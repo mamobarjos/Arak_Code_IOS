@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf">
+            <string>DroidArabicKufi-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="192" id="AMy-iq-zXg" customClass="UploadCell" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="354" height="192"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AMy-iq-zXg" id="xAU-Qf-h2k">
+                <rect key="frame" x="0.0" y="0.0" width="354" height="192"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="border" translatesAutoresizingMaskIntoConstraints="NO" id="fbg-mQ-Gpf">
+                        <rect key="frame" x="8" y="8" width="338" height="176"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="KzT-OG-7BH">
+                        <rect key="frame" x="117" y="48" width="120" height="96"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="HeO-V2-bLJ">
+                                <rect key="frame" x="30" y="0.0" width="60" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="2Ja-PN-mBv"/>
+                                    <constraint firstAttribute="height" constant="50" id="OCm-Bc-Yrq"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ujm-nA-Lya">
+                                <rect key="frame" x="0.0" y="62" width="120" height="34"/>
+                                <color key="backgroundColor" red="1" green="0.43137254899999999" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="ZoW-g1-6s7"/>
+                                    <constraint firstAttribute="width" constant="120" id="wTp-hv-PUb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="DroidArabicKufi-Bold" family="Droid Arabic Kufi" pointSize="13"/>
+                                <state key="normal" title="Upload Image">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="Upload:" destination="AMy-iq-zXg" eventType="touchUpInside" id="PrX-3b-tQX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGb-aU-vgL">
+                        <rect key="frame" x="304" y="15" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="0oC-ce-fOa"/>
+                            <constraint firstAttribute="height" constant="35" id="3lO-C2-f7l"/>
+                        </constraints>
+                        <state key="normal" image="trash"/>
+                        <connections>
+                            <action selector="Delete:" destination="AMy-iq-zXg" eventType="touchUpInside" id="dQm-xN-maG"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="fbg-mQ-Gpf" secondAttribute="trailing" constant="8" id="2XZ-yA-iay"/>
+                    <constraint firstItem="fbg-mQ-Gpf" firstAttribute="top" secondItem="xAU-Qf-h2k" secondAttribute="top" constant="8" id="6Y8-ES-kWq"/>
+                    <constraint firstAttribute="bottom" secondItem="fbg-mQ-Gpf" secondAttribute="bottom" constant="8" id="MTr-27-hm5"/>
+                    <constraint firstItem="fbg-mQ-Gpf" firstAttribute="leading" secondItem="xAU-Qf-h2k" secondAttribute="leading" constant="8" id="Un3-mp-Dfk"/>
+                    <constraint firstItem="KzT-OG-7BH" firstAttribute="centerX" secondItem="xAU-Qf-h2k" secondAttribute="centerX" id="Zix-NC-i4E"/>
+                    <constraint firstItem="KzT-OG-7BH" firstAttribute="centerY" secondItem="xAU-Qf-h2k" secondAttribute="centerY" id="a4e-5v-dHc"/>
+                    <constraint firstItem="iGb-aU-vgL" firstAttribute="top" secondItem="xAU-Qf-h2k" secondAttribute="top" constant="15" id="hQC-47-feJ"/>
+                    <constraint firstAttribute="trailing" secondItem="iGb-aU-vgL" secondAttribute="trailing" constant="15" id="lcE-s1-QGp"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="deleteButton" destination="iGb-aU-vgL" id="8cD-xb-FJs"/>
+                <outlet property="photoImageView" destination="fbg-mQ-Gpf" id="hs7-ft-HY9"/>
+                <outlet property="uploadButton" destination="ujm-nA-Lya" id="AbL-dB-pIS"/>
+                <outlet property="uploadImageView" destination="HeO-V2-bLJ" id="hBf-WA-uGb"/>
+            </connections>
+            <point key="canvasLocation" x="-56.521739130434788" y="136.60714285714286"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="border" width="282" height="177"/>
+        <image name="trash" width="43" height="46"/>
+        <image name="upload" width="50" height="41"/>
+    </resources>
+</document>

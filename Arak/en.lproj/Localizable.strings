@@ -1,0 +1,337 @@
+/* 
+  Localizable.strings
+  Arak
+
+  Created by Abed Qassim on 21/02/2021.
+  
+*/
+
+"Welcome" = "Welcome";
+"Email" = "Email";
+"Password" = "Password";
+"Log in" = "Log in";
+"Forgot password?" = "Forgot password?";
+"Log in with Apple" = "Log in with Apple";
+"Log in with Facebook" = "Log in with Facebook";
+"Log in with Google" = "Log in with Google";
+"OR" = "OR";
+"Log in with Facebook" = "Log in with Facebook";
+"Don't have an account? " = "Don't have an account? ";
+"Sign up" = "Sign up";
+"You have to enter at least 6 digit!" = "You have to enter at least 6 digit!";
+"Done" = "Done";
+
+"Join Arak"  = "Join Arak";
+"Full Name" = "Full Name";
+"Confirm password" = "Confirm password";
+"Gender" = "Gender";
+"Phone Number" = "Phone Number";
+"City" = "City";
+"Country" = "Country";
+"By signing up, you agree to our Terms & Conditions and Privacy Policy" = "By signing up, you agree to our Terms & Conditions and Privacy Policy";
+
+"Terms & Conditions" = "Terms & Conditions";
+"Privacy Policy" = "Privacy Policy";
+"Have an account? " = "Have an account? ";
+"Next" = "Next";
+"Forget Your Password" = "Forget Your Password";
+"Success" = "Success";
+
+"Your password has been changed successfully!" = "Your password has been changed successfully!";
+"Change Your Password" = "Change Your Password";
+"Please enter a new password and confirm password" = "Please enter a new password and confirm password";
+"Submit" = "Submit";
+"Please check your email" = "Please check your email";
+"OR" = "OR";
+"Male" = "Male";
+"Female" = "Female";
+"Image" = "Image";
+"Video" = "Video";
+"Website" = "Website";
+"Title" = "Title";
+"Description" = "Description";
+"Phone Number" = "Phone Number";
+"Location" = "Location";
+"Website" = "Website";
+
+"Learn More" = "Learn More";
+"Reach" = "Reach";
+
+"Upload Images" = "Upload Images";
+"Upload Video" = "Upload Video";
+
+"Company" = "Company";
+"Individual" = "Individual";
+"Company Name" = "Company Name";
+"Continue" = "Continue";
+"JOD" = "JOD";
+
+"Confrim" = "Confrim";
+"Pick the location" = "Pick the location";
+
+
+"Please Select one image at least" = "Please Select one image at least";
+"Please Select video" = "Please Select video";
+
+"Summary" = "Summary";
+"Cart Details" = "Cart Details";
+"Total Amount" = "Total Amount";
+"Check Out" = "Check Out";
+
+"My Wallet" = "My Wallet";
+"Name" = "Name";
+"Expiry Date" = "Expiry Date";
+"Pay" = "Pay";
+"CVV" = "CVV";
+"Card Number" = "Card Number";
+"Card" = "Card";
+"Checkout" = "Checkout";
+
+
+"Success" = "Success";
+"Your ad will be post soon." = "Your ad will be post soon.";
+"Go to My Ads" = "Go to My Ads";
+
+"The user has been blocked, please contact the administration" = "The user has been blocked, please contact the administration";
+"h" = "h";
+"m" = "m";
+"s" = "s";
+
+"Up To %@ Secounds" = "Up To %@ Secounds";
+
+"Home" = "Home";
+"Wallet" = "Wallet";
+"Ads" = "Ads";
+"Notification" = "Notification";
+"Profile" = "Profile";
+"Images" = "Images";
+"Image" = "Image";
+
+//Settings
+"Change Language" = "Change Language";
+"Change Password" = "Change Password";
+"Notifications" = "Notifications";
+"General" = "General";
+"Feedback" = "Feedback";
+"Terms & Conditions" = "Terms & Conditions";
+"About Us" = "About Us";
+"Privacy Policy" = "Privacy Policy";
+"Do you change the language!" =  "Do you change the language!";
+"Yes" = "Yes";
+"No" =  "No";
+
+
+//Services
+"Arak Service" = "Arak Service";
+"Arak Ranking" = "Arak Ranking";
+
+
+
+"Tell us a bit more about why you chose" = "Tell us a bit more about why you chose";
+"Thank you, we appreciate your opinion" = "Thank you, we appreciate your opinion";
+"Enter Coupon Code" = "Enter Coupon Code";
+"Favorite" = "Favorite";
+"History" = "History";
+"Login as a guest" = "Login as a guest";
+"Please insert your full name" = "Please insert your full name";
+"Please insert your email" = "Please insert your email";
+"Please insert your password" = "Please insert your password";
+"Please insert your old password" = "Please insert your old password";
+"Please insert your confirm password" = "Please insert your confirm password";
+"Please insert your gender" = "Please insert your gender";
+"Please insert your phone number" = "Please insert your phone number";
+"Please insert your phone business name" = "Please insert your business name";
+"Please select city" = "Please select city";
+"Please select country" = "Please select country";
+"Please select the location address" = "Please select the location address";
+"You have entered an invalid email address!" = "You have entered an invalid email address!";
+"Password must contain at least 7 characters" = "Password must contain at least 6 characters";
+"Please make sure the password matches" = "Please make sure the password matches";
+"Phone Number Should not been less than 9 digits" = "Phone Number Should not been less than 9 digits";
+"Old Password" = "Old Password";
+"You have entered an invalid email address!" = "You have entered an invalid email address!";
+"Business Name" = "Business Name";
+"Continue With" = "Continue With";
+"Apple" = "Apple";
+"Facebook" = "Facebook";
+"Google" = "Google";
+"Please enter new phone number" = "Please enter new phone number";
+"Change Phone Number" = "Change Phone Number";
+"Please Insert the otp" = "Please Insert the otp";
+"Please enter the verification code sent to your mobile number" = "Please enter the verification code sent to your mobile number";
+"The modification has been completed successfully" = "The modification has been completed successfully";
+"Resend Code" = "Resend Code";
+"Please enter Code sent to" = "Please enter Code sent to";
+"Verification Code" = "Verification Code";
+"second left" = "second left";
+"Your Payment was successfully" = "Your Payment was successfully";
+"Your Payment was failure , please try again" = "Your Payment was failure , please try again";
+
+//with draw
+"Amount" = "Amount";
+"Withdraw" = "Withdraw";
+"Earning" = "Earning";
+"JOD" = "JOD";
+"Enter Name" = "Enter Name";
+"Enter Phone Number" = "7xxxxxxxx";
+"Wallet Type" = "Wallet Type";
+"Select Wallet Type" = "Select Wallet Type";
+"Continue" = "Continue";
+"Enter Amount" = "Enter Amount";
+"Your request has been successfully uploaded" = "Your request has been successfully uploaded";
+"Please insert the amount" = "Please insert the amount";
+
+//enter coupon
+"Coupon Code" = "Coupon Code";
+
+//Search
+"Search..." = "Search...";
+
+//Ranking
+"Arak Ranking" = "Arak Ranking";
+"Video View" = "Video View";
+"Image View" = "Image View";
+"Web View" = "Web View";
+"Total Revenue" = "Total Revenue";
+"Ranking" = "Ranking";
+
+//Feedback
+"Tell us a bit more about why you chose" = "Tell us a bit more about why you chose";
+"Description" = "Description";
+"Thank you, we appreciate your opinion" = "Thank you, we appreciate your opinion";
+"Please insert your description" = "Please insert your description";
+
+
+//MyAds
+"Select Date range" = "Select Date range";
+"Done" = "Done";
+"Cancel" = "Cancel";
+"Pending" = "Pending";
+"Active" = "Active";
+"Complete" = "Complete";
+"Declined" = "Declined";
+"Ads Type" = "Ads Type";
+"My Ads" = "My Ads";
+"Reach" = "Reach";
+"Number" = "Number";
+"Time" = "Time";
+"Price" = "Price";
+"Image" = "Image";
+"Seconds" = "Seconds";
+
+
+//Story
+"Learn More" = "Learn More";
+
+//Profile
+"Edit Profile" = "Edit Profile";
+"My Detail" = "My Detail";
+"Sign out" = "Sign out";
+"Favorite" = "Favorite";
+"History" = "History";
+"Change Password" = "Change Password";
+"Confirm" = "Confirm";
+
+//Notifications
+"Notifications" = "Notifications";
+
+//Ads
+"Settings" = "Settings";
+
+//Home
+"Video" = "Video";
+"Website" = "Website";
+"s" = "s";
+
+//Ads Detail
+"You cannot start chatting because the ad is for your " = "You cannot start chatting because the ad is for your ";
+"Please Install Whatsapp" = "Please Install Whatsapp";
+
+
+//Other
+"Make An Ad" = "Make An Ad";
+"ACTIVITIES" = "ACTIVITIES";
+"General" = "General";
+"Feedback" = "Feedback";
+"Need Help?" = "Need Help?";
+"Legal" = "Legal";
+"Arak" = "Arak";
+
+
+
+
+//Addiational
+"Withdrawal Request Successful" = "Withdrawal Request Successful";
+"Your withdrawal request has been confirmed" = "Your withdrawal request has been confirmed";
+"Go to My Wallet" = "Go to My Wallet";
+"More" = "More";
+"Less" = "Less";
+"Business Name" = "Business Name";
+"Custom" = "Custom";
+"Select City" = "Select City";
+"Select Country" = "Select Country";
+"Select Gender" = "Select Gender";
+"Number Of Secounds" = "Number Of Secounds";
+"Select Number Of Secounds" = "Select Number Of Secounds";
+"Number Of Image" = "Number Of Image";
+"Select Number Of Image" = "Select Number Of Image";
+"Number Of Reach" = "Number Of Reach";
+"Select Number Of Reach" = "Select Number Of Reach";
+"Image Ads/Custom" = "Image Ads/Custom";
+"Video Ads/Custom" = "Video Ads/Custom";
+"Website Ads/Custom" = "Website Ads/Custom";
+"Search" = "Search";
+"No Data Found" = "No Data Found";
+"Filter" = "Filter";
+"Enter Email" = "Enter Email";
+"Contact Info" = "Contact Info";
+"Once the details below are completed, one of our expert advisors will contact you" = "Once the details below are completed, one of our expert advisors will contact you";
+"Send" = "Send";
+"Completed" = "Completed";
+"Please insert your Coupon Code" = "Please insert your Coupon Code";
+"Coupon code has been entered successfully" = "Coupon code has been entered successfully";
+"Your request has been successfully sent" = "Your request has been successfully sent";
+"You do not have enough balance in your wallet, you can proceed with your credit card" = "You do not have enough balance in your wallet, you can proceed with your credit card";
+"Featured" = "Featured";
+"Banners" = "Banners";
+"More" = "More";
+"Search videos,images and many more" = "Search videos,images and many more";
+"Double Payment" = "Double Payment";
+"Image ads" = "Image ads";
+"Video ads" = "Video ads";
+"Website ads" = "Website ads";
+"Ads Type" = "Ads Type";
+"Reach" = "Reach";
+"Number" = "Number";
+"Time" = "Time";
+"Cart Details" = "Cart Details";
+"Total Amount" = "Total Amount";
+"Wallet Insufficient" = "Wallet Insufficient";
+"Use" = "Use";
+"About Us" = "About Us";
+"Settings" = "Settings";
+"Please enter company name" = "Please enter company name";
+"Please enter title" = "Please enter title";
+"Please enter description" = "Please enter description";
+"Please insert location" = "Please insert location";
+"Delete Ad" = "Delete Ad";
+"Would you like to delete this ad?" = "Would you like to delete this ad?";
+"Yes" = "Yes";
+"No" = "No";
+
+
+
+"Location Permission Required" = "Location Permission Required";
+"Please enable location permissions in settings." = "Please enable location permissions in settings.";
+"Settings" = "Settings";
+"Cancel" = "Cancel";
+"Back To Ads" = "Back To Ads";
+"In this type, payment using wallet and credit card is combined. Would you like to continue?" = "In this type, payment using wallet and credit card is combined. Would you like to continue?";
+"Payment combined" = "Combined Payment";
+"Available Coupons\n25,50,100,250" = "Available Coupons\n25JD,50JD,100JD,250JD";
+"The number of images in this package is 0 You cannot upload images" = "The number of images in this package is 0 You cannot upload images";
+"Please enter website" = "Please enter website";
+"Please enter valid url for website" = "Please enter a valid url for the website";
+"Join us and be one of the thousands of registered members" = "Join us and be one of the thousands of registered members";
+"We apologize, the minimum amount for withdrawal is 5 dinars" = "We apologize, the minimum amount for withdrawal is 5 dinars";
+"Please contact us to purchase a coupon" = "Please contact us to purchase a coupon";

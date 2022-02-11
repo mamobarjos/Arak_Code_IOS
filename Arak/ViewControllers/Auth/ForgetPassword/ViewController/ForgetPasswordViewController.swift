@@ -1,0 +1,107 @@
+//
+//  ForgetPasswordViewController.swift
+//  Arak
+//
+//  Created by Abed Qassim on 22/02/2021.
+//  
+//
+
+import UIKit
+import Foundation
+
+
+class ForgetPasswordViewController: UIViewController {
+
+    // MARK: - Outlets
+    @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var phoneTextField: UITextField!
+    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var messageLabel: UILabel!
+  // MARK: - Properties
+
+    private var error = ""
+    private var viewModel: ForgetPasswordViewModel = ForgetPasswordViewModel()
+    private var signUpViewModel: SignUpViewModel = SignUpViewModel()
+
+    
+    // MARK: - Override Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        phoneTextField.semanticContentAttribute = .forceLeftToRight
+        phoneTextField.textAlignment = .left
+        self.setupHideKeyboardOnTap()
+        setupUI()
+        setupBinding()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      hiddenNavigation(isHidden: false)
+      navigationController?.navigationBar.transparentNavigationBar()
+    }
+
+    // MARK: - Protected Methods
+    private func setupUI() {
+      locaization()
+    }
+
+    private func setupBinding() {
+
+    }
+
+    private func locaization() {
+      welcomeLabel.text = "Forget Your Password".localiz()
+      messageLabel.text = "Please insert your phone number".localiz()
+      phoneTextField.placeholder = "xxxxxxxxx".localiz()
+      nextButton.setTitle("Next".localiz(), for: .normal)
+      welcomeLabel.textAligment()
+      messageLabel.textAligment()
+        phoneTextField.textAligment()
+    }
+
+    private func validation() -> Bool {
+        error = ""
+
+        guard let phone = phoneTextField.text else {
+          error = "Please insert your phone number".localiz()
+          self.phoneTextField.becomeFirstResponder()
+
+          return error.isEmpty
+        }
+
+        if phone.validator(type: .Required) == .Required {
+          error = "Please insert your phone number".localiz()
+          self.phoneTextField.becomeFirstResponder()
+          return error.isEmpty
+        }
+
+        if phone.count != 9 {
+          error = "Phone Number Should not been less than 9 digits".localiz()
+          self.phoneTextField.becomeFirstResponder()
+          return error.isEmpty
+        }
+      return error.isEmpty
+    }
+
+  @IBAction func Forget(_ sender: Any) {
+      if !validation() {
+        self.showToast(message: error)
+        return
+      }
+    var otpData:[String : String] = [:]
+    otpData["phone_no"] = "+962" + (phoneTextField.text ?? "")
+    signUpViewModel.otp(data: otpData) {  [weak self] (error) in
+      defer {
+        self?.stopLoading()
+      }
+      if error != nil {
+        self?.showToast(message: error)
+        return
+      }
+      let vc = self?.initViewControllerWith(identifier: OtpViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! OtpViewController
+      vc.confige(email: "", processType: .forgot, data: otpData)
+      self?.show(vc)
+    }
+  }
+
+}

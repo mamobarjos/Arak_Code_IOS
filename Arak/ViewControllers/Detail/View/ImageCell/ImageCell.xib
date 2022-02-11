@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="218" id="fY4-kc-Dck" customClass="ImageCell" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="218"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fY4-kc-Dck" id="gZS-qi-MYH">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="218"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J2E-gH-S8C">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="218"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpw-e1-ZqN">
+                        <rect key="frame" x="184" y="86" width="46" height="46"/>
+                        <state key="normal" image="play"/>
+                        <connections>
+                            <action selector="PlayVideo:" destination="fY4-kc-Dck" eventType="touchUpInside" id="5C3-le-Yar"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="tpw-e1-ZqN" firstAttribute="centerX" secondItem="gZS-qi-MYH" secondAttribute="centerX" id="1Be-hc-EPw"/>
+                    <constraint firstItem="tpw-e1-ZqN" firstAttribute="centerY" secondItem="gZS-qi-MYH" secondAttribute="centerY" id="LZ3-1c-jSQ"/>
+                    <constraint firstItem="J2E-gH-S8C" firstAttribute="leading" secondItem="gZS-qi-MYH" secondAttribute="leading" id="Uch-Qx-pkL"/>
+                    <constraint firstItem="J2E-gH-S8C" firstAttribute="top" secondItem="gZS-qi-MYH" secondAttribute="top" id="fni-rF-VJX"/>
+                    <constraint firstAttribute="bottom" secondItem="J2E-gH-S8C" secondAttribute="bottom" id="nbb-sQ-cSM"/>
+                    <constraint firstAttribute="trailing" secondItem="J2E-gH-S8C" secondAttribute="trailing" id="uHZ-gd-Mmz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="photoImageView" destination="J2E-gH-S8C" id="BEO-rM-KXJ"/>
+                <outlet property="playVideoButton" destination="tpw-e1-ZqN" id="iyc-iH-Eir"/>
+            </connections>
+            <point key="canvasLocation" x="-13.043478260869566" y="145.98214285714286"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="play" width="46" height="46"/>
+    </resources>
+</document>

@@ -1,0 +1,314 @@
+/* 
+  Localizable.strings
+  Arak
+
+  Created by Abed Qassim on 21/02/2021.
+  
+*/
+"Welcome" = "مرحبا";
+"Email" = "البريد الإلكتروني";
+"Password" = "كلمة المرور";
+"Log in" = "تسجيل الدخول";
+"Forgot password?" = "هل نسيت كلمة المرور ؟";
+"Log in with Apple" = "تسجيل الدخول باستخدام أبل";
+"Log in with Facebook" = "تسجيل الدخول باستخدام الفيسبوك";
+"Log in with Google" = "تسجيل الدخول باستخدام غوغل";
+"OR" = "OR";
+"Log in with Facebook" = "تسجيل الدخول بالفيسبوك";
+"Don't have an account? " = "لا تملك حساب ؟ ";
+"Sign up" = "حساب جديد";
+"You have entered an invalid email address!" = "لقد أدخلت عنوان بريد إلكتروني غير صحيح!";
+"You have to enter at least 6 digit!" = "يجب عليك إدخال 6 أرقام على الأقل!";
+"Done" = "تم";
+
+"Join Arak"  = "انضم لأراك";
+"Full Name" = "الاسم الكامل";
+"Confirm password" = "تأكيد كلمة المرور";
+"Gender" = "الجنس";
+"Phone Number" = "رقم الهاتف";
+"City" = "المدينة";
+"Country" = "الدولة";
+"By signing up, you agree to our Terms & Conditions and Privacy Policy" = "بالتسجيل ، فإنك توافق على الشروط والأحكام وسياسة الخصوصية الخاصة بنا";
+"Terms & Conditions" = "الشروط والأحكام";
+"Privacy Policy" = "سياسة الخصوصية";
+"Have an account? " = "لديك حساب ؟ ";
+"Next" = "التالي";
+"Forget Your Password" = "نسيت كلمة المرور";
+"Please enter your email" = "الرجاء أدخل البريد الالكتروني";
+"Success" = "صحيح";
+"Your password has been changed successfully!" = "تم تغيير كلمة المرور الخاصة بك بنجاح!";
+"Change Your Password" = "غير كلمة المرور الخاصة بك";
+"Please enter a new password and confirm password" = "الرجاء إدخال كلمة مرور جديدة وتأكيد كلمة المرور";
+"Submit" = "ارسال";
+"Please check your email" = " يرجى التحقق من البريد الالكتروني لديك ";
+"OR" = "أو";
+"Male" = "ذكر";
+"Female" = "أنثى";
+"Image" = "صورة";
+"Video" = "فيديو";
+"Website" = "ويب";
+
+
+"Title" = "العنوان";
+"Description" = "التفاصيل";
+"Phone Number" = "رقم الهاتف";
+"Location" = "الموقع";
+"Website" = "موقع الويب";
+"Learn More" = "المزيد";
+"Reach" = "الوصول";
+"Upload Images" = "تحميل الصور";
+"Upload Video" = "تحميل فيديو";
+"Company" = "شركة";
+"Individual" = "فردي";
+"Company Name" = "اسم الشركة";
+"Continue" = "متابعة";
+"JOD" = "د.أ";
+"Confrim" = "تأكيد";
+"Pick the location" = "اختر الموقع";
+
+
+"Please Select one image at least" = "يرجى تحديد صورة واحدة على الأقل";
+"Please Select video" = "الرجاء تحديد الفيديو";
+"Summary" = "الملخص";
+"Cart Details" = "تفاصيل السلة";
+"Total Amount" = "المبلغ الإجمالي";
+"Check Out" = "الدفع";
+
+"My Wallet" = "محفظتي";
+
+"Name" = "الاسم";
+"Expiry Date" = "تاريخ الانتهاء";
+"Pay" = "ادفع";
+"CVV" = "CVV";
+"Card Number" = "رقم البطاقة";
+"Card" = "البطاقة";
+"Checkout" = "الدفع";
+"Success" = "نجح";
+"Your ad will be post soon." = "سيتم نشر إعلانك قريبا.";
+"Go to My Ads" = "اذهب إلى إعلاناتي";
+"The user has been blocked, please contact the administration" = "تم حجب المستخدم يرجى التواصل مع الادارة";
+"h" = "س";
+"m" = "د";
+"s" = "ث";
+"Up To %@ Secounds" = "لغاية %@ ثواني";
+"Home" = "الرئيسية";
+"Wallet" = "محفظة";
+"Ads" = "الاعلانات";
+"Notification" = "الاشعارات";
+"Profile" = "الملف الشخصي";
+"Images" = "صور";
+"Image" = "صورة";
+"Change Language" = "تغيير اللغة";
+"Change Password" = "تغيير كلمة المرور";
+"Notifications" = "الإشعارات";
+"General" = "عام";
+"Feedback" = "آراء";
+"Terms & Conditions" = "الشروط والأحكام";
+"About Us" = "عن التطبيق";
+"Privacy Policy" = "سياسة الخصوصية";
+"Do you change the language!" =  "هل تود تغيير اللغة؟";
+"Yes" = "نعم";
+"No" =  "لا";
+
+"Arak Service" = "خدمات أراك";
+"Arak Ranking" = "تقييمات أراك";
+"Tell us a bit more about why you chose" = "اخبرنا بتلخيص لماذا اخترت";
+"Login as a guest" = "تسجيل الدخول كزائر";
+
+
+
+"Tell us a bit more about why you chose" = "أخبرنا بالمزيد عن سبب اختيارك";
+"Thank you, we appreciate your opinion" = "شكرا لك ، نحن نقدر رأيك";
+"Enter Coupon Code" = "أدخل رمز القسيمة";
+"Favorite" = "المفضلات";
+"History" = "السجلات";
+"Please insert your full name" = "الرجاء إدخال اسمك الكامل";
+"Please insert your email" = "الرجاء إدخال البريد الإلكتروني الخاص بك";
+"Please insert your password" = "الرجاء إدخال كلمة المرور الخاصة بك";
+"Please insert your old password" = "الرجاء إدخال كلمة المرور القديمة الخاصة بك";
+"Please insert your confirm password" = "الرجاء إدخال تأكيد كلمة المرور الخاصة بك";
+"Please insert your gender" = "الرجاء إدخال جنسك";
+"Please insert your phone number" = "الرجاء إدخال رقم هاتفك";
+"Please insert your phone business name" = "الرجاء إدخال اسم عملك";
+"Please select city" = "الرجاء تحديد المدينة";
+"Please select country" = "الرجاء تحديد الدولة";
+"Please select the location address" = "الرجاء تحديد عنوان الموقع";
+"You have entered an invalid email address!" = "لقد أدخلت عنوان بريد إلكتروني غير صالح!";
+"Password must contain at least 6 characters" = "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل";
+"Please make sure the password matches" = "يرجى التأكد من تطابق كلمة المرور";
+"Phone Number Should not been less than 9 digits" = "رقم الهاتف يجب ألا يقل عن 9 أرقام";
+"Old Password" = "كلمة سر قديمة";
+"Business Name" = "الاسم التجاري";
+"Continue With" = "متابعة ب";
+"Apple" = "أبل";
+"Facebook" = "الفيسبوك";
+"Google" = "غوغل";
+"Please enter new phone number" = "الرجاء إدخال رقم هاتف جديد";
+"Change Phone Number" = "غير رقم الهاتف";
+"Please Insert the otp" = "الرجاء إدخال otp";
+"Please enter the verification code sent to your mobile number" = "الرجاء إدخال رمز التحقق المرسل إلى رقم هاتفك المحمول";
+"The modification has been completed successfully" = "تم التعديل بنجاح";
+"Resend Code" = "أعد إرسال الرمز";
+"Please enter Code sent to" = "الرجاء إدخال الرمز المرسل إلى";
+"Verification Code" = "رمز التحقق";
+"second left" = "ثانية للانتهاء";
+"Your Payment was successfully" = "تم الدفع الخاص بك بنجاح";
+"Your Payment was failure , please try again" = "فشل الدفع الخاص بك ، يرجى المحاولة مرة أخرى";
+
+//with draw
+"Amount" = "المبلغ";
+"Withdraw" = "المسحوب";
+"Earning" = "الإيرادات";
+"JOD" = "د.أ";
+"Enter Name" = "ادخل الاسم";
+"Enter Phone Number" = "7xxxxxxxx";
+"Wallet Type" = "نوع المحفظة";
+"Select Wallet Type" = "أدخل نوع المحفظة";
+"Continue" = "المتابعة";
+"Enter Amount" = "ادخل القيمة";
+"Your request has been successfully uploaded" = "تم تحميل طلبك بنجاح";
+"Please insert the amount" = "الرجاء إدخال المبلغ";
+
+//enter coupon
+"Coupon Code" = "رمز الكوبون";
+
+//Search
+"Search..." = "البحث...";
+
+//Ranking
+"Video View" = "مشاهدة الفيديو";
+"Image View" = "عرض الصورة";
+"Web View" = "عرض الويب";
+"Total Revenue" = "إجمالي الإيرادات";
+"Ranking" = "التصنيف";
+
+//Feedback
+"Please insert your description" = "الرجاء إدخال الوصف الخاص بك";
+
+
+//MyAds
+"Select Date range" = "حدد النطاق الزمني";
+"Done" = "تم";
+"Cancel" = "الغاء";
+"Pending" = "قيد الانتظار";
+"Active" = "فعّال";
+"Complete" = "مكتمل";
+"Declined" = "ملغيّ";
+"Ads Type" = "نوع الاعلان";
+"My Ads" = "إعلاناتي";
+"Reach" = "الوصول";
+"Number" = "الرقم";
+"Time" = "الوقت";
+"Price" = "السعر";
+"Image" = "الصورة";
+"Seconds" = "الثواني";
+
+
+//Story
+"Learn More" = "تفاصيل";
+
+//Profile
+"Edit Profile" = "تعديل الملف الشخصي";
+"My Detail" = "تفاصيلي";
+"Sign out" = "تسجيل الخروج";
+"Favorite" = "المفضلات";
+"History" = "السجلات";
+"Change Password" = "تغيير كلمة المرور";
+"Confirm" = "تأكيد";
+
+//Notifications
+"Notifications" = "الإشعارات";
+
+//Ads
+"Settings" = "الإعدادات";
+
+//Home
+"Video" = "الفيديو";
+"Website" = "الموقع إلكتروني";
+"s" = "ث";
+
+//Ads Detail
+"You cannot start chatting because the ad is for your " = "لا يمكنك بدء الدردشة لأن الإعلان خاص بك";
+"Please Install Whatsapp" = "الرجاء تثبيت Whatsapp";
+//Other
+"Make An Ad" = "اصنع اعلان";
+"ACTIVITIES" = "الأنشطة";
+"General" = "العام";
+"Feedback" = "التغذية الراجعة";
+"Need Help?" = "تحتاج مساعدة؟";
+"Legal" = "السياسات";
+
+"Arak" = "أراك";
+
+
+//Addiational
+"Withdrawal Request Successful" = "تم طلب السحب بنجاح";
+"Your withdrawal request has been confirmed" = "تم تأكيد طلب السحب الخاص بك";
+"Go to My Wallet" = "اذهب إلى محفظتي";
+"Business Name" = "الاسم التجاري";
+"Custom" = "مخصص";
+"Select City" = "اختر المدينة";
+"Select Country" = "اختر الدولة";
+"Select Gender" = "اختر الجنس";
+"Number Of Secounds" = "عدد الثواني";
+"Select Number Of Secounds" = "أختر عدد الثواني";
+"Number Of Image" = "عدد الصور";
+"Select Number Of Image" = "اختر عدد الصور";
+"Number Of Reach" = "عدد الوصول";
+"Select Number Of Reach" = "اختر عدد الوصول";
+"Image Ads/Custom" = "إعلانات الصور / المخصصة";
+"Video Ads/Custom" = "إعلانات الفيديو / مخصص";
+"Website Ads/Custom" = "إعلانات موقع الويب / مخصص";
+"Search" = "البحث";
+"No Data Found" = "لا يوجد بيانات";
+"Filter" = "تصفية";
+"Enter Email" = "أدخل بريدك الالكتروني";
+"Contact Info" = "معلومات الاتصال";
+"Once the details below are completed, one of our expert advisors will contact you" = "بمجرد اكتمال التفاصيل أدناه ، سيتصل بك أحد المستشارين الخبراء لدينا";
+"Send" = "إرسال";
+"Completed" = "مكتمل";
+"Please insert your Coupon Code" = "الرجاء إدخال رمز القسيمة الخاص بك";
+"Coupon code has been entered successfully" = "تم ادخال رمز القسيمة بنجاح";
+"Your request has been successfully sent" = "تم ارسال طلبك بنجاح";
+"You do not have enough balance in your wallet, you can proceed with your credit card" = "ليس لديك رصيد كافي في محفظتك ، يمكنك المتابعة ببطاقتك الائتمانية";
+"Featured" = "المميزة";
+"Banners" = "اللافتات";
+"More" = "المزيد";
+"Search videos,images and many more" = "ابحث عن مقاطع الفيديو والصور وغيرها الكثير";
+"Double Payment" = "الدفع المزدوج";
+"Image ads" = "اعلانات صور";
+"Video ads" = "اعلانات فيديو";
+"Website ads" = "اعلانات مواقع الكترونية";
+"Ads Type" = "نوع الاعلان";
+"Reach" = "الوصول";
+"Number" = "العدد";
+"Time" = "الوقت";
+"Cart Details" = "تفاصيل السلة";
+"Total Amount" = "المبلغ الإجمالي";
+"Wallet Insufficient" = "المحفظة غير كافية";
+"Use" = "استخدم";
+"Settings" = "الإعدادات";
+"Please enter company name" = "الرجاء إدخال اسم الشركة";
+"Please enter title" = "الرجاء إدخال العنوان";
+"Please enter description" = "الرجاء إدخال الوصف";
+"Please insert location" = "الرجاء إدخال الموقع";
+"Delete Ad" = "حذف الإعلان";
+"Would you like to delete this ad?" = "هل ترغب في حذف هذا الإعلان؟";
+"Yes" = "نعم";
+"No" = "لا";
+
+
+"Location Permission Required" = "مطلوب إذن الموقع";
+"Please enable location permissions in settings." = "الرجاء تمكين أذونات الموقع في الإعدادات.";
+"Settings" = "الإعدادات";
+"Cancel" = "إلغاء";
+"Back To Ads" = "العودة للإعلانات";
+"In this type, payment using wallet and credit card is combined. Would you like to continue?" = "في هذا النوع ، يتم الجمع بين الدفع باستخدام المحفظة وبطاقة الائتمان. هل ترغب في الاستمرار؟";
+"Payment combined" = "الدفع المدمج";
+"Available Coupons\n25,50,100,250" = "القسائم المتوفرة \n25د.أ,50د.أ,100د.أ,250د.أ";
+"The number of images in this package is 0 You cannot upload images" = "عدد الصورة في هذه الحزمة 0 لا يمكنك رفع صور ";
+"Please enter website" = "الرجاء إدخال الموقع";
+"Please enter valid url for website" = "الرجاء إدخال عنوان موقع صحيح";
+"Join us and be one of the thousands of registered members" = "انضم إلينا وكن واحدًا من آلاف الأعضاء المسجلين";
+"We apologize, the minimum amount for withdrawal is 5 dinars" = "معذرة الحد الادنى للسحب 5 دنانير";
+"Please contact us to purchase a coupon" = "يرجى الاتصال بنا لشراء قسيمة";

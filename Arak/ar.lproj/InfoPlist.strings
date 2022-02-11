@@ -1,0 +1,18 @@
+/* Bundle name */
+"CFBundleName" = "أراك";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "يحتاج تطبيق اراك للوصول الى الكاميرا";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "يحتاج تطبيق اراك للوصول الى موقعك";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "يحتاج تطبيق اراك للوصول الى موقعك";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "يحتاج تطبيق اراك للوصول الى موقعك";
+
+/* Privacy - Photo Library Usage Description */
+"NSPhotoLibraryUsageDescription" = "يحتاج تطبيق اراك للوصول الى المكتبة لاختيار الصور";
+

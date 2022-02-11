@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="ArbFONTS-Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf">
+            <string>DroidArabicKufi</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="700" id="Wdh-2h-zeN" customClass="NotificationCell" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="700"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wdh-2h-zeN" id="Pc4-FA-z2D">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="700"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arak Logo" translatesAutoresizingMaskIntoConstraints="NO" id="pJ4-Qn-cDE">
+                        <rect key="frame" x="11" y="12" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="m7W-kF-Von"/>
+                            <constraint firstAttribute="height" constant="50" id="rJd-Ih-TRl"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="35"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGS-Dq-EjI">
+                        <rect key="frame" x="73" y="12" width="290" height="313"/>
+                        <mutableString key="text">sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd</mutableString>
+                        <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="13"/>
+                        <color key="textColor" red="0.1058823529" green="0.14117647059999999" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FL9-41-2zD">
+                        <rect key="frame" x="73" y="337" width="290" height="321"/>
+                        <mutableString key="text">sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd</mutableString>
+                        <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="13"/>
+                        <color key="textColor" red="0.1058823529" green="0.14117647059999999" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 hours ago" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZBr-vk-S7H">
+                        <rect key="frame" x="73" y="670" width="290" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="AJz-cv-Qrd"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="11"/>
+                        <color key="textColor" red="0.1058823529" green="0.14117647059999999" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="pJ4-Qn-cDE" firstAttribute="leading" secondItem="Pc4-FA-z2D" secondAttribute="leading" constant="11" id="8VZ-e0-CLU"/>
+                    <constraint firstItem="FL9-41-2zD" firstAttribute="top" secondItem="cGS-Dq-EjI" secondAttribute="bottom" constant="12" id="E6c-5K-eLJ"/>
+                    <constraint firstItem="ZBr-vk-S7H" firstAttribute="leading" secondItem="FL9-41-2zD" secondAttribute="leading" id="FX4-mp-uK0"/>
+                    <constraint firstItem="FL9-41-2zD" firstAttribute="trailing" secondItem="cGS-Dq-EjI" secondAttribute="trailing" id="HaT-Hh-NFI"/>
+                    <constraint firstAttribute="trailing" secondItem="cGS-Dq-EjI" secondAttribute="trailing" constant="12" id="JQ9-pF-1Wb"/>
+                    <constraint firstItem="ZBr-vk-S7H" firstAttribute="trailing" secondItem="FL9-41-2zD" secondAttribute="trailing" id="LPx-uC-47A"/>
+                    <constraint firstItem="FL9-41-2zD" firstAttribute="leading" secondItem="cGS-Dq-EjI" secondAttribute="leading" id="Qd4-mR-ZWt"/>
+                    <constraint firstItem="pJ4-Qn-cDE" firstAttribute="top" secondItem="Pc4-FA-z2D" secondAttribute="top" constant="12" id="SBj-zk-0WL"/>
+                    <constraint firstItem="ZBr-vk-S7H" firstAttribute="top" secondItem="FL9-41-2zD" secondAttribute="bottom" constant="12" id="Zhv-h4-dXS"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pJ4-Qn-cDE" secondAttribute="bottom" constant="12" id="br6-fC-Gbu"/>
+                    <constraint firstItem="cGS-Dq-EjI" firstAttribute="leading" secondItem="pJ4-Qn-cDE" secondAttribute="trailing" constant="12" id="cNt-hl-pgL"/>
+                    <constraint firstItem="cGS-Dq-EjI" firstAttribute="top" secondItem="Pc4-FA-z2D" secondAttribute="top" constant="12" id="i40-Bo-q6j"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZBr-vk-S7H" secondAttribute="bottom" constant="12" id="wtC-Fn-rFy"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="descLabel" destination="FL9-41-2zD" id="kmu-Cb-C1Z"/>
+                <outlet property="photoImageView" destination="pJ4-Qn-cDE" id="gPd-k0-jKf"/>
+                <outlet property="timeLabel" destination="ZBr-vk-S7H" id="dLU-ti-xrU"/>
+                <outlet property="titleLabel" destination="cGS-Dq-EjI" id="rkO-cY-kkT"/>
+            </connections>
+            <point key="canvasLocation" x="70.28985507246378" y="276.5625"/>
+        </tableViewCell>
+    </objects>
+    <designables>
+        <designable name="FL9-41-2zD">
+            <size key="intrinsicContentSize" width="3707.5" height="25"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="Arak Logo" width="37" height="41"/>
+    </resources>
+</document>

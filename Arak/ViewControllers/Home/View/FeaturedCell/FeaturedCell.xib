@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="SW6-Sk-OL3" customClass="FeaturedCell" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="383" height="235"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="4fu-2U-myW">
+                <rect key="frame" x="0.0" y="0.0" width="383" height="235"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2m-OZ-muh">
+                        <rect key="frame" x="0.0" y="0.0" width="383" height="235"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVf-8A-mzK" customClass="FSPagerView" customModule="FSPagerView">
+                                <rect key="frame" x="0.0" y="0.0" width="383" height="235"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kqy-hF-BQt" customClass="FSPageControl" customModule="FSPagerView">
+                                <rect key="frame" x="156.5" y="203" width="70" height="20"/>
+                                <color key="backgroundColor" red="0.36862745099999999" green="0.36470588240000001" blue="0.36470588240000001" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="V5X-tA-EMK"/>
+                                    <constraint firstAttribute="width" constant="70" id="p3J-dR-vPt"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DVf-8A-mzK" firstAttribute="leading" secondItem="e2m-OZ-muh" secondAttribute="leading" id="3mc-EQ-Yny"/>
+                            <constraint firstItem="DVf-8A-mzK" firstAttribute="top" secondItem="e2m-OZ-muh" secondAttribute="top" id="IZR-Cf-zzF"/>
+                            <constraint firstAttribute="bottom" secondItem="kqy-hF-BQt" secondAttribute="bottom" constant="12" id="YH9-cL-fHX"/>
+                            <constraint firstAttribute="bottom" secondItem="DVf-8A-mzK" secondAttribute="bottom" id="Z08-hD-Eu9"/>
+                            <constraint firstAttribute="trailing" secondItem="DVf-8A-mzK" secondAttribute="trailing" id="wzL-vW-jv4"/>
+                            <constraint firstItem="kqy-hF-BQt" firstAttribute="centerX" secondItem="e2m-OZ-muh" secondAttribute="centerX" id="zsm-2f-abY"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="e2m-OZ-muh" firstAttribute="top" secondItem="4fu-2U-myW" secondAttribute="top" id="IPX-MG-lJM"/>
+                    <constraint firstAttribute="bottom" secondItem="e2m-OZ-muh" secondAttribute="bottom" id="SjF-O3-rJ8"/>
+                    <constraint firstItem="e2m-OZ-muh" firstAttribute="leading" secondItem="4fu-2U-myW" secondAttribute="leading" id="Xys-hA-ZwN"/>
+                    <constraint firstAttribute="trailing" secondItem="e2m-OZ-muh" secondAttribute="trailing" id="lsf-Yv-GiX"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="383" height="235"/>
+            <connections>
+                <outlet property="featuredPagerView" destination="DVf-8A-mzK" id="fh3-SB-QhP"/>
+                <outlet property="pageControl" destination="kqy-hF-BQt" id="lIX-pP-MV6"/>
+            </connections>
+            <point key="canvasLocation" x="218.11594202898553" y="143.63839285714286"/>
+        </collectionViewCell>
+    </objects>
+</document>

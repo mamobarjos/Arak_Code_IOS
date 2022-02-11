@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="ArbFONTS-Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf">
+            <string>DroidArabicKufi</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="H6I-1l-RkR" customClass="CustomCell" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="171" height="199"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ZZP-ra-4oy">
+                <rect key="frame" x="0.0" y="0.0" width="171" height="199"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Du1-VK-BHY">
+                        <rect key="frame" x="0.0" y="0.0" width="171" height="199"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lak-RJ-64p">
+                                <rect key="frame" x="0.0" y="149" width="171" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z79-Cs-s24">
+                                        <rect key="frame" x="63" y="12.5" width="45" height="25"/>
+                                        <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="13"/>
+                                        <color key="textColor" red="1" green="0.43137254899999999" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Z79-Cs-s24" firstAttribute="centerY" secondItem="Lak-RJ-64p" secondAttribute="centerY" id="GE1-kg-2fa"/>
+                                    <constraint firstItem="Z79-Cs-s24" firstAttribute="centerX" secondItem="Lak-RJ-64p" secondAttribute="centerX" id="Sfa-dv-qbT"/>
+                                    <constraint firstAttribute="height" constant="50" id="iKf-Bk-Rbz"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SOE-1b-4g0">
+                                <rect key="frame" x="69.5" y="83.5" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="kwr-PL-JeT"/>
+                                    <constraint firstAttribute="width" constant="32" id="vqA-Rc-VNp"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="Add"/>
+                                <connections>
+                                    <action selector="Add:" destination="H6I-1l-RkR" eventType="touchUpInside" id="uAu-Ea-UuZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.43137254899999999" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="SOE-1b-4g0" firstAttribute="centerX" secondItem="Du1-VK-BHY" secondAttribute="centerX" id="Z4z-VX-B48"/>
+                            <constraint firstItem="Lak-RJ-64p" firstAttribute="leading" secondItem="Du1-VK-BHY" secondAttribute="leading" id="hR6-Lm-6NE"/>
+                            <constraint firstAttribute="trailing" secondItem="Lak-RJ-64p" secondAttribute="trailing" id="nbw-l2-fXI"/>
+                            <constraint firstAttribute="bottom" secondItem="Lak-RJ-64p" secondAttribute="bottom" id="vSD-kf-taD"/>
+                            <constraint firstItem="SOE-1b-4g0" firstAttribute="centerY" secondItem="Du1-VK-BHY" secondAttribute="centerY" id="xbz-GL-b0e"/>
+                            <constraint firstAttribute="bottom" secondItem="Lak-RJ-64p" secondAttribute="bottom" id="zBv-SH-F3Q"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="24"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Du1-VK-BHY" secondAttribute="trailing" id="KU4-XJ-7v8"/>
+                    <constraint firstAttribute="bottom" secondItem="Du1-VK-BHY" secondAttribute="bottom" id="aD6-s4-pzC"/>
+                    <constraint firstItem="Du1-VK-BHY" firstAttribute="leading" secondItem="ZZP-ra-4oy" secondAttribute="leading" id="bM5-3c-7hB"/>
+                    <constraint firstItem="Du1-VK-BHY" firstAttribute="top" secondItem="ZZP-ra-4oy" secondAttribute="top" id="i17-mG-1mo"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="190" height="174"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="10"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="customLabel" destination="Z79-Cs-s24" id="M3v-Iu-Cgg"/>
+                <outlet property="customView" destination="Lak-RJ-64p" id="Dkp-M5-fQh"/>
+            </connections>
+            <point key="canvasLocation" x="87.681159420289859" y="110.15625"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Add" width="24" height="24"/>
+    </resources>
+</document>
