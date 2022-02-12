@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import SwiftUI
 
 
 class ProfileViewController: UIViewController {
@@ -62,8 +63,12 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func MyDetail(_ sender: Any) {
-        let vc = initViewControllerWith(identifier: EditProfileViewController.className, and: "Edit Profile".localiz()) as! EditProfileViewController
-        show(vc)
+//        let vc = initViewControllerWith(identifier: Main.className, and: "Edit Profile".localiz()) as! EditProfileViewController
+//        show(vc)
+        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "shop name", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+              show(vc)
+
+
     }
     
     @IBAction func MyAds(_ sender: Any) {

@@ -16,14 +16,18 @@ class FeaturedCell: UICollectionViewCell {
     @IBOutlet weak var pageControl: FSPageControl!
     @IBOutlet weak var featuredPagerView: FSPagerView!
     
-    private var featuredAdsList: [Adverisment] = []
+    private var featuredAdsList: [Adverisment] = [] {
+        didSet {
+            self.featuredPagerView.reloadData()
+        }
+    }
     private var bannerList: [AdBanner] = []
     private var playVideoBlock:PlayVideoBlock?
     private var favorateBlock:FavorateBlock?
     private var moreBlock:MoreBlock?
 
     private var isFavorate: Bool = false
-    private var isBanner: Bool = false
+    var isBanner: Bool = false
 
         
     override func prepareForReuse() {
@@ -35,6 +39,16 @@ class FeaturedCell: UICollectionViewCell {
         pageControl.numberOfPages = 0
         featuredPagerView.reloadData()
     }
+
+    func setup(bannerList: [AdBanner]) {
+        self.bannerList = bannerList
+        isBanner = true
+        pageControl.numberOfPages = bannerList.count
+        featuredPagerView.isInfinite = true
+        featuredPagerView.automaticSlidingInterval = 5
+        self.setupSlider()
+    }
+
     func setup(featuredAdsList: [Adverisment],isFavorate: Bool,playVideoBlock:PlayVideoBlock?,favorateBlock:FavorateBlock?,moreBlock:MoreBlock?) {
         self.featuredAdsList = featuredAdsList
         self.playVideoBlock = playVideoBlock

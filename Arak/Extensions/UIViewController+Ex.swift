@@ -11,6 +11,7 @@ import AwaitToast
 extension UIViewController: NVActivityIndicatorViewable {
     enum Storyboard:String {
         case Main = "Main"
+        case MainPhase = "Main_2"
         case Auth = "Auth"
     }
     

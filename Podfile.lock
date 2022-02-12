@@ -142,6 +142,7 @@ PODS:
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
+  - WWLayout (0.8.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
@@ -167,6 +168,7 @@ DEPENDENCIES:
   - OTPFieldView
   - Player (~> 0.13.2)
   - SDWebImage
+  - WWLayout
 
 SPEC REPOS:
   trunk:
@@ -206,6 +208,7 @@ SPEC REPOS:
     - Player
     - PromisesObjC
     - SDWebImage
+    - WWLayout
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
@@ -244,7 +247,8 @@ SPEC CHECKSUMS:
   Player: e1889a481f14b3bc4065b62bed304c3de3b47dfe
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  WWLayout: 0ff533a6b9d0ae2ca2bdf91b6aefc04234b61f1b
 
-PODFILE CHECKSUM: 61b0a2935e39ab53c0eeb426944e5205f2cfc08c
+PODFILE CHECKSUM: 3c2fa418a01f4d8fefe1ef578907d4e84f6ad0d1
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

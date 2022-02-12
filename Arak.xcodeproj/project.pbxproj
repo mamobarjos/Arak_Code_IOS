@@ -39,7 +39,6 @@
 		2D151AC925E3034700789515 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D151AC825E3034700789515 /* SceneDelegate.swift */; };
 		2D151ACB25E3034700789515 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D151ACA25E3034700789515 /* ViewController.swift */; };
 		2D151ACE25E3034700789515 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D151ACC25E3034700789515 /* Main.storyboard */; };
-		2D151AD025E3034800789515 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D151ACF25E3034800789515 /* Assets.xcassets */; };
 		2D151AD325E3034800789515 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D151AD125E3034800789515 /* LaunchScreen.storyboard */; };
 		2D45BDF12672832700D95ED8 /* MyAdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D45BDF02672832700D95ED8 /* MyAdsViewController.swift */; };
 		2D45BDFA2672864D00D95ED8 /* AdsDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D45BDF92672864D00D95ED8 /* AdsDetailCell.xib */; };
@@ -170,6 +169,24 @@
 		2DFCF94825E58781004193A5 /* AdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFCF94725E58781004193A5 /* AdsType.swift */; };
 		2DFCF94B25E587BB004193A5 /* PageingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFCF94A25E587BB004193A5 /* PageingModel.swift */; };
 		C1799F291A016968E4740A82 /* Pods_Arak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3940EF976D11E4D6E88B6F /* Pods_Arak.framework */; };
+		C952429927B7E1CF006EDEDF /* StoreContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952429827B7E1CF006EDEDF /* StoreContentView.swift */; };
+		C952429B27B7E21F006EDEDF /* StroreContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C952429A27B7E21F006EDEDF /* StroreContentView.xib */; };
+		C952429D27B808CE006EDEDF /* ScrollContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952429C27B808CE006EDEDF /* ScrollContainerView.swift */; };
+		C95242A127B80D48006EDEDF /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952429F27B80D48006EDEDF /* ProductTableViewCell.swift */; };
+		C95242A227B80D48006EDEDF /* ProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C95242A027B80D48006EDEDF /* ProductTableViewCell.xib */; };
+		C9BD588327B6C2AD00B08DEB /* Main_2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9BD588227B6C2AD00B08DEB /* Main_2.storyboard */; };
+		C9CC76A727B6D43300D70E48 /* MainShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76A627B6D43300D70E48 /* MainShopViewController.swift */; };
+		C9CC76AB27B6EEF000D70E48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9CC76AA27B6EEEF00D70E48 /* Assets.xcassets */; };
+		C9CC76AD27B6EFF400D70E48 /* StoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76AC27B6EFF400D70E48 /* StoresViewController.swift */; };
+		C9CC76B027B6F35700D70E48 /* HorizontalTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76AF27B6F35700D70E48 /* HorizontalTagsView.swift */; };
+		C9CC76B227B6F3AE00D70E48 /* ViewWithSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76B127B6F3AE00D70E48 /* ViewWithSetup.swift */; };
+		C9CC76B427B6F3F000D70E48 /* UICollectionViewCell+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76B327B6F3F000D70E48 /* UICollectionViewCell+Reusable.swift */; };
+		C9CC76B627B6F74000D70E48 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76B527B6F6AE00D70E48 /* Then.swift */; };
+		C9CC76B827B6F7A300D70E48 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76B727B6F7A200D70E48 /* UIView+Extensions.swift */; };
+		C9CC76BC27B6F8AD00D70E48 /* ESColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76BA27B6F8AC00D70E48 /* ESColor.swift */; };
+		C9CC76BD27B6F8AD00D70E48 /* ESFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76BB27B6F8AD00D70E48 /* ESFont.swift */; };
+		C9CC76C027B71E0900D70E48 /* StroreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76BF27B71E0800D70E48 /* StroreTableViewCell.swift */; };
+		C9CC76C327B7DE8A00D70E48 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76C227B7DE8800D70E48 /* StoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -207,7 +224,6 @@
 		2D151AC825E3034700789515 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2D151ACA25E3034700789515 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2D151ACD25E3034700789515 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2D151ACF25E3034800789515 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D151AD225E3034800789515 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D151AD425E3034800789515 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D45BDF02672832700D95ED8 /* MyAdsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAdsViewController.swift; sourceTree = "<group>"; };
@@ -344,6 +360,24 @@
 		6D3940EF976D11E4D6E88B6F /* Pods_Arak.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Arak.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		745727D6CA7FF0C8AC52FA91 /* Pods-Arak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arak.release.xcconfig"; path = "Target Support Files/Pods-Arak/Pods-Arak.release.xcconfig"; sourceTree = "<group>"; };
 		A3709A530F12A2A7F7B67ED0 /* Pods-Arak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arak.debug.xcconfig"; path = "Target Support Files/Pods-Arak/Pods-Arak.debug.xcconfig"; sourceTree = "<group>"; };
+		C952429827B7E1CF006EDEDF /* StoreContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContentView.swift; sourceTree = "<group>"; };
+		C952429A27B7E21F006EDEDF /* StroreContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StroreContentView.xib; sourceTree = "<group>"; };
+		C952429C27B808CE006EDEDF /* ScrollContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollContainerView.swift; sourceTree = "<group>"; };
+		C952429F27B80D48006EDEDF /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
+		C95242A027B80D48006EDEDF /* ProductTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductTableViewCell.xib; sourceTree = "<group>"; };
+		C9BD588227B6C2AD00B08DEB /* Main_2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main_2.storyboard; sourceTree = "<group>"; };
+		C9CC76A627B6D43300D70E48 /* MainShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShopViewController.swift; sourceTree = "<group>"; };
+		C9CC76AA27B6EEEF00D70E48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C9CC76AC27B6EFF400D70E48 /* StoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresViewController.swift; sourceTree = "<group>"; };
+		C9CC76AF27B6F35700D70E48 /* HorizontalTagsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalTagsView.swift; sourceTree = "<group>"; };
+		C9CC76B127B6F3AE00D70E48 /* ViewWithSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewWithSetup.swift; sourceTree = "<group>"; };
+		C9CC76B327B6F3F000D70E48 /* UICollectionViewCell+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Reusable.swift"; sourceTree = "<group>"; };
+		C9CC76B527B6F6AE00D70E48 /* Then.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
+		C9CC76B727B6F7A200D70E48 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		C9CC76BA27B6F8AC00D70E48 /* ESColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESColor.swift; sourceTree = "<group>"; };
+		C9CC76BB27B6F8AD00D70E48 /* ESFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESFont.swift; sourceTree = "<group>"; };
+		C9CC76BF27B71E0800D70E48 /* StroreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StroreTableViewCell.swift; sourceTree = "<group>"; };
+		C9CC76C227B7DE8800D70E48 /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -499,8 +533,8 @@
 				2D4F226225E30B5C006FF475 /* Networking */,
 				2D151AC625E3034700789515 /* AppDelegate.swift */,
 				2D151AC825E3034700789515 /* SceneDelegate.swift */,
-				2D151ACF25E3034800789515 /* Assets.xcassets */,
 				2D151AD125E3034800789515 /* LaunchScreen.storyboard */,
+				C9CC76AA27B6EEEF00D70E48 /* Assets.xcassets */,
 				2D151AD425E3034800789515 /* Info.plist */,
 				21DF9DB72698683D00106DB7 /* InfoPlist.strings */,
 				2D587D2325E45681000E6958 /* splash.mp4 */,
@@ -541,7 +575,7 @@
 			children = (
 				2D4F226325E30B6C006FF475 /* APIConfiguration.swift */,
 				2D4F226725E30B7F006FF475 /* Constants.swift */,
-				2D4F226A25E30B9D006FF475 /* APIRouter.swift */,
+				C9BD588127B6C13300B08DEB /* Main API */,
 				2D4F22A425E30D52006FF475 /* MutlipartNetwork.swift */,
 			);
 			path = Networking;
@@ -566,6 +600,7 @@
 		2D4F22A725E313E2006FF475 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C9CC76B727B6F7A200D70E48 /* UIView+Extensions.swift */,
 				2DB54E3726624A0E00BA6944 /* UIViewController+ExSoicalMedia.swift */,
 				2D4F22B225E39C5A006FF475 /* String+Ex.swift */,
 				2D4F22B425E39C5A006FF475 /* UIApplication+Ex.swift */,
@@ -589,6 +624,9 @@
 		2D587CA825E3BDF2000E6958 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C9CC76C127B7DE4F00D70E48 /* Store */,
+				C9CC76A927B6E7F600D70E48 /* Stores */,
+				C9CC76A527B6D40900D70E48 /* Shop */,
 				2177E2F0269DCB7300E9E5B8 /* ServicePopUp */,
 				217AEF9E269B66CC00731123 /* Banner */,
 				2149E5062697714F00246882 /* WithDraw */,
@@ -611,6 +649,7 @@
 				2DE67E3025EA091700DC7F0F /* Detail */,
 				2D587D0F25E44D51000E6958 /* Success */,
 				2D587CAA25E3BE48000E6958 /* Auth */,
+				C9CC76AE27B6F30000D70E48 /* Components */,
 				2D151ACA25E3034700789515 /* ViewController.swift */,
 				2D587D0225E42195000E6958 /* WebViewViewController.swift */,
 				2D805F4A2664076F000B8317 /* SettingsViewController.swift */,
@@ -915,6 +954,7 @@
 			children = (
 				2D151ACC25E3034700789515 /* Main.storyboard */,
 				2DEBC273266A6E7C00836A23 /* Auth.storyboard */,
+				C9BD588227B6C2AD00B08DEB /* Main_2.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1285,6 +1325,105 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C952429727B7E17C006EDEDF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C95242A327B81D34006EDEDF /* ReviewCell */,
+				C952429E27B80D1F006EDEDF /* ProductCell */,
+				C952429827B7E1CF006EDEDF /* StoreContentView.swift */,
+				C952429A27B7E21F006EDEDF /* StroreContentView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C952429E27B80D1F006EDEDF /* ProductCell */ = {
+			isa = PBXGroup;
+			children = (
+				C952429F27B80D48006EDEDF /* ProductTableViewCell.swift */,
+				C95242A027B80D48006EDEDF /* ProductTableViewCell.xib */,
+			);
+			path = ProductCell;
+			sourceTree = "<group>";
+		};
+		C95242A327B81D34006EDEDF /* ReviewCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ReviewCell;
+			sourceTree = "<group>";
+		};
+		C9BD588127B6C13300B08DEB /* Main API */ = {
+			isa = PBXGroup;
+			children = (
+				2D4F226A25E30B9D006FF475 /* APIRouter.swift */,
+			);
+			path = "Main API";
+			sourceTree = "<group>";
+		};
+		C9CC76A527B6D40900D70E48 /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC76A827B6D7B000D70E48 /* MainShop */,
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		C9CC76A827B6D7B000D70E48 /* MainShop */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC76A627B6D43300D70E48 /* MainShopViewController.swift */,
+			);
+			path = MainShop;
+			sourceTree = "<group>";
+		};
+		C9CC76A927B6E7F600D70E48 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC76AC27B6EFF400D70E48 /* StoresViewController.swift */,
+				C9CC76BE27B71DDE00D70E48 /* Views */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		C9CC76AE27B6F30000D70E48 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC76B927B6F89900D70E48 /* Styles */,
+				C9CC76AF27B6F35700D70E48 /* HorizontalTagsView.swift */,
+				C952429C27B808CE006EDEDF /* ScrollContainerView.swift */,
+				C9CC76B327B6F3F000D70E48 /* UICollectionViewCell+Reusable.swift */,
+				C9CC76B527B6F6AE00D70E48 /* Then.swift */,
+				C9CC76B127B6F3AE00D70E48 /* ViewWithSetup.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		C9CC76B927B6F89900D70E48 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC76BA27B6F8AC00D70E48 /* ESColor.swift */,
+				C9CC76BB27B6F8AD00D70E48 /* ESFont.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		C9CC76BE27B71DDE00D70E48 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC76BF27B71E0800D70E48 /* StroreTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C9CC76C127B7DE4F00D70E48 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				C9CC76C227B7DE8800D70E48 /* StoreViewController.swift */,
+				C952429727B7E17C006EDEDF /* View */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1353,6 +1492,7 @@
 				2D587CDB25E3CA79000E6958 /* PlayfairDisplay-BoldItalic.ttf in Resources */,
 				2DFCF93F25E585EB004193A5 /* AdsTypeCell.xib in Resources */,
 				2D587CDC25E3CA79000E6958 /* PlayfairDisplay-ExtraBold.ttf in Resources */,
+				C95242A227B80D48006EDEDF /* ProductTableViewCell.xib in Resources */,
 				2D587CDD25E3CA79000E6958 /* PlayfairDisplay-ExtraBoldItalic.ttf in Resources */,
 				2DE67E3325EA092D00DC7F0F /* DetailView.xib in Resources */,
 				21DF9DB92698683D00106DB7 /* InfoPlist.strings in Resources */,
@@ -1362,8 +1502,10 @@
 				2DB54E40266260AB00BA6944 /* FeaturedCell.xib in Resources */,
 				2D45BDFA2672864D00D95ED8 /* AdsDetailCell.xib in Resources */,
 				2DE67E8B25EA47FB00DC7F0F /* UploadCell.xib in Resources */,
+				C9CC76AB27B6EEF000D70E48 /* Assets.xcassets in Resources */,
 				2D587CE025E3CA79000E6958 /* PlayfairDisplay-MediumItalic.ttf in Resources */,
 				2D587CE125E3CA79000E6958 /* PlayfairDisplay-Regular.ttf in Resources */,
+				C952429B27B7E21F006EDEDF /* StroreContentView.xib in Resources */,
 				2DFCF90225E54C1B004193A5 /* AdsCell.xib in Resources */,
 				2DDA7FDB2675F94A00FC9EE5 /* ServiceCell.xib in Resources */,
 				2D587CE225E3CA79000E6958 /* PlayfairDisplay-SemiBold.ttf in Resources */,
@@ -1375,6 +1517,7 @@
 				2D587CC525E3C657000E6958 /* ArbFONTS-Droid-Arabic-Kufi.ttf in Resources */,
 				2D587CC625E3C657000E6958 /* ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf in Resources */,
 				2D587CC725E3C657000E6958 /* ArbFONTS-Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf in Resources */,
+				C9BD588327B6C2AD00B08DEB /* Main_2.storyboard in Resources */,
 				2D587CC825E3C657000E6958 /* ArbFONTS-DroidKufi-Bold.ttf in Resources */,
 				217AEFA3269B839800731123 /* CustomCell.xib in Resources */,
 				2D9A229D26629D8F00586FAD /* TransactionCell.xib in Resources */,
@@ -1385,7 +1528,6 @@
 				2D151AD325E3034800789515 /* LaunchScreen.storyboard in Resources */,
 				21F4480A26925A5400150A6A /* RankCell.xib in Resources */,
 				2D4F224525E30599006FF475 /* Localizable.strings in Resources */,
-				2D151AD025E3034800789515 /* Assets.xcassets in Resources */,
 				2D151ACE25E3034700789515 /* Main.storyboard in Resources */,
 				21E031EB26B46B5E000B14D5 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1462,8 +1604,10 @@
 				2D45BDFC267289F300D95ED8 /* AdsDetailCell.swift in Sources */,
 				2D99CE2A2657F8E20047F2E7 /* LocaleManager.swift in Sources */,
 				2D9B8E5126738024006AB7A0 /* UIBarButtonItem+Extensions.swift in Sources */,
+				C95242A127B80D48006EDEDF /* ProductTableViewCell.swift in Sources */,
 				2D4F22B925E39C5A006FF475 /* UITableView+Ex.swift in Sources */,
 				2DB54E3826624A0E00BA6944 /* UIViewController+ExSoicalMedia.swift in Sources */,
+				C9CC76B027B6F35700D70E48 /* HorizontalTagsView.swift in Sources */,
 				2DFCF8D125E50883004193A5 /* NotificationViewModel.swift in Sources */,
 				2D587CB725E3BEAE000E6958 /* UIViewController+Ex.swift in Sources */,
 				2DFCF8E825E52FE9004193A5 /* BaseNavigationViewController.swift in Sources */,
@@ -1482,6 +1626,7 @@
 				2D587D1E25E45368000E6958 /* ResetPasswordViewModel.swift in Sources */,
 				2D4F226825E30B7F006FF475 /* Constants.swift in Sources */,
 				2D95C38A267844F500471E40 /* NotificationCell.swift in Sources */,
+				C9CC76B427B6F3F000D70E48 /* UICollectionViewCell+Reusable.swift in Sources */,
 				2DDA7FD42675F7F200FC9EE5 /* ServiceViewController.swift in Sources */,
 				2DB54E3A2662540F00BA6944 /* ImageTextField.swift in Sources */,
 				2D587CF525E3EF32000E6958 /* SignUpViewController.swift in Sources */,
@@ -1502,11 +1647,14 @@
 				2193780826A078190051790A /* WalletInsufficientViewController.swift in Sources */,
 				21F4480C26925C8200150A6A /* RankCell.swift in Sources */,
 				2D5D9C5C25E7929800D78FB0 /* StoryViewModel.swift in Sources */,
+				C9CC76A727B6D43300D70E48 /* MainShopViewController.swift in Sources */,
 				2DB54E3D266257C200BA6944 /* Country.swift in Sources */,
 				2D9A229F26629EC900586FAD /* TransactionCell.swift in Sources */,
 				2D4F22B825E39C5A006FF475 /* UICollectionView+Ex.swift in Sources */,
+				C9CC76BD27B6F8AD00D70E48 /* ESFont.swift in Sources */,
 				2D587CEF25E3E957000E6958 /* UserDefulte+Object.swift in Sources */,
 				2DE67E8125EA357500DC7F0F /* PackageCell.swift in Sources */,
+				C9CC76C027B71E0900D70E48 /* StroreTableViewCell.swift in Sources */,
 				2DDD4DBF25EB9D79001A5F95 /* LocationServiceManager.swift in Sources */,
 				21937804269F92BE0051790A /* ArakLinks.swift in Sources */,
 				2D151AC725E3034700789515 /* AppDelegate.swift in Sources */,
@@ -1516,6 +1664,7 @@
 				2DFCF8C225E50827004193A5 /* HomeViewModel.swift in Sources */,
 				2DFCF8CC25E50860004193A5 /* AdsViewModel.swift in Sources */,
 				2D87D7A925F6C608003FCB9C /* UploadMedaiFirebase.swift in Sources */,
+				C952429927B7E1CF006EDEDF /* StoreContentView.swift in Sources */,
 				21772D0F2694E5ED00C498FA /* FeedbackViewModel.swift in Sources */,
 				2DB54E36266248EF00BA6944 /* SocialMedia.swift in Sources */,
 				21A7A27B269709960078FD88 /* CouponViewController.swift in Sources */,
@@ -1528,9 +1677,11 @@
 				2DDD4DC825EB9ED4001A5F95 /* CustomPointAnnotation.swift in Sources */,
 				21772D112694E76500C498FA /* ServiceViewModel.swift in Sources */,
 				2DFCF8CB25E50860004193A5 /* AdsViewController.swift in Sources */,
+				C9CC76C327B7DE8A00D70E48 /* StoreViewController.swift in Sources */,
 				2DE67E5825EA12A900DC7F0F /* DetailViewController.swift in Sources */,
 				2D587D1D25E45368000E6958 /* ResetPasswordViewController.swift in Sources */,
 				2D9B8E4F267375C3006AB7A0 /* EditProfileViewController.swift in Sources */,
+				C9CC76B827B6F7A300D70E48 /* UIView+Extensions.swift in Sources */,
 				2D587D0925E4438F000E6958 /* ForgetPasswordViewController.swift in Sources */,
 				2DE67E8525EA3EE100DC7F0F /* DetailAdsViewController.swift in Sources */,
 				2D587CB225E3BE6D000E6958 /* LoginViewModel.swift in Sources */,
@@ -1550,12 +1701,14 @@
 				2DFCF94825E58781004193A5 /* AdsType.swift in Sources */,
 				2149E5082697716D00246882 /* WithDrawViewController.swift in Sources */,
 				2D587CFC25E3F813000E6958 /* ToolbarPickerView.swift in Sources */,
+				C952429D27B808CE006EDEDF /* ScrollContainerView.swift in Sources */,
 				2DFCF8D625E508A6004193A5 /* ProfileViewModel.swift in Sources */,
 				2D4F22B625E39C5A006FF475 /* UIColor+Ex.swift in Sources */,
 				2DECDC2625ED16E5002CB50D /* SuccessCheckoutViewController.swift in Sources */,
 				2D151AC925E3034700789515 /* SceneDelegate.swift in Sources */,
 				217AEF9D269B653600731123 /* MoreCell.swift in Sources */,
 				2D4F226425E30B6C006FF475 /* APIConfiguration.swift in Sources */,
+				C9CC76AD27B6EFF400D70E48 /* StoresViewController.swift in Sources */,
 				2DB54E34266248B700BA6944 /* SocialMediaAuthViewController.swift in Sources */,
 				21772D162694EF5400C498FA /* EditPhoneNumberViewController.swift in Sources */,
 				2DEBC26F266A6E0E00836A23 /* BubbleTabBarController.swift in Sources */,
@@ -1568,8 +1721,10 @@
 				2D805F4B2664076F000B8317 /* SettingsViewController.swift in Sources */,
 				2DEBC26E266A6E0E00836A23 /* BubbleTabBar.swift in Sources */,
 				2DE67E7825EA30FB00DC7F0F /* PackageViewController.swift in Sources */,
+				C9CC76B227B6F3AE00D70E48 /* ViewWithSetup.swift in Sources */,
 				21772D1A2694FA0B00C498FA /* OtpViewController.swift in Sources */,
 				211C3DA526993A9600C91876 /* NotificationModel.swift in Sources */,
+				C9CC76B627B6F74000D70E48 /* Then.swift in Sources */,
 				2D587D0A25E4438F000E6958 /* ForgetPasswordViewModel.swift in Sources */,
 				2DDD4DC325EB9DE2001A5F95 /* MapViewController.swift in Sources */,
 				2DB54E422662614900BA6944 /* FeaturedCell.swift in Sources */,
@@ -1577,6 +1732,7 @@
 				2DDA7FDD2675F9F800FC9EE5 /* ServiceCell.swift in Sources */,
 				2DAD5A2225F7F442000BDBDD /* Duration.swift in Sources */,
 				2DE379742658187A00BDD6DE /* ImageSliderViewController.swift in Sources */,
+				C9CC76BC27B6F8AD00D70E48 /* ESColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

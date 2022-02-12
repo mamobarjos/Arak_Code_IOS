@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,7 +29,6 @@
                                 <color key="backgroundColor" red="0.36862745099999999" green="0.36470588240000001" blue="0.36470588240000001" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="V5X-tA-EMK"/>
-                                    <constraint firstAttribute="width" constant="70" id="p3J-dR-vPt"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -44,6 +43,7 @@
                             <constraint firstItem="DVf-8A-mzK" firstAttribute="top" secondItem="e2m-OZ-muh" secondAttribute="top" id="IZR-Cf-zzF"/>
                             <constraint firstAttribute="bottom" secondItem="kqy-hF-BQt" secondAttribute="bottom" constant="12" id="YH9-cL-fHX"/>
                             <constraint firstAttribute="bottom" secondItem="DVf-8A-mzK" secondAttribute="bottom" id="Z08-hD-Eu9"/>
+                            <constraint firstItem="kqy-hF-BQt" firstAttribute="leading" secondItem="e2m-OZ-muh" secondAttribute="leading" constant="156.5" id="jbf-3L-Zyw"/>
                             <constraint firstAttribute="trailing" secondItem="DVf-8A-mzK" secondAttribute="trailing" id="wzL-vW-jv4"/>
                             <constraint firstItem="kqy-hF-BQt" firstAttribute="centerX" secondItem="e2m-OZ-muh" secondAttribute="centerX" id="zsm-2f-abY"/>
                         </constraints>

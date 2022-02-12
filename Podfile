@@ -28,5 +28,6 @@ target 'Arak' do
   pod "ExpandableLabel"
   pod 'Kingfisher'
   pod "Player", "~> 0.13.2"
+  pod 'WWLayout'
 
 end
