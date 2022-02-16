@@ -8,8 +8,6 @@
 import UIKit
 
 class StoreViewController: UIViewController {
-
-//    @IBOutlet weak var contentView: StoreContentView!
     let contentView = StoreContentView()
     lazy var scrollView = ScrollContainerView(contentView: contentView)
 
@@ -18,7 +16,8 @@ class StoreViewController: UIViewController {
 
         view.addSubview(scrollView)
         scrollView.layout.fill(.superview)
-        scrollView.scrollView.contentInset.bottom = 1
+        scrollView.scrollView.contentInset.bottom = 30
+        hiddenNavigation(isHidden: true)
 
     }
 

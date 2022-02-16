@@ -174,6 +174,12 @@
 		C952429D27B808CE006EDEDF /* ScrollContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952429C27B808CE006EDEDF /* ScrollContainerView.swift */; };
 		C95242A127B80D48006EDEDF /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C952429F27B80D48006EDEDF /* ProductTableViewCell.swift */; };
 		C95242A227B80D48006EDEDF /* ProductTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C95242A027B80D48006EDEDF /* ProductTableViewCell.xib */; };
+		C95242AA27B82562006EDEDF /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95242A827B82562006EDEDF /* ReviewTableViewCell.swift */; };
+		C95242AB27B82562006EDEDF /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C95242A927B82562006EDEDF /* ReviewTableViewCell.xib */; };
+		C9750AF727BDA612001C5265 /* ProductContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9750AF627BDA612001C5265 /* ProductContentView.xib */; };
+		C97727C627B99E4A00DF7D62 /* ProductContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97727C527B99E4A00DF7D62 /* ProductContentView.swift */; };
+		C9A61A4D27BDBD8300694C57 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A61A4C27BDBD8300694C57 /* ProductViewController.swift */; };
+		C9A61A5027BDBE8400694C57 /* FavriteManagerDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A61A4F27BDBE8400694C57 /* FavriteManagerDefault.swift */; };
 		C9BD588327B6C2AD00B08DEB /* Main_2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9BD588227B6C2AD00B08DEB /* Main_2.storyboard */; };
 		C9CC76A727B6D43300D70E48 /* MainShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CC76A627B6D43300D70E48 /* MainShopViewController.swift */; };
 		C9CC76AB27B6EEF000D70E48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9CC76AA27B6EEEF00D70E48 /* Assets.xcassets */; };
@@ -365,6 +371,12 @@
 		C952429C27B808CE006EDEDF /* ScrollContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollContainerView.swift; sourceTree = "<group>"; };
 		C952429F27B80D48006EDEDF /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		C95242A027B80D48006EDEDF /* ProductTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductTableViewCell.xib; sourceTree = "<group>"; };
+		C95242A827B82562006EDEDF /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		C95242A927B82562006EDEDF /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
+		C9750AF627BDA612001C5265 /* ProductContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductContentView.xib; sourceTree = "<group>"; };
+		C97727C527B99E4A00DF7D62 /* ProductContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductContentView.swift; sourceTree = "<group>"; };
+		C9A61A4C27BDBD8300694C57 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
+		C9A61A4F27BDBE8400694C57 /* FavriteManagerDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavriteManagerDefault.swift; sourceTree = "<group>"; };
 		C9BD588227B6C2AD00B08DEB /* Main_2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main_2.storyboard; sourceTree = "<group>"; };
 		C9CC76A627B6D43300D70E48 /* MainShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainShopViewController.swift; sourceTree = "<group>"; };
 		C9CC76AA27B6EEEF00D70E48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -584,6 +596,7 @@
 		2D4F229F25E30C1C006FF475 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C9A61A4E27BDBE4300694C57 /* FavoriteService */,
 				2DB54E392662540F00BA6944 /* ImageTextField.swift */,
 				2D99CE292657F8E20047F2E7 /* LocaleManager.swift */,
 				2D587CB925E3C634000E6958 /* Font */,
@@ -624,6 +637,7 @@
 		2D587CA825E3BDF2000E6958 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C97727C427B99E1600DF7D62 /* Product */,
 				C9CC76C127B7DE4F00D70E48 /* Store */,
 				C9CC76A927B6E7F600D70E48 /* Stores */,
 				C9CC76A527B6D40900D70E48 /* Shop */,
@@ -1348,8 +1362,36 @@
 		C95242A327B81D34006EDEDF /* ReviewCell */ = {
 			isa = PBXGroup;
 			children = (
+				C95242A827B82562006EDEDF /* ReviewTableViewCell.swift */,
+				C95242A927B82562006EDEDF /* ReviewTableViewCell.xib */,
 			);
 			path = ReviewCell;
+			sourceTree = "<group>";
+		};
+		C97727C427B99E1600DF7D62 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				C9A61A4C27BDBD8300694C57 /* ProductViewController.swift */,
+				C9A61A4B27BDBD3E00694C57 /* ProductCustomeView */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		C9A61A4B27BDBD3E00694C57 /* ProductCustomeView */ = {
+			isa = PBXGroup;
+			children = (
+				C97727C527B99E4A00DF7D62 /* ProductContentView.swift */,
+				C9750AF627BDA612001C5265 /* ProductContentView.xib */,
+			);
+			path = ProductCustomeView;
+			sourceTree = "<group>";
+		};
+		C9A61A4E27BDBE4300694C57 /* FavoriteService */ = {
+			isa = PBXGroup;
+			children = (
+				C9A61A4F27BDBE8400694C57 /* FavriteManagerDefault.swift */,
+			);
+			path = FavoriteService;
 			sourceTree = "<group>";
 		};
 		C9BD588127B6C13300B08DEB /* Main API */ = {
@@ -1510,6 +1552,7 @@
 				2DDA7FDB2675F94A00FC9EE5 /* ServiceCell.xib in Resources */,
 				2D587CE225E3CA79000E6958 /* PlayfairDisplay-SemiBold.ttf in Resources */,
 				2D587CE325E3CA79000E6958 /* PlayfairDisplay-SemiBoldItalic.ttf in Resources */,
+				C95242AB27B82562006EDEDF /* ReviewTableViewCell.xib in Resources */,
 				2D587CC225E3C657000E6958 /* ArbFONTS-Droid Arabic Kufi Bold.ttf in Resources */,
 				2D587CC325E3C657000E6958 /* ArbFONTS-Droid Arabic Kufi.ttf in Resources */,
 				2D587CC425E3C657000E6958 /* ArbFONTS-Droid-Arabic-Kufi-Bold.ttf in Resources */,
@@ -1524,6 +1567,7 @@
 				2DEBC271266A6E7C00836A23 /* Auth.storyboard in Resources */,
 				2DE67E4C25EA0A1600DC7F0F /* ImageCell.xib in Resources */,
 				217AEF9B269B64E100731123 /* MoreCell.xib in Resources */,
+				C9750AF727BDA612001C5265 /* ProductContentView.xib in Resources */,
 				2D587CC925E3C657000E6958 /* ArbFONTS-DroidKufi-Regular.ttf in Resources */,
 				2D151AD325E3034800789515 /* LaunchScreen.storyboard in Resources */,
 				21F4480A26925A5400150A6A /* RankCell.xib in Resources */,
@@ -1627,6 +1671,7 @@
 				2D4F226825E30B7F006FF475 /* Constants.swift in Sources */,
 				2D95C38A267844F500471E40 /* NotificationCell.swift in Sources */,
 				C9CC76B427B6F3F000D70E48 /* UICollectionViewCell+Reusable.swift in Sources */,
+				C9A61A4D27BDBD8300694C57 /* ProductViewController.swift in Sources */,
 				2DDA7FD42675F7F200FC9EE5 /* ServiceViewController.swift in Sources */,
 				2DB54E3A2662540F00BA6944 /* ImageTextField.swift in Sources */,
 				2D587CF525E3EF32000E6958 /* SignUpViewController.swift in Sources */,
@@ -1696,6 +1741,7 @@
 				2DE67E4F25EA0A4000DC7F0F /* ImageCell.swift in Sources */,
 				2DFCF90525E54D64004193A5 /* AdsCell.swift in Sources */,
 				2D4F22A525E30D52006FF475 /* MutlipartNetwork.swift in Sources */,
+				C95242AA27B82562006EDEDF /* ReviewTableViewCell.swift in Sources */,
 				2D45BDF12672832700D95ED8 /* MyAdsViewController.swift in Sources */,
 				2D587CB125E3BE6D000E6958 /* LoginViewController.swift in Sources */,
 				2DFCF94825E58781004193A5 /* AdsType.swift in Sources */,
@@ -1714,12 +1760,14 @@
 				2DEBC26F266A6E0E00836A23 /* BubbleTabBarController.swift in Sources */,
 				217AEFA5269B847000731123 /* CustomCell.swift in Sources */,
 				2177E2EF269DC61100E9E5B8 /* Notification+Ex.swift in Sources */,
+				C9A61A5027BDBE8400694C57 /* FavriteManagerDefault.swift in Sources */,
 				2DFCF94B25E587BB004193A5 /* PageingModel.swift in Sources */,
 				21F4480E26925D7F00150A6A /* RankViewController.swift in Sources */,
 				2DFCF8D525E508A6004193A5 /* ProfileViewController.swift in Sources */,
 				2D587D1325E44D6C000E6958 /* SuccessViewController.swift in Sources */,
 				2D805F4B2664076F000B8317 /* SettingsViewController.swift in Sources */,
 				2DEBC26E266A6E0E00836A23 /* BubbleTabBar.swift in Sources */,
+				C97727C627B99E4A00DF7D62 /* ProductContentView.swift in Sources */,
 				2DE67E7825EA30FB00DC7F0F /* PackageViewController.swift in Sources */,
 				C9CC76B227B6F3AE00D70E48 /* ViewWithSetup.swift in Sources */,
 				21772D1A2694FA0B00C498FA /* OtpViewController.swift in Sources */,

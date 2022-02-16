@@ -9,6 +9,7 @@ import UIKit
 
 class StoreContentView: UIView {
     @IBOutlet weak var productsTableView: UITableView!
+    @IBOutlet weak var reviewrTableView: UITableView!
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var backButoon: UIButton!
     @IBOutlet weak var favButton: UIButton!
@@ -44,6 +45,14 @@ class StoreContentView: UIView {
          productsTableView.rowHeight = UITableView.automaticDimension
          productsTableView.estimatedRowHeight = 150
          productsTableView.register(ProductTableViewCell.self)
+         productsTableView.separatorColor = .clear
+
+         reviewrTableView.delegate = self
+         reviewrTableView.dataSource = self
+         reviewrTableView.rowHeight = UITableView.automaticDimension
+         reviewrTableView.estimatedRowHeight = 150
+         reviewrTableView.separatorColor = .clear
+         reviewrTableView.register(ReviewTableViewCell.self)
     }
 }
 
@@ -53,9 +62,16 @@ extension StoreContentView: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:ProductTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setup()
-        return cell
+        if tableView == productsTableView {
+            let cell:ProductTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.setup()
+            return cell
+        } else {
+            let cell:ReviewTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.setup()
+            return cell
+        }
+
     }
 
 
