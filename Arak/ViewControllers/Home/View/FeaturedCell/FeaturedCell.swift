@@ -7,6 +7,11 @@
 
 import UIKit
 import FSPagerView
+
+protocol FeaturedCelldelegate: AnyObject {
+    func displayedCellIndex(index: Int)
+}
+
 class FeaturedCell: UICollectionViewCell {
     
     typealias PlayVideoBlock = (Int) -> Void
@@ -28,7 +33,7 @@ class FeaturedCell: UICollectionViewCell {
 
     private var isFavorate: Bool = false
     var isBanner: Bool = false
-
+    weak var delegate: FeaturedCelldelegate?
         
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -144,6 +149,7 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
     
     func pagerView(_ pagerView: FSPagerView, willDisplay cell: FSPagerViewCell, forItemAt index: Int) {
         self.pageControl.currentPage = index
+        self.delegate?.displayedCellIndex(index: index)
     }
     func numberOfItems(in pagerView: FSPagerView) -> Int {
         if isBanner {

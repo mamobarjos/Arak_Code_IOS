@@ -60,6 +60,9 @@ class Network {
                     completion(nil,NetworkResponse.unableToDecode.rawValue)
                     return
                 }
+                  print("////// //// ///// //// ")
+                  print(String(data: decode, encoding: .utf8) ?? "can't decode")
+                  print("////// //// ///// //// ")
 
                 let decoder = JSONDecoder.init()
                
@@ -81,13 +84,69 @@ class Network {
                   return
                 }
                 completion(decodeObj, nil)
-
               }
-
           break
       }
     }
   }
+   func requestWithoutToken<T: Codable>(request:APIConfiguration , decodable: T.Type,completion: @escaping (GenericModelWithoutToken<T>?, _ error: String?) -> ())  {
+      if !InternetConnectionManager.isConnectedToNetwork() {
+        //NoInternetScreen()
+        completion(nil,NetworkResponse.internet.rawValue.localiz())
+        return
+      }
+      Alamofire.request(request).responseJSON { (response) in
+        switch response.result {
+          case .failure(let err):
+            print(err.localizedDescription)
+            completion(nil,NetworkResponse.failed.rawValue)
+            break
+
+          case .success :
+
+            guard let responseDictionary  = response.value as? NSDictionary , let statusCode = response.response?.statusCode else {
+                completion(nil,NetworkResponse.unableToDecode.rawValue)
+                return
+              }
+                if statusCode == 401 {
+                  self.Logout()
+
+                  completion(nil,NetworkResponse.authenticationError.rawValue)
+                } else {
+
+                  guard let decode = try? JSONSerialization.data(withJSONObject: responseDictionary, options: .prettyPrinted)  else {
+                      completion(nil,NetworkResponse.unableToDecode.rawValue)
+                      return
+                  }
+                    print("=== ==== === ===")
+                    print(String(data: decode, encoding: .utf8) ?? "can't decode")
+                    print("=== ==== === ===")
+
+                  let decoder = JSONDecoder.init()
+
+                  guard let decodeObj = try? decoder.decode(GenericModelWithoutToken<T>.self, from: decode) else {
+                    completion(nil,NetworkResponse.unableToDecode.rawValue)
+                    return
+                  }
+
+                  if decodeObj.statusCode != 200  &&  decodeObj.statusCode != 201 {
+                    switch decodeObj.generalDescription {
+                      case .string(let error):
+                        completion(nil,error)
+                      case .listOfString(let errorList):
+                        completion(nil,errorList.joined(separator: "\n"))
+                      default:
+                        completion(nil,"Error")
+                    }
+
+                    return
+                  }
+                  completion(decodeObj, nil)
+                }
+            break
+        }
+      }
+    }
   func Logout() {
     let storyboard = UIStoryboard(name: "Auth", bundle: Bundle.main)
     let vc = storyboard.instantiateViewController(identifier: LoginViewController.className) as! LoginViewController

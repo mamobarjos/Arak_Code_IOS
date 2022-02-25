@@ -65,10 +65,8 @@ class ProfileViewController: UIViewController {
     @IBAction func MyDetail(_ sender: Any) {
 //        let vc = initViewControllerWith(identifier: Main.className, and: "Edit Profile".localiz()) as! EditProfileViewController
 //        show(vc)
-        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "shop name", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
-              show(vc)
-
-
+        let vc = initViewControllerWith(identifier: AdStatusViewController.className, and: "Edit Profile".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! AdStatusViewController
+        show(vc)
     }
     
     @IBAction func MyAds(_ sender: Any) {

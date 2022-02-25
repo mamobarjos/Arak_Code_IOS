@@ -8,26 +8,38 @@
 import UIKit
 
 class StoresViewController: UIViewController {
+    let tableView = UITableView()
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var banarCollectionView: UICollectionView!
-    @IBOutlet weak var searchTextField: UITextField!
+
     @IBOutlet weak var searchView: UIView!
 
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var joinUsButton: UIButton!
+
     private var pageFeatured = 1
-    private  let dispatchGroup = DispatchGroup()
-    
-    var viewModel: HomeViewModel = HomeViewModel()
+    private let dispatchGroup = DispatchGroup()
+
+    private var storesViewModel: StoresViewModel = StoresViewModel()
+    private var viewModel: HomeViewModel = HomeViewModel()
+
+    private var stores: [Store] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+
     lazy var tagsView = createTagsView()
-    let tableView = UITableView()
+
 
     // MARK: - Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(tagsView)
-        view.addSubview(tableView)
+        containerView.addSubview(tagsView)
+        containerView.addSubview(tableView)
 
         tagsView.layout
             .top(.equal, to: searchView, edge: .bottom, offset: -5)
@@ -45,19 +57,65 @@ class StoresViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 250
         tableView.separatorColor = .clear
-
+        tableView.contentInset.bottom = 100
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(cellClass: StroreTableViewCell.self)
 
         view.bringSubviewToFront(addButton)
         view.bringSubviewToFront(joinUsButton)
         setupCollectionView()
-        searchTextField.placeholder = "Search videos,images and many more".localiz()
+        scrollView.contentInset.bottom = 220
 
-//        tagsView.onItemSelection = { item in
-//            guard let categoryIndex = (self.categories.firstIndex { $0.id == item.id }) else {
-//                return
-//            }
-        tagsView.items = [HorizontalTagsView.TagItem(id: 1, title: "Car"), HorizontalTagsView.TagItem(id: 2, title: "Food"), HorizontalTagsView.TagItem(id: 3, title: "Car"), HorizontalTagsView.TagItem(id: 4, title: "Car")]
+//        searchTextField.placeholder = "Search videos,images and many more".localiz()
+
+
+        tagsView.onItemSelection = {[weak self] item in
+
+            if item.id == -1 { // get all stores
+                self?.storesViewModel.getStores { [weak self] error in
+                    defer {
+                        self?.stopLoading()
+                    }
+
+                    guard error == nil else {
+                        self?.showToast(message: error)
+                        return
+                    }
+                    self?.stores = self?.storesViewModel.getStores() ?? []
+                }
+                return
+            }
+
+            self?.storesViewModel.getStoresByCategory(by: item.id) {[weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
+
+                guard error == nil else {
+                    self?.showToast(message: error)
+                    return
+                }
+                self?.stores = self?.storesViewModel.getStores() ?? []
+            }
+        }
+
+        self.showLoading()
+        storesViewModel.getStores { [weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+
+            guard error == nil else {
+                self?.showToast(message: error)
+                return
+            }
+            self?.tagsView.items.append(HorizontalTagsView.TagItem(id: -1, title: "All"))
+            self?.storesViewModel.getCategories().forEach({
+                self?.tagsView.items.append(.init(id: $0.id, title: $0.name))
+            })
+            self?.tagsView.selectedItemID = -1
+            self?.stores = self?.storesViewModel.getStores() ?? []
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -76,8 +134,6 @@ class StoresViewController: UIViewController {
             let vc = initViewControllerWith(identifier: MyAdsViewController.className, and: "My Ads".localiz()) as! MyAdsViewController
             show(vc)
         }
-
-
     }
 
     private func setupCollectionView() {
@@ -108,22 +164,35 @@ class StoresViewController: UIViewController {
         let tagView = HorizontalTagsView()
         return tagView
     }
+
     @IBAction func addButtonAction(_ sender: Any) {
+        self.showToast(message: "WIll be Implemented later 😎")
     }
+
     @IBAction func joinButtonAction(_ sender: Any) {
+        let vc = initViewControllerWith(identifier: SignUpStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! SignUpStoreViewController
+        show(vc)
     }
 }
 
 extension StoresViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        stores.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(cellClass: StroreTableViewCell.self, for: indexPath)
+        let store = stores[indexPath.row]
+        cell.custumizeCell(store: store)
         return cell
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let store = stores[indexPath.row]
+        let vc = initViewControllerWith(identifier: StoreViewController.className, and: store.name ?? "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+        vc.storeId = store.id
+        show(vc)
+    }
 }
 
 extension StoresViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

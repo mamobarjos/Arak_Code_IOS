@@ -63,7 +63,6 @@ class HorizontalTagsView: ViewWithSetup {
         width += item.title.width(with: HorizontalTagsView.font) + 1 // add text size
         width += 2 * HorizontalTagsView.horizontalItemPadding  // add paddings
         width += 5 // well, that's a tip for me :)
-
         return width
     }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import Cosmos
+import Kingfisher
 
 class StroreTableViewCell: UITableViewCell {
 
@@ -36,8 +37,8 @@ class StroreTableViewCell: UITableViewCell {
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 10
         $0.clipsToBounds = true
-        $0.image = UIImage(named: "order2")
-        $0.backgroundColor = .buttonBackGround
+//        $0.image = UIImage(named: "")
+//        $0.backgroundColor = .buttonBackGround
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -178,11 +179,24 @@ class StroreTableViewCell: UITableViewCell {
         ])
     }
 
-    func custumizeCell() {
+    func custumizeCell(store: Store) {
         cosmosView.cosmosView.rating = 0
         bannerImageView.image = nil
         titleLabel.text = ""
         descriptionLabel.text = ""
+
+        if let bannerURL = URL(string:store.cover ?? "") {
+            bannerImageView.kf.setImage(with: bannerURL, placeholder: UIImage(named: "Summery Image"))
+        }
+
+        if let storURL = URL(string: store.img ?? "") {
+            storeImageView.kf.setImage(with: storURL, placeholder: UIImage(named: "Summery Image"))
+        }
+
+        titleLabel.text = store.name
+        cosmosView.cosmosView.rating = store.totalRates ?? 3
+        cosmosView.rateLabel.text = "(\(store.totalRates ?? 3))"
+        descriptionLabel.text = store.website
     }
 }
 
@@ -196,9 +210,10 @@ class ConsmosItemView: ViewWithSetup {
         $0.settings.filledBorderColor = .accentOrange
         $0.settings.filledImage = UIImage(named: "Icon awesome-star")
         $0.settings.emptyImage = UIImage(named: "Icon awesome-star-2")
+        $0.settings.updateOnTouch = false
     }
 
-    let rateLabel = UILabel().then {
+    var rateLabel = UILabel().then {
         $0.text = "(3.0)"
         $0.textColor = .text
         $0.font = .font(for: .regular, size: 10)

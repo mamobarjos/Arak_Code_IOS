@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32.001" height="34.001" viewBox="0 0 32.001 34.001">
+  <defs>
+    <filter id="Icon_awesome-trash" x="0" y="0" width="32.001" height="34.001" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Icon_awesome-trash)">
+    <path id="Icon_awesome-trash-2" data-name="Icon awesome-trash" d="M13.5,1H9.751L9.457.416A.75.75,0,0,0,8.785,0H5.213a.741.741,0,0,0-.669.416L4.25,1H.5a.5.5,0,0,0-.5.5v1A.5.5,0,0,0,.5,3h13a.5.5,0,0,0,.5-.5v-1A.5.5,0,0,0,13.5,1ZM1.663,14.595A1.5,1.5,0,0,0,3.16,16h7.682a1.5,1.5,0,0,0,1.5-1.406L13,4H1Z" transform="translate(9 6)" fill="#fff"/>
+  </g>
+</svg>

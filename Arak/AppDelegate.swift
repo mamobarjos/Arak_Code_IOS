@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Helper.appLanguage = "en"
         LocaleManager.apply(identifier: Helper.appLanguage ?? "en")
     }
+      print("token \(Helper.userToken)")
     for family in UIFont.familyNames {
         print("\(family)")
 

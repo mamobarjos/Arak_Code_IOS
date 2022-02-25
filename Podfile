@@ -24,9 +24,10 @@ target 'Arak' do
   pod 'DatePickerDialog'
   pod 'JWTDecode', '~> 2.6'
   pod 'Cosmos', '~> 23.0'
+  pod 'KDCircularProgress'
   pod 'OTPFieldView'
   pod "ExpandableLabel"
-  pod 'Kingfisher'
+  pod 'Kingfisher', '~> 7.0'
   pod "Player", "~> 0.13.2"
   pod 'WWLayout'
 

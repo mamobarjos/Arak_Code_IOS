@@ -127,7 +127,8 @@ PODS:
   - GTMSessionFetcher/Core (1.5.0)
   - IQKeyboardManagerSwift (6.5.6)
   - JWTDecode (2.6.0)
-  - Kingfisher (6.3.0)
+  - KDCircularProgress (1.5.4)
+  - Kingfisher (7.1.1)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -163,7 +164,8 @@ DEPENDENCIES:
   - GoogleSignIn
   - IQKeyboardManagerSwift
   - JWTDecode (~> 2.6)
-  - Kingfisher
+  - KDCircularProgress
+  - Kingfisher (~> 7.0)
   - NVActivityIndicatorView (~> 4.0.0)
   - OTPFieldView
   - Player (~> 0.13.2)
@@ -201,6 +203,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
     - JWTDecode
+    - KDCircularProgress
     - Kingfisher
     - nanopb
     - NVActivityIndicatorView
@@ -240,7 +243,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   JWTDecode: 480ca441ddbd5fbfb2abf17870af62f86436be58
-  Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
+  KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
+  Kingfisher: f738f9c4a3415823b8e2985d10aa2d6a9f37bc4d
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   NVActivityIndicatorView: 77ed6d7b571643e24899e7858bf9ae2ee4c21f31
   OTPFieldView: 700a752fe62c41d1c4914c78aa500fb30d97c255
@@ -249,6 +253,6 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   WWLayout: 0ff533a6b9d0ae2ca2bdf91b6aefc04234b61f1b
 
-PODFILE CHECKSUM: 3c2fa418a01f4d8fefe1ef578907d4e84f6ad0d1
+PODFILE CHECKSUM: d1d2df919be23c0a5a0c52a96b436e2edd6d2175
 
 COCOAPODS: 1.11.2

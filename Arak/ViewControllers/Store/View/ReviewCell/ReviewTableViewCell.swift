@@ -23,6 +23,7 @@ class ReviewTableViewCell: UITableViewCell {
         $0.settings.filledBorderColor = .accentOrange
         $0.settings.filledImage = UIImage(named: "Icon awesome-star")
         $0.settings.emptyImage = UIImage(named: "Icon awesome-star-2")
+        $0.settings.updateOnTouch = false
     }
 
     override func awakeFromNib() {

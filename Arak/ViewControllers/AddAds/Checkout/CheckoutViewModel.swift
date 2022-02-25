@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 class CheckoutViewModel {
   private(set) var url: String = ""
     private(set) var walletInsufficient: Bool = false

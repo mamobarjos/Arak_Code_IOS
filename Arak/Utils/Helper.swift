@@ -204,4 +204,26 @@ class Helper {
             }
         }
     }
+
+    static var store: StoreResponse? {
+        get {
+            let userDefaults = UserDefaults.standard
+            do {
+                let user = try userDefaults.getObject(forKey: "store", castTo: StoreResponse.self)
+                return user
+            } catch {
+                print(error.localizedDescription)
+            }
+            return nil
+        }
+        set{
+            let userDefaults = UserDefaults.standard
+            do {
+                try userDefaults.setObject(newValue, forKey: "store")
+                userDefaults.synchronize()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }

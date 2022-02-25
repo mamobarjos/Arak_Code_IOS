@@ -13,6 +13,8 @@ extension UIViewController: NVActivityIndicatorViewable {
         case Main = "Main"
         case MainPhase = "Main_2"
         case Auth = "Auth"
+        case storeAuth = "Store_Auth"
+
     }
     
     public func dismissViewController(animated: Bool = true) {
