@@ -13,6 +13,7 @@ protocol ProductContentViewDelegate: AnyObject {
     func userDidTapFavIcon(id: String)
     func userDidTapShare(id: String)
     func userDidTapBack()
+    func didTapOnViewAllproducts()
 }
 
 class ProductContentView: UIView, FeaturedCelldelegate {
@@ -20,6 +21,8 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     //    @IBOutlet weak var pagerView: FSPagerView!
     @IBOutlet weak var pagerConntainerView: UIView!
 
+    @IBOutlet weak var descLable: UILabel!
+    @IBOutlet weak var ratingLabelText: UILabel!
     @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var editedCosmosView: CosmosView!
     @IBOutlet weak var relatedProductCollectionView: UICollectionView!
@@ -34,6 +37,8 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var favButton: UIButton!
 
+    @IBOutlet weak var viewAllProducts: UIButton!
+
     var pageControl = PageControl()
     var homeViewModel = HomeViewModel()
 
@@ -47,6 +52,12 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     var panner: [AdBanner] = [] {
         didSet {
             bannerCollectionView.reloadData()
+        }
+    }
+
+    var relatedProducts: [RelatedProducts] = [] {
+        didSet {
+            relatedProductCollectionView.reloadData()
         }
     }
     override init(frame: CGRect) {
@@ -108,6 +119,10 @@ class ProductContentView: UIView, FeaturedCelldelegate {
          reviewsTableView.estimatedRowHeight = 150
          reviewsTableView.separatorColor = .clear
          reviewsTableView.register(ReviewTableViewCell.self)
+
+         viewAllProducts.addTapGestureRecognizer {[weak self] in
+             self?.delegate?.didTapOnViewAllproducts()
+         }
     }
 
     override func layoutSubviews() {
@@ -131,9 +146,11 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     private func updateUI(product: [Product]) {
         guard let product = product.first else { return }
         productNameLabel.text = product.name
-        shopNameLabel.text = product.desc
+        shopNameLabel.text = product.store?.name
+        descLable.text = product.desc
         priceLabel.text = product.priceformated
-        cosmosView.rating = product.totalRates ?? 3
+        cosmosView.rating = product.totalRates ?? 0
+        ratingLabelText.text = "(\(product.totalRates ?? 0.0))"
     }
 }
 
@@ -161,7 +178,7 @@ extension ProductContentView: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell:ReviewTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-            cell.setup()
+//            cell.setup()
             return cell
 
     }
@@ -173,7 +190,7 @@ extension ProductContentView: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == bannerCollectionView {
             return 1
         } else {
-            return 4
+            return relatedProducts.count
         }
     }
 
@@ -182,11 +199,8 @@ extension ProductContentView: UICollectionViewDelegate, UICollectionViewDataSour
             return makeFeatured(indexPath: indexPath, isBanner: true)
         } else {
             let cell:ProductCollectionViewCell = relatedProductCollectionView.dequeueReusableCell(forIndexPath: indexPath)
-            cell.productImageView.backgroundColor = #colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 1)
-            cell.productImageView.image = UIImage(named: "You")
-            cell.shopNameLabel.text = "Osama Store"
-            cell.shopNameLabel.text = "Osama Product"
-            cell.priceLabel.text = "$90.00"
+            let product = relatedProducts[indexPath.item]
+            cell.setup(product: product)
             return cell
         }
     }

@@ -9,25 +9,25 @@ import Foundation
 //
 //// MARK: - DataClass
 struct StoreResponse: Codable {
-    let youtube: String
+    let youtube: String?
     let id: Int
-    let lon: String
-    let linkedin: String
-    let storeCategoryid: Int
-    let createdAt: String
-    let userid: Int
-    let desc: String
-    let phoneNo: String
-    let lat: String
-    let img: String
-    let cover: String
-    let updatedAt: String
-    let snapchat: String
-    let facebook: String
-    let website: String
-    let instagram: String
-    let name: String
-    let twitter: String
+    let lon: String?
+    let linkedin: String?
+    let storeCategoryid: Int?
+    let createdAt: String?
+    let userid: Int?
+    let desc: String?
+    let phoneNo: String?
+    let lat: String?
+    let img: String?
+    let cover: String?
+    let updatedAt: String?
+    let snapchat: String?
+    let facebook: String?
+    let website: String?
+    let instagram: String?
+    let name: String?
+    let twitter: String?
 
     enum CodingKeys: String, CodingKey {
         case userid = "user_id"

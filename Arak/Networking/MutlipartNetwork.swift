@@ -125,6 +125,8 @@ class Network {
                   let decoder = JSONDecoder.init()
 
                   guard let decodeObj = try? decoder.decode(GenericModelWithoutToken<T>.self, from: decode) else {
+                      let errorResult  = try? decoder.decode(GenericModelWithoutToken<String>.self, from: decode)
+                      print("can't decode the result \(errorResult)")
                     completion(nil,NetworkResponse.unableToDecode.rawValue)
                     return
                   }

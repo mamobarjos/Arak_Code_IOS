@@ -35,27 +35,12 @@ class SocialMediaSignUPViewController: UIViewController {
     }
 
     @IBAction func submittAction(_ sender: Any) {
-        guard data != nil else {
-            return
-        }
-
+        if let content =  data?.merging(parseContent() ?? [:]) {(current, _) in current} {
+            print(content)
         let vc = self.initViewControllerWith(identifier: CreateStoreSummeryViewController.className, and: "Summery", storyboardName: Storyboard.storeAuth.rawValue) as! CreateStoreSummeryViewController
+            vc.data = content
         self.show(vc)
-//        if let content =  data?.merging(parseContent() ?? [:]) {(current, _) in current} {
-//            print(content)
-//            self.showLoading()
-//            viewModel.createStore(data: content, compliation: { [weak self] error in
-//                defer {
-//                    self?.stopLoading()
-//                }
-//                if error != nil {
-//                    self?.showToast(message: error)
-//                    return
-//                }
-//                let vc = self?.initViewControllerWith(identifier: CreateStoreSummeryViewController.className, and: "Summery", storyboardName: Storyboard.storeAuth.rawValue) as! CreateStoreSummeryViewController
-//                self?.show(vc)
-//            })
-//        }
+        }
     }
 
     @IBAction func facebookDeletAction(_ sender: Any) {

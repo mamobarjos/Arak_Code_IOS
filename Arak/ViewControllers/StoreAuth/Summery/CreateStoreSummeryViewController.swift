@@ -17,6 +17,8 @@ class CreateStoreSummeryViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
 
     lazy var checkoutView = createBlureView()
+    private var viewModel = CreateStoreViewModel()
+    public var data: [String:Any]?
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -28,25 +30,41 @@ class CreateStoreSummeryViewController: UIViewController {
             .height(to: 190)
 
         checkoutView.onAction = {[unowned self] in
-            let vc = self.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
-            self.show(vc)
+            guard let data = data else {
+                return
+            }
+            print(data)
+            self.showLoading()
+            viewModel.createStore(data: data, compliation: { [weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
+                if error != nil {
+                    self?.showToast(message: error)
+                    return
+                }
+                let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
+                self?.show(vc)
+            })
         }
-        // Do any additional setup after loading the view.
     }
 
     private func updateUI() {
-        let store = Helper.store
+        guard let store = data else{
+            return
+        }
+
         imageView.contentMode = .scaleToFill
-        if let url = URL(string:store?.cover ?? "") {
+        if let url = URL(string:store["cover"] as? String ?? "") {
 //            imageView.kf.setImage(with: url, placeholder: )
             imageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
         }
 
-        companyNameLabel.text = store?.name
-        descLabel.text = store?.desc
-        websiteLabel.text = store?.website
-        phoneLabel.text = store?.phoneNo
-        locationLabel.text = "lon: \(store?.lon ?? "")" + " , " + "lat: \(store?.lat ?? "")"
+        companyNameLabel.text = store["name"] as? String
+        descLabel.text = store["desc"] as? String
+        websiteLabel.text = store["website"] as? String
+        phoneLabel.text = store["phone_no"] as? String
+        locationLabel.text = "lon: \(store["lon"] as? String ?? "")" + " , " + "lat: \(store["lat"] as? String ?? "")"
     }
 
     private func createBlureView() -> CheckoutView {

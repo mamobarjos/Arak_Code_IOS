@@ -13,7 +13,7 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = UITableViewCell.SelectionStyle.none
@@ -32,6 +32,15 @@ class ProductTableViewCell: UITableViewCell {
     }
 
     func customize(product: StoreProduct) {
+//        if let url = URL(string: product.) {
+//
+//        }
+        titleLabel.text = product.name
+        subTitleLabel.text = product.desc
+        priceLabel.text = product.priceformated
+    }
+
+    func customize(product: RelatedProducts) {
 //        if let url = URL(string: product.)
         titleLabel.text = product.name
         subTitleLabel.text = product.desc

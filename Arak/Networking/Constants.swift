@@ -39,13 +39,13 @@ enum RequestParams {
 enum NetworkResponse:String {
   case success
   case authenticationError = "Please sign in again"
-  case generalError = "Bad request"
-  case outdated = "The url you requested is outdated."
-  case failed = "Network request failed."
-  case internet = "Check internet connection."
-  case noData = "Response returned with no data to decode."
-  case unableToDecode = "We could not decode the response."
-    case walletInsufficient = "WALLET_INSUFFICIENT"
+  case generalError =        "Bad request"
+  case outdated =            "The url you requested is outdated."
+  case failed =              "Network request failed."
+  case internet =            "Check internet connection."
+  case noData =              "Response returned with no data to decode."
+  case unableToDecode =      "We could not decode the response."
+  case walletInsufficient =  "WALLET_INSUFFICIENT"
 }
 
 enum AdsTypes: Int {

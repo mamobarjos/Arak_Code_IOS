@@ -7,12 +7,16 @@
 
 import UIKit
 import Cosmos
-
 class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var ReviewerImage: UIImageView!
     @IBOutlet weak var titaleLabel: UILabel!
     @IBOutlet weak var cosmosContainerView: UIView!
     @IBOutlet weak var descLabel: UILabel!
+
+    @IBOutlet weak var deleteButton: UIButton!
+
+    var onDeleteAction: (() -> Void)?
+
 
     let cosmosView = CosmosView().then {
         $0.rating = 3
@@ -33,13 +37,18 @@ class ReviewTableViewCell: UITableViewCell {
         setup()
     }
 
+    @IBAction func deleteAction(_ sender: Any) {
+        self.onDeleteAction?()
+    }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
 
-    func setup() {
+    private func setup() {
+        ReviewerImage.image = UIImage(named: "Summery Image")
         cosmosContainerView.addSubview(cosmosView)
         cosmosView.layout
             .leading(to: .superview)
@@ -48,5 +57,18 @@ class ReviewTableViewCell: UITableViewCell {
 
         ReviewerImage.image = UIImage(named: "You")
     }
-    
+
+    func cosumizeCell(review: ReviewResponse) {
+        if let url = URL(string: review.user.imgAvatar ?? "") {
+            ReviewerImage.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
+        }
+        cosmosView.rating = Double(review.rate ?? 5)
+        titaleLabel.text = review.user.fullname
+        descLabel.text = review.content
+        if Helper.currentUser?.id == review.user.id {
+            deleteButton.isHidden = false
+        } else {
+            deleteButton.isHidden = true
+        }
+    }
 }

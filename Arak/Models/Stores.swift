@@ -10,10 +10,12 @@ import Foundation
 struct StoresRespose: Codable {
     let storesData: StoresData
     let storeCategories: [StoreCategory]?
+    let banners: [Banner]
 
     enum CodingKeys: String, CodingKey {
         case storesData = "stores"
         case storeCategories = "store_categories"
+        case banners = "banners"
     }
 }
 
@@ -21,14 +23,16 @@ struct StoresRespose: Codable {
 struct StoreCategory: Codable {
     let id: Int
     let name: String
-    let createdAt: String
-    let updatedAt: String
+    let arName : String
+//    let createdAt: String
+//    let updatedAt: String
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
+        case arName = "name_ar"
+//        case createdAt = "created_at"
+//        case updatedAt = "updated_at"
     }
 }
 
@@ -85,7 +89,7 @@ struct Store: Codable {
     let storeCategoryid: Int?
     let createdAt: String?
     let updatedAt: String?
-
+    let storeCategory: StoreCategory
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
@@ -106,6 +110,29 @@ struct Store: Codable {
         case userid = "user_id"
         case storeCategoryid = "store_category_id"
         case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case storeCategory = "store_category"
+    }
+}
+// MARK: - Banner
+struct Banner: Codable {
+    let status: Int
+    let img: String?
+    let id: Int
+    let createdAt: String?
+    let isHomepage: Int?
+    let websiteurl: String?
+    let userid: Int?
+    let updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case status = "status"
+        case img = "img"
+        case id = "id"
+        case createdAt = "created_at"
+        case isHomepage = "is_homepage"
+        case websiteurl = "website_url"
+        case userid = "user_id"
         case updatedAt = "updated_at"
     }
 }

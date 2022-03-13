@@ -27,22 +27,22 @@
                         <rect key="frame" x="0.0" y="7.5" width="320" height="157"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dKj-l4-com">
-                                <rect key="frame" x="145" y="36.5" width="155" height="84"/>
+                                <rect key="frame" x="145" y="36.5" width="175" height="84"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEj-MY-lzY">
-                                        <rect key="frame" x="0.0" y="0.0" width="155" height="30.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="175" height="30.5"/>
                                         <fontDescription key="fontDescription" name="DroidArabicKufi-Bold" family="Droid Arabic Kufi" pointSize="16"/>
                                         <color key="textColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJ6-pN-LyS">
-                                        <rect key="frame" x="0.0" y="30.5" width="155" height="19"/>
+                                        <rect key="frame" x="0.0" y="30.5" width="175" height="19"/>
                                         <fontDescription key="fontDescription" name="DroidArabicKufi-Bold" family="Droid Arabic Kufi" pointSize="10"/>
                                         <color key="textColor" red="0.5490196078431373" green="0.5490196078431373" blue="0.58431372549019611" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oO3-Ug-K7m">
-                                        <rect key="frame" x="0.0" y="49.5" width="155" height="34.5"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="175" height="34.5"/>
                                         <fontDescription key="fontDescription" name="DroidArabicKufi-Bold" family="Droid Arabic Kufi" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -65,7 +65,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="LGK-qy-xfI" firstAttribute="leading" secondItem="aqa-3x-PZN" secondAttribute="leading" constant="10" id="IzI-Sy-iyv"/>
-                            <constraint firstAttribute="trailing" secondItem="dKj-l4-com" secondAttribute="trailing" constant="20" id="NPC-oC-GRt"/>
+                            <constraint firstAttribute="trailing" secondItem="dKj-l4-com" secondAttribute="trailing" id="S2p-1c-RGG"/>
                             <constraint firstItem="LGK-qy-xfI" firstAttribute="top" secondItem="aqa-3x-PZN" secondAttribute="top" constant="10" id="acl-FW-38V"/>
                             <constraint firstItem="dKj-l4-com" firstAttribute="centerY" secondItem="aqa-3x-PZN" secondAttribute="centerY" id="dMv-o8-Qq0"/>
                             <constraint firstAttribute="bottom" secondItem="LGK-qy-xfI" secondAttribute="bottom" constant="10" id="eUP-ma-Hnz"/>

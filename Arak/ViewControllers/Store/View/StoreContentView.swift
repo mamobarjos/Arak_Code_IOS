@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Cosmos
 
 protocol StoreContentViewProtocol: AnyObject {
     func didTapOnProduct(id:Int)
@@ -14,10 +15,14 @@ protocol StoreContentViewProtocol: AnyObject {
     func didTapViewAllProduct()
     func didTapOnAddProduct()
     func didTapOnBack()
+    func submiteReview(_ message: String, _ rating: Int)
+    func showTostMessage(with error: String)
+    func deleteReview(id: Int)
 }
 
 class StoreContentView: UIView {
 
+    @IBOutlet weak var storeImageView: UIImageView!
     @IBOutlet weak var productsTableView: UITableView!
     @IBOutlet weak var reviewrTableView: UITableView!
     @IBOutlet var contentView: UIView!
@@ -28,7 +33,7 @@ class StoreContentView: UIView {
 
     @IBOutlet weak var backButoon: UIButton!
     @IBOutlet weak var favButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
+//    @IBOutlet weak var editButton: UIButton!
 
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var faceButton: UIButton!
@@ -37,6 +42,10 @@ class StoreContentView: UIView {
     @IBOutlet weak var linkedInButton: UIButton!
     @IBOutlet weak var youTubeButton: UIButton!
 
+    @IBOutlet weak var heightConst: NSLayoutConstraint!
+    @IBOutlet weak var reviewsContainerView: UIView!
+    @IBOutlet weak var addReviewContainer: UIView!
+    @IBOutlet weak var cosmosView: CosmosView!
     @IBOutlet weak var reviewTextView: UITextView!
 
     @IBOutlet weak var snabButton: UIButton!
@@ -44,9 +53,34 @@ class StoreContentView: UIView {
 
     @IBOutlet weak var viewAllProductAction: UILabel!
 
+    private(set) var rating: Int?
     var products: [StoreProduct] = [] {
         didSet {
             productsTableView.reloadData()
+            if products.isEmpty {
+                heightConst.constant = 0
+                viewAllProductAction.isHidden = true
+                self.layoutIfNeeded()
+            } else if products.count == 1 {
+                heightConst.constant = 175
+                viewAllProductAction.isHidden = true
+                self.layoutIfNeeded()
+            } else if products.count == 2 {
+                heightConst.constant = 350
+                viewAllProductAction.isHidden = true
+                self.layoutIfNeeded()
+            }
+            if products.count > 3 {
+                viewAllProductAction.isHidden = false
+            } else {
+                viewAllProductAction.isHidden = true
+            }
+        }
+    }
+
+    var reviews: [ReviewResponse] = [] {
+        didSet {
+            reviewrTableView.reloadData()
         }
     }
 
@@ -75,8 +109,9 @@ class StoreContentView: UIView {
         guard let view = self.loadViewFromNip(nipName: "StroreContentView") else {return}
         view.frame = self.bounds
         self.addSubview(view)
-
+         addButton.isHidden = true
          reviewTextView.delegate = self
+         favButton.isHidden = true
 
          productsTableView.delegate = self
          productsTableView.dataSource = self
@@ -91,21 +126,29 @@ class StoreContentView: UIView {
          reviewrTableView.estimatedRowHeight = 150
          reviewrTableView.separatorColor = .clear
          reviewrTableView.register(ReviewTableViewCell.self)
+         cosmosView.rating = 0
+         cosmosView.didFinishTouchingCosmos = { [weak self] rating in
+             self?.rating = Int(rating)
+         }
+
+         viewAllProductAction.addTapGestureRecognizer {[weak self] in
+             self?.delegate?.didTapViewAllProduct()
+         }
     }
 
     private func updateUI(store: SingleStore) {
 
-        if store.facebook == nil {
+        if store.facebook == nil || store.facebook == "" {
             faceButton.removeFromSuperview()
-        } else if store.twitter == nil {
-            faceButton.removeFromSuperview()
-        } else if store.snapchat == nil {
-            faceButton.removeFromSuperview()
-        } else if store.linkedin == nil {
+        } else if store.twitter == nil || store.twitter == "" {
+            twitterButton.removeFromSuperview()
+        } else if store.snapchat == nil || store.snapchat == "" {
+            snabButton.removeFromSuperview()
+        } else if store.linkedin == nil || store.linkedin == "" {
             linkedInButton.removeFromSuperview()
-        } else if store.youtube == nil {
+        } else if store.youtube == nil || store.youtube == "" {
             youTubeButton.removeFromSuperview()
-        } else if store.instagram == nil {
+        } else if store.instagram == nil || store.instagram == "" {
             instaButton.removeFromSuperview()
         }
 
@@ -113,13 +156,39 @@ class StoreContentView: UIView {
             $0?.layer.cornerRadius = ($0?.frameWidth ?? 17) / 2
             $0?.clipsToBounds = true
         }
+        if let url = URL(string:store.img ?? "") {
+            self.storeImageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
+        }
+
+        storeImageView.contentMode = .scaleToFill
+        storeImageView.layer.cornerRadius = 25
+        storeImageView.clipsToBounds = true
+
         self.titleLabel.text = store.name
-        self.subtitleLabel.text = store.website
+        if let index = (store.createdAt?.range(of: "T")?.lowerBound){
+            let dateBeforeT = String(store.createdAt?.prefix(upTo: index) ?? "")
+            self.subtitleLabel.text = "Member Since: \(dateBeforeT) "
+        }
+
         self.descreptionLabel.text = store.desc
     }
 
     @IBAction func AddProductAction(_ sender: Any) {
         delegate?.didTapOnAddProduct()
+    }
+
+    @IBAction func submiteReviewAction(_ sender: Any) {
+        if reviewTextView.text == "Enter your review for this service provider..." || reviewTextView.text.isEmpty {
+            self.delegate?.showTostMessage(with: "please add your review")
+            return
+        }
+
+        guard let rating = rating else {
+            self.delegate?.showTostMessage(with: "please rate this store")
+            return
+        }
+
+        delegate?.submiteReview(reviewTextView.text, rating)
     }
 
     @IBAction func faceBookAction(_ sender: Any) {
@@ -155,9 +224,9 @@ class StoreContentView: UIView {
         delegate?.didTapOnFav(id: 1)
     }
 
-    @IBAction func editAction(_ sender: Any) {
-        delegate?.didTapOnEdit(id: 1)
-    }
+//    @IBAction func editAction(_ sender: Any) {
+//        delegate?.didTapOnEdit(id: 1)
+//    }
 
     @IBAction func twitterAction(_ sender: Any) {
         guard let twitterURL = storeDetails?.twitter else {
@@ -235,7 +304,17 @@ extension StoreContentView: UITextViewDelegate {
 
 extension StoreContentView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        products.count
+        if tableView == productsTableView {
+            if products.count < 4 {
+                return products.count
+            } else {
+                return 3
+            }
+
+        } else {
+            return reviews.count
+        }
+
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -246,14 +325,20 @@ extension StoreContentView: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let cell:ReviewTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-            cell.setup()
+            let review = reviews[indexPath.row]
+            cell.cosumizeCell(review: review)
+            cell.onDeleteAction = { [weak self] in
+                self?.delegate?.deleteReview(id: review.id ?? 0)
+            }
             return cell
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == productsTableView {
         let product = products[indexPath.row]
         delegate?.didTapOnProduct(id: product.id)
+        }
     }
 }
 

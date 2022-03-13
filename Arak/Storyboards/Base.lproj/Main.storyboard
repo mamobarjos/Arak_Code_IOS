@@ -11,11 +11,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="ArbFONTS-Droid-Arabic-Kufi.ttf">
-            <string>DroidArabicKufi</string>
-        </array>
-        <array key="ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf">
+        <array key="ArbFONTS-Droid-Arabic-Kufi-Bold.ttf">
             <string>DroidArabicKufi-Bold</string>
+        </array>
+        <array key="ArbFONTS-Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf">
+            <string>DroidArabicKufi</string>
         </array>
         <array key="HelveticaNeueLTArabic-Roman.ttf">
             <string>HelveticaNeueLTArabic-Roman</string>
@@ -113,18 +113,23 @@
                                                                     <constraint firstAttribute="height" constant="1" id="mnX-PL-6e7"/>
                                                                 </constraints>
                                                             </view>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" v" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rAb-1T-WQd">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Search Stores" placeholder=" v" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rAb-1T-WQd">
                                                                 <rect key="frame" x="62" y="8" width="225" height="34"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="34" id="kdM-8F-a9x"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="12"/>
+                                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="15"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gwY-Z2-o1x">
                                                                 <rect key="frame" x="0.0" y="0.0" width="295" height="50"/>
+                                                                <state key="normal">
+                                                                    <color key="titleColor" red="0.84313725490000002" green="0.85490196080000003" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                </state>
                                                                 <connections>
                                                                     <action selector="Search:" destination="dy1-V4-2LH" eventType="touchUpInside" id="aQE-hR-ves"/>
+                                                                    <action selector="searchAction:" destination="8Ga-6M-CYP" eventType="touchUpInside" id="B4h-KT-FRi"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>

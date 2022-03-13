@@ -10,8 +10,14 @@ import CoreLocation
 
 class SignUpStoreViewController: UIViewController {
 
+    enum ImageType {
+        case personalPhoto
+        case coverPhoto
+    }
+
     @IBOutlet weak var pickPhotoButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var coverImageView: UIImageView!
 
     @IBOutlet weak var companyNameTextField: UITextField!
     @IBOutlet weak var storeDesTextField: UITextView!
@@ -21,15 +27,28 @@ class SignUpStoreViewController: UIViewController {
 
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var chooseCategoryView: UIView!
 
     private var imagePicker = UIImagePickerController()
     private var currentLocation: CLLocation?
     private var currentLocatioTitle: String?
-    private var imageData: Data?
-    private var imageUrl: String?
+    private(set) var imageData: Data?
+    private(set) var imageUrl: String?
+    private(set) var coverImageData: Data?
+    private(set) var coverImageUrl: String?
+    private(set) var categoryId: Int?
+    private(set) var imageType: ImageType = .personalPhoto
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        chooseCategoryView.addTapGestureRecognizer {[weak self] in
+            let vc = CategoriesViewController()
+            vc.delegate = self
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+
+        coverImageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleToFill
     }
 
     @IBAction func locatioAction(_ sender: Any) {
@@ -43,6 +62,12 @@ class SignUpStoreViewController: UIViewController {
         show(vc)
     }
     @IBAction func picPhotoAction(_ sender: Any) {
+        imageType = .personalPhoto
+        fetchImage()
+    }
+
+    @IBAction func coverPhotoAction(_ sender: Any) {
+        imageType = .coverPhoto
         fetchImage()
     }
 
@@ -58,23 +83,43 @@ class SignUpStoreViewController: UIViewController {
 
     private func validateContent() -> [String:Any]? {
         guard let companyName = companyNameTextField.text else {
+            self.showToast(message: "Please Enter Store Name")
             return nil
         }
         guard let description = storeDesTextField.text else {
+            self.showToast(message: "Please Enter Store Description")
             return nil
         }
-        guard let storeWebsit = websiteTextField.text else {
+
+        if storeDesTextField.text == "Description" {
+            self.showToast(message: "Please Enter Store Description")
             return nil
         }
+
         guard let phoneNumber = phoneNumberTextField.text else {
+            self.showToast(message: "Please Enter Store Phone Number")
             return nil
         }
         guard let currentLocation = currentLocation else {
+            self.showToast(message: "Please Enter your Store Location")
             return nil
         }
-//        guard let imageUrl = imageUrl else {
-//            return nil
-//        }
+
+        guard let categoryId = categoryId else {
+            self.showToast(message: "Please Choose Store Category Type")
+            return nil
+        }
+
+        guard let imageUrl = imageUrl else {
+            self.showToast(message: "Please Add Your Store Image")
+            return nil
+        }
+
+        guard let coverImageUrl = coverImageUrl else {
+            self.showToast(message: "Please Add Your Store Cover Image")
+            return nil
+        }
+
 
 
         let lat = currentLocation.coordinate.latitude
@@ -83,13 +128,13 @@ class SignUpStoreViewController: UIViewController {
         let data: [String: Any] = [
             "name":companyName,
             "desc":description,
-            "website":storeWebsit,
+            "website":websiteTextField.text ?? "",
             "phone_no":phoneNumber,
-            "store_category_id":1,
+            "store_category_id":categoryId,
             "lon":"\(lon)",
             "lat":"\(lat)",
-            "img":"https://firebasestorage.googleapis.com/v0/b/arak-d1392.appspot.com/o/B0012A83-F42B-4AEA-BB36-98AD01029290.jpg?alt=media&token=78216f3f-8f82-4eab-bbf6-6b6af44f3003",
-            "cover":"https://firebasestorage.googleapis.com/v0/b/arak-d1392.appspot.com/o/B0012A83-F42B-4AEA-BB36-98AD01029290.jpg?alt=media&token=78216f3f-8f82-4eab-bbf6-6b6af44f3003"
+            "img":imageUrl,
+            "cover":coverImageUrl
         ]
         return data
     }
@@ -101,15 +146,30 @@ extension SignUpStoreViewController: UIImagePickerControllerDelegate & UINavigat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         dismiss(animated: true, completion: nil)
         if let image = info[.editedImage] as? UIImage {
-            imageData = image.jpegData(compressionQuality: 0.8)
-            imageView.image = nil
-            imageView.image = image
+
+            if imageType == .personalPhoto {
+                imageView.image = nil
+                imageData = image.jpegData(compressionQuality: 0.8)
+                imageView.image = image
+            } else {
+                coverImageView.image = nil
+                coverImageData = image.jpegData(compressionQuality: 0.8)
+                coverImageView.image = image
+            }
             uploadToImageFirebase()
 
         }else if let image = info[.originalImage] as? UIImage {
-            imageData = image.jpegData(compressionQuality: 0.8)
-            imageView.image = nil
-            imageView.image = image
+
+
+            if imageType == .personalPhoto {
+                imageView.image = nil
+                imageData = image.jpegData(compressionQuality: 0.8)
+                imageView.image = image
+            } else {
+                coverImageView.image = nil
+                coverImageData = image.jpegData(compressionQuality: 0.8)
+                coverImageView.image = image
+            }
             uploadToImageFirebase()
         }
     }
@@ -140,16 +200,34 @@ extension SignUpStoreViewController: UIImagePickerControllerDelegate & UINavigat
 
     private func compliationUpload() {
         let userId = Helper.currentUser?.id ?? -1
-
-        if userId != -1  && imageData != nil {
-            let id = "\(userId)"
-            UploadMedia.saveImages(userId: id, imagesArray: [UIImage(data: imageData!)], completionHandler: { [weak self] url in
-                if let firstUrl: String = url.first {
-                    self?.imageUrl = firstUrl
-                    self?.stopLoading()
-                }
-            })
+        if imageType == .personalPhoto {
+            if userId != -1  && imageData != nil {
+                let id = "\(userId)"
+                UploadMedia.saveImages(userId: id, imagesArray: [UIImage(data: imageData!)], completionHandler: { [weak self] url in
+                    if let firstUrl: String = url.first {
+                        self?.imageUrl = firstUrl
+                        self?.stopLoading()
+                    }
+                })
+            }
+        } else {
+            if userId != -1  && coverImageData != nil {
+                let id = "\(userId)"
+                UploadMedia.saveImages(userId: id, imagesArray: [UIImage(data: coverImageData!)], completionHandler: { [weak self] url in
+                    if let firstUrl: String = url.first {
+                        self?.coverImageUrl = firstUrl
+                        self?.stopLoading()
+                    }
+                })
+            }
         }
     }
+}
+
+extension SignUpStoreViewController: CategoriesViewControllerDelegate {
+    func didFinishWithCategory(categoryId: Int, categoryName: String) {
+        self.categoryId = categoryId
+    }
+
 }
 

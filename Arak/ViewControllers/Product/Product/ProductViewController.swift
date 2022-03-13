@@ -24,6 +24,8 @@ class ProductViewController: UIViewController {
 
     private var productViewModel = ProductViewModel()
     private var storeProduct: [Product] = []
+    public var storeId: Int?
+    public var storeName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,7 +50,7 @@ class ProductViewController: UIViewController {
 
 
         scrollView.layout.fill(.superview)
-        scrollView.scrollView.contentInset.bottom = 170
+        scrollView.scrollView.contentInset.bottom = -200
 
         contentView.delegate = self
 
@@ -71,13 +73,14 @@ class ProductViewController: UIViewController {
 
 
             self?.updateUI(product: self?.productViewModel.getStoreProduct() ?? [])
+            self?.contentView.relatedProducts = self?.productViewModel.getRelatedProducts() ?? []
         })
     }
 
     @objc func handleVisitStoreTap() {
 
         let vc = initViewControllerWith(identifier: StoreViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
-        vc.storeId = 1
+        vc.storeId = storeId
         show(vc)
     }
 
@@ -130,6 +133,12 @@ extension ProductViewController {
 }
 
 extension ProductViewController :ProductContentViewDelegate {
+    func didTapOnViewAllproducts() {
+        let vc = initViewControllerWith(identifier: StoreProductsViewController.className, and: "\(storeName ?? "All Products")", storyboardName: Storyboard.MainPhase.rawValue) as! StoreProductsViewController
+        vc.storeId = storeId
+        show(vc)
+    }
+
     func userDidTapBack() {
         self.navigationController?.popViewController(animated: true)
     }

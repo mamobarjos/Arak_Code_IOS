@@ -194,9 +194,29 @@ class StroreTableViewCell: UITableViewCell {
         }
 
         titleLabel.text = store.name
-        cosmosView.cosmosView.rating = store.totalRates ?? 3
-        cosmosView.rateLabel.text = "(\(store.totalRates ?? 3))"
-        descriptionLabel.text = store.website
+        descriptionLabel.text = store.storeCategory.name
+        cosmosView.cosmosView.rating = store.totalRates ?? 0
+        cosmosView.rateLabel.text = "(\(store.totalRates ?? 0))"
+    }
+
+    func custumizeCell(store: TestSearchModel) {
+        cosmosView.cosmosView.rating = 0
+        bannerImageView.image = nil
+        titleLabel.text = ""
+        descriptionLabel.text = ""
+
+        if let bannerURL = URL(string:store.cover ?? "") {
+            bannerImageView.kf.setImage(with: bannerURL, placeholder: UIImage(named: "Summery Image"))
+        }
+
+        if let storURL = URL(string: store.img ?? "") {
+            storeImageView.kf.setImage(with: storURL, placeholder: UIImage(named: "Summery Image"))
+        }
+
+        titleLabel.text = store.name
+        descriptionLabel.text = "Electroics"
+        cosmosView.cosmosView.rating = store.totalRates ?? 0
+        cosmosView.rateLabel.text = "(\(store.totalRates ?? 0))"
     }
 }
 

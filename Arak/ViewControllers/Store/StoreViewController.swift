@@ -8,6 +8,11 @@
 import UIKit
 
 class StoreViewController: UIViewController {
+    enum StoreType {
+        case regularStore
+        case myStore
+    }
+
     let contentView = StoreContentView()
     lazy var scrollView = ScrollContainerView(contentView: contentView)
     let bottomView = BottomBarItemView()
@@ -15,6 +20,7 @@ class StoreViewController: UIViewController {
     private var storeViewModel: StoreViewModel = StoreViewModel()
 
     var storeId: Int?
+    var storeType: StoreType = .regularStore
     private var storeDetails: SingleStore?
 
     override func viewDidLoad() {
@@ -32,11 +38,14 @@ class StoreViewController: UIViewController {
         scrollView.layout.fill(.superview)
         scrollView.scrollView.contentInset.bottom = 130
 
-        hiddenNavigation(isHidden: true)
-
         contentView.delegate = self
         configration(storeId: storeId ?? 1)
         connectAction()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hiddenNavigation(isHidden: true)
     }
 
     func configration(storeId: Int) {
@@ -52,14 +61,18 @@ class StoreViewController: UIViewController {
 
             self?.contentView.storeDetails = self?.storeViewModel.getStoreDetails()
 
-            self?.storeDetails = self?.storeViewModel.getStoreDetails()!
+            if let storeDetails = self?.storeViewModel.getStoreDetails() {
+                self?.storeDetails = storeDetails
+            }
+
             self?.contentView.products = self?.storeViewModel.getStoreProduct() ?? []
+            self?.contentView.reviews = self?.storeViewModel.getReviews() ?? []
         })
     }
 
    private func connectAction() {
-        bottomView.webAction = {
-            if let url = URL(string: "https://www.hackingwithswift.com") {
+        bottomView.webAction = { [weak self] in
+            if let url = URL(string: self?.storeDetails?.website ?? "") {
                 UIApplication.shared.open(url)
             }
         }
@@ -74,8 +87,12 @@ class StoreViewController: UIViewController {
               }
         }
 
-        bottomView.locationAction = {
-
+        bottomView.locationAction = { [weak self] in
+            if let latDouble = Double(self?.storeDetails?.lat ?? "") , let lngDouble = Double(self?.storeDetails?.lon ?? "") {
+              Helper.OpenMap(latDouble, lngDouble)
+            } else {
+                self?.showToast(message: "Can't open the Map ")
+            }
         }
 
         bottomView.whatsAppAction = { [weak self] in
@@ -104,7 +121,9 @@ extension StoreViewController: StoreContentViewProtocol {
     }
 
     func didTapViewAllProduct() {
-        self.showToast(message: "WIll be Implemented later 😎")
+        let vc = initViewControllerWith(identifier: StoreProductsViewController.className, and: "\(storeDetails?.name ?? "All Products")", storyboardName: Storyboard.MainPhase.rawValue) as! StoreProductsViewController
+        vc.storeId = storeId
+        show(vc)
     }
 
     func didTapOnFav(id: Int) {
@@ -116,11 +135,56 @@ extension StoreViewController: StoreContentViewProtocol {
     }
 
     func didTapOnBack() {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
     func didTapOnProduct(id: Int) {
         let vc = initViewControllerWith(identifier: ProductViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! ProductViewController
+        vc.storeId = storeId
+        vc.storeName = storeDetails?.name
         show(vc)
+    }
+
+    func submiteReview(_ message: String, _ rating: Int) {
+        self.showLoading()
+        storeViewModel.submitReview(review: message, rate: rating, stroeId: storeId ?? 0) {[weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+
+            if let error = error {
+                self?.showToast(message: error)
+            }
+
+            if let review = self?.storeViewModel.getReview() {
+                self?.contentView.reviews.append(review)
+            }
+
+            self?.contentView.addReviewContainer.isHidden = true
+        }
+    }
+
+    func showTostMessage(with error: String) {
+        self.showToast(message: error)
+    }
+
+    func deleteReview(id: Int) {
+        self.showLoading()
+        self.storeViewModel.deleteStoreReview(reviewId: id) { [weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+
+            if let error = error {
+                self?.showToast(message: error)
+                return
+            }
+
+            self?.contentView.addReviewContainer.isHidden = false
+            self?.showToast(message: "Review deleted successfully")
+            self?.contentView.reviews = self?.storeViewModel.getReviews().filter{
+                $0.id != id
+            } ?? []
+        }
     }
 }

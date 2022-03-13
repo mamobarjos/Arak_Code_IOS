@@ -31,23 +31,23 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="HCu-Tk-Tzn">
-                        <rect key="frame" x="70" y="10" width="240" height="143"/>
+                        <rect key="frame" x="70" y="10" width="203" height="143"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yara Kamal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0G-hl-Rxe">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="203" height="16.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.61568627450980395" green="0.61960784313725492" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Jg-ee-lWh">
-                                <rect key="frame" x="0.0" y="24" width="240" height="30"/>
+                                <rect key="frame" x="0.0" y="21.5" width="203" height="30"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="shS-ZG-NSw"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Caq-95-ZlS">
-                                <rect key="frame" x="0.0" y="59" width="240" height="84"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Caq-95-ZlS">
+                                <rect key="frame" x="0.0" y="56.5" width="203" height="86.5"/>
                                 <string key="text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <color key="textColor" red="0.61568627450000002" green="0.61960784310000006" blue="0.63921568630000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -55,12 +55,26 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-ey-hEr">
+                        <rect key="frame" x="278" y="61.5" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="NAT-Iv-QpB"/>
+                            <constraint firstAttribute="width" constant="40" id="U7f-x8-FwO"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="trash" title=" "/>
+                        <connections>
+                            <action selector="deleteAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Q1O-xH-4Mr"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="HCu-Tk-Tzn" firstAttribute="leading" secondItem="L3Z-R7-D8m" secondAttribute="trailing" constant="15" id="7xA-1x-U7m"/>
-                    <constraint firstAttribute="trailing" secondItem="HCu-Tk-Tzn" secondAttribute="trailing" constant="10" id="BzC-Kv-iVu"/>
+                    <constraint firstItem="nfV-ey-hEr" firstAttribute="leading" secondItem="HCu-Tk-Tzn" secondAttribute="trailing" constant="5" id="EXr-Ju-8jP"/>
+                    <constraint firstAttribute="trailing" secondItem="nfV-ey-hEr" secondAttribute="trailing" constant="2" id="Xra-Tm-Rcw"/>
                     <constraint firstAttribute="bottom" secondItem="HCu-Tk-Tzn" secondAttribute="bottom" constant="10" id="ZIf-sK-NGt"/>
                     <constraint firstItem="L3Z-R7-D8m" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="gI3-6g-Vkh"/>
+                    <constraint firstItem="nfV-ey-hEr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gne-pj-git"/>
                     <constraint firstItem="HCu-Tk-Tzn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="jff-UH-yfl"/>
                     <constraint firstItem="L3Z-R7-D8m" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="wcn-33-mva"/>
                 </constraints>
@@ -69,6 +83,7 @@
             <connections>
                 <outlet property="ReviewerImage" destination="L3Z-R7-D8m" id="79N-68-icp"/>
                 <outlet property="cosmosContainerView" destination="2Jg-ee-lWh" id="DDn-BW-cq2"/>
+                <outlet property="deleteButton" destination="nfV-ey-hEr" id="jed-kX-nPp"/>
                 <outlet property="descLabel" destination="Caq-95-ZlS" id="oF1-RY-q41"/>
                 <outlet property="titaleLabel" destination="K0G-hl-Rxe" id="e8a-2c-1fX"/>
             </connections>
@@ -76,6 +91,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="trash" width="43" height="46"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

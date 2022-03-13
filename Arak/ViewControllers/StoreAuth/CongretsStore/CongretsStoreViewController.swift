@@ -1,0 +1,87 @@
+//
+//  CongretsStoreViewController.swift
+//  Arak
+//
+//  Created by Osama Abu hdba on 25/02/2022.
+//
+
+import UIKit
+
+class CongretsStoreViewController: UIViewController {
+
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var createAdLabel: UILabel!
+
+    private(set) var congretsType: CongretsType = .store
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        createAdLabel.addGestureRecognizer(tap)
+        titleLabel.text = congretsType.title
+        createAdLabel.text = congretsType.actionTitle
+    }
+
+    public func configure(for type: CongretsType = .store) {
+        congretsType = type
+    }
+
+    private func openCreateService() {
+        show(congretsType.view)
+    }
+
+    @objc func handleTap() {
+        // go to create service
+        openCreateService()
+    }
+
+    @IBAction func nextAction(_ sender: Any) {
+        // go to create service
+        openCreateService()
+    }
+}
+
+extension CongretsStoreViewController {
+    enum CongretsType {
+        case store
+        case service
+
+        var title: String {
+            switch self {
+            case .store:
+                return "Your store has been successfully created and you have 2 free ads"
+            case .service:
+                return "Your Service has been successfully created"
+            }
+        }
+
+        var actionTitle: String {
+            switch self {
+            case .store:
+                return "Go To Your Store"
+            case .service:
+                return "Go To Your Store"
+            }
+        }
+
+        var view: UIViewController {
+            switch self {
+            case .store:
+                let vc = initViewControllerWith(identifier: StoreViewController.className, and:  "") as! StoreViewController
+                vc.storeId = Helper.store?.id
+                return vc
+            case .service:
+                let vc = initViewControllerWith(identifier: StoreViewController.className, and:  "") as! StoreViewController
+                vc.storeId = Helper.store?.id
+                return vc
+            }
+        }
+
+        private func initViewControllerWith(identifier: String, and title: String, storyboardName: String = "Main_2") -> UIViewController {
+            let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: identifier)
+            vc.title = title
+            return vc
+        }
+    }
+}

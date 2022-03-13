@@ -10,30 +10,34 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="ArbFONTS-Droid-Arabic-Kufi.ttf">
-            <string>DroidArabicKufi</string>
-        </array>
-        <array key="ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf">
+        <array key="ArbFONTS-Droid Arabic Kufi Bold.ttf">
             <string>DroidArabicKufi-Bold</string>
+        </array>
+        <array key="ArbFONTS-Droid Arabic Kufi.ttf">
+            <string>DroidArabicKufi</string>
         </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StoreContentView" customModule="Arak" customModuleProvider="target">
             <connections>
                 <outlet property="addButton" destination="hSi-k2-9ea" id="ck5-dI-5w8"/>
+                <outlet property="addReviewContainer" destination="hh4-ex-qu5" id="uf6-Tg-cI5"/>
                 <outlet property="backButoon" destination="m9V-ic-kaF" id="Frs-G3-bXz"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="CkA-5l-QzK"/>
+                <outlet property="cosmosView" destination="ofX-JF-Psg" id="0YM-lY-Ibq"/>
                 <outlet property="descreptionLabel" destination="kNQ-Yd-cke" id="rJv-jb-q6d"/>
-                <outlet property="editButton" destination="8pi-O0-IT1" id="T1M-o0-lAy"/>
                 <outlet property="faceButton" destination="9lV-4E-lch" id="OG8-Ut-dRZ"/>
                 <outlet property="favButton" destination="hWS-AV-MjW" id="Urp-dY-Bc7"/>
+                <outlet property="heightConst" destination="W0I-BH-I01" id="EPj-rG-8VA"/>
                 <outlet property="instaButton" destination="A57-mS-jwW" id="CAV-8G-RCG"/>
                 <outlet property="linkedInButton" destination="TsH-gv-DjS" id="BFy-l8-3nH"/>
                 <outlet property="productsTableView" destination="jOE-nq-e5N" id="S1y-l6-BoO"/>
                 <outlet property="reviewTextView" destination="qC8-Zv-i37" id="79C-Ve-WhF"/>
                 <outlet property="reviewrTableView" destination="LkE-Un-O6x" id="6sF-ky-bmB"/>
+                <outlet property="reviewsContainerView" destination="QbU-UR-62o" id="GBZ-aZ-8dZ"/>
                 <outlet property="snabButton" destination="1Lw-UN-4DM" id="QQr-Ff-X8s"/>
                 <outlet property="stackView" destination="EXd-Hw-oWv" id="YLM-ea-pLM"/>
+                <outlet property="storeImageView" destination="SG6-uM-o7G" id="boS-b0-Aki"/>
                 <outlet property="subtitleLabel" destination="2eA-XF-EmD" id="lJZ-f4-Nsp"/>
                 <outlet property="titleLabel" destination="CfJ-OO-DOf" id="6h9-lX-vVd"/>
                 <outlet property="twitterButton" destination="bGg-vW-c0j" id="yeD-Ly-76X"/>
@@ -68,14 +72,6 @@
                     <buttonConfiguration key="configuration" style="plain" image="Icon awesome-heart" title=" "/>
                     <connections>
                         <action selector="favAction:" destination="-1" eventType="touchUpInside" id="92m-WE-Peh"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8pi-O0-IT1">
-                    <rect key="frame" x="303" y="59" width="41" height="31"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="Icon material-edit" title=" "/>
-                    <connections>
-                        <action selector="editAction:" destination="-1" eventType="touchUpInside" id="mYj-uz-eNA"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CfJ-OO-DOf">
@@ -204,7 +200,7 @@
                         </button>
                     </subviews>
                 </stackView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="You" translatesAutoresizingMaskIntoConstraints="NO" id="SG6-uM-o7G">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="SG6-uM-o7G">
                     <rect key="frame" x="20" y="101" width="51" height="51"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="51" id="XjB-OW-6nP"/>
@@ -239,10 +235,10 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="jOE-nq-e5N">
-                    <rect key="frame" x="20" y="347.5" width="374" height="500"/>
+                    <rect key="frame" x="20" y="347.5" width="374" height="530"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="500" id="W0I-BH-I01"/>
+                        <constraint firstAttribute="height" constant="530" id="W0I-BH-I01"/>
                     </constraints>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QbU-UR-62o">
@@ -298,7 +294,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View All" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihy-g4-UBc">
-                    <rect key="frame" x="20" y="867.5" width="374" height="74.5"/>
+                    <rect key="frame" x="20" y="897.5" width="374" height="44.5"/>
                     <color key="tintColor" red="0.1058823529" green="0.14117647059999999" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="17"/>
                     <color key="textColor" red="0.10588235294117647" green="0.14117647058823529" blue="0.36078431372549019" alpha="1" colorSpace="calibratedRGB"/>
@@ -372,6 +368,9 @@
                                     <real key="value" value="7"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="submiteReviewAction:" destination="-1" eventType="touchUpInside" id="xcF-PM-ofy"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -424,7 +423,6 @@
                 <constraint firstItem="hSi-k2-9ea" firstAttribute="top" secondItem="EXd-Hw-oWv" secondAttribute="bottom" constant="43" id="HyR-0z-Uzg"/>
                 <constraint firstItem="CfJ-OO-DOf" firstAttribute="leading" secondItem="SG6-uM-o7G" secondAttribute="trailing" constant="20" id="Jlc-ha-kxx"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ihy-g4-UBc" secondAttribute="trailing" constant="20" id="QBr-12-o9x"/>
-                <constraint firstItem="hWS-AV-MjW" firstAttribute="leading" secondItem="8pi-O0-IT1" secondAttribute="trailing" constant="10" id="TSC-ja-Gop"/>
                 <constraint firstItem="ihy-g4-UBc" firstAttribute="top" secondItem="jOE-nq-e5N" secondAttribute="bottom" constant="20" id="Te8-HW-0zP"/>
                 <constraint firstItem="hSi-k2-9ea" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="VlT-1I-AVR"/>
                 <constraint firstItem="m9V-ic-kaF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="cgh-r2-zTp"/>
@@ -437,7 +435,6 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kNQ-Yd-cke" secondAttribute="trailing" constant="20" id="lJU-RJ-fnh"/>
                 <constraint firstItem="hh4-ex-qu5" firstAttribute="top" secondItem="QbU-UR-62o" secondAttribute="bottom" constant="40" id="lmK-ta-YBq"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hh4-ex-qu5" secondAttribute="trailing" constant="20" id="n0Q-TE-QkL"/>
-                <constraint firstItem="8pi-O0-IT1" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="pkD-MX-ux6"/>
                 <constraint firstItem="hWS-AV-MjW" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="qWX-3K-o6J"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hWS-AV-MjW" secondAttribute="trailing" constant="20" id="s3q-QP-Llm"/>
                 <constraint firstItem="SG6-uM-o7G" firstAttribute="top" secondItem="m9V-ic-kaF" secondAttribute="bottom" constant="25" id="sJw-O1-1SP"/>
@@ -452,24 +449,18 @@
             <point key="canvasLocation" x="-420.28985507246381" y="155.35714285714286"/>
         </view>
     </objects>
-    <designables>
-        <designable name="ofX-JF-Psg">
-            <size key="intrinsicContentSize" width="87" height="15"/>
-        </designable>
-    </designables>
     <resources>
         <image name="Facebook-1" width="31.131000518798828" height="31.131000518798828"/>
         <image name="Icon awesome-heart" width="26" height="22"/>
         <image name="Icon awesome-star" width="15.708000183105469" height="15.034999847412109"/>
         <image name="Icon awesome-star-2" width="16.732000350952148" height="16.051000595092773"/>
-        <image name="Icon material-edit" width="13" height="13"/>
         <image name="Instagram" width="31.5" height="31.5"/>
         <image name="Linkedin" width="31.131000518798828" height="31.131000518798828"/>
         <image name="Snapchat" width="31.131000518798828" height="31.131000518798828"/>
         <image name="Twitter" width="31.131000518798828" height="31.131000518798828"/>
-        <image name="You" width="151" height="147"/>
         <image name="Youtube" width="31.131000518798828" height="31.131000518798828"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <image name="placeholder" width="162" height="218"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <namedColor name="accentOrange">
             <color red="1" green="0.4309999942779541" blue="0.18000000715255737" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -20,6 +20,8 @@ class StoresViewController: UIViewController {
     @IBOutlet weak var joinUsButton: UIButton!
 
     private var pageFeatured = 1
+    private(set) var page = 1
+    private(set) var categoryId = -1
     private let dispatchGroup = DispatchGroup()
 
     private var storesViewModel: StoresViewModel = StoresViewModel()
@@ -40,7 +42,7 @@ class StoresViewController: UIViewController {
 
         containerView.addSubview(tagsView)
         containerView.addSubview(tableView)
-
+        print(Helper.store!)
         tagsView.layout
             .top(.equal, to: searchView, edge: .bottom, offset: -5)
             .leading(to:.superview , offset: 10)
@@ -57,7 +59,7 @@ class StoresViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 250
         tableView.separatorColor = .clear
-        tableView.contentInset.bottom = 100
+        tableView.contentInset.bottom = 150
         tableView.showsVerticalScrollIndicator = false
         tableView.register(cellClass: StroreTableViewCell.self)
 
@@ -66,26 +68,11 @@ class StoresViewController: UIViewController {
         setupCollectionView()
         scrollView.contentInset.bottom = 220
 
-//        searchTextField.placeholder = "Search videos,images and many more".localiz()
-
-
         tagsView.onItemSelection = {[weak self] item in
-
-            if item.id == -1 { // get all stores
-                self?.storesViewModel.getStores { [weak self] error in
-                    defer {
-                        self?.stopLoading()
-                    }
-
-                    guard error == nil else {
-                        self?.showToast(message: error)
-                        return
-                    }
-                    self?.stores = self?.storesViewModel.getStores() ?? []
-                }
-                return
-            }
-
+            self?.categoryId = item.id
+            self?.page = 1
+            self?.showLoading()
+            self?.storesViewModel.canLoadMore = false
             self?.storesViewModel.getStoresByCategory(by: item.id) {[weak self] error in
                 defer {
                     self?.stopLoading()
@@ -98,23 +85,19 @@ class StoresViewController: UIViewController {
                 self?.stores = self?.storesViewModel.getStores() ?? []
             }
         }
+        fetchStores()
 
-        self.showLoading()
-        storesViewModel.getStores { [weak self] error in
-            defer {
-                self?.stopLoading()
-            }
-
-            guard error == nil else {
-                self?.showToast(message: error)
-                return
-            }
-            self?.tagsView.items.append(HorizontalTagsView.TagItem(id: -1, title: "All"))
-            self?.storesViewModel.getCategories().forEach({
-                self?.tagsView.items.append(.init(id: $0.id, title: $0.name))
-            })
-            self?.tagsView.selectedItemID = -1
-            self?.stores = self?.storesViewModel.getStores() ?? []
+        if Helper.currentUser?.hasStore == 1 {
+            self.joinUsButton.isHidden = true
+            self.addButton.isHidden = false
+            return
+        } else if Helper.store != nil {
+            self.joinUsButton.isHidden = true
+            self.addButton.isHidden = false
+            return
+        } else {
+            self.joinUsButton.isHidden = false
+            self.addButton.isHidden = true
         }
     }
 
@@ -123,7 +106,6 @@ class StoresViewController: UIViewController {
         hiddenNavigation(isHidden: false)
         dispatchGroup.enter()
         pageFeatured = 1
-        fetchFeaturedAds()
 
         dispatchGroup.notify(queue: .main) {
             self.banarCollectionView.reloadData()
@@ -144,20 +126,48 @@ class StoresViewController: UIViewController {
         banarCollectionView.register(FeaturedCell.self)
     }
 
-    private func fetchFeaturedAds() {
-        showLoading()
-        viewModel.getBannerList(page: pageFeatured, search: "") { [weak self] (error) in
-            self?.dispatchGroup.leave()   // <<---
+
+    private func fetchStores(page: Int = 1 ,fillCategories: Bool = true) {
+        self.showLoading()
+        storesViewModel.getStores(page:page) { [weak self] error in
             defer {
                 self?.stopLoading()
-                self?.banarCollectionView.reloadData()
             }
 
-            if error != nil {
+            guard error == nil else {
                 self?.showToast(message: error)
                 return
             }
+            if fillCategories {
+                self?.tagsView.items = []
+                self?.tagsView.items.append(HorizontalTagsView.TagItem(id: -1, title: "All"))
+                self?.storesViewModel.getCategories().forEach({
+                    self?.tagsView.items.append(.init(id: $0.id, title: $0.name))
+                    self?.fetchFeaturedAds()
+                })
+                self?.tagsView.selectedItemID = -1
+            }
+            self?.stores = self?.storesViewModel.getStores() ?? []
         }
+    }
+
+    private func fetchStoresByCategory(page: Int = 1) {
+        self.showLoading()
+        self.storesViewModel.getStoresByCategory(page: page, by: categoryId) {[weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+
+            guard error == nil else {
+                self?.showToast(message: error)
+                return
+            }
+            self?.stores = self?.storesViewModel.getStores() ?? []
+        }
+    }
+
+    private func fetchFeaturedAds() {
+        self.banarCollectionView.reloadData()
     }
 
     private func createTagsView() -> HorizontalTagsView {
@@ -165,10 +175,20 @@ class StoresViewController: UIViewController {
         return tagView
     }
 
-    @IBAction func addButtonAction(_ sender: Any) {
-        self.showToast(message: "WIll be Implemented later 😎")
+    private func openCreateService() {
+        let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "Add Service", storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
+        show(vc)
     }
 
+    @IBAction func addButtonAction(_ sender: Any) {
+        openCreateService()
+    }
+
+    @IBAction func searchAction(_ sender: Any) {
+            let vc = initViewControllerWith(identifier: SearchStoresViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! SearchStoresViewController
+            show(vc)
+    }
+    
     @IBAction func joinButtonAction(_ sender: Any) {
         let vc = initViewControllerWith(identifier: SignUpStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! SignUpStoreViewController
         show(vc)
@@ -193,6 +213,16 @@ extension StoresViewController: UITableViewDelegate, UITableViewDataSource {
         vc.storeId = store.id
         show(vc)
     }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == storesViewModel.getStores().count - 1 && storesViewModel.canLoadMore {
+            page += 1
+            switch categoryId {
+            case -1: fetchStores(page: page, fillCategories: false)
+            default : fetchStoresByCategory(page: page)
+            }
+        }
+    }
 }
 
 extension StoresViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -214,7 +244,7 @@ extension StoresViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func makeFeatured(indexPath:IndexPath,isBanner: Bool) -> FeaturedCell {
             let cell:FeaturedCell = banarCollectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setup(bannerList: viewModel.getAllBanner())
+        cell.setup(bannerList: storesViewModel.getBanners())
         cell.layoutIfNeeded()
         return cell
 
