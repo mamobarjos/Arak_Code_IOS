@@ -3,7 +3,7 @@
 //  Arak
 //
 //  Created by Abed Qassim on 22/02/2021.
-//  
+//
 //
 
 import UIKit
@@ -18,7 +18,7 @@ class LoginViewController: UIViewController, SocialDelegate {
     
     // MARK: - Outlets
     @IBOutlet weak var welcomeLabel: UILabel!
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var logInButton: UIButton!
     @IBOutlet weak var forgetPasswordLabel: UILabel!
@@ -28,10 +28,13 @@ class LoginViewController: UIViewController, SocialDelegate {
     @IBOutlet weak var loginGuestLabel: UILabel!
     @IBOutlet weak var alertLabel: UILabel!
     
+    @IBOutlet weak var faceIdImageView: UIImageView!
     @IBOutlet weak var orButton: UIButton!
     @IBOutlet weak var hasAccountLabel: UILabel!
     
     // MARK: - Properties
+    let keyChain = KeychainPasswordStoreService()
+    let faceIDAuthenticatorService = DefaultFaceIDAuthenticatorService()
     var viewModel: LoginViewModel = LoginViewModel()
     var signUpViewModel: SignUpViewModel = SignUpViewModel()
     var error = ""
@@ -55,47 +58,82 @@ class LoginViewController: UIViewController, SocialDelegate {
     // MARK: - Protected Methods
     private func setupUI() {
         localization()
-        GIDSignIn.sharedInstance().presentingViewController = self
+//        GIDSignIn.sharedInstance().presentingViewController = self
     }
     
     
     private func localization() {
         welcomeLabel.text = "Welcome".localiz()
-        emailTextField.placeholder = "Email".localiz()
+        phoneNumberTextField.placeholder = "Phone Number".localiz()
         passwordTextField.placeholder = "Password".localiz()
         logInButton.setTitle("Log in".localiz(), for: .normal)
         forgetPasswordLabel.text = "Forgot password?".localiz()
         orButton.setTitle("OR".localiz(), for: .normal)
         loginFacebookLabel.text = "Log in with Facebook".localiz()
         loginGoogleLabel.text = "Log in with Google".localiz()
-        loginAppleLabel.text = "Log in with Apple".localiz()
+        loginAppleLabel.text = "Sign in with Apple".localiz()
         hasAccountLabel.text = "Don't have an account? ".localiz() + "Sign up".localiz()
+        
         hasAccountLabel.setSubTextColor(pSubString: "Sign up".localiz(), pColor: #colorLiteral(red: 1, green: 0.431372549, blue: 0.1803921569, alpha: 1))
         loginGuestLabel.text = "Login as a guest".localiz()
         alertLabel.text = "Join us and be one of the thousands of registered members".localiz()
         
         welcomeLabel.textAligment()
-        emailTextField.textAligment()
+        phoneNumberTextField.textAligment()
         passwordTextField.textAligment()
+        
+        print(keyChain.retriveCredentials()?.password)
+        print(keyChain.retriveCredentials()?.phoneNumber)
+        if keyChain.retriveCredentials()?.phoneNumber.isEmpty == true || keyChain.retriveCredentials() == nil {
+            faceIdImageView.isHidden = true
+        } else {
+            faceIdImageView.isHidden = false
+        }
+        
+        faceIdImageView.addTapGestureRecognizer {[weak self] in
+            self?.faceIDAuthenticatorService.evaluate(completion: {pass, _ in
+                guard pass else {return}
+                
+                self?.showLoading()
+                
+                let credentials = self?.keyChain.retriveCredentials()
+                self?.viewModel.login(phone: credentials?.phoneNumber ?? "", password: credentials?.password ?? "" ) { [weak self] (error) in
+                    
+                    defer {
+                        self?.stopLoading()
+                    }
+                    
+                    if error != nil {
+                        self?.showToast(message: error)
+                        return
+                    }
+                    let tabBarViewController = self?.initViewControllerWith(identifier: BubbleTabBarController.className, and: "") as! BubbleTabBarController
+                    tabBarViewController.modalPresentationStyle = .fullScreen
+                    let navigationRoot = UINavigationController(rootViewController: tabBarViewController)
+                    navigationRoot.modalPresentationStyle = .fullScreen
+                    self?.present(navigationRoot)
+                }
+            })
+        }
     }
     
     private func validation() -> Bool {
         error = ""
         
-        guard let email = emailTextField.text else {
-            error = "Please insert your email".localiz()
-            self.emailTextField.becomeFirstResponder()
+        guard let phone = phoneNumberTextField.text else {
+            error = "Please insert your phone number".localiz()
+            self.phoneNumberTextField.becomeFirstResponder()
             
             return error.isEmpty
         }
-        if email.validator(type: .Email) == .Required {
-            error = "Please insert your email".localiz()
-            self.emailTextField.becomeFirstResponder()
+        if phone.validator(type: .PhoneNumber) == .Required {
+            error = "Please insert your phone number".localiz()
+            self.phoneNumberTextField.becomeFirstResponder()
             return error.isEmpty
         }
-        if email.validator(type: .Email) == .Email {
-            error = "You have entered an invalid email address!".localiz()
-            self.emailTextField.becomeFirstResponder()
+        if phone.validator(type: .PhoneNumber) == .Email {
+            error = "Phone Number Should not been less than 9 digits".localiz()
+            self.phoneNumberTextField.becomeFirstResponder()
             
             return error.isEmpty
         }
@@ -139,7 +177,11 @@ class LoginViewController: UIViewController, SocialDelegate {
             return
         }
         showLoading()
-        viewModel.login(email: emailTextField.text!, password: passwordTextField.text!) { [weak self] (error) in
+        var validPhone = phoneNumberTextField.text!
+        if validPhone.starts(with: "00") {
+            validPhone = "\(validPhone.dropFirst(2))"
+        }
+        viewModel.login(phone: phoneNumberTextField.text!, password: passwordTextField.text!) { [weak self] (error) in
             
             defer {
                 self?.stopLoading()
@@ -154,6 +196,9 @@ class LoginViewController: UIViewController, SocialDelegate {
             let navigationRoot = UINavigationController(rootViewController: tabBarViewController)
             navigationRoot.modalPresentationStyle = .fullScreen
             self?.present(navigationRoot)
+            self?.keyChain.save(credentials: .init(
+                phoneNumber: validPhone,
+                password: self?.passwordTextField.text ?? ""))
         }
     }
     
@@ -161,10 +206,10 @@ class LoginViewController: UIViewController, SocialDelegate {
         let forget = initViewControllerWith(identifier: ForgetPasswordViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue)
         show(forget)
     }
-    
-    
+
+
     @IBAction func FaceebookLogin(_ sender: Any) {
-        signInFacebook()
+//        signInFacebook()
     }
     @IBAction func GoogleLogin(_ sender: Any) {
         signInGoogle()
@@ -214,6 +259,20 @@ extension LoginViewController {
         }
         
         return result
+    }
+    
+    func signInGoogle() {
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
+            guard error == nil else { return }
+            
+            // If sign-in succeeded, display the app's main content View.
+            if let user = signInResult?.user {
+                print("User signed in: \(user.userID ?? "No name")")
+
+                    let soicalMedia = SocialMedia(socialId: user.userID ?? "", email: user.profile?.email ?? "", phone: SocialError.PhoneNotFound.rawValue, displayName: user.profile?.name ?? "", imageUrl: "", socialToken: user.userID ?? "", type: .Google)
+                    socialDelegate?.signIn(socialMedia: soicalMedia)
+            }
+        }   
     }
     
     @available(iOS 13, *)

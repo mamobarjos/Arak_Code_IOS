@@ -14,50 +14,39 @@ class ProductViewController: UIViewController {
     lazy var scrollView = ScrollContainerView(contentView: contentView)
     let bottomView = BottomBarItemView()
 
-    let visitStoreButtom = UIButton().then {
-        $0.backgroundColor = UIColor.accentOrange.withAlphaComponent(0.80)
-        $0.setTitle("Visit Store", for: .normal)
-        $0.setTitleColor(.background, for: .normal)
-        $0.setTitleColor(.accent, for: .highlighted)
-        $0.layer.cornerRadius = 5
-    }
-
     private var productViewModel = ProductViewModel()
     private var storeProduct: [Product] = []
     public var storeId: Int?
     public var storeName: String?
+    public var productId: Int?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(scrollView)
-
         view.addSubview(bottomView)
-        view.addSubview(visitStoreButtom)
 
         view.bringSubviewToFront(bottomView)
-        view.bringSubviewToFront(visitStoreButtom)
 
         bottomView.layout
             .leading(to: .superview)
             .trailing(to: .superview)
             .bottom(to: .superview)
 
-        visitStoreButtom.layout
-            .leading(to: .superview, offset: 25)
-            .trailing(to: .superview, offset: -25)
-            .height(to: 55)
-            .bottom(.equal, to: bottomView, edge: .top, offset: -9)
-
-
         scrollView.layout.fill(.superview)
-        scrollView.scrollView.contentInset.bottom = -200
+        scrollView.scrollView.contentInset.bottom = 150
 
         contentView.delegate = self
 
         hiddenNavigation(isHidden: true)
-        configration(productId: 1)
+        configration(productId: productId ?? 0)
         connectAction()
-        visitStoreButtom.addTarget(self, action: #selector(handleVisitStoreTap), for: .touchUpInside)
+//        visitStoreButtom.addTarget(self, action: #selector(handleVisitStoreTap), for: .touchUpInside)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hiddenNavigation(isHidden: true)
     }
 
     func configration(productId: Int) {
@@ -72,27 +61,28 @@ class ProductViewController: UIViewController {
             }
 
 
-            self?.updateUI(product: self?.productViewModel.getStoreProduct() ?? [])
+            self?.updateUI(product: self?.productViewModel.getStoreProduct())
             self?.contentView.relatedProducts = self?.productViewModel.getRelatedProducts() ?? []
+            self?.contentView.reviews = self?.productViewModel.getStoreProduct()?.storeProduct?.reviews.map({.init(content: $0.content, rate: $0.rate, id: $0.id, createdAt: $0.createdAt, userid: $0.userid, updatedAt: $0.updatedAt, storeid: $0.storeProductid, user: nil)}) ?? []
         })
     }
 
-    @objc func handleVisitStoreTap() {
-
-        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
-        vc.storeId = storeId
-        show(vc)
-    }
+//    @objc func handleVisitStoreTap() {
+//
+//        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+//        vc.storeId = storeId
+//        show(vc)
+//    }
 
     private func connectAction() {
-        bottomView.webAction = {
-            if let url = URL(string: "https://www.hackingwithswift.com") {
+        bottomView.webAction = { [weak self] in
+            if let url = URL(string: "https://\(self?.productViewModel.getStoreProduct()?.storeProduct?.store?.website ?? "")") {
                 UIApplication.shared.open(url)
             }
         }
 
         bottomView.phoneAction = { [weak self] in
-            if let phoneCallURL = URL(string: "tel://") {
+            if let phoneCallURL = URL(string: "tel://\(self?.productViewModel.getStoreProduct()?.storeProduct?.store?.phoneNo ?? "")") {
 
                 let application:UIApplication = UIApplication.shared
                 if (application.canOpenURL(phoneCallURL)) {
@@ -101,12 +91,16 @@ class ProductViewController: UIViewController {
               }
         }
 
-        bottomView.locationAction = {
-
+        bottomView.locationAction = { [weak self] in
+            if let latDouble = Double(self?.productViewModel.getStoreProduct()?.storeProduct?.store?.lat ?? "") , let lngDouble = Double(self?.productViewModel.getStoreProduct()?.storeProduct?.store?.lon ?? "") {
+              Helper.OpenMap(latDouble, lngDouble)
+            } else {
+                self?.showToast(message: "Can't open the Map ")
+            }
         }
 
         bottomView.whatsAppAction = { [weak self] in
-            let urlWhats = "whatsapp://send?phone="
+            let urlWhats = "whatsapp://send?phone=\(self?.productViewModel.getStoreProduct()?.storeProduct?.store?.website ?? "")"
               if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed){
                   if let whatsappURL = URL(string: urlString) {
                       if UIApplication.shared.canOpenURL(whatsappURL){
@@ -127,15 +121,61 @@ class ProductViewController: UIViewController {
 
 
 extension ProductViewController {
-    private func updateUI(product: [Product]) {
+    private func updateUI(product: SingleProduct?) {
+        guard let product = product else {
+            return
+        }
         contentView.storeProduct = product
     }
 }
 
 extension ProductViewController :ProductContentViewDelegate {
+    func submiteReview(_ message: String, _ rating: Int) {
+        self.showLoading()
+        productViewModel.submitReview(review: message, rate: rating, storeProductId: productViewModel.getStoreProduct()?.storeProduct?.id ?? 0) {[weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+
+            if let error = error {
+                self?.showToast(message: error)
+            }
+
+            if let review = self?.productViewModel.getReview() {
+                self?.contentView.reviews.append(review)
+            }
+
+            self?.contentView.addReviewContainer.isHidden = true
+        }
+    }
+    
+    func showTostMessage(with error: String) {
+        self.showToast(message: error)
+    }
+
+    func deleteReview(id: Int) {
+        self.showLoading()
+        self.productViewModel.deleteReview(reviewId: id) { [weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+
+            if let error = error {
+                self?.showToast(message: error)
+                return
+            }
+
+            self?.contentView.addReviewContainer.isHidden = false
+            self?.showToast(message: "Review deleted successfully")
+            self?.contentView.reviews = self?.contentView.reviews.filter {$0.id != id
+            } ?? []
+        }
+    }
+
     func didTapOnViewAllproducts() {
         let vc = initViewControllerWith(identifier: StoreProductsViewController.className, and: "\(storeName ?? "All Products")", storyboardName: Storyboard.MainPhase.rawValue) as! StoreProductsViewController
-        vc.storeId = storeId
+        vc.categoryId = self.productViewModel.getStoreProduct()?.storeProduct?.store?.storeCategoryid
+        vc.storeId = -1
         show(vc)
     }
 
@@ -149,7 +189,7 @@ extension ProductViewController :ProductContentViewDelegate {
     }
 
     func userDidTapShare(id: String) {
-        let text = "This is some text that I want to share."
+        let text = productViewModel.getStoreProduct()?.storeProduct?.shareLink
 
                // set up activity view controller
                let textToShare = [ text ]
@@ -161,5 +201,24 @@ extension ProductViewController :ProductContentViewDelegate {
 
                // present the view controller
                self.present(activityViewController, animated: true, completion: nil)
+    }
+
+    func didTapOnProduct(id: Int) {
+        let vc = initViewControllerWith(identifier: ProductViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! ProductViewController
+        vc.storeId = storeId
+        vc.productId = id
+        show(vc)
+    }
+
+    func visatStoreTapped() {
+        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+               vc.storeId = storeId
+               show(vc)
+    }
+
+    func didTapOnBanner(productImagesFile: [StoreProductFile]) {
+        let vc = initViewControllerWith(identifier: PhotoViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! PhotoViewController
+        vc.imagesFile = productImagesFile
+        self.show(vc)
     }
 }

@@ -11,7 +11,9 @@ class DetailViewModel {
 
     // MARK: - Properties
     private(set) var ad: Adverisment?
-
+    var reviews: [ReviewResponse] = []
+    var review: ReviewResponse?
+    
     var adImages: [String] {
       return ad?.adImages?.map { $0.path ?? "" } ?? []
     }
@@ -26,6 +28,7 @@ class DetailViewModel {
           return
         }
         self.ad = response?.data
+        self.reviews = response?.data?.reviews ?? []
         compliation(nil)
       }
     }
@@ -41,4 +44,25 @@ class DetailViewModel {
           compliation(nil)
         }
       }
+    
+    func submitReview(review: String, rate: Int, ad_id: Int, complition: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.submitReview(content: review, rate: rate, ad_id: ad_id), decodable: ReviewResponse.self) { [weak self] response, error in
+            guard error == nil else {
+                complition(error)
+                return
+            }
+            self?.review = response?.data
+            complition(nil)
+        }
+    }
+    
+    func deleteReview(reviewId: Int, complition: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.deleteReview(id: reviewId), decodable: Review.self) { [weak self] response, error in
+            guard error == nil else {
+                complition(error)
+                return
+            }
+            complition(nil)
+        }
+    }
 }

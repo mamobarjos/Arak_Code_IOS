@@ -23,6 +23,7 @@ class StoreViewController: UIViewController {
     var storeType: StoreType = .regularStore
     private var storeDetails: SingleStore?
 
+    public var mode: StoreMode = .add
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,39 +36,67 @@ class StoreViewController: UIViewController {
 
         view.bringSubviewToFront(bottomView)
 
-        scrollView.layout.fill(.superview)
+        scrollView.layout.fill(.safeArea)
         scrollView.scrollView.contentInset.bottom = 130
 
         contentView.delegate = self
         configration(storeId: storeId ?? 1)
+        if mode == .edit {
+            contentView.favButton.isHidden = false
+            contentView.favButton.setImage(UIImage(named: "Icon material-edit"), for: .normal)
+            contentView.addButton.isHidden = false
+            contentView.addReviewContainer.isHidden = true
+        }
         connectAction()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hiddenNavigation(isHidden: true)
+        hiddenNavigation(isHidden: false)
     }
 
     func configration(storeId: Int) {
         self.showLoading()
-        storeViewModel.getStore(stroeId: storeId, complition: {[weak self] error in
-            defer {
-                self?.stopLoading()
+        if mode == .edit {
+            storeViewModel.getUserStore { [weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
+
+                if let error = error {
+                    self?.showToast(message: error)
+                }
+
+                self?.contentView.storeDetails = self?.storeViewModel.getStoreDetails()
+
+                if let storeDetails = self?.storeViewModel.getStoreDetails() {
+                    self?.storeDetails = storeDetails
+                }
+
+                self?.contentView.products = self?.storeViewModel.getStoreProduct() ?? []
+                self?.contentView.reviews = self?.storeViewModel.getReviews() ?? []
             }
+        } else {
 
-            if let error = error {
-                self?.showToast(message: error)
-            }
+            storeViewModel.getStore(stroeId: storeId, complition: {[weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
 
-            self?.contentView.storeDetails = self?.storeViewModel.getStoreDetails()
+                if let error = error {
+                    self?.showToast(message: error)
+                }
 
-            if let storeDetails = self?.storeViewModel.getStoreDetails() {
-                self?.storeDetails = storeDetails
-            }
+                self?.contentView.storeDetails = self?.storeViewModel.getStoreDetails()
 
-            self?.contentView.products = self?.storeViewModel.getStoreProduct() ?? []
-            self?.contentView.reviews = self?.storeViewModel.getReviews() ?? []
-        })
+                if let storeDetails = self?.storeViewModel.getStoreDetails() {
+                    self?.storeDetails = storeDetails
+                }
+
+                self?.contentView.products = self?.storeViewModel.getStoreProduct() ?? []
+                self?.contentView.reviews = self?.storeViewModel.getReviews() ?? []
+            })
+        }
     }
 
    private func connectAction() {
@@ -117,17 +146,26 @@ class StoreViewController: UIViewController {
 
 extension StoreViewController: StoreContentViewProtocol {
     func didTapOnAddProduct() {
-        self.showToast(message: "WIll be Implemented later 😎")
+        let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "\(storeDetails?.name ?? "Add Product")", storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
+        show(vc)
     }
 
     func didTapViewAllProduct() {
         let vc = initViewControllerWith(identifier: StoreProductsViewController.className, and: "\(storeDetails?.name ?? "All Products")", storyboardName: Storyboard.MainPhase.rawValue) as! StoreProductsViewController
-        vc.storeId = storeId
+        if mode == .edit {
+            vc.storeId = storeDetails?.id
+            vc.mode = .edit
+        } else {
+            vc.storeId = storeId
+        }
+
         show(vc)
     }
 
     func didTapOnFav(id: Int) {
-        self.showToast(message: "WIll be Implemented later 😎")
+       let vc = self.initViewControllerWith(identifier: SignUpStoreViewController.className, and: "Your Store", storyboardName: Storyboard.storeAuth.rawValue) as! SignUpStoreViewController
+        vc.mode = .edit
+        show(vc)
     }
 
     func didTapOnEdit(id: Int) {
@@ -139,10 +177,20 @@ extension StoreViewController: StoreContentViewProtocol {
     }
 
     func didTapOnProduct(id: Int) {
-        let vc = initViewControllerWith(identifier: ProductViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! ProductViewController
-        vc.storeId = storeId
-        vc.storeName = storeDetails?.name
-        show(vc)
+        if storeType == .myStore {
+            let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
+            vc.mode = .edit
+            let product = self.storeViewModel.getStoreProduct().filter{$0.id == id}.first
+            vc.product = product
+            show(vc)
+        } else {
+            let vc = initViewControllerWith(identifier: ProductViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! ProductViewController
+            vc.storeId = storeId
+            vc.storeName = storeDetails?.name
+            vc.productId = id
+            show(vc)
+        }
+
     }
 
     func submiteReview(_ message: String, _ rating: Int) {

@@ -1,0 +1,6 @@
+framework module WWLayout {
+  umbrella header "WWLayout-umbrella.h"
+
+  export *
+  module * { export * }
+}

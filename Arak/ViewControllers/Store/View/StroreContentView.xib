@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="ArbFONTS-Droid Arabic Kufi Bold.ttf">
+        <array key="ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf">
             <string>DroidArabicKufi-Bold</string>
         </array>
-        <array key="ArbFONTS-Droid Arabic Kufi.ttf">
+        <array key="ArbFONTS-Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf">
             <string>DroidArabicKufi</string>
         </array>
     </customFonts>
@@ -31,13 +31,17 @@
                 <outlet property="heightConst" destination="W0I-BH-I01" id="EPj-rG-8VA"/>
                 <outlet property="instaButton" destination="A57-mS-jwW" id="CAV-8G-RCG"/>
                 <outlet property="linkedInButton" destination="TsH-gv-DjS" id="BFy-l8-3nH"/>
+                <outlet property="productsStoreTiltleLabel" destination="Aod-qd-SyP" id="qVg-Gm-N35"/>
                 <outlet property="productsTableView" destination="jOE-nq-e5N" id="S1y-l6-BoO"/>
+                <outlet property="rateThisProviderTitleLabel" destination="X6b-tE-lUS" id="BNd-aJ-jgu"/>
+                <outlet property="reviewStoreTitleLabel" destination="0a9-PH-2hE" id="TyL-hh-aQ4"/>
                 <outlet property="reviewTextView" destination="qC8-Zv-i37" id="79C-Ve-WhF"/>
                 <outlet property="reviewrTableView" destination="LkE-Un-O6x" id="6sF-ky-bmB"/>
                 <outlet property="reviewsContainerView" destination="QbU-UR-62o" id="GBZ-aZ-8dZ"/>
                 <outlet property="snabButton" destination="1Lw-UN-4DM" id="QQr-Ff-X8s"/>
                 <outlet property="stackView" destination="EXd-Hw-oWv" id="YLM-ea-pLM"/>
                 <outlet property="storeImageView" destination="SG6-uM-o7G" id="boS-b0-Aki"/>
+                <outlet property="submitButton" destination="oiI-5K-FZh" id="Oei-B8-F8O"/>
                 <outlet property="subtitleLabel" destination="2eA-XF-EmD" id="lJZ-f4-Nsp"/>
                 <outlet property="titleLabel" destination="CfJ-OO-DOf" id="6h9-lX-vVd"/>
                 <outlet property="twitterButton" destination="bGg-vW-c0j" id="yeD-Ly-76X"/>
@@ -310,10 +314,10 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofX-JF-Psg" customClass="CosmosView" customModule="Cosmos">
-                            <rect key="frame" x="15" y="36.5" width="150" height="30"/>
+                            <rect key="frame" x="15" y="36.5" width="90" height="30"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="150" id="AkH-oC-DD2"/>
+                                <constraint firstAttribute="width" constant="90" id="AkH-oC-DD2"/>
                                 <constraint firstAttribute="height" constant="30" id="G8e-cE-lwC"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>

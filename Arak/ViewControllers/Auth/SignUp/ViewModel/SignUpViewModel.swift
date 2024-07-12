@@ -10,7 +10,7 @@ import Foundation
 class SignUpViewModel {
 
   // MARK: - Properties
-  private(set) var genderList: [String] = ["Male".localiz() , "Female".localiz()]
+  private(set) var genderList: [String] = ["Male".localiz() , "Female".localiz(), "Other".localiz()]
 
   private(set) var countryList: [Country] = []
   private(set) var cityList: [Country] = []
@@ -18,6 +18,7 @@ class SignUpViewModel {
     private(set) var phone:String = ""
 
   func register(data: [String: String] , compliation: @escaping CompliationHandler) {
+      print(data)
     Network.shared.request(request: APIRouter.register(data: data), decodable: User.self) { (response, error) in
       if error != nil {
         compliation(error)
@@ -41,6 +42,7 @@ class SignUpViewModel {
     }
       
   func socialRegisterLogin(data: [String: String] , compliation: @escaping CompliationHandler) {
+      print(data)
     Network.shared.request(request: APIRouter.socialRegisterLogin(data: data), decodable: User.self) { (response, error) in
       if error != nil || response?.data == nil {
         compliation(error)

@@ -20,13 +20,16 @@
 
 #if TARGET_OS_TV
 
-#import "FBSDKCoreKitImport.h"
-
+#if defined BUCK || defined FBSDKCOCOAPODS || defined __cplusplus
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKSharingContent.h>
+#else
+@import FBSDKCoreKit;
 #import "FBSDKSharingContent.h"
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
-DEVICE_SHARING_DEPRECATED
 NS_SWIFT_NAME(FBDeviceShareButton)
 @interface FBSDKDeviceShareButton : FBSDKDeviceButton
 

@@ -13,14 +13,28 @@ enum StoresRout: APIConfiguration {
     case getStores(page: Int)
     case filterStoresByCategory(category: Int, page: Int)
     case searchStore(storeName: String)
+
     case getSingleStore(id: Int)
+    case getUserStore
+
     case createProduct(data: [String:Any])
     case getStoreProducts(storeId: Int, page: Int)
     case getStoreSingleProduct(productId: Int)
-    case submitReview(content: String, rate: Int, store_id: Int)
 
+    case submitReview(content: String, rate: Int, store_id: Int)
     case deleteStoreReview(id: Int)
+
+    case submiteProductReview(content: String, rate: Int, store_product_id: Int)
+    case deleteProductReview(id: Int)
+
     case getCategories
+
+    case updateStore(id: Int, data: [String:Any])
+    case updateProduct(id: Int, data: [String:Any])
+    case getUserProducts(page: Int)
+
+    case getProductsByCategory(categoryId: Int, page: Int)
+
     var method: HTTPMethod {
         switch self {
         case .createStore: return .post
@@ -35,6 +49,15 @@ enum StoresRout: APIConfiguration {
         case .deleteStoreReview: return .delete
         case .getCategories: return .get
 
+        case .updateStore:return .post
+        case .updateProduct:return .post
+        case .getUserStore: return .get
+        case .submiteProductReview: return .post
+        case .deleteProductReview: return .delete
+        case .getUserProducts: return .get
+
+        case .getProductsByCategory:
+            return .get
         }
     }
 
@@ -52,6 +75,18 @@ enum StoresRout: APIConfiguration {
             case .deleteStoreReview(let id):
                 return "store-reviews/delete-review/\(id)"
             case .getCategories: return "store-categories"
+            case .updateStore(let id, _):
+                return "stores/update-store/\(id)"
+            case .updateProduct(let id, _):
+                return "store-products/update-product/\(id)"
+            case .getUserStore:
+                return "stores/get-user-store"
+            case .submiteProductReview: return "store-product-reviews/add-review"
+            case .deleteProductReview(id: let id): return "store-product-reviews/delete-review/\(id)"
+            case .getUserProducts:
+                return "store-products/get-user-store-products"
+            case .getProductsByCategory(let id, _):
+                return "stores/filter-store-products-by-category/\(id)"
             }
         }
 
@@ -78,6 +113,20 @@ enum StoresRout: APIConfiguration {
             case .deleteStoreReview:
                 return .url([:])
             case .getCategories:
+                return .url([:])
+            case .updateStore(_ , let data):
+                return .body(data)
+            case .updateProduct(_ , let data):
+                return .body(data)
+            case .getUserStore:
+                return .url([:])
+            case .submiteProductReview(content: let content, rate: let rate, store_product_id: let storeID):
+                return .body(["content":content, "rate":rate, "store_product_id":storeID])
+            case .deleteProductReview(id: let id):
+                return .url([:])
+            case .getUserProducts(let page):
+                return.url(["page":page])
+            case .getProductsByCategory(categoryId: let categoryId, page: let page):
                 return .url([:])
             }
         }

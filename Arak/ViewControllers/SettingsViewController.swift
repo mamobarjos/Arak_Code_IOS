@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import Foundation
+import SwiftUI
 class SettingsViewController: UIViewController {
     
     @IBOutlet weak var changeLanguageLabel: UILabel!
@@ -32,6 +33,8 @@ class SettingsViewController: UIViewController {
     
     
     private var viewModel = NotificationViewModel()
+    var viewModel2: ProfileViewModel = ProfileViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -119,5 +122,35 @@ class SettingsViewController: UIViewController {
         show(vc)
     }
     @IBAction func NeedHelp(_ sender: Any) {
+    }
+    
+    
+    @IBAction func deleteAccountTapped(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your account?", preferredStyle: .alert)
+            
+             let ok = UIAlertAction(title: "Confirm", style: .default, handler: { action in
+                 self.showLoading()
+                 self.viewModel2.deleteAccount { [weak self] (error) in
+                     defer {
+                         self?.stopLoading()
+                     }
+                     
+                     if error != nil {
+                         self?.showToast(message: error)
+                         return
+                     }
+                     Helper.store = nil
+                     let vc = self?.initViewControllerWith(identifier: "LoginViewController", and: "",storyboardName: Storyboard.Auth.rawValue) as! LoginViewController
+                     self?.presentWithNavigation(vc, animated: true, configure: nil, completion: nil)
+                 }
+             })
+             alert.addAction(ok)
+             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { action in
+             })
+             alert.addAction(cancel)
+             DispatchQueue.main.async(execute: {
+                self.present(alert, animated: true)
+        })
     }
 }

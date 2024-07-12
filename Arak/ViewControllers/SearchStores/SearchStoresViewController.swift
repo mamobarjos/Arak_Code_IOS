@@ -27,6 +27,7 @@ class SearchStoresViewController: UIViewController {
     var viewModel = StoresViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchTextField.placeholder = "placeHolder.Search Stores".localiz()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension

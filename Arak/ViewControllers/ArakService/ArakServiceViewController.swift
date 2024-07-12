@@ -66,13 +66,20 @@ extension ArakServiceViewController : UITableViewDelegate , UITableViewDataSourc
             Helper.resetLoggingData()
             return
         }
-        let vc = self.initViewControllerWith(identifier: ServicePopUpViewController.className, and: "") as! ServicePopUpViewController
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
-        vc.confige(serviceId: serviceViewModel.item(at: indexPath.row).id ?? -1) {
-            vc.dismiss(animated: true, completion: nil)
+        let popUp = self.initViewControllerWith(identifier: ArakServiceDetailsPopUpViewController.className, and: "") as! ArakServiceDetailsPopUpViewController
+        popUp.serviceDesc = serviceViewModel.item(at: indexPath.row ).desc
+        popUp.onButtonAction = {[weak self] in
+            popUp.dismiss(animated: false)
+            let vc = self?.initViewControllerWith(identifier: ServicePopUpViewController.className, and: "") as! ServicePopUpViewController
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.modalTransitionStyle = .crossDissolve
+            vc.confige(serviceId: self?.serviceViewModel.item(at: indexPath.row).id ?? -1) {
+                vc.dismiss(animated: true, completion: nil)
+            }
+            self?.present(vc, animated: true, completion: nil)
         }
-        self.present(vc, animated: true, completion: nil)
+        self.present(popUp, modalPresentationStyle: .pageSheet)
+       
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

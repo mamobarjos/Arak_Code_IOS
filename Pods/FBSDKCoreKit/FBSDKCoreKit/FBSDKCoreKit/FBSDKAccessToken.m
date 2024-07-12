@@ -17,7 +17,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "FBSDKAccessToken.h"
-#import "FBSDKAccessToken+Internal.h"
 
 #import "FBSDKGraphRequestPiggybackManager.h"
 #import "FBSDKInternalUtility.h"
@@ -57,25 +56,25 @@ static FBSDKAccessToken *g_currentAccessToken;
 - (instancetype)initWithTokenString:(NSString *)tokenString
                         permissions:(NSArray *)permissions
                 declinedPermissions:(NSArray *)declinedPermissions
-                 expiredPermissions:(NSArray *)expiredPermissions
+                expiredPermissions:(NSArray *)expiredPermissions
                               appID:(NSString *)appID
                              userID:(NSString *)userID
                      expirationDate:(NSDate *)expirationDate
                         refreshDate:(NSDate *)refreshDate
            dataAccessExpirationDate:(NSDate *)dataAccessExpirationDate
 {
-  if ((self = [super init])) {
-    _tokenString = [tokenString copy];
-    _permissions = [NSSet setWithArray:permissions];
-    _declinedPermissions = [NSSet setWithArray:declinedPermissions];
-    _expiredPermissions = [NSSet setWithArray:expiredPermissions];
-    _appID = [appID copy];
-    _userID = [userID copy];
-    _expirationDate = [expirationDate copy] ?: [NSDate distantFuture];
-    _refreshDate = [refreshDate copy] ?: [NSDate date];
-    _dataAccessExpirationDate = [dataAccessExpirationDate copy] ?: [NSDate distantFuture];
-  }
-  return self;
+    if ((self = [super init])) {
+        _tokenString = [tokenString copy];
+        _permissions = [NSSet setWithArray:permissions];
+        _declinedPermissions = [NSSet setWithArray:declinedPermissions];
+        _expiredPermissions = [NSSet setWithArray:expiredPermissions];
+        _appID = [appID copy];
+        _userID = [userID copy];
+        _expirationDate = [expirationDate copy] ?: [NSDate distantFuture];
+        _refreshDate = [refreshDate copy] ?: [NSDate date];
+        _dataAccessExpirationDate = [dataAccessExpirationDate copy] ?: [NSDate distantFuture];
+    }
+    return self;
 }
 
 - (instancetype)initWithTokenString:(NSString *)tokenString
@@ -111,11 +110,12 @@ static FBSDKAccessToken *g_currentAccessToken;
 - (BOOL)hasGranted:(NSString *)permission
 {
   return [self.permissions containsObject:permission];
+
 }
 
 - (BOOL)isDataAccessExpired
 {
-  return [self.dataAccessExpirationDate compare:NSDate.date] == NSOrderedAscending;
+    return [self.dataAccessExpirationDate compare:NSDate.date] == NSOrderedAscending;
 }
 
 - (BOOL)isExpired
@@ -130,16 +130,10 @@ static FBSDKAccessToken *g_currentAccessToken;
 
 + (void)setCurrentAccessToken:(FBSDKAccessToken *)token
 {
-  [FBSDKAccessToken setCurrentAccessToken:token shouldDispatchNotif:YES];
-}
-
-+ (void)setCurrentAccessToken:(FBSDKAccessToken *)token
-          shouldDispatchNotif:(BOOL)shouldDispatchNotif
-{
   if (token != g_currentAccessToken) {
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-    [FBSDKTypeUtility dictionary:userInfo setObject:token forKey:FBSDKAccessTokenChangeNewKey];
-    [FBSDKTypeUtility dictionary:userInfo setObject:g_currentAccessToken forKey:FBSDKAccessTokenChangeOldKey];
+    [FBSDKBasicUtility dictionary:userInfo setObject:token forKey:FBSDKAccessTokenChangeNewKey];
+    [FBSDKBasicUtility dictionary:userInfo setObject:g_currentAccessToken forKey:FBSDKAccessTokenChangeOldKey];
     // We set this flag also when the current Access Token was not valid, since there might be legacy code relying on it
     if (![g_currentAccessToken.userID isEqualToString:token.userID] || !self.isCurrentAccessTokenActive) {
       userInfo[FBSDKAccessTokenDidChangeUserIDKey] = @YES;
@@ -154,11 +148,9 @@ static FBSDKAccessToken *g_currentAccessToken;
     }
 
     [FBSDKSettings accessTokenCache].accessToken = token;
-    if (shouldDispatchNotif) {
-      [[NSNotificationCenter defaultCenter] postNotificationName:FBSDKAccessTokenDidChangeNotification
-                                                          object:[self class]
-                                                        userInfo:userInfo];
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:FBSDKAccessTokenDidChangeNotification
+                                                        object:[self class]
+                                                      userInfo:userInfo];
   }
 }
 
@@ -175,13 +167,9 @@ static FBSDKAccessToken *g_currentAccessToken;
     [FBSDKGraphRequestPiggybackManager addRefreshPiggyback:connection permissionHandler:completionHandler];
     [connection start];
   } else if (completionHandler) {
-    completionHandler(
-      nil,
-      nil,
-      [FBSDKError
-       errorWithCode:FBSDKErrorAccessTokenRequired
-       message:@"No current access token to refresh"]
-    );
+    completionHandler(nil, nil, [FBSDKError
+                                 errorWithCode:FBSDKErrorAccessTokenRequired
+                                 message:@"No current access token to refresh"]);
   }
 }
 
@@ -217,17 +205,17 @@ static FBSDKAccessToken *g_currentAccessToken;
 
 - (BOOL)isEqualToAccessToken:(FBSDKAccessToken *)token
 {
-  return (token
-    && [FBSDKInternalUtility object:self.tokenString isEqualToObject:token.tokenString]
-    && [FBSDKInternalUtility object:self.permissions isEqualToObject:token.permissions]
-    && [FBSDKInternalUtility object:self.declinedPermissions isEqualToObject:token.declinedPermissions]
-    && [FBSDKInternalUtility object:self.expiredPermissions isEqualToObject:token.expiredPermissions]
-    && [FBSDKInternalUtility object:self.appID isEqualToObject:token.appID]
-    && [FBSDKInternalUtility object:self.userID isEqualToObject:token.userID]
-    && [FBSDKInternalUtility object:self.refreshDate isEqualToObject:token.refreshDate]
-    && [FBSDKInternalUtility object:self.expirationDate isEqualToObject:token.expirationDate]
-    && [FBSDKInternalUtility object:self.dataAccessExpirationDate isEqualToObject:token.dataAccessExpirationDate]
-    && [FBSDKInternalUtility object:self.graphDomain isEqualToObject:token.graphDomain]);
+  return (token &&
+          [FBSDKInternalUtility object:self.tokenString isEqualToObject:token.tokenString] &&
+          [FBSDKInternalUtility object:self.permissions isEqualToObject:token.permissions] &&
+          [FBSDKInternalUtility object:self.declinedPermissions isEqualToObject:token.declinedPermissions] &&
+          [FBSDKInternalUtility object:self.expiredPermissions isEqualToObject:token.expiredPermissions] &&
+          [FBSDKInternalUtility object:self.appID isEqualToObject:token.appID] &&
+          [FBSDKInternalUtility object:self.userID isEqualToObject:token.userID] &&
+          [FBSDKInternalUtility object:self.refreshDate isEqualToObject:token.refreshDate] &&
+          [FBSDKInternalUtility object:self.expirationDate isEqualToObject:token.expirationDate] &&
+          [FBSDKInternalUtility object:self.dataAccessExpirationDate isEqualToObject:token.dataAccessExpirationDate] &&
+          [FBSDKInternalUtility object:self.graphDomain isEqualToObject:token.graphDomain]);
 }
 
 #pragma mark - NSCopying
@@ -285,16 +273,5 @@ static FBSDKAccessToken *g_currentAccessToken;
   [encoder encodeObject:self.dataAccessExpirationDate forKey:FBSDK_ACCESSTOKEN_DATA_EXPIRATIONDATE_KEY];
   [encoder encodeObject:self.graphDomain forKey:FBSDK_ACCESSTOKEN_GRAPH_DOMAIN_KEY];
 }
-
-#pragma mark - Testability
-
-#if DEBUG
-
-+ (void)resetCurrentAccessTokenCache
-{
-  g_currentAccessToken = nil;
-}
-
-#endif
 
 @end

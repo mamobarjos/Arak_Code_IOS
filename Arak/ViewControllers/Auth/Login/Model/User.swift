@@ -19,7 +19,7 @@ struct User: Codable {
     let socialToken: String?
     var balance: Double?
     var companyName: String?
-    let hasStore: Int
+    let hasStore: Int?
     
     var balanceTitle: String  {
         return "\(balance ?? 0) \("JOD".localiz())"

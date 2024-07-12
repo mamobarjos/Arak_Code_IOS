@@ -10,7 +10,7 @@
 "Password" = "كلمة المرور";
 "Log in" = "تسجيل الدخول";
 "Forgot password?" = "هل نسيت كلمة المرور ؟";
-"Log in with Apple" = "تسجيل الدخول باستخدام أبل";
+"Sign in with Apple" = "تسجيل الدخول باستخدام أبل";
 "Log in with Facebook" = "تسجيل الدخول باستخدام الفيسبوك";
 "Log in with Google" = "تسجيل الدخول باستخدام غوغل";
 "OR" = "OR";
@@ -92,6 +92,7 @@
 "s" = "ث";
 "Up To %@ Secounds" = "لغاية %@ ثواني";
 "Home" = "الرئيسية";
+"Stores" = "المتاجر";
 "Wallet" = "محفظة";
 "Ads" = "الاعلانات";
 "Notification" = "الاشعارات";
@@ -112,6 +113,7 @@
 
 "Arak Service" = "خدمات أراك";
 "Arak Ranking" = "تقييمات أراك";
+"Service Details" = "تفاصيل الخدمة";
 "Tell us a bit more about why you chose" = "اخبرنا بتلخيص لماذا اخترت";
 "Login as a guest" = "تسجيل الدخول كزائر";
 
@@ -157,7 +159,7 @@
 
 //with draw
 "Amount" = "المبلغ";
-"Withdraw" = "المسحوب";
+"Withdraw" = "طلب السحب";
 "Earning" = "الإيرادات";
 "JOD" = "د.أ";
 "Enter Name" = "ادخل الاسم";
@@ -211,6 +213,7 @@
 "Edit Profile" = "تعديل الملف الشخصي";
 "My Detail" = "تفاصيلي";
 "Sign out" = "تسجيل الخروج";
+"Follow Us" = "تابعنا";
 "Favorite" = "المفضلات";
 "History" = "السجلات";
 "Change Password" = "تغيير كلمة المرور";
@@ -231,15 +234,22 @@
 "You cannot start chatting because the ad is for your " = "لا يمكنك بدء الدردشة لأن الإعلان خاص بك";
 "Please Install Whatsapp" = "الرجاء تثبيت Whatsapp";
 //Other
-"Make An Ad" = "اصنع اعلان";
-"ACTIVITIES" = "الأنشطة";
+"Make An Ad" = "إنشاء اعلان";
+"ACTIVITIES" = "الحركات";
 "General" = "العام";
-"Feedback" = "التغذية الراجعة";
+"Feedback" = "تقييم التطبيق";
 "Need Help?" = "تحتاج مساعدة؟";
 "Legal" = "السياسات";
 
 "Arak" = "أراك";
 
+
+"All" = "الكل";
+"Stores" = "المتاجر";
+"Images" = "الصور";
+"Video" = "فيديو";
+"Video Web" = "فيديو ويب";
+"Filter Ads" = "تصفية";
 
 //Addiational
 "Withdrawal Request Successful" = "تم طلب السحب بنجاح";
@@ -312,3 +322,57 @@
 "Join us and be one of the thousands of registered members" = "انضم إلينا وكن واحدًا من آلاف الأعضاء المسجلين";
 "We apologize, the minimum amount for withdrawal is 5 dinars" = "معذرة الحد الادنى للسحب 5 دنانير";
 "Please contact us to purchase a coupon" = "يرجى الاتصال بنا لشراء قسيمة";
+
+
+// New Updates
+
+"placeHolder.Search Stores" = "البحث في المتاجر";
+"placeHolder.Enter your review for this service provider..." = "ادخل رايك ...";
+"placeHolder.Enter your review ..." = "ادخل رايك ...";
+"placeHolder.Description" = "الوصف";
+"placeHolder.Title" = "العنوان";
+"placeHolder.Price" = "السعر";
+"placeHolder.Company Name" = "اسم المتجر";
+"placeHolder.Website" = "الموقع الالكتروني";
+"placeHolder.Phone Number" = "رقم الهاتف";
+"placeHolder.Location" = "الموقع";
+
+
+
+"label.Products Store" = "منتجات المتجر";
+"label.Related Products" = "منتجات ذات صله";
+"label.Review" = "المراجعات";
+"label.Rate this service Provider" = "اضافة تقييم";
+"label.Rate this Ad" = "اضافة تقييم";
+"label.View All" = "مشاهدة الكل";
+"label.Your Store" = "متجرك";
+"label.My Store" = "متجري";
+"label.My Products" = "منتجاتي";
+
+"title.Choose Store Category" = "اختر الفئه";
+"title.Your store has been successfully created" = "تم إنشاء متجرك بنجاح";
+"title.Your Service has been successfully created" = "تم إنشاء خدمتك بنجاح";
+"title.Go To Your Store" = "اذهب إلى متجرك";
+"title.Success" = "نجاح";
+
+"action.Add Your Store" = "أضف متجرك";
+"action.Submit" = "متابعه";
+"action.Upload Image" = "ارفع صورة";
+"action.Continue" = "متابعه";
+"action.Visit Store" = "قم بزيارة المعرض او المتجر";
+"action.All" = "الكل";
+
+"error.please add your review" = "الرجاء إضافة رأيك";
+"error.please rate this store" = "يرجى تقييم هذا المتجر";
+"error.Please Enter your Product Name" = "الرجاء إدخال اسم المنتج الخاص بك";
+"error.Please Enter your Product Description" = "الرجاء إدخال وصف المنتج الخاص بك";
+"error.Please Enter your Product Price" = "الرجاء إدخال سعر المنتج الخاص بك";
+"error.Please add Product Image" = "الرجاء إضافة صورة المنتج";
+"error.Please Enter Store Name" = "الرجاء إدخال اسم المتجر";
+"error.Please Enter Store Description" = "الرجاء إدخال وصف المتجر";
+"error.Please Enter Store Phone Number" = "الرجاء إدخال رقم هاتف المتجر";
+"error.Please Enter your Store Location" = "الرجاء إدخال موقع متجرك";
+"error.Please Choose Store Category Type" = "الرجاء اختيار نوع فئة المتجر";
+"error.Please Add Your Store Image" = "الرجاء إضافة صورة متجرك";
+"error.Please Add Your Store Cover Image" = "يرجى إضافة صورة غلاف متجرك";
+"error.you already have store" = "لديك بالفعل متجر";

@@ -8,7 +8,7 @@
 import Foundation
 
 struct SingleProduct: Codable {
-    let storeProduct: PagingModel<[Product]>?
+    let storeProduct: Product?
     let relatedProducts: [RelatedProducts]?
 
     enum CodingKeys: String, CodingKey {
@@ -20,14 +20,15 @@ struct SingleProduct: Codable {
 // MARK: - StoreProduct
 
 struct RelatedProducts: Codable {
-    let id: Int
+    let id: Int?
     let name: String?
     let desc: String?
     let price: Double?
     let totalRates: Double?
-    let storeid: Int
+    let storeid: Int?
     let createdAt: String?
     let updatedAt: String?
+    let storeProductFiles: [StoreProductFile]?
 
     var priceformated: String {
         let price = String(format: "%.2f", self.price ?? 0.0)
@@ -44,20 +45,23 @@ struct RelatedProducts: Codable {
         case storeid = "store_id"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case storeProductFiles = "store_product_files"
     }
 }
 
 struct Product: Codable {
-    let id: Int
-    let name: String
-    let desc: String
-    let price: Double
+    let id: Int?
+    let name: String?
+    let desc: String?
+    let price: Double?
     let totalRates: Double?
-    let storeid: Int
-    let createdAt: String
-    let updatedAt: String
+    let storeid: Int?
+    let createdAt: String?
+    let updatedAt: String?
     let storeProductFiles: [StoreProductFile]
     let store: ProductStore?
+    let reviews: [ProductReviewResponse]
+    let shareLink: String?
     
     var priceformated: String {
         let price = String(format: "%.2f", self.price ?? 0.0)
@@ -75,16 +79,18 @@ struct Product: Codable {
         case updatedAt = "updated_at"
         case storeProductFiles = "store_product_files"
         case store = "store"
+        case reviews = "store_product_reviews"
+        case shareLink = "share_link"
     }
 }
 
 // MARK: - StoreProductFile
 struct StoreProductFile: Codable {
-    let id: Int
-    let path: String
-    let storeProductid: Int
-    let createdAt: String
-    let updatedAt: String
+    let id: Int?
+    let path: String?
+    let storeProductid: Int?
+    let createdAt: String?
+    let updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -141,5 +147,76 @@ struct ProductStore: Codable {
         case createdAt = "created_at"
         case desc = "desc"
         case snapchat = "snapchat"
+    }
+}
+
+
+
+/// Stubid Model
+
+struct StubidRelatedProducts: Codable {
+    let id: Int
+    let name: String?
+    let desc: String?
+    let price: Double?
+    let totalRates: Double?
+    let storeid: Int
+    let createdAt: String?
+    let updatedAt: String?
+//    let storeProductFiles: [StoreProductFile]
+
+    var priceformated: String {
+        let price = String(format: "%.2f", self.price ?? 0.0)
+        return "$\(price)"
+    }
+
+
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case desc = "desc"
+        case price = "price"
+        case totalRates = "total_rates"
+        case storeid = "store_id"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+//        case storeProductFiles = "store_product_files"
+    }
+}
+
+
+struct Datum: Codable {
+    let id, price: Int?
+    let createdAt: JSONNull?
+    let storeProductFiles: [StoreProductFile2]?
+    let totalRates: Double?
+    let updatedAt: JSONNull?
+    let storeID: Int?
+    let name, desc: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, price
+        case createdAt = "created_at"
+        case storeProductFiles = "store_product_files"
+        case totalRates = "total_rates"
+        case updatedAt = "updated_at"
+        case storeID = "store_id"
+        case name, desc
+    }
+}
+
+// MARK: - StoreProductFile
+struct StoreProductFile2: Codable {
+    let path: String?
+    let id: Int?
+    let updatedAt: JSONNull?
+    let storeProductID: Int?
+    let createdAt: JSONNull?
+
+    enum CodingKeys: String, CodingKey {
+        case path, id
+        case updatedAt = "updated_at"
+        case storeProductID = "store_product_id"
+        case createdAt = "created_at"
     }
 }

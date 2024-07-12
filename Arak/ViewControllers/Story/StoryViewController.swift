@@ -22,6 +22,8 @@ class StoryViewController: UIViewController {
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var timerLable: UILabel!
     @IBOutlet weak var learnMoreButton: UIButton!
+    @IBOutlet weak var forwardButtonImage: UIButton!
+    @IBOutlet weak var backwardButtonImage: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var learnMoreView: UIView!
@@ -37,14 +39,24 @@ class StoryViewController: UIViewController {
     private var viewModel: StoryViewModel?
     private var adsType: AdsTypes = .image
     private var avPlayerController = AVPlayerViewController()
-    private var loading: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var activityIndicator: UIActivityIndicatorView!
     private var path = ""
     private var detailViewModel = DetailViewModel()
     private var source: Source = .Home
     fileprivate var player = Player()
+    private var currentImageIndex = 0
     // MARK: - Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .gray
+        self.view.addSubview(activityIndicator)
+        
+        forwardButtonImage.isHidden = true
+        backwardButtonImage.isHidden = true
         if let viewModel = viewModel {
             prepareBinding(index: viewModel.index)
         }else {
@@ -146,6 +158,8 @@ class StoryViewController: UIViewController {
                     webView.isHidden = true
                     count = Double(activeAds.duration ?? "5") ?? 5
                     imageView.getAlamofireImage(urlString: activeAds.adImages?.first?.path)
+                    fetchImageDetail(id: activeAds.id ?? 0 )
+                    print(activeAds.adImages)
                     prepare()
                 } else if activeAds.adCategoryID == AdsTypes.video.rawValue   {
                     imageView.isHidden = true
@@ -223,7 +237,7 @@ class StoryViewController: UIViewController {
     
     private func setupVideo(path: String) {
         if source != .Home {
-            showLoading()
+            activityIndicator.startAnimating()
             timerLable.text = ""
             
             if let videoUrl = URL(string: path) {
@@ -240,7 +254,7 @@ class StoryViewController: UIViewController {
                 
             }
         } else {
-            showLoading()
+            activityIndicator.startAnimating()
             timerLable.text = "00:00"
             
           
@@ -263,13 +277,33 @@ class StoryViewController: UIViewController {
     }
     
     
+    private func fetchImageDetail(id: Int) {
+        activityIndicator.startAnimating()
+        detailViewModel.adsDetail(id: id) { [weak self] (error) in
+            defer {
+                self?.activityIndicator.stopAnimating()
+            }
+            
+            if error != nil {
+                self?.showToast(message: error)
+                return
+            }
+            
+            if self?.detailViewModel.adImages.count ?? 0 > 1 {
+                self?.forwardButtonImage.isHidden = false
+                self?.backwardButtonImage.isHidden = false
+            }
+//            self?.loadDetailView()
+        }
+    }
+    
     public func config(viewModel: StoryViewModel, source: Source) {
         self.viewModel = viewModel
         self.source = source
     }
     
     @IBAction func Close(_ sender: Any) {
-        player.forceStop()
+//        player.forceStop()
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         self.player.willMove(toParent: nil)
         self.player.view.removeFromSuperview()
@@ -277,6 +311,19 @@ class StoryViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func forwardButtonAction(_ sender: Any) {
+        if currentImageIndex < detailViewModel.adImages.count - 1 {
+            currentImageIndex += 1
+            imageView.getAlamofireImage(urlString: detailViewModel.adImages[currentImageIndex])
+        }
+    }
+    
+    @IBAction func backwardButtonAction(_ sender: Any) {
+        if currentImageIndex > 0 {
+            currentImageIndex -= 1
+            imageView.getAlamofireImage(urlString: detailViewModel.adImages[currentImageIndex])
+        }
+    }
     
     @IBAction func LearnMore(_ sender: Any) {
         if Helper.userType == Helper.UserType.GUEST.rawValue  {
@@ -284,7 +331,7 @@ class StoryViewController: UIViewController {
             Helper.resetLoggingData()
             return
         }
-        player.forceStop()
+//        player.forceStop()
         let detailVC = self.initViewControllerWith(identifier: DetailViewController.className, and: "") as! DetailViewController
         detailVC.confige(id: activeAds?.id)
         self.show(detailVC)
@@ -313,7 +360,7 @@ extension Double {
 extension StoryViewController: PlayerDelegate {
     func playerReady(_ player: Player) {
         print("\(#function) ready")
-        self.stopLoading()
+        self.activityIndicator.stopAnimating()
         self.count = Double(activeAds?.duration ?? "5") ?? 5
         if source == .Home {
             self.prepare()
@@ -336,7 +383,7 @@ extension StoryViewController: PlayerDelegate {
     
     func player(_ player: Player, didFailWithError error: Error?) {
         print("\(#function) error.description")
-        self.stopLoading()
+        self.activityIndicator.stopAnimating()
     }
     
     

@@ -40,6 +40,7 @@ class OtpViewController: UIViewController {
 
   func confige(email: String,processType: ProcessType,data:[String : String] = [:]) {
     self.processType = processType
+      print(data)
     self.data = data
     self.oldNumber = data["old_phone"] ?? ""
   }

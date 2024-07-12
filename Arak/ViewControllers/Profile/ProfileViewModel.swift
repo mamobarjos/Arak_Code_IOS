@@ -8,25 +8,36 @@
 import Foundation
 
 class ProfileViewModel {
-
+    
     // MARK: - Properties
     
     
     // MARK: - Exposed Methods
     
     
-  // MARK: - Protected Methods
-  func logout(compliation: @escaping CompliationHandler) {
-    Network.shared.request(request: APIRouter.logout, decodable: User.self) { (response, error) in
-        if error != nil {
-          compliation(error)
-          return
+    // MARK: - Protected Methods
+    func logout(compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.logout, decodable: User.self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            Helper.resetLoggingData()
+            compliation(nil)
         }
-        Helper.resetLoggingData()
-        compliation(nil)
-      }
     }
-    
+    func deleteAccount(compliation: @escaping CompliationHandler) {
+        
+        Network.shared.request(request: APIRouter.deleteAccount, decodable: DeleteUerModel.self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            Helper.resetLoggingData()
+            compliation(nil)
+        }
+    }
+
     func editProfile(data: [String: String],compliation: @escaping CompliationHandler) {
       Network.shared.request(request: APIRouter.editUserInfo(data: data), decodable: User.self) { (response, error) in
           if error != nil {

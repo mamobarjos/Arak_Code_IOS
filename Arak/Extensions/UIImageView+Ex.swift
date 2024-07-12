@@ -31,6 +31,7 @@ extension UIImageView {
     func getAlamofireImage(urlString: String?,compliation: (()-> Void)? = nil) {
         DispatchQueue.main.async {
             if let url = URL(string:  (urlString ?? "")) {
+                print(url)
                 self.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "Summery Image"), options: .highPriority, completed: {_,_,_,_ in
                     compliation?()
                 })

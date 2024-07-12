@@ -16,8 +16,8 @@ class LoginViewModel {
     
     
     // MARK: - Protected Methods
-  func login(email: String , password:String , compliation: @escaping CompliationHandler) {
-    Network.shared.request(request: APIRouter.login(email: email, password: password), decodable: User.self) { (response, error) in
+  func login(phone: String , password:String , compliation: @escaping CompliationHandler) {
+    Network.shared.request(request: APIRouter.login(phone: phone, password: password), decodable: User.self) { (response, error) in
       if error != nil {
         compliation(error)
         return

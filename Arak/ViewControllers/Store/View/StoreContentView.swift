@@ -24,12 +24,18 @@ class StoreContentView: UIView {
 
     @IBOutlet weak var storeImageView: UIImageView!
     @IBOutlet weak var productsTableView: UITableView!
-    @IBOutlet weak var reviewrTableView: UITableView!
+    
     @IBOutlet var contentView: UIView!
 
     @IBOutlet weak var descreptionLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+
+    @IBOutlet weak var reviewrTableView: UITableView!
+    @IBOutlet weak var productsStoreTiltleLabel: UILabel!
+    @IBOutlet weak var reviewStoreTitleLabel: UILabel!
+    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
+    @IBOutlet weak var submitButton: UIButton!
 
     @IBOutlet weak var backButoon: UIButton!
     @IBOutlet weak var favButton: UIButton!
@@ -109,9 +115,19 @@ class StoreContentView: UIView {
         guard let view = self.loadViewFromNip(nipName: "StroreContentView") else {return}
         view.frame = self.bounds
         self.addSubview(view)
+
+         productsStoreTiltleLabel.text = "label.Products Store".localiz()
+         reviewStoreTitleLabel.text = "label.Review".localiz()
+         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
+         submitButton.setTitle("action.Submit".localiz(), for: .normal)
+         reviewTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
+
+         reviewTextView.textAlignment = Helper.appLanguage ?? "en" == "en" ? .left : .right
+         addButton.setTitle("action.Add Your Store".localiz(), for: .normal)
          addButton.isHidden = true
          reviewTextView.delegate = self
          favButton.isHidden = true
+         backButoon.isHidden = true
 
          productsTableView.delegate = self
          productsTableView.dataSource = self
@@ -140,15 +156,25 @@ class StoreContentView: UIView {
 
         if store.facebook == nil || store.facebook == "" {
             faceButton.removeFromSuperview()
-        } else if store.twitter == nil || store.twitter == "" {
+        }
+
+        if store.twitter == nil || store.twitter == "" {
             twitterButton.removeFromSuperview()
-        } else if store.snapchat == nil || store.snapchat == "" {
+        }
+
+        if store.snapchat == nil || store.snapchat == "" {
             snabButton.removeFromSuperview()
-        } else if store.linkedin == nil || store.linkedin == "" {
+        }
+
+        if store.linkedin == nil || store.linkedin == "" {
             linkedInButton.removeFromSuperview()
-        } else if store.youtube == nil || store.youtube == "" {
+        }
+
+        if store.youtube == nil || store.youtube == "" {
             youTubeButton.removeFromSuperview()
-        } else if store.instagram == nil || store.instagram == "" {
+        }
+
+        if store.instagram == nil || store.instagram == "" {
             instaButton.removeFromSuperview()
         }
 
@@ -163,7 +189,7 @@ class StoreContentView: UIView {
         storeImageView.contentMode = .scaleToFill
         storeImageView.layer.cornerRadius = 25
         storeImageView.clipsToBounds = true
-
+        addReviewContainer.isHidden = store.isReviewed == 0 ? false : true
         self.titleLabel.text = store.name
         if let index = (store.createdAt?.range(of: "T")?.lowerBound){
             let dateBeforeT = String(store.createdAt?.prefix(upTo: index) ?? "")
@@ -178,13 +204,13 @@ class StoreContentView: UIView {
     }
 
     @IBAction func submiteReviewAction(_ sender: Any) {
-        if reviewTextView.text == "Enter your review for this service provider..." || reviewTextView.text.isEmpty {
-            self.delegate?.showTostMessage(with: "please add your review")
+        if reviewTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || reviewTextView.text.isEmpty {
+            self.delegate?.showTostMessage(with: "error.please add your review".localiz())
             return
         }
 
         guard let rating = rating else {
-            self.delegate?.showTostMessage(with: "please rate this store")
+            self.delegate?.showTostMessage(with: "error.please rate this store".localiz())
             return
         }
 
@@ -288,7 +314,7 @@ class StoreContentView: UIView {
 
 extension StoreContentView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "Enter your review for this service provider..." {
+        if textView.text == "placeHolder.Enter your review for this service provider...".localiz() {
             textView.text = nil
             textView.textColor = UIColor.black
         }
@@ -296,7 +322,7 @@ extension StoreContentView: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty == true {
-            textView.text = "Enter your review for this service provider..."
+            textView.text = "placeHolder.Enter your review for this service provider...".localiz()
             textView.textColor = .lightGray
         }
     }

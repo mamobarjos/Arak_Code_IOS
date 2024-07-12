@@ -194,7 +194,7 @@ class StroreTableViewCell: UITableViewCell {
         }
 
         titleLabel.text = store.name
-        descriptionLabel.text = store.storeCategory.name
+        descriptionLabel.text = Helper.appLanguage ?? "en" == "en" ? store.storeCategory.name : store.storeCategory.arName
         cosmosView.cosmosView.rating = store.totalRates ?? 0
         cosmosView.rateLabel.text = "(\(store.totalRates ?? 0))"
     }

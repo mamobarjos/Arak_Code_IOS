@@ -17,6 +17,7 @@ class FeaturedCell: UICollectionViewCell {
     typealias PlayVideoBlock = (Int) -> Void
     typealias FavorateBlock = (Int) -> Void
     typealias MoreBlock = () -> Void
+    typealias ShowImages = () -> Void
 
     @IBOutlet weak var pageControl: FSPageControl!
     @IBOutlet weak var featuredPagerView: FSPagerView!
@@ -27,14 +28,19 @@ class FeaturedCell: UICollectionViewCell {
         }
     }
     private var bannerList: [AdBanner] = []
+    private var images: [StoreProductFile] = []
     private var storeBanners: [Banner] = []
     private var playVideoBlock:PlayVideoBlock?
     private var favorateBlock:FavorateBlock?
     private var moreBlock:MoreBlock?
+    public var showImages:ShowImages?
+    public var learnMore: ((Banner) -> Void)?
+    public var showDetails: ((Banner) -> Void)?
 
     private var isFavorate: Bool = false
     var isBanner: Bool = false
     var isStoreBanner: Bool = false
+    var isImage: Bool = false
     weak var delegate: FeaturedCelldelegate?
         
     override func prepareForReuse() {
@@ -45,6 +51,14 @@ class FeaturedCell: UICollectionViewCell {
         isBanner = false
         pageControl.numberOfPages = 0
         featuredPagerView.reloadData()
+    }
+
+    func setup(images: [StoreProductFile]) {
+        self.images = images
+        pageControl.numberOfPages = images.count
+        featuredPagerView.isInfinite = true
+        isImage = true
+        self.setupSlider()
     }
 
     func setup(bannerList: [AdBanner]) {
@@ -108,6 +122,19 @@ class FeaturedCell: UICollectionViewCell {
 }
 extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
+
+        if isImage {
+            guard let cell: AdsCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index) as? AdsCell else {
+                return FSPagerViewCell()
+            }
+            cell.setupBanner(path: images[index].path ?? "" )
+            cell.learnMoreButton.isHidden = true
+            cell.learnMoreBlock = {
+                print("learn more")
+            }
+            return cell
+        }
+
         if isBanner {
             if index == bannerList.count {
                 guard let cell: MoreCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "moreCell", at: index) as? MoreCell else {
@@ -121,8 +148,12 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
             guard let cell: AdsCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index) as? AdsCell else {
                 return FSPagerViewCell()
             }
-            cell.setupBanner(path: bannerList[index].path ?? "")
             
+            cell.setupBanner(path: bannerList[index].path ?? "")
+            cell.learnMoreButton.isHidden = true
+            cell.learnMoreBlock = {
+                print("learn more")
+            }
             return cell
         } else if isStoreBanner {
             if index == storeBanners.count {
@@ -138,6 +169,14 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
                 return FSPagerViewCell()
             }
             cell.setupBanner(path: storeBanners[index].img ?? "")
+            cell.learnMoreBlock = { [unowned self] in
+                self.learnMore?(self.storeBanners[index])
+            }
+            
+            cell.photoImageView.addTapGestureRecognizer {[unowned self] in
+                self.showDetails?(self.storeBanners[index])
+            }
+            
             return cell
         }
         
@@ -166,10 +205,12 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         if index == featuredAdsList.count {
             self.moreBlock?()
+            self.showImages?()
         } else if isBanner && index == bannerList.count {
             self.moreBlock?()
         } else {
             self.playVideoBlock?(index)
+            self.showImages?()
         }
     }
     
@@ -178,6 +219,11 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
         self.delegate?.displayedCellIndex(index: index)
     }
     func numberOfItems(in pagerView: FSPagerView) -> Int {
+
+        if isImage {
+            return images.count
+        }
+
         if isBanner {
             return self.bannerList.count
         } else if isStoreBanner {

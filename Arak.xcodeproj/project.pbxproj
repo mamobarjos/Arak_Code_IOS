@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11F3DB75297848EE003C3A4D /* DeleteUerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F3DB74297848EE003C3A4D /* DeleteUerModel.swift */; };
 		211C3DA526993A9600C91876 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211C3DA426993A9600C91876 /* NotificationModel.swift */; };
 		2149E5082697716D00246882 /* WithDrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2149E5072697716D00246882 /* WithDrawViewController.swift */; };
 		2149E50A2697754300246882 /* withDrawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2149E5092697754300246882 /* withDrawViewModel.swift */; };
@@ -168,7 +169,23 @@
 		2DFCF94225E586FE004193A5 /* AdsTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFCF94125E586FE004193A5 /* AdsTypeCell.swift */; };
 		2DFCF94825E58781004193A5 /* AdsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFCF94725E58781004193A5 /* AdsType.swift */; };
 		2DFCF94B25E587BB004193A5 /* PageingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFCF94A25E587BB004193A5 /* PageingModel.swift */; };
+		4A6E99722C3810AA00703BEF /* CategoriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E99702C3810A800703BEF /* CategoriesCollectionViewCell.swift */; };
+		4A6E99732C3810AA00703BEF /* CategoriesCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E99712C3810AA00703BEF /* CategoriesCollectionViewCell.xib */; };
+		4A6E997A2C3810D500703BEF /* HorizontalTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E99742C3810D500703BEF /* HorizontalTagCollectionViewCell.swift */; };
+		4A6E997B2C3810D500703BEF /* HorizontalTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E99752C3810D500703BEF /* HorizontalTagCollectionViewCell.xib */; };
+		4A6E997C2C3810D500703BEF /* HorizontalTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E99772C3810D500703BEF /* HorizontalTagView.swift */; };
+		4A6E997D2C3810D500703BEF /* HorizontalTagView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E99782C3810D500703BEF /* HorizontalTagView.xib */; };
+		4A6E99812C3989FB00703BEF /* HomeFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E997F2C3989FB00703BEF /* HomeFilterCollectionViewCell.swift */; };
+		4A6E99822C3989FB00703BEF /* HomeFilterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A6E99802C3989FB00703BEF /* HomeFilterCollectionViewCell.xib */; };
+		4A6E99852C39A62100703BEF /* PopUpViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E99842C39A62100703BEF /* PopUpViewViewController.swift */; };
+		4AB5FD8C2C3C974200B57762 /* ArakServiceDetailsPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB5FD8B2C3C974200B57762 /* ArakServiceDetailsPopUpViewController.swift */; };
+		4AE4FBED2C2EF21D00D4B717 /* FaceIDAuthenticatorServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4FBEB2C2EF21C00D4B717 /* FaceIDAuthenticatorServiceType.swift */; };
+		4AE4FBEE2C2EF21D00D4B717 /* PasswordStoreServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4FBEC2C2EF21D00D4B717 /* PasswordStoreServiceType.swift */; };
 		C1799F291A016968E4740A82 /* Pods_Arak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D3940EF976D11E4D6E88B6F /* Pods_Arak.framework */; };
+		C916168227E7B133005F411D /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C916168127E7B133005F411D /* PhotosViewController.swift */; };
+		C916168527E7B613005F411D /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C916168327E7B613005F411D /* ImageCollectionViewCell.swift */; };
+		C916168627E7B613005F411D /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C916168427E7B613005F411D /* ImageCollectionViewCell.xib */; };
+		C916168927E7C310005F411D /* DTPhotoViewerController in Frameworks */ = {isa = PBXBuildFile; productRef = C916168827E7C310005F411D /* DTPhotoViewerController */; };
 		C944E41F27BFA79B0060E135 /* StoresRout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C944E41E27BFA79B0060E135 /* StoresRout.swift */; };
 		C944E42127BFDC230060E135 /* Store_Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C944E42027BFDC230060E135 /* Store_Auth.storyboard */; };
 		C944E42527BFDC740060E135 /* SignUpStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C944E42427BFDC740060E135 /* SignUpStoreViewController.swift */; };
@@ -231,6 +248,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11F3DB74297848EE003C3A4D /* DeleteUerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUerModel.swift; sourceTree = "<group>"; };
 		211C3DA426993A9600C91876 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		2149E5072697716D00246882 /* WithDrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithDrawViewController.swift; sourceTree = "<group>"; };
 		2149E5092697754300246882 /* withDrawViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = withDrawViewModel.swift; sourceTree = "<group>"; };
@@ -398,9 +416,24 @@
 		2DFCF94125E586FE004193A5 /* AdsTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsTypeCell.swift; sourceTree = "<group>"; };
 		2DFCF94725E58781004193A5 /* AdsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsType.swift; sourceTree = "<group>"; };
 		2DFCF94A25E587BB004193A5 /* PageingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageingModel.swift; sourceTree = "<group>"; };
+		4A6E99702C3810A800703BEF /* CategoriesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A6E99712C3810AA00703BEF /* CategoriesCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesCollectionViewCell.xib; sourceTree = "<group>"; };
+		4A6E99742C3810D500703BEF /* HorizontalTagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalTagCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A6E99752C3810D500703BEF /* HorizontalTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalTagCollectionViewCell.xib; sourceTree = "<group>"; };
+		4A6E99772C3810D500703BEF /* HorizontalTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalTagView.swift; sourceTree = "<group>"; };
+		4A6E99782C3810D500703BEF /* HorizontalTagView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HorizontalTagView.xib; sourceTree = "<group>"; };
+		4A6E997F2C3989FB00703BEF /* HomeFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A6E99802C3989FB00703BEF /* HomeFilterCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeFilterCollectionViewCell.xib; sourceTree = "<group>"; };
+		4A6E99842C39A62100703BEF /* PopUpViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewViewController.swift; sourceTree = "<group>"; };
+		4AB5FD8B2C3C974200B57762 /* ArakServiceDetailsPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArakServiceDetailsPopUpViewController.swift; sourceTree = "<group>"; };
+		4AE4FBEB2C2EF21C00D4B717 /* FaceIDAuthenticatorServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceIDAuthenticatorServiceType.swift; sourceTree = "<group>"; };
+		4AE4FBEC2C2EF21D00D4B717 /* PasswordStoreServiceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordStoreServiceType.swift; sourceTree = "<group>"; };
 		6D3940EF976D11E4D6E88B6F /* Pods_Arak.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Arak.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		745727D6CA7FF0C8AC52FA91 /* Pods-Arak.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arak.release.xcconfig"; path = "Target Support Files/Pods-Arak/Pods-Arak.release.xcconfig"; sourceTree = "<group>"; };
 		A3709A530F12A2A7F7B67ED0 /* Pods-Arak.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arak.debug.xcconfig"; path = "Target Support Files/Pods-Arak/Pods-Arak.debug.xcconfig"; sourceTree = "<group>"; };
+		C916168127E7B133005F411D /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		C916168327E7B613005F411D /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		C916168427E7B613005F411D /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		C944E41E27BFA79B0060E135 /* StoresRout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresRout.swift; sourceTree = "<group>"; };
 		C944E42027BFDC230060E135 /* Store_Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Store_Auth.storyboard; sourceTree = "<group>"; };
 		C944E42427BFDC740060E135 /* SignUpStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStoreViewController.swift; sourceTree = "<group>"; };
@@ -468,6 +501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1799F291A016968E4740A82 /* Pods_Arak.framework in Frameworks */,
+				C916168927E7C310005F411D /* DTPhotoViewerController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +702,8 @@
 		2D4F229F25E30C1C006FF475 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4AE4FBEB2C2EF21C00D4B717 /* FaceIDAuthenticatorServiceType.swift */,
+				4AE4FBEC2C2EF21D00D4B717 /* PasswordStoreServiceType.swift */,
 				C9A61A4E27BDBE4300694C57 /* FavoriteService */,
 				2DB54E392662540F00BA6944 /* ImageTextField.swift */,
 				2D99CE292657F8E20047F2E7 /* LocaleManager.swift */,
@@ -709,6 +745,7 @@
 		2D587CA825E3BDF2000E6958 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				4A6E99832C39A60900703BEF /* PopUpView */,
 				C9CC7C0127D55DF000567B61 /* AddService */,
 				C9CAEBE327C99BA6004230DC /* SearchStores */,
 				C944E42227BFDC340060E135 /* StoreAuth */,
@@ -1099,6 +1136,7 @@
 			children = (
 				2DDA7FD82675F93600FC9EE5 /* View */,
 				2DDA7FD62675F92C00FC9EE5 /* ArakServiceViewController.swift */,
+				4AB5FD8B2C3C974200B57762 /* ArakServiceDetailsPopUpViewController.swift */,
 			);
 			path = ArakService;
 			sourceTree = "<group>";
@@ -1351,6 +1389,8 @@
 		2DFCF8FE25E54C09004193A5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4A6E997E2C39899300703BEF /* FilterCell */,
+				4A6E996F2C38108A00703BEF /* RandomPorducts */,
 				217AEF99269B64D500731123 /* MoreCell */,
 				2DB54E3E2662609500BA6944 /* FeaturedCell */,
 				2DFCF90025E54C0F004193A5 /* AdsCell */,
@@ -1407,6 +1447,52 @@
 				2DFCF8C925E50860004193A5 /* AdsViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4A6E996F2C38108A00703BEF /* RandomPorducts */ = {
+			isa = PBXGroup;
+			children = (
+				4A6E99792C3810D500703BEF /* HorizontalTagView */,
+				4A6E99702C3810A800703BEF /* CategoriesCollectionViewCell.swift */,
+				4A6E99712C3810AA00703BEF /* CategoriesCollectionViewCell.xib */,
+			);
+			path = RandomPorducts;
+			sourceTree = "<group>";
+		};
+		4A6E99762C3810D500703BEF /* HorizonatlTagViewItem */ = {
+			isa = PBXGroup;
+			children = (
+				4A6E99742C3810D500703BEF /* HorizontalTagCollectionViewCell.swift */,
+				4A6E99752C3810D500703BEF /* HorizontalTagCollectionViewCell.xib */,
+			);
+			path = HorizonatlTagViewItem;
+			sourceTree = "<group>";
+		};
+		4A6E99792C3810D500703BEF /* HorizontalTagView */ = {
+			isa = PBXGroup;
+			children = (
+				4A6E99762C3810D500703BEF /* HorizonatlTagViewItem */,
+				4A6E99772C3810D500703BEF /* HorizontalTagView.swift */,
+				4A6E99782C3810D500703BEF /* HorizontalTagView.xib */,
+			);
+			path = HorizontalTagView;
+			sourceTree = "<group>";
+		};
+		4A6E997E2C39899300703BEF /* FilterCell */ = {
+			isa = PBXGroup;
+			children = (
+				4A6E997F2C3989FB00703BEF /* HomeFilterCollectionViewCell.swift */,
+				4A6E99802C3989FB00703BEF /* HomeFilterCollectionViewCell.xib */,
+			);
+			path = FilterCell;
+			sourceTree = "<group>";
+		};
+		4A6E99832C39A60900703BEF /* PopUpView */ = {
+			isa = PBXGroup;
+			children = (
+				4A6E99842C39A62100703BEF /* PopUpViewViewController.swift */,
+			);
+			path = PopUpView;
 			sourceTree = "<group>";
 		};
 		C1635B37A39BE3AEBB6B93F2 /* Frameworks */ = {
@@ -1480,6 +1566,7 @@
 				C9CAEBD927C925E4004230DC /* Store.swift */,
 				C97AFDCC27DAAC9100C4E0D9 /* CreateProductModel.swift */,
 				C97AFDD427DAB83700C4E0D9 /* ReviewResponse.swift */,
+				11F3DB74297848EE003C3A4D /* DeleteUerModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1635,6 +1722,9 @@
 				C9CC76AF27B6F35700D70E48 /* HorizontalTagsView.swift */,
 				C944E43C27C1963F0060E135 /* BottomBarItemView.swift */,
 				C952429C27B808CE006EDEDF /* ScrollContainerView.swift */,
+				C916168127E7B133005F411D /* PhotosViewController.swift */,
+				C916168327E7B613005F411D /* ImageCollectionViewCell.swift */,
+				C916168427E7B613005F411D /* ImageCollectionViewCell.xib */,
 				C9CC76B327B6F3F000D70E48 /* UICollectionViewCell+Reusable.swift */,
 				C9CC76B527B6F6AE00D70E48 /* Then.swift */,
 				C9CC76B127B6F3AE00D70E48 /* ViewWithSetup.swift */,
@@ -1710,14 +1800,17 @@
 				2D151ABF25E3034700789515 /* Sources */,
 				2D151AC025E3034700789515 /* Frameworks */,
 				2D151AC125E3034700789515 /* Resources */,
-				420711FCEE87FE19DDB98508 /* [CP] Embed Pods Frameworks */,
-				D7222CA6ED65433C6647F87F /* [CP] Copy Pods Resources */,
+				C28BD6C221C61A01CF6BDE07 /* [CP] Embed Pods Frameworks */,
+				4876F13D1637B02CADC3106D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Arak;
+			packageProductDependencies = (
+				C916168827E7C310005F411D /* DTPhotoViewerController */,
+			);
 			productName = Arak;
 			productReference = 2D151AC325E3034700789515 /* Arak.app */;
 			productType = "com.apple.product-type.application";
@@ -1746,6 +1839,9 @@
 				ar,
 			);
 			mainGroup = 2D151ABA25E3034700789515;
+			packageReferences = (
+				C916168727E7C30F005F411D /* XCRemoteSwiftPackageReference "DTPhotoViewerController" */,
+			);
 			productRefGroup = 2D151AC425E3034700789515 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1777,23 +1873,28 @@
 				2D587CDF25E3CA79000E6958 /* PlayfairDisplay-Medium.ttf in Resources */,
 				2DE67E7E25EA33C000DC7F0F /* PackageCell.xib in Resources */,
 				2DB54E40266260AB00BA6944 /* FeaturedCell.xib in Resources */,
+				4A6E997B2C3810D500703BEF /* HorizontalTagCollectionViewCell.xib in Resources */,
 				2D45BDFA2672864D00D95ED8 /* AdsDetailCell.xib in Resources */,
 				2DE67E8B25EA47FB00DC7F0F /* UploadCell.xib in Resources */,
 				C9CC76AB27B6EEF000D70E48 /* Assets.xcassets in Resources */,
+				4A6E997D2C3810D500703BEF /* HorizontalTagView.xib in Resources */,
 				2D587CE025E3CA79000E6958 /* PlayfairDisplay-MediumItalic.ttf in Resources */,
 				2D587CE125E3CA79000E6958 /* PlayfairDisplay-Regular.ttf in Resources */,
 				C952429B27B7E21F006EDEDF /* StroreContentView.xib in Resources */,
 				2DFCF90225E54C1B004193A5 /* AdsCell.xib in Resources */,
 				2DDA7FDB2675F94A00FC9EE5 /* ServiceCell.xib in Resources */,
 				2D587CE225E3CA79000E6958 /* PlayfairDisplay-SemiBold.ttf in Resources */,
+				4A6E99822C3989FB00703BEF /* HomeFilterCollectionViewCell.xib in Resources */,
 				2D587CE325E3CA79000E6958 /* PlayfairDisplay-SemiBoldItalic.ttf in Resources */,
 				C95242AB27B82562006EDEDF /* ReviewTableViewCell.xib in Resources */,
 				2D587CC225E3C657000E6958 /* ArbFONTS-Droid Arabic Kufi Bold.ttf in Resources */,
 				2D587CC325E3C657000E6958 /* ArbFONTS-Droid Arabic Kufi.ttf in Resources */,
 				2D587CC425E3C657000E6958 /* ArbFONTS-Droid-Arabic-Kufi-Bold.ttf in Resources */,
+				4A6E99732C3810AA00703BEF /* CategoriesCollectionViewCell.xib in Resources */,
 				2D95C388267843D800471E40 /* NotificationCell.xib in Resources */,
 				2D587CC525E3C657000E6958 /* ArbFONTS-Droid-Arabic-Kufi.ttf in Resources */,
 				2D587CC625E3C657000E6958 /* ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf in Resources */,
+				C916168627E7B613005F411D /* ImageCollectionViewCell.xib in Resources */,
 				2D587CC725E3C657000E6958 /* ArbFONTS-Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf in Resources */,
 				C9E1475927C43171006B8409 /* Test.storyboard in Resources */,
 				C9BD588327B6C2AD00B08DEB /* Main_2.storyboard in Resources */,
@@ -1819,21 +1920,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		420711FCEE87FE19DDB98508 /* [CP] Embed Pods Frameworks */ = {
+		4876F13D1637B02CADC3106D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		966FE11C36BE1F87418AB105 /* [CP] Check Pods Manifest.lock */ = {
@@ -1858,21 +1959,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D7222CA6ED65433C6647F87F /* [CP] Copy Pods Resources */ = {
+		C28BD6C221C61A01CF6BDE07 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1894,6 +1995,7 @@
 				C944E43827C171580060E135 /* SingleStore.swift in Sources */,
 				C9E0F2C527C922DB00C3C066 /* CreateStoreViewModel.swift in Sources */,
 				2DFCF8D125E50883004193A5 /* NotificationViewModel.swift in Sources */,
+				4AE4FBEE2C2EF21D00D4B717 /* PasswordStoreServiceType.swift in Sources */,
 				2D587CB725E3BEAE000E6958 /* UIViewController+Ex.swift in Sources */,
 				2DFCF8E825E52FE9004193A5 /* BaseNavigationViewController.swift in Sources */,
 				2DFCF93A25E5831E004193A5 /* UIImage+Ex.swift in Sources */,
@@ -1928,14 +2030,18 @@
 				2D95C38D2678494D00471E40 /* FeedbackViewController.swift in Sources */,
 				C944E43627C01BAE0060E135 /* Stores.swift in Sources */,
 				2D9A22A226629F7900586FAD /* Transaction.swift in Sources */,
+				4A6E997A2C3810D500703BEF /* HorizontalTagCollectionViewCell.swift in Sources */,
+				4AE4FBED2C2EF21D00D4B717 /* FaceIDAuthenticatorServiceType.swift in Sources */,
 				2D587CF625E3EF32000E6958 /* SignUpViewModel.swift in Sources */,
 				C992026227C2C562003B67A7 /* ProductCollectionViewCell.swift in Sources */,
 				2D587CE925E3DFCA000E6958 /* User.swift in Sources */,
 				21DF9DBB2698854300106DB7 /* DigitalWallet.swift in Sources */,
 				C944E43327C01AB40060E135 /* StoresViewModel.swift in Sources */,
+				4A6E997C2C3810D500703BEF /* HorizontalTagView.swift in Sources */,
 				21DF9DBD2698868C00106DB7 /* RankViewModel.swift in Sources */,
 				C9CAEBE027C9498B004230DC /* CheckoutView.swift in Sources */,
 				2DDD4DD025EBBE1B001A5F95 /* CheckoutViewController.swift in Sources */,
+				C916168527E7B613005F411D /* ImageCollectionViewCell.swift in Sources */,
 				2DFCF94225E586FE004193A5 /* AdsTypeCell.swift in Sources */,
 				2193780826A078190051790A /* WalletInsufficientViewController.swift in Sources */,
 				21F4480C26925C8200150A6A /* RankCell.swift in Sources */,
@@ -1958,13 +2064,18 @@
 				2D65D19425EBD3380061ACAC /* VideoEncode.swift in Sources */,
 				2D587D1425E44D6C000E6958 /* SuccessViewModel.swift in Sources */,
 				C9CAEBE527C99BE2004230DC /* SearchStoresViewController.swift in Sources */,
+				11F3DB75297848EE003C3A4D /* DeleteUerModel.swift in Sources */,
 				C9E1475C27C43536006B8409 /* TestViewController.swift in Sources */,
 				2DFCF8C225E50827004193A5 /* HomeViewModel.swift in Sources */,
 				2DFCF8CC25E50860004193A5 /* AdsViewModel.swift in Sources */,
 				2D87D7A925F6C608003FCB9C /* UploadMedaiFirebase.swift in Sources */,
+				4A6E99722C3810AA00703BEF /* CategoriesCollectionViewCell.swift in Sources */,
 				C952429927B7E1CF006EDEDF /* StoreContentView.swift in Sources */,
+				C916168227E7B133005F411D /* PhotosViewController.swift in Sources */,
 				21772D0F2694E5ED00C498FA /* FeedbackViewModel.swift in Sources */,
 				C992026527C2CF14003B67A7 /* ProductViewModel.swift in Sources */,
+				4AB5FD8C2C3C974200B57762 /* ArakServiceDetailsPopUpViewController.swift in Sources */,
+				4A6E99852C39A62100703BEF /* PopUpViewViewController.swift in Sources */,
 				2DB54E36266248EF00BA6944 /* SocialMedia.swift in Sources */,
 				21A7A27B269709960078FD88 /* CouponViewController.swift in Sources */,
 				217AEFA8269B887200731123 /* CustomPackageViewController.swift in Sources */,
@@ -2049,6 +2160,7 @@
 				2DE379742658187A00BDD6DE /* ImageSliderViewController.swift in Sources */,
 				C9CC76BC27B6F8AD00D70E48 /* ESColor.swift in Sources */,
 				C9E1475627C4151A006B8409 /* PageControll.swift in Sources */,
+				4A6E99812C3989FB00703BEF /* HomeFilterCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2227,20 +2339,20 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Arak/Arak.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BDF7N3U79N;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = VC82Q54PSP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Arak",
 				);
 				INFOPLIST_FILE = Arak/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Arak.freelance;
+				MARKETING_VERSION = 2.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Arak.store;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "Arak-Bridging-Header.h";
@@ -2257,20 +2369,20 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Arak/Arak.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BDF7N3U79N;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = VC82Q54PSP;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Arak",
 				);
 				INFOPLIST_FILE = Arak/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Arak.freelance;
+				MARKETING_VERSION = 2.0.6;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Arak.store;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "Arak-Bridging-Header.h";
@@ -2301,6 +2413,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C916168727E7C30F005F411D /* XCRemoteSwiftPackageReference "DTPhotoViewerController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tungvoduc/DTPhotoViewerController";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C916168827E7C310005F411D /* DTPhotoViewerController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C916168727E7C30F005F411D /* XCRemoteSwiftPackageReference "DTPhotoViewerController" */;
+			productName = DTPhotoViewerController;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2D151ABB25E3034700789515 /* Project object */;
 }

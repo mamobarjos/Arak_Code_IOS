@@ -158,14 +158,7 @@ extension HorizontalTagsView {
 }
 
 private extension String {
-    func width(with font: UIFont) -> CGFloat {
-        let maxSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: font.lineHeight)
-        let actualSize = self.boundingRect(with: maxSize,
-                                           options: [.usesLineFragmentOrigin],
-                                           attributes: [.font: font],
-                                           context: nil)
-        return ceil(actualSize.width)
-    }
+  
 }
 
 extension UIView {

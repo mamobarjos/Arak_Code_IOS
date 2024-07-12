@@ -395,8 +395,7 @@ open class Player: UIViewController {
 
         self._playerView.player = nil
     }
-    
-   
+
     // MARK: - view lifecycle
 
     open override func loadView() {
@@ -524,21 +523,6 @@ extension Player {
         self.playbackState = .stopped
         self.playbackDelegate?.playerPlaybackDidEnd(self)
     }
-    open func forceStop() {
-        self._avplayer.pause()
-        self.setupPlayerItem(nil)
-
-        self.removePlayerObservers()
-
-        self.playerDelegate = nil
-        self.removeApplicationObservers()
-
-        self.playbackDelegate = nil
-        self.removePlayerLayerObservers()
-
-        self._playerView.player = nil
-    }
-
 
     /// Updates playback to the specified time.
     ///

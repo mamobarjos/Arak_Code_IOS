@@ -14,6 +14,7 @@ struct Country: Codable {
     let name_ar:String?
     let name_en:String?
     enum CodingKeys: String, CodingKey {
-        case id,name_ar,name_en
+        case id,name_ar
+        case name_en = "name"
     }
 }

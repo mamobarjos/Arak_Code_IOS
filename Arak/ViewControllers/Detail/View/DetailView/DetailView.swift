@@ -8,6 +8,7 @@
 import UIKit
 import FSPagerView
 import AVKit
+import Cosmos
 
 class DetailView: UIView {
     enum Action {
@@ -65,22 +66,59 @@ class DetailView: UIView {
     @IBOutlet weak var numberOfImagesView: UIView!
     @IBOutlet weak var numberOfImagesLabel: UILabel!
     
+    
+    @IBOutlet weak var reviewrTableView: UITableView!
+
+    @IBOutlet weak var reviewStoreTitleLabel: UILabel!
+    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
+    @IBOutlet weak var submitButton: UIButton!
+    
+    @IBOutlet weak var heightConst: NSLayoutConstraint!
+    @IBOutlet weak var reviewsContainerView: UIView!
+    @IBOutlet weak var addReviewContainer: UIView!
+    @IBOutlet weak var cosmosView: CosmosView!
+    @IBOutlet weak var reviewTextView: UITextView!
+    
     private var actionType: ActionBlock?
     private var ads: Adverisment?
     private var viewMode: ViewMode = .detail
     private var mediaList: [AdImage] = []
     private var mediaListPreparing: [AdImagePrepare] = []
+    private(set) var rating: Int?
     
-    func configeUI(ads: Adverisment? ,viewMode: ViewMode ,actionType: ActionBlock?) {
+    var sender: DetailViewController?
+    var reviews: [ReviewResponse] = [] {
+        didSet {
+            reviewrTableView.reloadData()
+        }
+    }
+    
+    func configeUI(ads: Adverisment? ,viewMode: ViewMode, viewController: DetailViewController? ,actionType: ActionBlock?) {
+        self.reviews = ads?.reviews ?? []
         self.ads = ads
         self.actionType = actionType
         self.viewMode = viewMode
         self.setup()
+        self.sender = viewController
+        setupTableView()
     }
     
+    
+    private func setupTableView() {
+        reviewrTableView.delegate = self
+        reviewrTableView.dataSource = self
+        reviewrTableView.rowHeight = UITableView.automaticDimension
+        reviewrTableView.estimatedRowHeight = 150
+        reviewrTableView.separatorColor = .clear
+        reviewrTableView.register(ReviewTableViewCell.self)
+        cosmosView.rating = 0
+        cosmosView.didFinishTouchingCosmos = { [weak self] rating in
+            self?.rating = Int(rating)
+        }
+    }
 
     private func setup() {
-        
+        reviewTextView.delegate = self
         guard let ads = ads else {
             return
         }
@@ -153,7 +191,10 @@ class DetailView: UIView {
         cartDetailsLabel.text = "Cart Details".localiz()
         checkoutButton.setTitle("Check Out".localiz(), for: .normal)
         backToHome.setTitle("Back To Ads".localiz(), for: .normal)
-    
+        reviewStoreTitleLabel.text = "label.Review".localiz()
+        rateThisProviderTitleLabel.text = "label.Rate this Ad".localiz()
+        submitButton.setTitle("action.Submit".localiz(), for: .normal)
+        reviewTextView.text = "placeHolder.Enter your review ...".localiz()
         
     }
     
@@ -167,6 +208,20 @@ class DetailView: UIView {
         sliderPageView.dataSource = self
         pageControl.hidesForSinglePage = true
         pageControl.numberOfPages = mediaList.count
+    }
+    
+    @IBAction func submiteReviewAction(_ sender: Any) {
+        if reviewTextView.text == "placeHolder.Enter your review ...".localiz() || reviewTextView.text.isEmpty {
+            self.sender?.showToast(message:  "error.please add your review".localiz())
+            return
+        }
+
+        guard let rating = rating else {
+            self.sender?.showToast(message: "error.please rate this store".localiz())
+            return
+        }
+
+        self.sender?.submiteReview(context: reviewTextView.text, rating: rating)
     }
     
     @IBAction func BackToHome(_ sender: Any) {
@@ -220,6 +275,23 @@ class DetailView: UIView {
         actionType?(.website(url:  ads?.websiteURL ?? "")) //To Do...
     }
     
+}
+
+extension DetailView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return reviews.count
+        }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     
+            let cell:ReviewTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            let review = reviews[indexPath.row]
+            cell.cosumizeCell(review: review)
+            cell.onDeleteAction = { [weak self] in
+                self?.sender?.deleteReview(id: review.id ?? 0)
+            }
+            return cell
+    }
 }
 
 extension DetailView : FSPagerViewDelegate ,  FSPagerViewDataSource {
@@ -277,4 +349,20 @@ extension DetailView : FSPagerViewDelegate ,  FSPagerViewDataSource {
     }
     
     
+}
+
+extension DetailView: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "placeHolder.Enter your review ...".localiz() {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty == true {
+            textView.text = "placeHolder.Enter your review ...".localiz()
+            textView.textColor = .lightGray
+        }
+    }
 }

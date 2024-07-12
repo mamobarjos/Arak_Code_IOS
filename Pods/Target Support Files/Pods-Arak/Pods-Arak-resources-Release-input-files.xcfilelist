@@ -1,2 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Arak/Pods-Arak-resources.sh
-${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/AppCenter/AppCenterAnalytics.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/AppCenter/AppCenter.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/AppCenter/AppCenterCrashes.bundle

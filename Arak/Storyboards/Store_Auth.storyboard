@@ -26,7 +26,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1050"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jzr-Lr-vMq">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jzr-Lr-vMq">
                                 <rect key="frame" x="0.0" y="44" width="414" height="972"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhC-F5-ZsZ">
@@ -347,6 +347,7 @@
                                     <constraint firstItem="dhC-F5-ZsZ" firstAttribute="width" secondItem="Jzr-Lr-vMq" secondAttribute="width" multiplier="0.997585" id="AfM-QM-3QE"/>
                                     <constraint firstItem="dhC-F5-ZsZ" firstAttribute="height" secondItem="Jzr-Lr-vMq" secondAttribute="height" multiplier="1.02799" priority="250" constant="32.415057915057787" id="Kda-Lb-NOY"/>
                                     <constraint firstItem="dhC-F5-ZsZ" firstAttribute="leading" secondItem="Jzr-Lr-vMq" secondAttribute="leading" id="PAO-l4-O7B"/>
+                                    <constraint firstAttribute="trailing" secondItem="dhC-F5-ZsZ" secondAttribute="trailing" id="edG-Vq-efe"/>
                                     <constraint firstItem="dhC-F5-ZsZ" firstAttribute="top" secondItem="Jzr-Lr-vMq" secondAttribute="top" constant="-29" id="hZX-YF-ZTG"/>
                                     <constraint firstAttribute="bottom" secondItem="dhC-F5-ZsZ" secondAttribute="bottom" constant="-29" id="tz3-kS-5BR"/>
                                 </constraints>
@@ -363,6 +364,8 @@
                     </view>
                     <size key="freeformSize" width="414" height="1050"/>
                     <connections>
+                        <outlet property="categoryName" destination="QTj-cO-gLq" id="jfs-r1-v1r"/>
+                        <outlet property="chooseCategoryButton" destination="bxy-b9-TVl" id="DhI-W7-bUR"/>
                         <outlet property="chooseCategoryView" destination="wOS-kA-14i" id="nsl-WQ-xlO"/>
                         <outlet property="companyNameTextField" destination="Tsc-7z-wLv" id="xoF-0u-ErM"/>
                         <outlet property="coverImageView" destination="75U-bk-wqy" id="1u0-FY-sRA"/>
@@ -1288,7 +1291,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="createAdLabel" destination="6Qu-HT-ACS" id="vfG-rK-BCg"/>
+                        <outlet property="createAdLabel" destination="6Qu-HT-ACS" id="bry-qH-nYB"/>
+                        <outlet property="successLabel" destination="Rvl-5U-72s" id="10N-nn-fle"/>
                         <outlet property="titleLabel" destination="iIm-89-NR7" id="FIW-Aw-OOg"/>
                     </connections>
                 </viewController>

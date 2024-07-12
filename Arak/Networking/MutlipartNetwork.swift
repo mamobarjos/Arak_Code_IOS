@@ -61,11 +61,41 @@ class Network {
                     return
                 }
                   print("////// //// ///// //// ")
+                  print("URL =====>  \(request.path)")
                   print(String(data: decode, encoding: .utf8) ?? "can't decode")
                   print("////// //// ///// //// ")
 
                 let decoder = JSONDecoder.init()
                
+                
+
+                  do {
+                      let decodeObj = try decoder.decode(GenericModel<T>.self, from: decode)
+                      // Successfully decoded
+                     
+                  } catch let error {
+                      // Decoding error occurred
+                      print("Decoding error:", error.localizedDescription)
+                      if let decodingError = error as? DecodingError {
+                          switch decodingError {
+                          case .dataCorrupted(let context):
+                              print("Data corrupted: \(context)")
+                          case .keyNotFound(let key, let context):
+                              print("Key '\(key)' not found:", context.debugDescription)
+                              print("CodingPath:", context.codingPath)
+                          case .typeMismatch(let type, let context):
+                              print("Type mismatch: '\(type)'", context.debugDescription)
+                              print("CodingPath:", context.codingPath)
+                          case .valueNotFound(let type, let context):
+                              print("Value '\(type)' not found:", context.debugDescription)
+                              print("CodingPath:", context.codingPath)
+                          @unknown default:
+                              print("Unknown decoding error")
+                          }
+                      }
+                  }
+                  
+                  
                 guard let decodeObj = try? decoder.decode(GenericModel<T>.self, from: decode) else {
                   completion(nil,NetworkResponse.unableToDecode.rawValue)
                   return

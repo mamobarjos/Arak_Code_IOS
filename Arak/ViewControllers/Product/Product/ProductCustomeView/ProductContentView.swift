@@ -10,10 +10,16 @@ import FSPagerView
 import Cosmos
 
 protocol ProductContentViewDelegate: AnyObject {
+    func didTapOnProduct(id: Int)
     func userDidTapFavIcon(id: String)
     func userDidTapShare(id: String)
     func userDidTapBack()
     func didTapOnViewAllproducts()
+    func submiteReview(_ message: String, _ rating: Int)
+    func showTostMessage(with error: String)
+    func deleteReview(id: Int)
+    func visatStoreTapped()
+    func didTapOnBanner(productImagesFile: [StoreProductFile])
 }
 
 class ProductContentView: UIView, FeaturedCelldelegate {
@@ -33,19 +39,32 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     @IBOutlet weak var shopNameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
 
+    @IBOutlet weak var relatedProductTitleLabel: UILabel!
+    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
+    @IBOutlet weak var reviewTitleLabel: UILabel!
+    @IBOutlet weak var submitButton: UIButton!
+
+    @IBOutlet weak var vistStoreButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var favButton: UIButton!
 
     @IBOutlet weak var viewAllProducts: UIButton!
+    @IBOutlet weak var addReviewContainer: UIView!
 
     var pageControl = PageControl()
     var homeViewModel = HomeViewModel()
 
+    private(set) var rating: Int?
+    
     weak var delegate: ProductContentViewDelegate?
-    var storeProduct: [Product] = [] {
+    var storeProduct: SingleProduct?  {
         didSet {
+            guard let storeProduct = storeProduct else {
+                return
+            }
             self.updateUI(product: storeProduct)
+            self.bannerCollectionView.reloadData()
         }
     }
 
@@ -60,6 +79,13 @@ class ProductContentView: UIView, FeaturedCelldelegate {
             relatedProductCollectionView.reloadData()
         }
     }
+
+    var reviews: [ReviewResponse] = [] {
+        didSet {
+            reviewsTableView.reloadData()
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -68,6 +94,9 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setup()
+    }
+    @IBAction func vistStoreAction(_ sender: Any) {
+        self.delegate?.visatStoreTapped()
     }
     @IBAction func shareAction(_ sender: Any) {
         delegate?.userDidTapShare(id: "1")
@@ -78,14 +107,36 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     @IBAction func backAction(_ sender: Any) {
         delegate?.userDidTapBack()
     }
-    @IBAction func submitButton(_ sender: Any) {
+    @IBAction func viewAllAction(_ sender: Any) {
+        delegate?.didTapOnViewAllproducts()
+    }
 
+    @IBAction func submitButton(_ sender: Any) {
+        if rateTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || rateTextView.text.isEmpty {
+            self.delegate?.showTostMessage(with: "please add your review")
+            return
+        }
+
+        guard let rating = rating else {
+            self.delegate?.showTostMessage(with: "please rate this product")
+            return
+        }
+
+        delegate?.submiteReview(rateTextView.text, rating)
     }
 
      func setup() {
         guard let view = self.loadViewFromNip(nipName: "ProductContentView") else {return}
         view.frame = self.bounds
         self.addSubview(view)
+
+         relatedProductTitleLabel.text = "label.Related Products".localiz()
+         reviewTitleLabel.text = "label.Review".localiz()
+         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
+         submitButton.setTitle("action.Submit".localiz(), for: .normal)
+         vistStoreButton.setTitle("action.Visit Store".localiz(), for: .normal)
+         rateTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
+         rateTextView.textAlignment = Helper.appLanguage ?? "en" == "en" ? .left : .right
 
              homeViewModel.getBannerList(page: 1, search: "") { [weak self] (error) in
              defer {
@@ -100,7 +151,7 @@ class ProductContentView: UIView, FeaturedCelldelegate {
          }
 
          rateTextView.delegate = self
-         rateTextView.text = "Enter your review for this service provider..."
+         rateTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
          rateTextView.textColor = UIColor.lightGray
 
          relatedProductCollectionView.delegate = self
@@ -119,7 +170,10 @@ class ProductContentView: UIView, FeaturedCelldelegate {
          reviewsTableView.estimatedRowHeight = 150
          reviewsTableView.separatorColor = .clear
          reviewsTableView.register(ReviewTableViewCell.self)
-
+         editedCosmosView.rating = 0
+         editedCosmosView.didFinishTouchingCosmos = { [weak self] rating in
+             self?.rating = Int(rating)
+         }
          viewAllProducts.addTapGestureRecognizer {[weak self] in
              self?.delegate?.didTapOnViewAllproducts()
          }
@@ -143,20 +197,20 @@ class ProductContentView: UIView, FeaturedCelldelegate {
         bannerCollectionView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 
-    private func updateUI(product: [Product]) {
-        guard let product = product.first else { return }
-        productNameLabel.text = product.name
-        shopNameLabel.text = product.store?.name
-        descLable.text = product.desc
-        priceLabel.text = product.priceformated
-        cosmosView.rating = product.totalRates ?? 0
-        ratingLabelText.text = "(\(product.totalRates ?? 0.0))"
+    private func updateUI(product: SingleProduct) {
+        productNameLabel.text = product.storeProduct?.name
+        shopNameLabel.text = product.storeProduct?.store?.name
+        descLable.text = product.storeProduct?.desc
+        priceLabel.text = product.storeProduct?.priceformated
+        cosmosView.rating = product.storeProduct?.totalRates ?? 0
+        ratingLabelText.text = "(\(product.storeProduct?.totalRates ?? 0.0))"
+//        self.reviews = product.storeProduct?.reviews ?? []
     }
 }
 
 extension ProductContentView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "Enter your review for this service provider..." {
+        if textView.text == "placeHolder.Enter your review for this service provider...".localiz() {
             textView.text = nil
             textView.textColor = UIColor.black
         }
@@ -164,7 +218,7 @@ extension ProductContentView: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty == true {
-            textView.text = "Enter your review for this service provider..."
+            textView.text = "placeHolder.Enter your review for this service provider...".localiz()
             textView.textColor = .lightGray
         }
     }
@@ -173,12 +227,16 @@ extension ProductContentView: UITextViewDelegate {
 
 extension ProductContentView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        reviews.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell:ReviewTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-//            cell.setup()
+        let review = reviews[indexPath.row]
+        cell.cosumizeCell(review: review)
+        cell.onDeleteAction = { [weak self] in
+            self?.delegate?.deleteReview(id: review.id ?? 0)
+        }
             return cell
 
     }
@@ -213,17 +271,29 @@ extension ProductContentView: UICollectionViewDelegate, UICollectionViewDataSour
         }
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == bannerCollectionView {
+            self.delegate?.didTapOnBanner(productImagesFile: storeProduct?.storeProduct?.storeProductFiles ?? [])
+        } else {
+            let product = relatedProducts[indexPath.item]
+            self.delegate?.didTapOnProduct(id: product.id ?? 0)
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0 , left: 0, bottom: 0, right: 0)
     }
 
     func makeFeatured(indexPath:IndexPath,isBanner: Bool) -> FeaturedCell {
             let cell:FeaturedCell = bannerCollectionView.dequeueReusableCell(forIndexPath: indexPath)
-        cell.setup(bannerList: homeViewModel.getAllBanner())
+        cell.setup(images: storeProduct?.storeProduct?.storeProductFiles ?? [])
         pageControl.numberOfPages = homeViewModel.getAllBanner().count
         pageControl.isHidden = homeViewModel.getAllBanner().count == 1
-        print(homeViewModel.getAllBanner().count)
+//
         cell.delegate = self
+        cell.showImages = { [weak self] in
+            self?.delegate?.didTapOnBanner(productImagesFile: self?.storeProduct?.storeProduct?.storeProductFiles ?? [])
+        }
         cell.layoutIfNeeded()
         return cell
     }

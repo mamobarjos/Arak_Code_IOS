@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="47" height="47" viewBox="0 0 47 47">
+  <g id="Group_1481" data-name="Group 1481" transform="translate(-1342 -781)">
+    <g id="Group_1479" data-name="Group 1479" transform="translate(1114 -92)">
+      <g id="Group_1480" data-name="Group 1480">
+        <g id="layer1" transform="translate(237.64 884.641)">
+          <path id="path2792" d="M5.849.529a1.356,1.356,0,0,0-1.219.686C3.225,4.19,1.553,7.106.535,9.747.522,11.86.361,14.473,3.194,15.2V22.06a1.246,1.246,0,0,0,1.328,1.129H23.18a1.247,1.247,0,0,0,1.338-1.129V15.2c3.035-.515,2.666-3.342,2.648-5.438a67.889,67.889,0,0,0-4.093-8.549A1.357,1.357,0,0,0,21.852.529h-16ZM9.875,14.709a3.929,3.929,0,0,0,4,0,3.89,3.89,0,0,0,4,0,3.9,3.9,0,0,0,3.976.024v6.19h-4V19.794c0-4.535-8-4.535-8,0v1.129H5.849V14.748a4.08,4.08,0,0,0,4.025-.04Z" transform="translate(0)" fill="#c1c1c1"/>
+        </g>
+      </g>
+      <g id="ic_Home" transform="translate(150.626 834.179)">
+        <rect id="TriggerArea" width="47" height="47" transform="translate(77.374 38.821)" fill="rgba(255,255,255,0)"/>
+      </g>
+    </g>
+  </g>
+</svg>

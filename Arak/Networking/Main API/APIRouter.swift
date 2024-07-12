@@ -9,15 +9,17 @@ import Foundation
 import Alamofire
 enum APIRouter: APIConfiguration {
     
-    case login(email:String, password:String)
+    case login(phone:String, password:String)
     case forget(email:String)
     case register(data: [String: String])
     case socialRegisterLogin(data: [String: Any])
     case countries
     case cities(id:Int)
     case logout
+    case deleteAccount
     case adsType
     case adsList(page: Int , search:String)
+    case adsFilteredList(page: Int , type:Int)
     case adsDetail(id: Int)
     case featuredAds(page: Int, search:String)
     case services(page: Int)
@@ -32,7 +34,8 @@ enum APIRouter: APIConfiguration {
     case getTopRanked(page: Int)
     case getFavorites(page: Int)
     case getHistory(page: Int)
-
+    case getRandomProducts
+    
     case favorites(data:[String: String],isFavorate: Bool)
     case getUserBalance
     case editUserImg(data:[String: String])
@@ -47,17 +50,19 @@ enum APIRouter: APIConfiguration {
     case RequestArakService(name: String ,email: String , phoneNo: String,serviceId: String)
     case toggleNotifications
     case getNotificationsStatus
+    case submitReview(content: String, rate: Int, ad_id: Int)
+    case deleteReview(id: Int)
 
     
     
     // MARK: - HTTPMethod
     var method: HTTPMethod {
         switch self {
-        case .login , .register ,.forget,.editUserImg,.editUserInfo , .logout,.socialRegisterLogin,.arakFeedback,.otp,.resetPassword,.changePhone,.withDraw,.favorites,.editPassword,.updateToken,.createCoupon,.RequestArakService,.toggleNotifications:
+        case .login , .register ,.forget,.editUserImg,.editUserInfo , .logout,.socialRegisterLogin,.arakFeedback,.otp,.resetPassword,.changePhone,.withDraw,.favorites,.editPassword,.updateToken,.createCoupon,.RequestArakService,.toggleNotifications, .submitReview:
             return .post
-        case .adsType,.adsList,.getUserBalance , .adsDetail,.countries,.cities,.transactions,.featuredAds,.services,.digitalWallets,.getTopRanked,.notifications,.getFavorites,.userBanners,.getHistory,.getUserAds,.aboutData,.getNotificationsStatus:
+        case .adsType,.adsList,.adsFilteredList ,.getUserBalance , .adsDetail,.countries,.cities,.transactions,.featuredAds,.services,.digitalWallets,.getTopRanked,.notifications,.getFavorites,.userBanners,.getHistory,.getUserAds,.aboutData,.getNotificationsStatus, .getRandomProducts:
             return .get
-        case .deleteAds:
+        case .deleteAds, .deleteAccount, .deleteReview:
             return .delete
         }
     }
@@ -65,7 +70,7 @@ enum APIRouter: APIConfiguration {
     var parameters: RequestParams {
         switch self {
         case .login(let username, let password):
-            return .body(["email":username,"password":password])
+            return .body(["phone_no":username,"password":password])
         case .forget(let email):
             return .body(["email":email])
         case .logout:
@@ -74,7 +79,11 @@ enum APIRouter: APIConfiguration {
             return .url([:])
         case .featuredAds(let page , _),.services(let page),.getTopRanked(let page),.notifications(let page),.getFavorites(let page),.userBanners(let page),.getHistory(let page),.getUserAds(let page,_,_,_),.transactions(let page,_,_,_):
             return .url(["page":page])
+        case .getRandomProducts:
+            return .url([:])
         case .adsList(let page , _):
+            return .url(["page":page])
+        case .adsFilteredList(let page , _):
             return .url(["page":page])
         case .adsDetail,.countries,.cities(_):
             return .url([:])
@@ -98,6 +107,12 @@ enum APIRouter: APIConfiguration {
             return .body([:])
         case .getNotificationsStatus:
             return .url([:])
+        case .deleteAccount:
+            return .url([:])
+        case .submitReview(content: let content, rate: let rate, ad_id: let ad_id):
+            return .body(["content":content, "rate":rate, "ad_id":ad_id])
+        case .deleteReview:
+            return .url([:])
         }
     }
     
@@ -110,6 +125,8 @@ enum APIRouter: APIConfiguration {
             return "ads-categories"
         case .adsList(_,let search):
             return search.isEmpty ?  "ads" : "ads/\(search)"
+        case .adsFilteredList(_, type: let type):
+            return "ads/get-ads-by-category-id/\(type)"
         case .register:
             return "auth/register"
         case .logout:
@@ -144,6 +161,8 @@ enum APIRouter: APIConfiguration {
             return "digital-wallets"
         case .getTopRanked(_):
             return "users/get-top-ranked-users-by-balance"
+        case .getRandomProducts:
+            return "store-products/get-random-products-from-many-stores"
         case .favorites(_,_):
 //            return isFavorate ? "favorites/unfavorite-ad" : "favorites/favorite-ad"
         return "favorites/favorite-ad"
@@ -179,6 +198,12 @@ enum APIRouter: APIConfiguration {
             return "notifications/toggle-notifications-status"
         case .getNotificationsStatus:
             return "notifications/get-notifications-status"
+        case .deleteAccount:
+            return "user/account/delete-account"
+        case .submitReview:
+            return "ad-reviews/add-review"
+        case .deleteReview(id: let id):
+            return "ad-reviews/delete-review/\(id)"
         }
     }
     

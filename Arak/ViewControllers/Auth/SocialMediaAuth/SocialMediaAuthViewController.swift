@@ -67,7 +67,7 @@ class SocialMediaAuthViewController: UIViewController,UITextFieldDelegate {
     showLoading()
     var data:[String : String] = [:]
     data["fullname"] = fullNameTextField.text ?? ""
-    data["email"] = emailTextField.text ?? ""
+//    data["email"] = emailTextField.text ?? ""
     data["phone_no"] = "+962" + (phoneTextField.text ?? "")
     data["social_token"] = soicalMedia?.socialId ?? ""
     viewModel.register(data: data) { [weak self] (error) in

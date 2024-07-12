@@ -49,23 +49,24 @@ class ReviewTableViewCell: UITableViewCell {
 
     private func setup() {
         ReviewerImage.image = UIImage(named: "Summery Image")
+        ReviewerImage.contentMode = .scaleToFill
         cosmosContainerView.addSubview(cosmosView)
         cosmosView.layout
             .leading(to: .superview)
             .top(to: .superview)
             .bottom(to: .superview)
 
-        ReviewerImage.image = UIImage(named: "You")
+        ReviewerImage.image = UIImage(named: "Summery Image")
     }
 
     func cosumizeCell(review: ReviewResponse) {
-        if let url = URL(string: review.user.imgAvatar ?? "") {
+        if let url = URL(string: review.user?.imgAvatar ?? "") {
             ReviewerImage.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
         }
         cosmosView.rating = Double(review.rate ?? 5)
-        titaleLabel.text = review.user.fullname
+        titaleLabel.text = review.user?.fullname
         descLabel.text = review.content
-        if Helper.currentUser?.id == review.user.id {
+        if Helper.currentUser?.id == review.user?.id {
             deleteButton.isHidden = false
         } else {
             deleteButton.isHidden = true

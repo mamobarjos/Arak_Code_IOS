@@ -7,6 +7,12 @@
 
 import UIKit
 import CoreLocation
+import Kingfisher
+
+enum StoreMode {
+    case add
+    case edit
+}
 
 class SignUpStoreViewController: UIViewController {
 
@@ -28,10 +34,13 @@ class SignUpStoreViewController: UIViewController {
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var chooseCategoryView: UIView!
+    @IBOutlet weak var categoryName: UILabel!
 
+    @IBOutlet weak var chooseCategoryButton: UIButton!
     private var imagePicker = UIImagePickerController()
     private var currentLocation: CLLocation?
     private var currentLocatioTitle: String?
+
     private(set) var imageData: Data?
     private(set) var imageUrl: String?
     private(set) var coverImageData: Data?
@@ -39,8 +48,24 @@ class SignUpStoreViewController: UIViewController {
     private(set) var categoryId: Int?
     private(set) var imageType: ImageType = .personalPhoto
 
+    public var mode: StoreMode = .add
     override func viewDidLoad() {
         super.viewDidLoad()
+        companyNameTextField.placeholder = "placeHolder.Company Name".localiz()
+        storeDesTextField.text = "placeHolder.Description".localiz()
+        categoryName.text = "title.Choose Store Category".localiz()
+        websiteTextField.placeholder = "placeHolder.Website".localiz()
+        phoneNumberTextField.placeholder = "placeHolder.Phone Number".localiz()
+        locationTextField.placeholder = "placeHolder.Location".localiz()
+        submitButton.setTitle("action.Continue".localiz(), for: .normal)
+        locationTextField.textAlignment = Helper.appLanguage ?? "en" == "en" ? .right : .left
+        if Helper.appLanguage ?? "en" == "en" {
+            self.chooseCategoryButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        } else {
+            self.chooseCategoryButton.transform = CGAffineTransform(scaleX: -1, y: 1)
+        }
+
+
         chooseCategoryView.addTapGestureRecognizer {[weak self] in
             let vc = CategoriesViewController()
             vc.delegate = self
@@ -49,6 +74,40 @@ class SignUpStoreViewController: UIViewController {
 
         coverImageView.contentMode = .scaleToFill
         imageView.contentMode = .scaleToFill
+
+        if mode == .edit {
+            fillViewWithData()
+        }
+    }
+
+    private func fillViewWithData() {
+        guard let store = Helper.store else {
+            self.showToast(message:"Error Can't find your store")
+            return
+        }
+
+        if let coverUrl = URL(string:store.cover ?? "") {
+            self.coverImageUrl = store.cover
+            coverImageView.kf.setImage(with: coverUrl, placeholder: UIImage(named: "Summery Image"))
+        }
+
+        if let imageUrl = URL(string:store.img ?? "") {
+            self.imageUrl = store.img
+            imageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "Summery Image"))
+        }
+
+        companyNameTextField.text = store.name
+        storeDesTextField.text = store.desc
+        websiteTextField.text = store.website
+        phoneNumberTextField.text = store.phoneNo
+        locationTextField.text = "\(store.lat ?? "") , \(store.lon ?? "")"
+        categoryName.text = "Current Category: " + "\(store.storeCategoryid ?? 1)"
+        categoryId = store.storeCategoryid
+        currentLocatioTitle = "\(store.lat ?? "") , \(store.lon ?? "")"
+        currentLocation = CLLocation(
+            latitude: Double(store.lat ?? "") ?? 0.0,
+            longitude: Double(store.lon ?? "") ?? 0.0)
+
     }
 
     @IBAction func locatioAction(_ sender: Any) {
@@ -77,46 +136,49 @@ class SignUpStoreViewController: UIViewController {
         }
         let vc = initViewControllerWith(identifier: SocialMediaSignUPViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as!
         SocialMediaSignUPViewController
+        if mode == .edit {
+            vc.mode = .edit
+        }
         vc.getData(data: content)
         show(vc)
     }
 
     private func validateContent() -> [String:Any]? {
         guard let companyName = companyNameTextField.text else {
-            self.showToast(message: "Please Enter Store Name")
+            self.showToast(message: "error.Please Enter Store Name".localiz())
             return nil
         }
         guard let description = storeDesTextField.text else {
-            self.showToast(message: "Please Enter Store Description")
+            self.showToast(message: "error.Please Enter Store Description".localiz())
             return nil
         }
 
         if storeDesTextField.text == "Description" {
-            self.showToast(message: "Please Enter Store Description")
+            self.showToast(message: "error.Please Enter Store Description".localiz())
             return nil
         }
 
         guard let phoneNumber = phoneNumberTextField.text else {
-            self.showToast(message: "Please Enter Store Phone Number")
+            self.showToast(message: "error.Please Enter Store Phone Number".localiz())
             return nil
         }
         guard let currentLocation = currentLocation else {
-            self.showToast(message: "Please Enter your Store Location")
+            self.showToast(message: "error.Please Enter your Store Location".localiz())
             return nil
         }
 
         guard let categoryId = categoryId else {
-            self.showToast(message: "Please Choose Store Category Type")
+            self.showToast(message: "error.Please Choose Store Category Type".localiz())
             return nil
         }
 
         guard let imageUrl = imageUrl else {
-            self.showToast(message: "Please Add Your Store Image")
+            self.showToast(message: "error.Please Add Your Store Image".localiz())
             return nil
         }
 
         guard let coverImageUrl = coverImageUrl else {
-            self.showToast(message: "Please Add Your Store Cover Image")
+            self.showToast(message: "error.Please Add Your Store Cover Image".localiz())
             return nil
         }
 
@@ -227,6 +289,7 @@ extension SignUpStoreViewController: UIImagePickerControllerDelegate & UINavigat
 extension SignUpStoreViewController: CategoriesViewControllerDelegate {
     func didFinishWithCategory(categoryId: Int, categoryName: String) {
         self.categoryId = categoryId
+        self.categoryName.text = categoryName
     }
 
 }

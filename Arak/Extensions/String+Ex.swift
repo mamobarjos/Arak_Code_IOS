@@ -11,11 +11,13 @@ enum ValidationRuleType {
     case Required,
     Email,
     Length,
+    PhoneNumber,
     NotMatching
 }
 enum ValidationErrorType {
    case Required,
         Email,
+        PhoneNumber,
         Length,
         NotMatching,
         Validated
@@ -26,6 +28,8 @@ enum ValidationErrorType {
             return "Required field"
         case .Email:
             return "Must be a valid email"
+        case .PhoneNumber:
+            return "Must be a valid Phone Number"
         case .Length:
             return "Must be at least 8 characters"
           case .NotMatching:
@@ -47,6 +51,8 @@ extension String {
         return isMatch(otherString: otherString)
       case .Length:
         return self.count > length ? .Validated : .Length
+    case .PhoneNumber:
+       return isValidPhoneNumber()
     }
   }
 
@@ -67,7 +73,15 @@ extension String {
     let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
     return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil ? .Validated : .Email
   }
-
+    
+    private func isValidPhoneNumber() -> ValidationErrorType {
+        if self.isEmpty {
+            return .Required
+        }
+        // Regular expression for validating phone numbers like 962796951946
+        let regex = try! NSRegularExpression(pattern: "^[0-9]{12}$", options: .caseInsensitive)
+        return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: self.count)) != nil ? .Validated : .PhoneNumber
+    }
   
 }
 

@@ -40,6 +40,7 @@ struct Adverisment: Codable {
     var checkoutURL:String?
     var isFavorate,status: Int?
     var thumbUrl: String?
+    var reviews: [ReviewResponse]?
     var isMe: Bool {
         return userID ?? -1 == Helper.currentUser?.id ?? -2
     }
@@ -93,6 +94,7 @@ struct Adverisment: Codable {
         case thumbUrl = "thumb_url"
         case package
         case views
+        case reviews = "ad_reviews"
     }
 }
 

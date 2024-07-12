@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,8 +13,11 @@
         <array key="ArbFONTS-Droid Arabic Kufi.ttf">
             <string>DroidArabicKufi</string>
         </array>
-        <array key="ArbFONTS-DroidKufi-Bold.ttf">
+        <array key="ArbFONTS-Droid-Arabic-Kufi-Bold.ttf">
             <string>DroidArabicKufi-Bold</string>
+        </array>
+        <array key="Roboto-Bold.ttf">
+            <string>Roboto-Bold</string>
         </array>
     </customFonts>
     <objects>
@@ -93,6 +97,26 @@
                                     <action selector="Favorate:" destination="Xth-cb-42R" eventType="touchUpInside" id="Gae-V0-euk"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EyV-WZ-05D">
+                                <rect key="frame" x="317" y="5" width="70" height="20"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="FN7-yI-Y8q"/>
+                                    <constraint firstAttribute="height" constant="20" id="con-fe-Prl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="11"/>
+                                <color key="tintColor" name="background"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="learn more"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="learnMoreButtonAction:" destination="Xth-cb-42R" eventType="touchUpInside" id="Zgq-WD-EfB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -100,8 +124,10 @@
                             <constraint firstItem="WzP-IP-9eI" firstAttribute="centerY" secondItem="38J-ty-xnm" secondAttribute="centerY" id="0J4-Qv-UFV"/>
                             <constraint firstItem="Zrd-s0-WwH" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" constant="20" id="0SC-hP-8Rz"/>
                             <constraint firstItem="Fku-ix-t6w" firstAttribute="centerY" secondItem="38J-ty-xnm" secondAttribute="centerY" id="8uQ-TN-Twf"/>
+                            <constraint firstItem="EyV-WZ-05D" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" constant="5" id="GcK-jT-zfu"/>
                             <constraint firstAttribute="trailing" secondItem="38J-ty-xnm" secondAttribute="trailing" constant="15" id="JVh-UB-On1"/>
                             <constraint firstItem="btV-Rz-xNB" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" id="MdC-as-zEv"/>
+                            <constraint firstAttribute="trailing" secondItem="EyV-WZ-05D" secondAttribute="trailing" constant="5" id="NKC-MT-brh"/>
                             <constraint firstItem="Zrd-s0-WwH" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" constant="20" id="OTr-xU-obG"/>
                             <constraint firstAttribute="bottom" secondItem="DBh-gx-sWN" secondAttribute="bottom" id="PSc-e2-7bY"/>
                             <constraint firstAttribute="trailing" secondItem="DBh-gx-sWN" secondAttribute="trailing" id="VAz-Ym-9cE"/>
@@ -127,6 +153,7 @@
             <connections>
                 <outlet property="favorateButton" destination="aWT-9M-29N" id="6jD-CL-PKl"/>
                 <outlet property="gradiantImageView" destination="DBh-gx-sWN" id="Per-Qr-Kcs"/>
+                <outlet property="learnMoreButton" destination="EyV-WZ-05D" id="btd-VP-ePq"/>
                 <outlet property="photoImageView" destination="btV-Rz-xNB" id="jmH-UT-XmF"/>
                 <outlet property="timeCountLabel" destination="38J-ty-xnm" id="lgl-h0-zua"/>
                 <outlet property="timerImageView" destination="Fku-ix-t6w" id="Wxd-ju-GyB"/>
@@ -141,6 +168,12 @@
         <image name="Icon awesome-heart-1" width="26" height="22"/>
         <image name="Rectangle 1315" width="161" height="66"/>
         <image name="timer" width="14" height="14"/>
+        <namedColor name="background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

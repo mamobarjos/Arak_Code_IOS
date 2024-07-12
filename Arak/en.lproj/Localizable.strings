@@ -11,7 +11,7 @@
 "Password" = "Password";
 "Log in" = "Log in";
 "Forgot password?" = "Forgot password?";
-"Log in with Apple" = "Log in with Apple";
+"Sign in with Apple" = "Sign in with Apple";
 "Log in with Facebook" = "Log in with Facebook";
 "Log in with Google" = "Log in with Google";
 "OR" = "OR";
@@ -124,7 +124,7 @@
 //Services
 "Arak Service" = "Arak Service";
 "Arak Ranking" = "Arak Ranking";
-
+"Service Details" = "Service Details";
 
 
 "Tell us a bit more about why you chose" = "Tell us a bit more about why you chose";
@@ -227,6 +227,7 @@
 "Edit Profile" = "Edit Profile";
 "My Detail" = "My Detail";
 "Sign out" = "Sign out";
+"Follow Us" = "Follow Us";
 "Favorite" = "Favorite";
 "History" = "History";
 "Change Password" = "Change Password";
@@ -258,7 +259,12 @@
 "Arak" = "Arak";
 
 
-
+"All" = "All";
+"Stores" = "Store";
+"Images" = "Images";
+"Video" = "Video";
+"Video Web" = "Video Web";
+"Filter Ads" = "Filter Ads";
 
 //Addiational
 "Withdrawal Request Successful" = "Withdrawal Request Successful";
@@ -335,3 +341,58 @@
 "Join us and be one of the thousands of registered members" = "Join us and be one of the thousands of registered members";
 "We apologize, the minimum amount for withdrawal is 5 dinars" = "We apologize, the minimum amount for withdrawal is 5 dinars";
 "Please contact us to purchase a coupon" = "Please contact us to purchase a coupon";
+
+
+// New Updates:
+
+"placeHolder.Search Stores" = "Search Stores";
+"placeHolder.Enter your review for this service provider..." = "Enter your review for this service provider...";
+"placeHolder.Enter your review ..." = "Enter your review ...";
+"placeHolder.Description" = "Description";
+"placeHolder.Title" = "Title";
+"placeHolder.Price" = "Price";
+"placeHolder.Company Name" = "Company Name";
+"placeHolder.Website" = "Website";
+"placeHolder.Phone Number" = "Phone Number";
+"placeHolder.Location" = "Location";
+
+
+
+"label.Products Store" = "Products Store";
+"label.Related Products" = "Related Products";
+"label.Review" = "Review";
+"label.Rate this service Provider" = "Rate this service Provider";
+"label.Rate this Ad" = "Rate this Ad";
+"label.View All" = "View All";
+"label.Your Store" = "Your Store";
+"label.My Store" = "My Store";
+"label.My Products" = "My Products";
+
+"title.Choose Store Category" = "Choose Store Category";
+"title.Your store has been successfully created" = "Your store has been successfully created";
+"title.Your Service has been successfully created" = "Your Service has been successfully created";
+"title.Go To Your Store" = "Go To Your Store";
+"title.Success" = "Success";
+
+"action.Add Your Store" = "Add Your Store";
+"action.Submit" = "Submit";
+"action.Upload Image" = "Upload Image";
+"action.Visit Store" = "Visit Store";
+"action.All" = "All";
+"action.Continue" = "Continue";
+
+
+"error.please add your review" = "please add your review";
+"error.please rate this store" = "please rate this store";
+"error.Please Enter your Product Name" = "Please Enter your Product Name";
+"error.Please Enter your Product Description" = "Please Enter your Product Description";
+"error.Please Enter your Product Price" = "Please Enter your Product Price";
+"error.Please add Product Image" = "Please add Product Image";
+"error.Please Enter Store Name" = "Please Enter Store Name";
+"error.Please Enter Store Description" = "Please Enter Store Description";
+"error.Please Enter Store Phone Number" = "Please Enter Store Phone Number";
+"error.Please Enter your Store Location" = "Please Enter your Store Location";
+"error.Please Choose Store Category Type" = "Please Choose Store Category Type";
+"error.Please Add Your Store Image" = "Please Add Your Store Image";
+"error.Please Add Your Store Cover Image" = "Please Add Your Store Cover Image";
+"error.you already have store" = "you already have store";

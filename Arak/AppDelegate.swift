@@ -10,7 +10,7 @@ import IQKeyboardManagerSwift
 import Firebase
 import FirebaseMessaging
 import GoogleSignIn
-
+import FBSDKCoreKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
@@ -21,7 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     LocaleManager.setup()
     IQKeyboardManager.shared.enable = true
     FirebaseApp.configure()
-    GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+      GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+          if error != nil || user == nil {
+              // Show the app's signed-out state.
+          } else {
+              // Show the app's signed-in state.
+          }
+      }
+//      GIDSignIn.sharedInstance.
     if Helper.appLanguage == nil {
         Helper.appLanguage = "en"
         LocaleManager.apply(identifier: Helper.appLanguage ?? "en")
@@ -47,15 +54,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UIApplication.shared.registerForRemoteNotifications()
       }
     }
-
+      // Initialize Facebook SDK
+      FBSDKCoreKit.ApplicationDelegate.shared.application(
+          application,
+          didFinishLaunchingWithOptions: launchOptions
+      )
     return true
   }
-  @available(iOS 9.0, *)
-  func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
-    -> Bool {
-    return GIDSignIn.sharedInstance().handle(url)
-  }
+//  @available(iOS 9.0, *)
+    func application(_ app: UIApplication, open url: URL,
+              options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+      var handled: Bool
 
+      handled = GIDSignIn.sharedInstance.handle(url)
+      if handled {
+        return true
+      }
+
+      // Handle other custom URL types.
+
+      // If not handled by this app, return false.
+      return false
+    }
+    
 //  func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any])
 //          -> Bool {
 //              let facebookResponse = ApplicationDelegate.shared.application(application, open: url, options: options)

@@ -27,19 +27,71 @@ class SocialMediaSignUPViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
 
     private var viewModel = CreateStoreViewModel()
+    public var mode: StoreMode = .add
     var data: [String:Any]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        submitButton.setTitle("action.Continue".localiz(), for: .normal)
         prepareUI()
+
+        if mode == .edit {
+            updateUI()
+        }
         // Do any additional setup after loading the view.
     }
 
+    private func updateUI() {
+        guard let store = Helper.store else {
+            self.showToast(message:"Error Can't find your store")
+            return
+        }
+
+        facebookTextField.text = store.facebook ?? ""
+        twitterTextField.text = store.twitter ?? ""
+        instaTextField.text = store.instagram ?? ""
+        linkidInTextField.text = store.linkedin ?? ""
+        YouTubeTextField.text = store.youtube ?? ""
+        snapShatTextField.text = store.snapchat ?? ""
+    }
+
     @IBAction func submittAction(_ sender: Any) {
+        if Helper.store != nil {
+            self.showToast(message:"error.you already have store".localiz())
+            return
+        }
         if let content =  data?.merging(parseContent() ?? [:]) {(current, _) in current} {
             print(content)
-        let vc = self.initViewControllerWith(identifier: CreateStoreSummeryViewController.className, and: "Summery", storyboardName: Storyboard.storeAuth.rawValue) as! CreateStoreSummeryViewController
-            vc.data = content
-        self.show(vc)
+            self.showLoading()
+            if mode == .add {
+            viewModel.createStore(data: content, compliation: { [weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
+                if error != nil {
+                    self?.showToast(message: error)
+                    return
+                }
+                let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
+                self?.show(vc)
+            })
+            } else {
+                viewModel.updateStore(id: Helper.store?.id ?? -1, data: content, compliation: { [weak self] error in
+                    defer {
+                        self?.stopLoading()
+                    }
+                    if error != nil {
+                        self?.showToast(message: error)
+                        return
+                    }
+                    self?.showToast(message: "Your Store Updated Successfully")
+                    for controller in (self?.navigationController!.viewControllers ?? []) as Array {
+                        if controller.isKind(of: StoreViewController.self) {
+                            self?.navigationController!.popToViewController(controller, animated: true)
+                            break
+                        }
+                    }
+                })
+            }
         }
     }
 

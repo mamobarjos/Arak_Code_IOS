@@ -9,9 +9,15 @@ import UIKit
 
 class AddServiceViewController: UIViewController {
 
+    enum ProductMode {
+        case add
+        case edit
+    }
+
     @IBOutlet weak var imageView: UIImageView!
 
     @IBOutlet weak var uploadImageButton: UIButton!
+    @IBOutlet weak var continueButton: UIButton!
     @IBOutlet weak var trashButton: UIButton!
 
     @IBOutlet weak var placeHolderImage: UIImageView!
@@ -22,26 +28,70 @@ class AddServiceViewController: UIViewController {
 
     @IBOutlet weak var priceTextField: UITextField!
 
-
     private var imagePicker = UIImagePickerController()
 
     private(set) var imageData: Data?
     private(set) var imageUrl: String?
     private(set) var data: [String:Any]?
 
+    public var mode: ProductMode = .add
+    public var product: StoreProduct?
+    public var relatedProduct: RelatedProducts?
+
     private var viewModel: CreateServiceViewModel = .init()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setupUI()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.hiddenNavigation(isHidden: false)
+    }
     private func setupUI() {
         trashButton.isHidden = true
 
-        descTextField.text = "Description"
+        uploadImageButton.setTitle("action.Upload Image".localiz(), for: .normal)
+        descTextField.text = "placeHolder.Description".localiz()
+        titleTextField.placeholder = "placeHolder.Title".localiz()
+        priceTextField.placeholder = "placeHolder.Price".localiz()
+        continueButton.setTitle("action.Continue".localiz(), for: .normal)
+
         descTextField.textColor = UIColor.lightGray
         descTextField.delegate = self
         descTextField.font = .font(for: .regular, size: 17)
+
+        if mode == .edit {
+            fillViewWithMyProduct()
+        }
+
+    }
+
+    private func fillViewWithMyProduct() {
+        if let product = product {
+            titleTextField.text = product.name
+            descTextField.text = product.desc
+            priceTextField.text = "\(product.price ?? 0.0)"
+        }
+
+        if let relatedProduct = relatedProduct {
+            titleTextField.text = relatedProduct.name
+            descTextField.text = relatedProduct.desc
+            priceTextField.text = "\(relatedProduct.price ?? 0.0)"
+        }
+    }
+
+    @IBAction func backButtonAction(_ sender: Any) {
+        for controller in self.navigationController!.viewControllers as Array {
+            if controller.isKind(of: StoreViewController.self) {
+                self.navigationController!.popToViewController(controller, animated: true)
+                break
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
 
     @IBAction func uploadImageAction(_ sender: Any) {
@@ -53,7 +103,7 @@ class AddServiceViewController: UIViewController {
             return
         }
         self.showLoading()
-        viewModel.createService(data: content, compliation: { [weak self] error in
+        viewModel.createService(data: content, completion: { [weak self] error in
             defer {
                 self?.stopLoading()
             }
@@ -77,22 +127,22 @@ class AddServiceViewController: UIViewController {
 
     private func getValidatedData() -> [String:Any]? {
         guard let productName = titleTextField.text else {
-            self.showToast(message: "Please Enter your Product Name")
+            self.showToast(message: "error.Please Enter your Product Name".localiz())
             return nil
         }
 
         guard let desc = descTextField.text else {
-            self.showToast(message: "Please Enter your Product Description")
+            self.showToast(message: "error.Please Enter your Product Description".localiz())
             return nil
         }
 
         guard let price = priceTextField.text else {
-            self.showToast(message: "Please Enter your Product Price")
+            self.showToast(message: "error.Please Enter your Product Price".localiz())
             return nil
         }
 
         guard let imageUrl = imageUrl else {
-            self.showToast(message: "Please add Product Image")
+            self.showToast(message: "error.Please add Product Image".localiz())
             return nil
         }
 
@@ -100,7 +150,7 @@ class AddServiceViewController: UIViewController {
             "name":productName,
             "desc":desc,
             "price":price,
-            "files[0][path]":imageUrl,
+            "files[0][\(imageUrl)]":imageUrl,
         ]
 
         return data
@@ -118,7 +168,7 @@ extension AddServiceViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if descTextField.text.isEmpty {
-            descTextField.text = "Description"
+            descTextField.text = "placeHolder.Description".localiz()
             descTextField.textColor = UIColor.lightGray
         }
     }

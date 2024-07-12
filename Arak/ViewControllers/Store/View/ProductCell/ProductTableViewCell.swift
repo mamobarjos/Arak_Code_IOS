@@ -28,22 +28,32 @@ class ProductTableViewCell: UITableViewCell {
     }
 
     func setup() {
-        productImageView.image = UIImage(named: "You")
+        productImageView.image = UIImage(named: "Summery Image")
+        productImageView.contentMode = .scaleToFill
     }
 
     func customize(product: StoreProduct) {
-//        if let url = URL(string: product.) {
-//
-//        }
+        if let url = URL(string: product.storeProductsFile.first?.path ?? "") {
+            productImageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
+        }
         titleLabel.text = product.name
         subTitleLabel.text = product.desc
         priceLabel.text = product.priceformated
     }
 
     func customize(product: RelatedProducts) {
-//        if let url = URL(string: product.)
+        if let url = URL(string: product.storeProductFiles?.first?.path ?? "") {
+            productImageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
+        }
         titleLabel.text = product.name
         subTitleLabel.text = product.desc
+        priceLabel.text = product.priceformated
+    }
+
+    func customize(product: StubidRelatedProducts) {
+      
+        titleLabel.text = product.name
+        subTitleLabel.text = ""
         priceLabel.text = product.priceformated
     }
 }

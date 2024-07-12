@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="ArbFONTS-Droid Arabic Kufi Bold.ttf">
+        <array key="ArbFONTS-DroidKufi-Bold.ttf">
             <string>DroidArabicKufi-Bold</string>
         </array>
     </customFonts>
@@ -54,6 +54,7 @@
                                 <color key="backgroundColor" red="0.1058823529" green="0.14117647059999999" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="115" id="Oah-FE-iXL"/>
+                                    <constraint firstAttribute="height" constant="137" id="mnK-YT-i3T"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

@@ -12,7 +12,7 @@ class StoreViewModel {
     private(set) var storeProduct: [StoreProduct] = []
     private(set) var reviews: [ReviewResponse] = []
     private(set) var review: ReviewResponse?
-    private(set) var products: [RelatedProducts] = []
+    private(set) var products: [StubidRelatedProducts] = []
     var canLoadMore = false
     func getStoreDetails() -> SingleStore? {
         return self.storDetails
@@ -30,10 +30,23 @@ class StoreViewModel {
         return review
     }
 
-    func getProducts() -> [RelatedProducts] {
+    func getProducts() -> [StubidRelatedProducts] {
         return products
     }
 
+
+    func getUserStore(complition: @escaping CompliationHandler) {
+        Network.shared.request(request: StoresRout.getUserStore, decodable: SingleStore.self) { [weak self] response, error in
+            guard error == nil else {
+                complition(error)
+                return
+            }
+            self?.storDetails = response?.data
+            self?.storeProduct = response?.data?.storeProducts ?? []
+            self?.reviews = response?.data?.storeReviews ?? []
+            complition(nil)
+        }
+    }
 
     func getStore(stroeId: Int, complition: @escaping CompliationHandler) {
         Network.shared.request(request: StoresRout.getSingleStore(id: stroeId), decodable: SingleStore.self) { [weak self] response, error in
@@ -47,6 +60,23 @@ class StoreViewModel {
             complition(nil)
         }
     }
+
+    func getUserProducts(page: Int = 1, complition: @escaping CompliationHandler) {
+            if page == 1 {
+                self.products = []
+            }
+
+            Network.shared.request(request: StoresRout.getUserProducts(page: page), decodable: PagingModel<[StubidRelatedProducts]>.self) { [weak self] response, error in
+                guard error == nil else {
+                    complition(error)
+                    return
+                }
+
+                self?.canLoadMore = !(response?.data?.data?.isEmpty ?? false)
+                self?.products.append(contentsOf: response?.data?.data ?? [])
+                complition(nil)
+            }
+        }
 
     func submitReview(review: String, rate: Int, stroeId: Int, complition: @escaping CompliationHandler) {
         Network.shared.request(request: StoresRout.submitReview(content: review, rate: rate, store_id: stroeId), decodable: ReviewResponse.self) { [weak self] response, error in
@@ -64,7 +94,7 @@ class StoreViewModel {
             self.products = []
         }
 
-        Network.shared.request(request: StoresRout.getStoreProducts(storeId: storeId, page: page), decodable: PagingModel<[RelatedProducts]>.self) { [weak self] response, error in
+        Network.shared.request(request: StoresRout.getStoreProducts(storeId: storeId, page: page), decodable: PagingModel<[StubidRelatedProducts]>.self) { [weak self] response, error in
             guard error == nil else {
                 complition(error)
                 return
@@ -75,6 +105,25 @@ class StoreViewModel {
             complition(nil)
         }
     }
+
+    func getStoreProductsByCategory(categoryId: Int, page: Int = 1, complition: @escaping CompliationHandler) {
+        if page == 1 {
+            self.products = []
+        }
+
+        Network.shared.request(request: StoresRout.getProductsByCategory(categoryId: categoryId, page: page), decodable: PagingModel<[StubidRelatedProducts]>.self) { [weak self] response, error in
+            guard error == nil else {
+                complition(error)
+                return
+            }
+
+            self?.canLoadMore = !(response?.data?.data?.isEmpty ?? false)
+            self?.products.append(contentsOf: response?.data?.data ?? [])
+            complition(nil)
+        }
+    }
+
+
 
     func deleteStoreReview(reviewId: Int, complition: @escaping CompliationHandler) {
         Network.shared.request(request: StoresRout.deleteStoreReview(id: reviewId), decodable: Review.self) { [weak self] response, error in

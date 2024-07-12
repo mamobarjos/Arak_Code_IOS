@@ -82,7 +82,7 @@ class DetailViewController: UIViewController {
             return
         }
         
-        detailView.configeUI(ads: viewModel.ad, viewMode: .detail) { (action) in
+        detailView.configeUI(ads: viewModel.ad,viewMode: .detail, viewController: self) { (action) in
             switch action {
             case .call(let phone):
                 Helper.CellPhone(phone)
@@ -131,6 +131,37 @@ class DetailViewController: UIViewController {
         detailView.bounds = self.view.frame
         
         detailView.center = self.view.center
+    }
+    
+    func submiteReview(context: String, rating: Int) {
+        self.showLoading()
+        viewModel.submitReview(review: context, rate: rating, ad_id: id) { [weak self] (error) in
+            defer {
+                self?.stopLoading()
+            }
+            
+            if error != nil {
+                self?.showToast(message: error)
+                return
+            }
+            
+            self?.fetchDetail()
+        }
+    }
+    
+    func deleteReview(id: Int) {
+        viewModel.deleteReview(reviewId: id) { [weak self] (error) in
+            defer {
+                self?.stopLoading()
+            }
+            
+            if error != nil {
+                self?.showToast(message: error)
+                return
+            }
+            
+            self?.fetchDetail()
+        }
     }
     
     private func Favorite(id: Int,isFavorate: Bool) {

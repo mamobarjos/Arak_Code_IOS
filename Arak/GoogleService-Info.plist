@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>890454586973-psvhp53ubcp0a6q15d2oqsinbqja3ts9.apps.googleusercontent.com</string>
+	<string>559969284871-ceu15hubm2u4ope2j9fdf1cb4sp9op0e.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.890454586973-psvhp53ubcp0a6q15d2oqsinbqja3ts9</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>890454586973-vkv94nc6ajfnjmqbaptttocfqqgbg5hu.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.559969284871-ceu15hubm2u4ope2j9fdf1cb4sp9op0e</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD1Vu4R1kYmaY3h_fGxwskutYGYekPhRJ8</string>
+	<string>AIzaSyCq2FHpXva4TP0coci-0-vhB3zzhQJPLSA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>890454586973</string>
+	<string>559969284871</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.Arak.freelance</string>
+	<string>com.Arak.store</string>
 	<key>PROJECT_ID</key>
-	<string>arak-d1392</string>
+	<string>arak-9b950</string>
 	<key>STORAGE_BUCKET</key>
-	<string>arak-d1392.appspot.com</string>
+	<string>arak-9b950.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:890454586973:ios:50f45d6976feaec9373fb4</string>
+	<string>1:559969284871:ios:bac3bd432f8a31bfbd4ba2</string>
+	<key>DATABASE_URL</key>
+	<string>https://arak-9b950-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

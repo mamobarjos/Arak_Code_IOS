@@ -11,11 +11,12 @@ class CongretsStoreViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var createAdLabel: UILabel!
-
+    @IBOutlet weak var successLabel: UILabel!
     private(set) var congretsType: CongretsType = .store
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        successLabel.text = "title.Success".localiz()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         createAdLabel.addGestureRecognizer(tap)
         titleLabel.text = congretsType.title
@@ -49,18 +50,18 @@ extension CongretsStoreViewController {
         var title: String {
             switch self {
             case .store:
-                return "Your store has been successfully created and you have 2 free ads"
+                return "title.Your store has been successfully created".localiz()
             case .service:
-                return "Your Service has been successfully created"
+                return "title.Your Service has been successfully created".localiz()
             }
         }
 
         var actionTitle: String {
             switch self {
             case .store:
-                return "Go To Your Store"
+                return "title.Go To Your Store".localiz()
             case .service:
-                return "Go To Your Store"
+                return "title.Go To Your Store".localiz()
             }
         }
 
@@ -73,6 +74,7 @@ extension CongretsStoreViewController {
             case .service:
                 let vc = initViewControllerWith(identifier: StoreViewController.className, and:  "") as! StoreViewController
                 vc.storeId = Helper.store?.id
+                vc.mode = .edit
                 return vc
             }
         }

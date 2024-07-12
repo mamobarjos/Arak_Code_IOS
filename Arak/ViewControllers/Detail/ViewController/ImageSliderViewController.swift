@@ -62,6 +62,7 @@ class ImageSliderViewController: UIViewController {
   }
 
   func confige(imageNames:[String]) {
+      print(imageNames)
     self.imageNames = imageNames
   }
 }

@@ -17,48 +17,22 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if SWIFT_PACKAGE
- #import "FBSDKSettings.h"
+#import "FBSDKSettings.h"
 #else
- #import <FBSDKCoreKit/FBSDKSettings.h>
+#import <FBSDKCoreKit/FBSDKSettings.h>
 #endif
-
-#import "FBSDKCoreKit+Internal.h"
-
-#define DATA_PROCESSING_OPTIONS         @"data_processing_options"
-#define DATA_PROCESSING_OPTIONS_COUNTRY @"data_processing_options_country"
-#define DATA_PROCESSING_OPTIONS_STATE   @"data_processing_options_state"
 
 @protocol FBSDKAccessTokenCaching;
 
-@interface FBSDKSettings (Internal)
+@interface FBSDKSettings(Internal)
 
-+ (nullable NSObject<FBSDKAccessTokenCaching> *)accessTokenCache;
++ (NSObject<FBSDKAccessTokenCaching> *)accessTokenCache;
 
-+ (void)setAccessTokenCache:(nullable NSObject<FBSDKAccessTokenCaching> *)accessTokenCache;
++ (void)setAccessTokenCache:(NSObject<FBSDKAccessTokenCaching> *)accessTokenCache;
 
-+ (FBSDKAdvertisingTrackingStatus)getAdvertisingTrackingStatus;
-
-+ (void)setAdvertiserTrackingStatus:(FBSDKAdvertisingTrackingStatus)status;
-
-+ (nullable NSDictionary<NSString *, id> *)dataProcessingOptions;
-
-+ (BOOL)isDataProcessingRestricted;
-
-+ (void)recordInstall;
-
-+ (void)recordSetAdvertiserTrackingEnabled;
-
-+ (BOOL)isEventDelayTimerExpired;
-
-+ (BOOL)isSetATETimeExceedsInstallTime;
-
-+ (NSDate *_Nullable)getInstallTimestamp;
-
-+ (NSDate *_Nullable)getSetAdvertiserTrackingEnabledTimestamp;
-
-@property (class, nullable, nonatomic, readonly, copy) NSString *graphAPIDebugParamValue;
+@property (class, nonatomic, copy, readonly) NSString *graphAPIDebugParamValue;
 
 // used by Unity.
-@property (class, nullable, nonatomic, copy) NSString *userAgentSuffix;
+@property (class, nonatomic, copy) NSString *userAgentSuffix;
 
 @end

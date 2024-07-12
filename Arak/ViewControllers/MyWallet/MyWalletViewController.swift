@@ -78,6 +78,7 @@ class MyWalletViewController: UIViewController {
     
     private func loadTransaction() {
         showLoading()
+        getBalance()
         myWalletViewModel.getTransactions(page: page, isFilter: isFilter, year: year, month: month) {[weak self] (error) in
             defer {
                 self?.stopLoading()

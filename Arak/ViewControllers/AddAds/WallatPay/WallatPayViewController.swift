@@ -42,11 +42,11 @@ class WallatPayViewController: UIViewController {
     }
     
     private func getBalance() {
-        fetchBalance { error in
-            if error == nil {
-                self.earningValueLabel.text = "\(Helper.currentUser?.balanceTitle ?? "")"
-            }
-        }
+//        fetchBalance { error in
+//            if error == nil {
+//                self.earningValueLabel.text = "\(Helper.currentUser?.balanceTitle ?? "")"
+//            }
+//        }
     }
     
     private func localization() {

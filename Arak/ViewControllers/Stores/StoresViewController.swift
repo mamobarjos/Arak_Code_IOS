@@ -15,7 +15,8 @@ class StoresViewController: UIViewController {
     @IBOutlet weak var banarCollectionView: UICollectionView!
 
     @IBOutlet weak var searchView: UIView!
-
+    @IBOutlet weak var searchStoreTextField: UITextField!
+    
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var joinUsButton: UIButton!
 
@@ -40,9 +41,11 @@ class StoresViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        joinUsButton.setTitle("action.Add Your Store".localiz(), for: .normal)
+        searchStoreTextField.text = "placeHolder.Search Stores".localiz()
+
         containerView.addSubview(tagsView)
         containerView.addSubview(tableView)
-        print(Helper.store!)
         tagsView.layout
             .top(.equal, to: searchView, edge: .bottom, offset: -5)
             .leading(to:.superview , offset: 10)
@@ -87,9 +90,17 @@ class StoresViewController: UIViewController {
         }
         fetchStores()
 
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hiddenNavigation(isHidden: false)
+        dispatchGroup.enter()
+        pageFeatured = 1
         if Helper.currentUser?.hasStore == 1 {
-            self.joinUsButton.isHidden = true
-            self.addButton.isHidden = false
+            self.joinUsButton.isHidden = false
+            self.addButton.isHidden = true
             return
         } else if Helper.store != nil {
             self.joinUsButton.isHidden = true
@@ -99,13 +110,6 @@ class StoresViewController: UIViewController {
             self.joinUsButton.isHidden = false
             self.addButton.isHidden = true
         }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        hiddenNavigation(isHidden: false)
-        dispatchGroup.enter()
-        pageFeatured = 1
 
         dispatchGroup.notify(queue: .main) {
             self.banarCollectionView.reloadData()
@@ -140,9 +144,10 @@ class StoresViewController: UIViewController {
             }
             if fillCategories {
                 self?.tagsView.items = []
-                self?.tagsView.items.append(HorizontalTagsView.TagItem(id: -1, title: "All"))
+                self?.tagsView.items.append(HorizontalTagsView.TagItem(id: -1, title: "action.All".localiz()))
                 self?.storesViewModel.getCategories().forEach({
-                    self?.tagsView.items.append(.init(id: $0.id, title: $0.name))
+                    
+                    self?.tagsView.items.append(.init(id: $0.id, title:Helper.appLanguage ?? "en" == "en" ? $0.name : $0.arName))
                     self?.fetchFeaturedAds()
                 })
                 self?.tagsView.selectedItemID = -1
@@ -242,12 +247,44 @@ extension StoresViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return UIEdgeInsets(top: 0 , left: 0, bottom: 0, right: 0)
     }
 
+    func openExternalURL(_ urlString: String) {
+           if let url = URL(string: urlString) {
+               // Check if the URL can be opened
+               if UIApplication.shared.canOpenURL(url) {
+                   // Open the URL with default web browser
+                   UIApplication.shared.open(url, options: [:], completionHandler: nil)
+               } else {
+                   // Handle the error if the URL cannot be opened
+                   print("Cannot open URL")
+               }
+           } else {
+               // Handle the error if the URL is invalid
+               print("Invalid URL")
+           }
+       }
     func makeFeatured(indexPath:IndexPath,isBanner: Bool) -> FeaturedCell {
             let cell:FeaturedCell = banarCollectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setup(bannerList: storesViewModel.getBanners())
         cell.layoutIfNeeded()
+        cell.learnMore = {[weak self] item in
+            let vc = self?.initViewControllerWith(identifier: PopUpViewViewController.className, and: "", storyboardName: "Main") as! PopUpViewViewController
+            vc.bannerDesc = item.description
+            vc.bannerTitle = item.title
+            self?.present(vc, modalPresentationStyle: .pageSheet)
+        }
+        
+        cell.showDetails = {[weak self] item in
+            if item.websiteurl == nil {
+                let vc = self?.initViewControllerWith(identifier: StoreViewController.className, and: item.title ?? "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+                vc.storeId = item.id
+                self?.show(vc)
+            } else {
+                self?.openExternalURL(item.websiteurl ?? "https://www.google.com/?client=safari&channel=iphone_bm")
+            }
+        }
+        
         return cell
-
+       
     }
 
 }

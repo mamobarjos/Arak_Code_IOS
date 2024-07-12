@@ -35,7 +35,7 @@ class SummaryViewController: UIViewController {
       return
     }
 
-    detailView.configeUI(ads: ads, viewMode: .view) { (action) in
+      detailView.configeUI(ads: ads, viewMode: .view, viewController: nil) { (action) in
       switch action {
         case .call(let phone):
           Helper.CellPhone(phone)

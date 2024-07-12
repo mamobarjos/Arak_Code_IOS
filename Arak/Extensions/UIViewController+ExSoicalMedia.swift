@@ -17,8 +17,8 @@ protocol SocialDelegate {
 }
 var socialDelegate: SocialDelegate?
 
-extension UIViewController: GIDSignInDelegate {
-    
+extension UIViewController {
+//    
     func signInFacebook()  {
         let loginManager = LoginManager()
         loginManager.logIn(permissions: [], from: self) { result, error in
@@ -32,16 +32,20 @@ extension UIViewController: GIDSignInDelegate {
             }
             self.fetchProfile(accessToken:accessToken,socialDelegate: socialDelegate)
         }
+        
     }
     
     func fetchBalance(compliation: @escaping CompliationHandler) {
         let viewModel = ProfileViewModel()
         viewModel.getUserBalance (compliation: compliation)
     }
+    
     func fetchProfile(accessToken:String , socialDelegate:SocialDelegate?) {
         let parameters = ["fields": "id, email, name, picture.type(large)"]
-        let graphRequest = GraphRequest(graphPath: "me", parameters: parameters, tokenString: accessToken, version: Settings.defaultGraphAPIVersion, httpMethod: HTTPMethod.get)
+        let graphRequest = GraphRequest(graphPath: "me", parameters: parameters, tokenString: accessToken, version: "", httpMethod: HTTPMethod.get)
         
+        
+//        GraphRequest(graphPath: "me", parameters: parameters, tokenString: accessToken, version: Settings.defaultGraphAPIVersion, httpMethod: HTTPMethod.get)
         graphRequest.start { connection, user, requestError in
             if requestError != nil {
                 print("----------ERROR-----------\n")
@@ -70,10 +74,10 @@ extension UIViewController: GIDSignInDelegate {
         }
     }
     
-    func signInGoogle()  {
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().signIn()
-    }
+//    func signInGoogle()  {
+//        GIDSignIn.sharedInstance().delegate = self
+//        GIDSignIn.sharedInstance().signIn()
+//    }
     
     public func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if error != nil {
@@ -84,11 +88,11 @@ extension UIViewController: GIDSignInDelegate {
             socialDelegate?.error(socialError: .General)
         } else {
             let id = user.userID ?? ""
-            let idToken = user.authentication.idToken ?? ""
-            let fullName = user.profile.name ?? ""
-            _ = user.profile.givenName ?? ""
-            _ = user.profile.familyName
-            let email = user.profile.email ?? SocialError.EmailNotFound.rawValue
+            let idToken = user.idToken?.tokenString ?? ""
+            let fullName = user.profile?.name ?? ""
+            _ = user.profile?.givenName ?? ""
+            _ = user.profile?.familyName
+            let email = user.profile?.email ?? SocialError.EmailNotFound.rawValue
             let soicalMedia = SocialMedia(socialId: id, email: email, phone: SocialError.PhoneNotFound.rawValue, displayName: fullName, imageUrl: "", socialToken: idToken, type: .Google)
             socialDelegate?.signIn(socialMedia: soicalMedia)
         }

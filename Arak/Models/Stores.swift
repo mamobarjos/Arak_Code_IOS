@@ -124,6 +124,8 @@ struct Banner: Codable {
     let websiteurl: String?
     let userid: Int?
     let updatedAt: String?
+    let title: String?
+    let description: String?
 
     enum CodingKeys: String, CodingKey {
         case status = "status"
@@ -134,5 +136,6 @@ struct Banner: Codable {
         case websiteurl = "website_url"
         case userid = "user_id"
         case updatedAt = "updated_at"
+        case title, description
     }
 }

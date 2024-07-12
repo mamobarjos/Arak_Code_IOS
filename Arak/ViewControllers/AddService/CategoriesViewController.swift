@@ -36,7 +36,13 @@ class CategoriesViewController: UIViewController {
             collectionView
             saveButton
         }
-        collectionView.layout.fill(.safeArea)
+
+        collectionView.layout
+            .top(to: .safeArea)
+            .leading(to: .superview)
+            .trailing(to: .superview)
+            .bottom(to: .superview, offset: -150)
+
         saveButton.layout
             .trailing(to: .superview, offset: -50)
             .leading(to: .superview, offset: 50)

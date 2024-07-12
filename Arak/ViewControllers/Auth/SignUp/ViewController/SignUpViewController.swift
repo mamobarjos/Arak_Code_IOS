@@ -1,9 +1,9 @@
-//
+
 //  SignUpViewController.swift
 //  Arak
 //
 //  Created by Abed Qassim on 22/02/2021.
-//  
+//
 //
 
 import UIKit
@@ -13,6 +13,7 @@ import AuthenticationServices
 import FirebaseAuth
 import GoogleSignIn
 import JWTDecode
+import FBSDKLoginKit
 
 class SignUpViewController: UIViewController,SocialDelegate {
 
@@ -20,7 +21,7 @@ class SignUpViewController: UIViewController,SocialDelegate {
 
   @IBOutlet weak var joinArakLabel: UILabel!
   @IBOutlet weak var fullNameTextField: UITextField!
-  @IBOutlet weak var emailTextField: UITextField!
+  @IBOutlet weak var dateTextField: UITextField!
   @IBOutlet weak var passwordTextField: UITextField!
   @IBOutlet weak var confirmPasswordTextField: UITextField!
   @IBOutlet weak var phoneNumberTextField: UITextField!
@@ -30,15 +31,19 @@ class SignUpViewController: UIViewController,SocialDelegate {
   @IBOutlet weak var cityTextField: UITextField!
   @IBOutlet weak var countryTextField: UITextField!
 
-    @IBOutlet weak var businessNameTextField: UITextField!
+//    @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var orButton: UIButton!
-  @IBOutlet weak var loginFacebookLabel: UILabel!
-  @IBOutlet weak var loginGoogleLabel: UILabel!
-  @IBOutlet weak var loginAppleLabel: UILabel!
+//  @IBOutlet weak var loginFacebookLabel: UILabel!
+//  @IBOutlet weak var loginGoogleLabel: UILabel!
+//  @IBOutlet weak var loginAppleLabel: UILabel!
   @IBOutlet weak var hasAccountLabel: UILabel!
 
-  
+    @IBOutlet weak var yesImage: UIImageView!
+    @IBOutlet weak var noImage: UIImageView!
+//    @IBOutlet weak var loginView: UIView!
+    
   // MARK: - Properties
+  private let datePicker = UIDatePicker()
   private var genderPickerView = ToolbarPickerView()
   private var countryPickerView = ToolbarPickerView()
   private var cityPickerView = ToolbarPickerView()
@@ -49,15 +54,40 @@ class SignUpViewController: UIViewController,SocialDelegate {
   var cityId = -1
 
   var viewModel: SignUpViewModel = SignUpViewModel()
-
+var haveWallet = -1
 
   // MARK: - Override Methods
   override func viewDidLoad() {
     super.viewDidLoad()
+//      if let token = AccessToken.current,
+//          !token.isExpired {
+//          let token = token.tokenString
+//          let request = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields" : "email, name"], tokenString: token,version: nil ,httpMethod: .get)
+//          request.start {connection, result , error in
+////              LoginManager().logOut()
+////              print(result)
+//          }
+//      }else{
+//          let facebookBtn = FBLoginButton()
+//          facebookBtn.delegate = self
+//          facebookBtn.permissions = ["public_profile", "email"]
+//          loginView.addSubview(facebookBtn)
+//          facebookBtn.translatesAutoresizingMaskIntoConstraints = false
+//          facebookBtn.bottomAnchor.constraint(equalTo: loginView.bottomAnchor).isActive = true
+//          facebookBtn.leadingAnchor.constraint(equalTo: loginView.leadingAnchor).isActive = true
+//          facebookBtn.trailingAnchor.constraint(equalTo: loginView.trailingAnchor).isActive = true
+//          facebookBtn.topAnchor.constraint(equalTo: loginView.topAnchor).isActive = true
+//          facebookBtn.layer.masksToBounds = true
+//          facebookBtn.layer.cornerRadius = 10
+//          facebookBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
+//          facebookBtn.setImage(nil, for: .normal)
+//          
+//      }
     socialDelegate = self
     phoneNumberTextField.semanticContentAttribute = .forceLeftToRight
     phoneNumberTextField.textAlignment = .left
     setupUI()
+      setupDatePicker()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -86,9 +116,42 @@ class SignUpViewController: UIViewController,SocialDelegate {
         cityTextField.setRightImage(image: #imageLiteral(resourceName: "arrow_down"))
         countryTextField.setRightImage(image: #imageLiteral(resourceName: "arrow_down"))
     }
-    
-
   }
+    
+    private func setupDatePicker() {
+        datePicker.datePickerMode = .date
+        datePicker.maximumDate = Date()
+        datePicker.preferredDatePickerStyle = .wheels // or .compact for a different style
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        }
+        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        
+        // Create a toolbar with a "Done" button
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
+        toolbar.setItems([doneButton], animated: true)
+        
+        // Set the date picker as the input view for the text field
+        dateTextField.inputView = datePicker
+        
+        // Set the toolbar as the input accessory view for the text field
+        dateTextField.inputAccessoryView = toolbar
+    }
+    
+    @objc private func dateChanged() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateTextField.text = dateFormatter.string(from: datePicker.date)
+    }
+    
+    @objc private func doneTapped() {
+        // Dismiss the date picker
+        dateTextField.resignFirstResponder()
+    }
+    
     private func validation() -> Bool {
       error = ""
       guard let name = fullNameTextField.text else {
@@ -102,24 +165,29 @@ class SignUpViewController: UIViewController,SocialDelegate {
         self.fullNameTextField.becomeFirstResponder()
         return error.isEmpty
       }
-
-      guard let email = emailTextField.text else {
-        error = "Please insert your email".localiz()
-        self.emailTextField.becomeFirstResponder()
-
-        return error.isEmpty
-      }
-      if email.validator(type: .Email) == .Required {
-        error = "Please insert your email".localiz()
-        self.emailTextField.becomeFirstResponder()
-        return error.isEmpty
-      }
-      if email.validator(type: .Email) == .Email {
-        error = "You have entered an invalid email address!".localiz()
-        self.emailTextField.becomeFirstResponder()
-
-        return error.isEmpty
-      }
+        if haveWallet == -1 {
+            error = "Please insert your wallet status".localiz()
+            return error.isEmpty
+        }
+        
+//      guard let email = emailTextField.text else {
+//        error = "Please insert your email".localiz()
+//        self.emailTextField.becomeFirstResponder()
+//
+//        return error.isEmpty
+//      }
+        
+//      if email.validator(type: .Email) == .Required {
+//        error = "Please insert your email".localiz()
+//        self.emailTextField.becomeFirstResponder()
+//        return error.isEmpty
+//      }
+//      if email.validator(type: .Email) == .Email {
+//        error = "You have entered an invalid email address!".localiz()
+//        self.emailTextField.becomeFirstResponder()
+//
+//        return error.isEmpty
+//      }
 
       guard let password = passwordTextField.text else {
         error = "Please insert your password".localiz()
@@ -164,17 +232,17 @@ class SignUpViewController: UIViewController,SocialDelegate {
         self.confirmPasswordTextField.becomeFirstResponder()
         return error.isEmpty
       }
-        guard let gender = genderTextField.text else {
-          error = "Please insert your gender".localiz()
-          self.genderTextField.becomeFirstResponder()
-          return error.isEmpty
-        }
+//        guard let gender = genderTextField.text else {
+//          error = "Please insert your gender".localiz()
+//          self.genderTextField.becomeFirstResponder()
+//          return error.isEmpty
+//        }
 
-        if gender.validator(type: .Required) == .Required {
-          error = "Please insert your gender".localiz()
-          self.genderTextField.becomeFirstResponder()
-          return error.isEmpty
-        }
+//        if gender.validator(type: .Required) == .Required {
+//          error = "Please insert your gender".localiz()
+//          self.genderTextField.becomeFirstResponder()
+//          return error.isEmpty
+//        }
         guard let phone = phoneNumberTextField.text else {
           error = "Please insert your phone number".localiz()
           self.phoneNumberTextField.becomeFirstResponder()
@@ -232,7 +300,7 @@ class SignUpViewController: UIViewController,SocialDelegate {
 
     joinArakLabel.text = "Join Arak".localiz()
     fullNameTextField.placeholder = "Full Name".localiz()
-    emailTextField.placeholder = "Email".localiz()
+    dateTextField.placeholder = "Date of birth".localiz()
     passwordTextField.placeholder = "Password".localiz()
     confirmPasswordTextField.placeholder = "Confirm password".localiz()
     genderTextField.placeholder = "Gender".localiz()
@@ -242,15 +310,15 @@ class SignUpViewController: UIViewController,SocialDelegate {
     termsPrivacyLabel.text = "By signing up, you agree to our Terms & Conditions and Privacy Policy .".localiz()
     signUpButton.setTitle("Sign up".localiz(), for: .normal)
     orButton.setTitle("OR".localiz(), for: .normal)
-    loginFacebookLabel.text = "Log in with Facebook".localiz()
-    loginGoogleLabel.text = "Log in with Google".localiz()
-    loginAppleLabel.text = "Log in with Apple".localiz()
-    businessNameTextField.placeholder = "Business Name".localiz()
+//    loginFacebookLabel.text = "Log in with Facebook".localiz()
+//    loginGoogleLabel.text = "Log in with Google".localiz()
+//    loginAppleLabel.text = "Sign in with Apple".localiz()
+//    businessNameTextField.placeholder = "Business Name".localiz()
     hasAccountLabel.text = "Have an account? ".localiz() + "Log in".localiz()
     hasAccountLabel.setSubTextColor(pSubString: "Log in".localiz(), pColor: #colorLiteral(red: 1, green: 0.431372549, blue: 0.1803921569, alpha: 1))
 
     joinArakLabel.textAligment()
-    emailTextField.textAligment()
+//    emailTextField.textAligment()
     passwordTextField.textAligment()
     confirmPasswordTextField.textAligment()
     fullNameTextField.textAligment()
@@ -258,7 +326,7 @@ class SignUpViewController: UIViewController,SocialDelegate {
     phoneNumberTextField.textAligment()
     cityTextField.textAligment()
     countryTextField.textAligment()
-    businessNameTextField.textAligment()
+//    businessNameTextField.textAligment()
     phoneNumberTextField.delegate = self
 
   }
@@ -278,15 +346,21 @@ class SignUpViewController: UIViewController,SocialDelegate {
   }
 
   @IBAction func SignUp(_ sender: Any) {
+      print(haveWallet)
+
     if !validation() {
       showToast(message: error)
       return
     }
-    let data: [String: String] =  ["fullname": fullNameTextField.text ?? "","email": emailTextField.text ?? "" , "password": passwordTextField.text ?? "" , "phone_no" : "+962" + (phoneNumberTextField.text ?? "") , "password_confirmation" : confirmPasswordTextField.text ?? "" , "gender" : genderTextField.text ?? "" , "city" : cityTextField.text ?? "" , "country" : countryTextField.text ?? "","company_name":businessNameTextField.text ?? "" ]
-    
+    let data: [String: String] =  [
+        "fullname": fullNameTextField.text ?? "",
+        "password": passwordTextField.text ?? "" ,
+        "birthdate": dateTextField.text ?? "",
+        "phone_no" : "+962" + (phoneNumberTextField.text ?? "")
+                                   , "password_confirmation" : confirmPasswordTextField.text ?? "" , "gender" : genderTextField.text ?? "" , "city" : cityTextField.text ?? "" , "country" : countryTextField.text ?? "", "has_wallet": "\(haveWallet)"]
+    print(data)
     var otpData:[String : String] = [:]
     otpData["phone_no"] = "+962" + (phoneNumberTextField.text ?? "")
-    otpData["email"] = emailTextField.text ?? ""
     self.signUpButton.isUserInteractionEnabled = false
     showLoading()
     viewModel.otp(data: otpData) {  [weak self] (error) in
@@ -299,6 +373,7 @@ class SignUpViewController: UIViewController,SocialDelegate {
         return
       }
       let vc = self?.initViewControllerWith(identifier: OtpViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! OtpViewController
+        print(data)
       vc.confige(email: "", processType: .register, data: data)
       self?.show(vc)
     }
@@ -334,6 +409,17 @@ class SignUpViewController: UIViewController,SocialDelegate {
     }
   }
 
+    @IBAction func yesTapped(_ sender: Any) {
+        yesImage.image = UIImage(named: "Check (1)")
+        noImage.image = UIImage(named: "check 1")
+        haveWallet = 1
+    }
+    
+    @IBAction func noTapped(_ sender: Any) {
+        yesImage.image = UIImage(named: "check 1" )
+        noImage.image = UIImage(named: "Check (1)")
+        haveWallet = 0
+    }
 }
 
 extension SignUpViewController: UITextFieldDelegate {
@@ -430,10 +516,12 @@ extension SignUpViewController: UIPickerViewDataSource, UIPickerViewDelegate, To
     }
   }
   @IBAction func FaceebookLogin(_ sender: Any) {
-    signInFacebook()
+//    signInFacebook()
+      
+   
   }
   @IBAction func GoogleLogin(_ sender: Any) {
-    signInGoogle()
+//    signInGoogle()
   }
   @available(iOS 13, *)
   @IBAction func Apple(_ sender: Any) {
@@ -531,7 +619,8 @@ extension SignUpViewController: ASAuthorizationControllerDelegate,ASAuthorizatio
         let isPrivateEmail = jwtToken["is_private_email"] as? Bool ?? true
         var email:String = jwtToken["email"] as? String ?? SocialError.EmailNotFound.rawValue
         email = isPrivateEmail ? SocialError.EmailNotFound.rawValue : email
-        let soicalMedia = SocialMedia(socialId: appleIDCredential.user, email: email, phone: SocialError.PhoneNotFound.rawValue, displayName: "", imageUrl: "", socialToken: idTokenString, type: .Apple)
+        let soicalMedia = SocialMedia(socialId: appleIDCredential.user, email: "", phone: "", displayName: "", imageUrl: "", socialToken: idTokenString, type: .Apple)
+          print(soicalMedia)
         socialDelegate?.signIn(socialMedia: soicalMedia)
       } catch let err {
         print(err.localizedDescription)
@@ -586,7 +675,32 @@ extension SignUpViewController {
         let newString: NSString =
                currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
-      } 
+      }
    return true
   }
+}
+extension SignUpViewController : LoginButtonDelegate {
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        let token = result?.token?.tokenString
+        print(token)
+        let request = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields" : "email, name"], tokenString: token,version: nil ,httpMethod: .get)
+        request.start { connection, user, requestError in
+//            if let tabBarVc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBar") as? MainTabBar {
+//                if let accessToken = AccessToken.current?.tokenString {
+//                    NetworkManager().FacebookloginRequest(access_token: accessToken) { (error, isSuccess, mess) in
+//                        LoginManager().logOut()
+//                        self.SetDeviceDataRegister()
+//                        let nextVC = UINavigationController(rootViewController: tabBarVc)
+//                        nextVC.modalPresentationStyle = .fullScreen
+//                        self.present(nextVC, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+        }
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        
+    }
 }

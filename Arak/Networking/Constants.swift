@@ -49,7 +49,11 @@ enum NetworkResponse:String {
 }
 
 enum AdsTypes: Int {
-  case video = 2
-  case image = 1
-  case videoWeb = 3
+    case all = 0
+    case video = 2
+    case image = 1
+    case videoWeb = 3
+    case store = 4
 }
+
+

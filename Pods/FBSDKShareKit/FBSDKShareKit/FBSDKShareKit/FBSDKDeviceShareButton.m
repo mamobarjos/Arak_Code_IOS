@@ -20,20 +20,16 @@
 
 #if TARGET_OS_TV
 
- #import "FBSDKDeviceShareButton.h"
+#import "FBSDKDeviceShareButton.h"
+#import "FBSDKDeviceShareViewController.h"
 
- #import "FBSDKDeviceShareViewController.h"
+#if defined BUCK || defined FBSDKCOCOAPODS || defined __cplusplus
+#import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
+#else
+#import "FBSDKCoreKit+Internal.h"
+#endif
 
- #if defined BUCK || defined FBSDKCOCOAPODS || defined __cplusplus
-  #import <FBSDKCoreKit/FBSDKCoreKit+Internal.h>
- #else
-  #import "FBSDKCoreKit+Internal.h"
- #endif
-
- #pragma clang diagnostic push
- #pragma clang diagnostic ignored "-Wdeprecated-implementations"
 @implementation FBSDKDeviceShareButton
- #pragma clang diagnostic pop
 
 - (void)configureButton
 {
@@ -43,13 +39,9 @@
          highlightedColor:nil];
 
   NSString *title =
-  NSLocalizedStringWithDefaultValue(
-    @"ShareButton.Share",
-    @"FacebookSDK",
-    [FBSDKInternalUtility bundleForStrings],
-    @"Share",
-    @"The label for FBSDKShareButton"
-  );
+  NSLocalizedStringWithDefaultValue(@"ShareButton.Share", @"FacebookSDK", [FBSDKInternalUtility bundleForStrings],
+                                    @"Share",
+                                    @"The label for FBSDKShareButton");
   NSAttributedString *attributedTitle = [self attributedTitleStringFromString:title];
   [self setAttributedTitle:attributedTitle forState:UIControlStateNormal];
   [self setAttributedTitle:attributedTitle forState:UIControlStateFocused];
@@ -61,7 +53,7 @@
   [self addTarget:self action:@selector(_buttonPressed:) forControlEvents:UIControlEventPrimaryActionTriggered];
 }
 
- #pragma mark - Properties
+#pragma mark - Properties
 
 - (void)setShareContent:(id<FBSDKSharingContent>)shareContent
 {
@@ -71,7 +63,7 @@
   }
 }
 
- #pragma mark - Implementation
+#pragma mark - Implementation
 
 - (void)_buttonPressed:(id)sender
 {

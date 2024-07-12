@@ -15,7 +15,7 @@ class HomeViewModel {
     private var featuredAdsList:[Adverisment] = []
     var hasMoreFeaturedAds: Bool = true
     var hasMoreBannerAds: Bool = true
-    
+    var randomProducts: [RelatedProducts] = []
     private var bannerList:[AdBanner] = []
     
     var itemCount: Int {
@@ -72,24 +72,44 @@ class HomeViewModel {
     
     
     // MARK: - Protected Methods
-    func adsList(page:Int , search:String,compliation: @escaping CompliationHandler) {
-        if page == 1 {
-            adsList = []
-            bannerList = []
-        }
-        Network.shared.request(request: APIRouter.adsList(page: page, search: search), decodable: AdverismentResponse.self) { (response, error) in
-            if error != nil {
-                compliation(error)
-                return
-            }
-            self.adsList.append(contentsOf: response?.data?.ads?.data ?? [])
-            self.hasMore = (response?.data?.ads?.data ?? []).count != 0
+    func adsList(page:Int , search:String, adsType: AdsTypes ,compliation: @escaping CompliationHandler) {
+        if adsType == .all {
             if page == 1 {
-                self.bannerList = (response?.data?.banners?.data ?? [])
-                self.hasMoreBannerAds = (response?.data?.banners?.data ?? []).count > 0
+                adsList = []
+                bannerList = []
             }
-            compliation(nil)
+            Network.shared.request(request: APIRouter.adsList(page: page, search: search), decodable: AdverismentResponse.self) { (response, error) in
+                if error != nil {
+                    compliation(error)
+                    return
+                }
+                self.adsList.append(contentsOf: response?.data?.ads?.data ?? [])
+                self.hasMore = (response?.data?.ads?.data ?? []).count != 0
+                if page == 1 {
+                    self.bannerList = (response?.data?.banners?.data ?? [])
+                    self.hasMoreBannerAds = (response?.data?.banners?.data ?? []).count > 0
+                }
+                compliation(nil)
+            }
+        } else {
+            if page == 1 {
+                adsList = []
+            }
+            Network.shared.request(request: APIRouter.adsFilteredList(page: page, type: adsType.rawValue), decodable: PagingModel<[Adverisment]>.self) { (response, error) in
+                if error != nil {
+                    compliation(error)
+                    return
+                }
+                self.adsList.append(contentsOf: response?.data?.data ?? [])
+                self.hasMore = (response?.data?.data ?? []).count != 0
+//                if page == 1 {
+//                    self.bannerList = (response?.data?.banners?.data ?? [])
+//                    self.hasMoreBannerAds = (response?.data?.banners?.data ?? []).count > 0
+//                }
+                compliation(nil)
+            }
         }
+       
     }
     
     func searchList(page:Int , search:String,compliation: @escaping CompliationHandler) {
@@ -194,5 +214,15 @@ class HomeViewModel {
         }
     }
     
-    
+    func getRandomProductList(compliation: @escaping CompliationHandler) {
+        
+        Network.shared.request(request: APIRouter.getRandomProducts, decodable: [RelatedProducts].self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            self.randomProducts = response?.data ?? []
+            compliation(nil)
+        }
+    }
 }

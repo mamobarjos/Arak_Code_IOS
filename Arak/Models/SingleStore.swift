@@ -70,6 +70,7 @@ struct StoreProduct: Codable {
     let storeid: Int?
     let createdAt: String?
     let updatedAt: String?
+    let storeProductsFile: [StoreProductFile]
     
     var priceformated: String {
         let price = String(format: "%.2f", self.price ?? 0.0)
@@ -85,5 +86,6 @@ struct StoreProduct: Codable {
         case storeid = "store_id"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case storeProductsFile = "store_product_files"
     }
 }

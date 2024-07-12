@@ -12,9 +12,10 @@ class StoreProductsViewController: UIViewController {
 
     private var viewModel = StoreViewModel()
     private(set) var page = 1
-    var storeId: Int?
-
-    var products: [RelatedProducts] = [] {
+    public var storeId: Int?
+    public var mode: StoreMode = .add
+    public var categoryId: Int?
+    var products: [StubidRelatedProducts] = [] {
         didSet {
             tableView.reloadData()
             if products.isEmpty {
@@ -28,11 +29,12 @@ class StoreProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        self.hiddenNavigation(isHidden: false)
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.hiddenNavigation(isHidden: false)
         fetchDataIfNedded()
     }
 
@@ -41,16 +43,45 @@ class StoreProductsViewController: UIViewController {
             return
         }
         self.showLoading()
-        viewModel.getStoreProducts(storeId: storeId, page: page) {[weak self] error in
-            defer {
-                self?.stopLoading()
-            }
+         if categoryId != nil {
+             viewModel.getStoreProductsByCategory(categoryId: categoryId ?? 1, page: page) {[weak self] error in
+                 defer {
+                     self?.stopLoading()
+                 }
 
-            if let error = error {
-                self?.showToast(message: error)
-            }
+                 if let error = error {
+                     self?.showToast(message: error)
+                 }
 
-            self?.products = self?.viewModel.getProducts() ?? []
+                 self?.products = self?.viewModel.getProducts() ?? []
+             }
+            return
+        }
+
+        if mode == .edit {
+            viewModel.getUserProducts( page: page) {[weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
+
+                if let error = error {
+                    self?.showToast(message: error)
+                }
+
+                self?.products = self?.viewModel.getProducts() ?? []
+            }
+        } else {
+            viewModel.getStoreProducts(storeId: storeId, page: page) {[weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
+
+                if let error = error {
+                    self?.showToast(message: error)
+                }
+
+                self?.products = self?.viewModel.getProducts() ?? []
+            }
         }
     }
 
@@ -79,6 +110,17 @@ extension StoreProductsViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let product = products[indexPath.row]
+        if mode == .edit {
+            let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
+            vc.mode = .edit
+//            vc.relatedProduct = product
+            show(vc)
+        } else {
+            let vc = initViewControllerWith(identifier: ProductViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! ProductViewController
+            vc.storeId = storeId
+            vc.storeName = "Your Store"
+            show(vc)
+        }
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Icon material-home.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Icon material-home@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Icon material-home@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "Icon material-home.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

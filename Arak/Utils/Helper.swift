@@ -59,6 +59,17 @@ class Helper {
             UserDefaults.standard.synchronize()
         }
     }
+    
+    static var isBiomatricAvailable:Bool{
+        get{
+            let available = UserDefaults.standard.bool(forKey: "isBiomatricAvailable")
+            return available
+        }
+        set{
+            UserDefaults.standard.set(newValue, forKey: "isBiomatricAvailable")
+            UserDefaults.standard.synchronize()
+        }
+    }
 
     static func updateSubscription(isEnable: Bool) {
         isEnabelNotification = isEnable

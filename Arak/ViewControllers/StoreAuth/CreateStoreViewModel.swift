@@ -8,7 +8,9 @@
 import Foundation
 
 class CreateStoreViewModel {
+    
    private(set) var categories: [StoreCategory] = []
+
     func getCategories() -> [StoreCategory] {
         return categories
     }
@@ -24,13 +26,23 @@ class CreateStoreViewModel {
         }
     }
 
+    func updateStore(id: Int, data: [String:Any], compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: StoresRout.updateStore(id: id, data: data), decodable: StoreResponse.self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            Helper.store = response?.data
+            compliation(nil)
+        }
+    }
+
     func getStoresCategory(compliation: @escaping CompliationHandler) {
         Network.shared.request(request: StoresRout.getCategories, decodable: [StoreCategory].self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
             }
-
             self.categories = response?.data ?? []
             compliation(nil)
         }

@@ -7,6 +7,7 @@
 
 import UIKit
 import Cosmos
+import StoreKit
 
 class FeedbackViewController: UIViewController,UITextViewDelegate {
   @IBOutlet weak var ratingView: CosmosView!
@@ -43,6 +44,16 @@ class FeedbackViewController: UIViewController,UITextViewDelegate {
     submitButton.setTitle("Submit".localiz(), for: .normal)
     setupDescription()
   }
+    
+    func requestAppRating() {
+        if #available(iOS 14.0, *) {
+            SKStoreReviewController.requestReview()
+        } else {
+            if let scene = UIApplication.shared.currentScene {
+                SKStoreReviewController.requestReview(in: scene)
+            }
+        }
+    }
 
   @IBAction func Close(_ sender: Any) {
     self.navigationController?.popViewController(animated: true)
@@ -60,6 +71,7 @@ class FeedbackViewController: UIViewController,UITextViewDelegate {
         self?.stopLoading()
       }
       self?.showToast(message: "Thank you, we appreciate your opinion".localiz())
+        self?.requestAppRating()
         self?.navigationController?.popViewController(animated: true)
     }
   }
@@ -101,4 +113,11 @@ class FeedbackViewController: UIViewController,UITextViewDelegate {
       return true
     }
 
+}
+
+
+extension UIApplication {
+    var currentScene: UIWindowScene? {
+        return connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+    }
 }

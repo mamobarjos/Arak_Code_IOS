@@ -18,7 +18,10 @@ class CreateStoreSummeryViewController: UIViewController {
 
     lazy var checkoutView = createBlureView()
     private var viewModel = CreateStoreViewModel()
+
+    public var mode: StoreMode = .add
     public var data: [String:Any]?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -35,6 +38,8 @@ class CreateStoreSummeryViewController: UIViewController {
             }
             print(data)
             self.showLoading()
+
+            if mode == .add {
             viewModel.createStore(data: data, compliation: { [weak self] error in
                 defer {
                     self?.stopLoading()
@@ -46,6 +51,24 @@ class CreateStoreSummeryViewController: UIViewController {
                 let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
                 self?.show(vc)
             })
+            } else {
+                viewModel.updateStore(id: Helper.store?.id ?? -1, data: data, compliation: { [weak self] error in
+                    defer {
+                        self?.stopLoading()
+                    }
+                    if error != nil {
+                        self?.showToast(message: error)
+                        return
+                    }
+                    self?.showToast(message: "Your Store Updated Successfully")
+                    for controller in (self?.navigationController!.viewControllers ?? []) as Array {
+                        if controller.isKind(of: StoreViewController.self) {
+                            self?.navigationController!.popToViewController(controller, animated: true)
+                            break
+                        }
+                    }
+                })
+            }
         }
     }
 

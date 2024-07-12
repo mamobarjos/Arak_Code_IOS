@@ -20,10 +20,9 @@
 
 #if !TARGET_OS_TV
 
- #import "_FBSDKLoginRecoveryAttempter.h"
+#import "_FBSDKLoginRecoveryAttempter.h"
 
- #import "FBSDKLoginKit+Internal.h"
- #import "FBSDKLoginManagerLoginResult+Internal.h"
+#import "FBSDKLoginKit+Internal.h"
 
 @implementation _FBSDKLoginRecoveryAttempter
 
@@ -31,9 +30,9 @@
                      optionIndex:(NSUInteger)recoveryOptionIndex
                         delegate:(id)delegate
               didRecoverSelector:(SEL)didRecoverSelector
-                     contextInfo:(void *)contextInfo
-{
-  void (^handler)(BOOL) = ^(BOOL didRecover) {
+                     contextInfo:(void *)contextInfo {
+
+  void(^handler)(BOOL) = ^(BOOL didRecover) {
     [super completeRecovery:didRecover delegate:delegate didRecoverSelector:didRecoverSelector contextInfo:contextInfo];
   };
   NSSet *currentPermissions = [FBSDKAccessToken currentAccessToken].permissions;

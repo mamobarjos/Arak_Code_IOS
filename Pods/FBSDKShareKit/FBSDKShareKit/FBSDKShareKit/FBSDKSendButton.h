@@ -22,7 +22,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FBSDKCoreKitImport.h"
+#if defined BUCK || defined FBSDKCOCOAPODS || defined __cplusplus
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#else
+@import FBSDKCoreKit;
+#endif
 
 #import "FBSDKShareConstants.h"
 #import "FBSDKSharingButton.h"
@@ -35,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  Tapping the receiver will invoke the FBSDKShareDialog with the attached shareContent.  If the dialog cannot
  be shown, the button will be disable.
  */
+DEPRECATED_FOR_MESSENGER
 NS_SWIFT_NAME(FBSendButton)
 @interface FBSDKSendButton : FBSDKButton <FBSDKSharingButton>
 

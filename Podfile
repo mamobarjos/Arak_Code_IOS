@@ -4,7 +4,7 @@
 target 'Arak' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-
+  
   pod 'SDWebImage'
   pod 'IQKeyboardManagerSwift'
   pod 'Alamofire', '~> 4.5'
@@ -15,9 +15,9 @@ target 'Arak' do
   pod "BSImagePicker", "~> 3.1"
   pod 'Firebase/Storage'
   pod 'AppCenter'
-  pod 'FBSDKCoreKit'
-  pod 'FBSDKLoginKit'
-  pod 'FBSDKShareKit'
+  #  pod 'FBSDKCoreKit'
+  #  pod 'FBSDKLoginKit'
+  #  pod 'FBSDKShareKit'
   pod 'GoogleSignIn'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
@@ -30,5 +30,22 @@ target 'Arak' do
   pod 'Kingfisher', '~> 7.0'
   pod "Player", "~> 0.13.2"
   pod 'WWLayout'
-
+  pod 'KeychainSwift', '~> 20.0'
+  
+  pod 'FacebookSDK'
+  pod 'FacebookSDK/LoginKit'
+  pod 'FacebookSDK/ShareKit'
+  pod 'FacebookSDK/PlacesKit'
+  
+  #  pod 'FBSDKMessengerShareKit'
+  
+  post_install do |installer|
+    installer.generated_projects.each do |project|
+      project.targets.each do |target|
+        target.build_configurations.each do |config|
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        end
+      end
+    end
+  end
 end

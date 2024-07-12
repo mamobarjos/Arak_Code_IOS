@@ -15,6 +15,7 @@ class AdsCell: FSPagerViewCell {
     @IBOutlet weak var typeLabel: UILabel!
     
     @IBOutlet weak var gradiantImageView: UIImageView!
+    @IBOutlet weak var learnMoreButton: UIButton!
     @IBOutlet weak var typeView: UIView!
     @IBOutlet weak var timeCountLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -24,6 +25,7 @@ class AdsCell: FSPagerViewCell {
     
     private var playVideo: PlayVideo?
     private var favorateBlock: FavorateBlock?
+    var learnMoreBlock: FavorateBlock?
     private var  player = Player()
     
     override func prepareForReuse() {
@@ -37,6 +39,8 @@ class AdsCell: FSPagerViewCell {
     }
     
     func setupBanner(path: String) {
+        learnMoreButton.isHidden = false
+        learnMoreButton.setTitle("Learn More".localiz(), for: .normal)
         titleLabel.isHidden = true
         timeCountLabel.isHidden = true
         favorateButton.isHidden = true
@@ -49,6 +53,7 @@ class AdsCell: FSPagerViewCell {
         
     }
     func setup(indexItem: Int,isFavorate: Bool,ads: Adverisment,playVideo: PlayVideo?,favorateBlock:FavorateBlock?) {
+        learnMoreButton.isHidden = true
         typeView.isHidden = false
         timerImageView.isHidden = false
         gradiantImageView.isHidden = false
@@ -139,4 +144,7 @@ class AdsCell: FSPagerViewCell {
         favorateBlock?()
     }
     
+    @IBAction func learnMoreButtonAction(_ sender: Any) {
+        learnMoreBlock?()
+    }
 }
