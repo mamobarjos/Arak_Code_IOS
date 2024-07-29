@@ -12,7 +12,7 @@ class StoreViewModel {
     private(set) var storeProduct: [StoreProduct] = []
     private(set) var reviews: [ReviewResponse] = []
     private(set) var review: ReviewResponse?
-    private(set) var products: [StubidRelatedProducts] = []
+    private(set) var products: [StoreProduct] = []
     var canLoadMore = false
     func getStoreDetails() -> SingleStore? {
         return self.storDetails
@@ -30,7 +30,7 @@ class StoreViewModel {
         return review
     }
 
-    func getProducts() -> [StubidRelatedProducts] {
+    func getProducts() -> [StoreProduct] {
         return products
     }
 
@@ -66,7 +66,7 @@ class StoreViewModel {
                 self.products = []
             }
 
-            Network.shared.request(request: StoresRout.getUserProducts(page: page), decodable: PagingModel<[StubidRelatedProducts]>.self) { [weak self] response, error in
+            Network.shared.request(request: StoresRout.getUserProducts(page: page), decodable: PagingModel<[StoreProduct]>.self) { [weak self] response, error in
                 guard error == nil else {
                     complition(error)
                     return
@@ -94,7 +94,7 @@ class StoreViewModel {
             self.products = []
         }
 
-        Network.shared.request(request: StoresRout.getStoreProducts(storeId: storeId, page: page), decodable: PagingModel<[StubidRelatedProducts]>.self) { [weak self] response, error in
+        Network.shared.request(request: StoresRout.getStoreProducts(storeId: storeId, page: page), decodable: PagingModel<[StoreProduct]>.self) { [weak self] response, error in
             guard error == nil else {
                 complition(error)
                 return
@@ -111,7 +111,7 @@ class StoreViewModel {
             self.products = []
         }
 
-        Network.shared.request(request: StoresRout.getProductsByCategory(categoryId: categoryId, page: page), decodable: PagingModel<[StubidRelatedProducts]>.self) { [weak self] response, error in
+        Network.shared.request(request: StoresRout.getProductsByCategory(categoryId: categoryId, page: page), decodable: PagingModel<[StoreProduct]>.self) { [weak self] response, error in
             guard error == nil else {
                 complition(error)
                 return

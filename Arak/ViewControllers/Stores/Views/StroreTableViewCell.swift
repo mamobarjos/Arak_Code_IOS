@@ -55,7 +55,7 @@ class StroreTableViewCell: UITableViewCell {
         $0.numberOfLines = 1
         $0.textAlignment = .left
         $0.textColor = .text
-        $0.font = .font(for: .regular, size: 16)
+        $0.font = .font(for: .bold, size: 16)
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -133,13 +133,13 @@ class StroreTableViewCell: UITableViewCell {
         let containerViewMarginGuide = containerView.layoutMarginsGuide
 
         NSLayoutConstraint.activate([
-            containerView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            containerView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-            containerView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
             imageContainerView.leadingAnchor.constraint(equalTo: containerViewMarginGuide.leadingAnchor),
-            imageContainerView.topAnchor.constraint(equalTo: containerViewMarginGuide.topAnchor),
+            imageContainerView.topAnchor.constraint(equalTo: containerView.topAnchor),
             imageContainerView.trailingAnchor.constraint(equalTo: containerViewMarginGuide.trailingAnchor),
             imageContainerView.heightAnchor.constraint(equalToConstant: 170),
 
@@ -168,11 +168,11 @@ class StroreTableViewCell: UITableViewCell {
                 equalTo: imageContainerView.layoutMarginsGuide.bottomAnchor, constant: 0),
 
             containerStackView.leadingAnchor.constraint(
-                equalTo: contentView.layoutMarginsGuide.leadingAnchor, constant: 15),
+                equalTo: contentView.leadingAnchor, constant: 15),
             containerStackView.topAnchor.constraint(
                 equalTo: imageContainerView.bottomAnchor, constant: -5),
             containerStackView.trailingAnchor.constraint(
-                equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: -20),
+                equalTo: contentView.trailingAnchor, constant: -20),
             containerStackView.bottomAnchor.constraint(
                 equalTo: contentView.layoutMarginsGuide.bottomAnchor, constant: -10),
 
@@ -196,7 +196,7 @@ class StroreTableViewCell: UITableViewCell {
         titleLabel.text = store.name
         descriptionLabel.text = Helper.appLanguage ?? "en" == "en" ? store.storeCategory.name : store.storeCategory.arName
         cosmosView.cosmosView.rating = store.totalRates ?? 0
-        cosmosView.rateLabel.text = "(\(store.totalRates ?? 0))"
+        cosmosView.rateLabel.text = "[\(store.totalRates ?? 0)]"
     }
 
     func custumizeCell(store: TestSearchModel) {
@@ -216,7 +216,7 @@ class StroreTableViewCell: UITableViewCell {
         titleLabel.text = store.name
         descriptionLabel.text = "Electroics"
         cosmosView.cosmosView.rating = store.totalRates ?? 0
-        cosmosView.rateLabel.text = "(\(store.totalRates ?? 0))"
+        cosmosView.rateLabel.text = "[\(store.totalRates ?? 0)]"
     }
 }
 
@@ -235,8 +235,8 @@ class ConsmosItemView: ViewWithSetup {
 
     var rateLabel = UILabel().then {
         $0.text = "(3.0)"
-        $0.textColor = .text
-        $0.font = .font(for: .regular, size: 10)
+        $0.textColor = .lightGray
+        $0.font = .font(for: .regular, size: 12)
     }
 
     override func setup() {

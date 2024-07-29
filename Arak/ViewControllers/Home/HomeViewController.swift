@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     // MARK: - Properties
     
-    private  let dispatchGroup = DispatchGroup()
+    private let dispatchGroup = DispatchGroup()
     static var goToMyAds = false
 
     var viewModel: HomeViewModel = HomeViewModel()
@@ -161,6 +161,8 @@ class HomeViewController: UIViewController {
             }
         }
     }
+    
+    
     
     private func setupCollectionView() {
         adsCollectionView.contentInsetAdjustmentBehavior = .always

@@ -8,6 +8,7 @@
 import UIKit
 import Cosmos
 class ReviewTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var ReviewerImage: UIImageView!
     @IBOutlet weak var titaleLabel: UILabel!
     @IBOutlet weak var cosmosContainerView: UIView!
@@ -64,8 +65,9 @@ class ReviewTableViewCell: UITableViewCell {
             ReviewerImage.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
         }
         cosmosView.rating = Double(review.rate ?? 5)
-        titaleLabel.text = review.user?.fullname
+//        titaleLabel.text = review.user?.fullname
         descLabel.text = review.content
+        descLabel.numberOfLines = 0
         if Helper.currentUser?.id == review.user?.id {
             deleteButton.isHidden = false
         } else {

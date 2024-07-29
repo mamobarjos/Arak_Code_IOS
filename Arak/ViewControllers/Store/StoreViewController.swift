@@ -28,31 +28,31 @@ class StoreViewController: UIViewController {
         super.viewDidLoad()
 
         view.addSubview(scrollView)
-        view.addSubview(bottomView)
-        bottomView.layout
-            .leading(to: .superview)
-            .trailing(to: .superview)
-            .bottom(to: .superview)
+//        view.addSubview(bottomView)
+//        bottomView.layout
+//            .leading(to: .superview)
+//            .trailing(to: .superview)
+//            .bottom(to: .superview)
 
-        view.bringSubviewToFront(bottomView)
+//        view.bringSubviewToFront(bottomView)
 
-        scrollView.layout.fill(.safeArea)
-        scrollView.scrollView.contentInset.bottom = 130
+        scrollView.layout.fill(.superview)
+        scrollView.scrollView.contentInset.bottom = 10
 
         contentView.delegate = self
         configration(storeId: storeId ?? 1)
         if mode == .edit {
-            contentView.favButton.isHidden = false
-            contentView.favButton.setImage(UIImage(named: "Icon material-edit"), for: .normal)
-            contentView.addButton.isHidden = false
-            contentView.addReviewContainer.isHidden = true
+//            contentView.favButton.isHidden = false
+//            contentView.favButton.setImage(UIImage(named: "Icon material-edit"), for: .normal)
+//            contentView.addButton.isHidden = false
+//            contentView.addReviewContainer.isHidden = true
         }
         connectAction()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hiddenNavigation(isHidden: false)
+        hiddenNavigation(isHidden: true)
     }
 
     func configration(storeId: Int) {
@@ -208,7 +208,7 @@ extension StoreViewController: StoreContentViewProtocol {
                 self?.contentView.reviews.append(review)
             }
 
-            self?.contentView.addReviewContainer.isHidden = true
+//            self?.contentView.addReviewContainer.isHidden = true
         }
     }
 
@@ -228,7 +228,7 @@ extension StoreViewController: StoreContentViewProtocol {
                 return
             }
 
-            self?.contentView.addReviewContainer.isHidden = false
+//            self?.contentView.addReviewContainer.isHidden = false
             self?.showToast(message: "Review deleted successfully")
             self?.contentView.reviews = self?.storeViewModel.getReviews().filter{
                 $0.id != id

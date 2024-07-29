@@ -26,7 +26,7 @@ class Helper {
     }
     
     static var apiKey: String {
-        return "yzjPf7Ng7ccQwJeBjVa6Uj3hWM8PcMyz"
+        return "w0QEzdIHjitCUB902JGf6q2xgyGKoP9A"
     }
     
     static func verifyUrl (urlString: String?) -> Bool {

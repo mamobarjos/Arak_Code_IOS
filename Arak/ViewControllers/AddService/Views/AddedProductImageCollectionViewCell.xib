@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AddedProductImageCollectionViewCell" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="152" height="133"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="152" height="133"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Nb-XK-u0a">
+                        <rect key="frame" x="0.0" y="0.0" width="152" height="133"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BDA-N8-dzT">
+                                <rect key="frame" x="0.0" y="0.0" width="152" height="133"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="muv-os-Szy">
+                                <rect key="frame" x="127" y="5" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="0hY-ZY-RYZ"/>
+                                    <constraint firstAttribute="height" constant="20" id="JAQ-Z7-qbb"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="close_gray_background"/>
+                                <connections>
+                                    <action selector="deleteButtonAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Fp1-jA-hmn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" name="background"/>
+                        <constraints>
+                            <constraint firstItem="BDA-N8-dzT" firstAttribute="top" secondItem="0Nb-XK-u0a" secondAttribute="top" id="3NN-le-MoG"/>
+                            <constraint firstItem="muv-os-Szy" firstAttribute="top" secondItem="0Nb-XK-u0a" secondAttribute="top" constant="5" id="QG8-tM-tQB"/>
+                            <constraint firstAttribute="bottom" secondItem="BDA-N8-dzT" secondAttribute="bottom" id="VJB-TB-mB0"/>
+                            <constraint firstAttribute="trailing" secondItem="BDA-N8-dzT" secondAttribute="trailing" id="YlA-u9-ep9"/>
+                            <constraint firstAttribute="trailing" secondItem="muv-os-Szy" secondAttribute="trailing" constant="5" id="iV2-JV-Hsj"/>
+                            <constraint firstItem="BDA-N8-dzT" firstAttribute="leading" secondItem="0Nb-XK-u0a" secondAttribute="leading" id="lef-t0-6YB"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="0Nb-XK-u0a" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="1FA-SZ-Tda"/>
+                <constraint firstAttribute="trailing" secondItem="0Nb-XK-u0a" secondAttribute="trailing" id="4uz-Cw-Enu"/>
+                <constraint firstAttribute="bottom" secondItem="0Nb-XK-u0a" secondAttribute="bottom" id="DnY-Qe-QWl"/>
+                <constraint firstItem="0Nb-XK-u0a" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="M59-mz-4x7"/>
+            </constraints>
+            <size key="customSize" width="152" height="133"/>
+            <connections>
+                <outlet property="imageView" destination="BDA-N8-dzT" id="PKN-1j-8hO"/>
+            </connections>
+            <point key="canvasLocation" x="79.389312977099237" y="48.943661971830991"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="close_gray_background" width="16" height="16"/>
+        <namedColor name="background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -37,7 +37,8 @@ class Network {
       completion(nil,NetworkResponse.internet.rawValue.localiz())
       return
     }
-    Alamofire.request(request).responseJSON { (response) in
+      
+    AF.request(request).responseJSON { (response) in
       switch response.result {
         case .failure(let err):
           print(err.localizedDescription)
@@ -117,7 +118,10 @@ class Network {
               }
           break
       }
+    }.cURLDescription { description in
+        print("cURLDescription: ", description)
     }
+      
   }
    func requestWithoutToken<T: Codable>(request:APIConfiguration , decodable: T.Type,completion: @escaping (GenericModelWithoutToken<T>?, _ error: String?) -> ())  {
       if !InternetConnectionManager.isConnectedToNetwork() {
@@ -125,7 +129,8 @@ class Network {
         completion(nil,NetworkResponse.internet.rawValue.localiz())
         return
       }
-      Alamofire.request(request).responseJSON { (response) in
+       
+      AF.request(request).responseJSON { (response) in
         switch response.result {
           case .failure(let err):
             print(err.localizedDescription)
@@ -177,8 +182,11 @@ class Network {
                 }
             break
         }
+      }.cURLDescription { description in
+          print("cURLDescription: ", description)
       }
     }
+    
   func Logout() {
     let storyboard = UIStoryboard(name: "Auth", bundle: Bundle.main)
     let vc = storyboard.instantiateViewController(identifier: LoginViewController.className) as! LoginViewController
@@ -187,84 +195,63 @@ class Network {
       viewController.push(vc)
     }
   }
-  func postRequestWithMultipart<T: Codable>(_ url:String, decodable: T.Type, parameters:[String : Any], imagesArray:[Data]? = [], imageServerKey: [String]? = [],mimeType:[String] = ["image/jpeg"],extType:[String] = ["jpeg"] ,completionHandler: @escaping (_ Result: GenericModel<T>?, String??) -> Void)   {
-    if url.isEmpty {
-        completionHandler(nil,NetworkResponse.generalError.rawValue)
-        return
-    }
-    if !InternetConnectionManager.isConnectedToNetwork() {
-      //NoInternetScreen()
-      completionHandler(nil,NetworkResponse.internet.rawValue.localiz())
-      return
-    }
-      Alamofire.upload(
-          multipartFormData: { multipartFormData in
-              if let imageDataArray = imagesArray {
-                  if imageDataArray.count > 0 {
-                      for index  in   0 ... imageDataArray.count - 1 {
-                          multipartFormData.append(imageDataArray[index], withName: imageServerKey?[index] ?? "", fileName: "\(Date().timeIntervalSince1970).\(extType[index])", mimeType:mimeType[index])
-                      }
-                  }
+    
 
-              }
-
-
-              for (key,value) in parameters {
-
-                  if value is String {
-                      multipartFormData.append((value as! String).data(using: .utf8)!, withName: key)
-                  }else if value is Int {
-                      multipartFormData.append(("\(value)").data(using: .utf8)!, withName: key)
-                  }else if value is Bool {
-                      multipartFormData.append((value as! Bool).description.data(using: .utf8)!, withName: key)
-                  }
-
-              }
-
-      },
-          to: url,
-          method: .post,
-          headers: headers(),
-          encodingCompletion: { encodingResult in
-
-              switch encodingResult {
-                  //SUCCESS
-
-              case .success(let upload, _, _):
-                  upload.responseJSON { response in
-                    if response.result.isSuccess {
-                        let responseDic = response
-                        guard let responseDictionary  = responseDic.value as? NSDictionary else {
-                            completionHandler(nil,NetworkResponse.generalError.rawValue.localiz())
-
-                            return
-                        }
-                            do {
-                                guard let decode = try? JSONSerialization.data(withJSONObject: responseDictionary, options: .prettyPrinted)  else {
-                                  completionHandler(nil,NetworkResponse.generalError.rawValue.localiz())
-                                    return
-                                }
-                                let decoder = JSONDecoder.init()
-                                let ObjectInfo = try decoder.decode(GenericModel<T>.self, from: decode)
-                                completionHandler(ObjectInfo, nil)
-                            }catch (_) {
-                              completionHandler(nil,NetworkResponse.generalError.rawValue.localiz())
-                            }
-                    } else {
-                      if response.response?.statusCode == 401 {
-                        self.Logout()
-                        completionHandler(nil,NetworkResponse.authenticationError.rawValue.localiz())
-                      } else {
-                        completionHandler(nil,NetworkResponse.generalError.rawValue.localiz())
-                      }
+    func postRequestWithMultipart<T: Codable>(_ url: String, decodable: T.Type, parameters: [String: Any], imagesArray: [Data]? = [], imageServerKey: [String]? = [], mimeType: [String] = ["image/jpeg"], extType: [String] = ["jpeg"], completionHandler: @escaping (_ Result: GenericModel<T>?, String??) -> Void) {
+        if url.isEmpty {
+            completionHandler(nil, NetworkResponse.generalError.rawValue)
+            return
+        }
+        if !InternetConnectionManager.isConnectedToNetwork() {
+            //NoInternetScreen()
+            completionHandler(nil, NetworkResponse.internet.rawValue.localiz())
+            return
+        }
+        
+        AF.upload(
+            multipartFormData: { multipartFormData in
+                if let imageDataArray = imagesArray, !imageDataArray.isEmpty {
+                    for index in 0..<imageDataArray.count {
+                        multipartFormData.append(imageDataArray[index], withName: imageServerKey?[index] ?? "", fileName: "\(Date().timeIntervalSince1970).\(extType[index])", mimeType: mimeType[index])
                     }
-                  }
-
-              //FAILURE
-                case .failure(_):
-                  completionHandler(nil,NetworkResponse.generalError.rawValue.localiz())
                 }
-      }
-      )
-  }
+                
+                for (key, value) in parameters {
+                    if let stringValue = value as? String {
+                        multipartFormData.append(Data(stringValue.utf8), withName: key)
+                    } else if let intValue = value as? Int {
+                        multipartFormData.append(Data("\(intValue)".utf8), withName: key)
+                    } else if let boolValue = value as? Bool {
+                        multipartFormData.append(Data("\(boolValue)".utf8), withName: key)
+                    }
+                }
+            },
+            to: url,
+            method: .post,
+            headers: headers()
+        ).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                guard let responseDictionary = value as? [String: Any] else {
+                    completionHandler(nil, NetworkResponse.generalError.rawValue.localiz())
+                    return
+                }
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: responseDictionary, options: .prettyPrinted)
+                    let decoder = JSONDecoder()
+                    let objectInfo = try decoder.decode(GenericModel<T>.self, from: jsonData)
+                    completionHandler(objectInfo, nil)
+                } catch {
+                    completionHandler(nil, NetworkResponse.generalError.rawValue.localiz())
+                }
+            case .failure:
+                if response.response?.statusCode == 401 {
+                    self.Logout()
+                    completionHandler(nil, NetworkResponse.authenticationError.rawValue.localiz())
+                } else {
+                    completionHandler(nil, NetworkResponse.generalError.rawValue.localiz())
+                }
+            }
+        }
+    }
 }

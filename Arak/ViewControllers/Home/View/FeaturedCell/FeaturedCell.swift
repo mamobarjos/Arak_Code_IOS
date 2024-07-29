@@ -27,6 +27,7 @@ class FeaturedCell: UICollectionViewCell {
             self.featuredPagerView.reloadData()
         }
     }
+    public var ImageCornerRadius: CGFloat = 7
     private var bannerList: [AdBanner] = []
     private var images: [StoreProductFile] = []
     private var storeBanners: [Banner] = []
@@ -50,12 +51,17 @@ class FeaturedCell: UICollectionViewCell {
         isFavorate = false
         isBanner = false
         pageControl.numberOfPages = 0
+       
         featuredPagerView.reloadData()
     }
 
     func setup(images: [StoreProductFile]) {
         self.images = images
         pageControl.numberOfPages = images.count
+        pageControl.setFillColor(UIColor.accentOrange, for: .selected)
+        pageControl.setFillColor(UIColor.accentOrange.withAlphaComponent(0.5), for: .normal)
+        pageControl.isHidden = false
+        isBanner = true
         featuredPagerView.isInfinite = true
         isImage = true
         self.setupSlider()
@@ -65,6 +71,8 @@ class FeaturedCell: UICollectionViewCell {
         self.bannerList = bannerList
         isBanner = true
         pageControl.numberOfPages = bannerList.count
+        pageControl.tintColor = UIColor.lightGray
+        pageControl.setFillColor(UIColor.blue, for: .normal)
         featuredPagerView.isInfinite = true
         featuredPagerView.automaticSlidingInterval = 5
         self.setupSlider()
@@ -74,6 +82,8 @@ class FeaturedCell: UICollectionViewCell {
         self.storeBanners = bannerList
         isStoreBanner = true
         pageControl.numberOfPages = bannerList.count
+        pageControl.setFillColor(UIColor.accentOrange, for: .selected)
+        pageControl.setFillColor(UIColor.accentOrange.withAlphaComponent(0.5), for: .normal)
         featuredPagerView.isInfinite = true
         featuredPagerView.automaticSlidingInterval = 5
         self.setupSlider()
@@ -85,6 +95,8 @@ class FeaturedCell: UICollectionViewCell {
         self.moreBlock = moreBlock
         self.isFavorate = isFavorate
         self.favorateBlock = favorateBlock
+        pageControl.setFillColor(UIColor.accentOrange, for: .selected)
+        pageControl.setFillColor(UIColor.accentOrange.withAlphaComponent(0.5), for: .normal)
         pageControl.numberOfPages = featuredAdsList.count
         self.setupSlider()
     }
@@ -94,6 +106,8 @@ class FeaturedCell: UICollectionViewCell {
         self.moreBlock = moreBlock
         self.bannerList = bannerList
         self.playVideoBlock = playVideoBlock
+        pageControl.setFillColor(UIColor.accentOrange, for: .selected)
+        pageControl.setFillColor(UIColor.accentOrange.withAlphaComponent(0.5), for: .normal)
         pageControl.numberOfPages = bannerList.count
         self.setupSlider()
         featuredPagerView.isInfinite = true
@@ -104,12 +118,12 @@ class FeaturedCell: UICollectionViewCell {
         featuredPagerView.register(nib, forCellWithReuseIdentifier: "cell")
         let moreNib = UINib(nibName: MoreCell.className, bundle: Bundle.main)
         featuredPagerView.register(moreNib, forCellWithReuseIdentifier: "moreCell")
-        featuredPagerView.automaticSlidingInterval = isBanner ? 3 : 0
-        featuredPagerView.transformer = FSPagerViewTransformer(type: .linear)
+        featuredPagerView.automaticSlidingInterval = isBanner ? 3 : 5
+        featuredPagerView.transformer = FSPagerViewTransformer(type: cornerRadius == 7 ? .linear : .depth)
         featuredPagerView.delegate = self
         featuredPagerView.dataSource = self
-        pageControl.hidesForSinglePage = true
-        pageControl.isHidden = isBanner ?  bannerList.count <= 1  : featuredAdsList.count <= 1
+        pageControl.hidesForSinglePage = false
+        pageControl.isHidden = !isBanner
         //featuredPagerView.itemSize = CGSize(width: contentView.frameWidth, height: contentView.frameHeight)
         
         featuredPagerView.reloadData()
@@ -120,6 +134,7 @@ class FeaturedCell: UICollectionViewCell {
         featuredPagerView.reloadData()
     }
 }
+
 extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
 
@@ -129,6 +144,7 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
             }
             cell.setupBanner(path: images[index].path ?? "" )
             cell.learnMoreButton.isHidden = true
+            cell.photoImageView.cornerRadius = ImageCornerRadius
             cell.learnMoreBlock = {
                 print("learn more")
             }
@@ -180,19 +196,10 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
             return cell
         }
         
-        if index == featuredAdsList.count {
-            guard let cell: MoreCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "moreCell", at: index) as? MoreCell else {
-                return FSPagerViewCell()
-            }
-            cell.setup { [weak self] in
-                self?.moreBlock?()
-            }
-            return cell
-        }
         guard let cell: AdsCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index) as? AdsCell else {
             return FSPagerViewCell()
         }
-        cell.setup(indexItem: index, isFavorate: isFavorate, ads: featuredAdsList[index]) {  [weak self] in
+        cell.setup(indexItem: index, isFavorate: isFavorate, ads: featuredAdsList[index], isSpecial: true) {  [weak self] in
             self?.playVideoBlock?(index)
         } favorateBlock: {  [weak self] in
             self?.favorateBlock?(index)
@@ -218,6 +225,7 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
         self.pageControl.currentPage = index
         self.delegate?.displayedCellIndex(index: index)
     }
+    
     func numberOfItems(in pagerView: FSPagerView) -> Int {
 
         if isImage {
@@ -229,7 +237,7 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
         } else if isStoreBanner {
             return self.storeBanners.count
         }
-        return self.featuredAdsList.count + 1
+        return self.featuredAdsList.count
     }
     
 }

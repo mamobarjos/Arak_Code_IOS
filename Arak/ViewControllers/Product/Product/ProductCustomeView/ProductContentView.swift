@@ -25,34 +25,30 @@ protocol ProductContentViewDelegate: AnyObject {
 class ProductContentView: UIView, FeaturedCelldelegate {
     @IBOutlet weak var bannerCollectionView: UICollectionView!
     //    @IBOutlet weak var pagerView: FSPagerView!
-    @IBOutlet weak var pagerConntainerView: UIView!
 
     @IBOutlet weak var descLable: UILabel!
     @IBOutlet weak var ratingLabelText: UILabel!
     @IBOutlet weak var cosmosView: CosmosView!
-    @IBOutlet weak var editedCosmosView: CosmosView!
+//    @IBOutlet weak var editedCosmosView: CosmosView!
     @IBOutlet weak var relatedProductCollectionView: UICollectionView!
     @IBOutlet weak var reviewsTableView: UITableView!
     @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var rateTextView: UITextView!
+//    @IBOutlet weak var rateTextView: UITextView!
 
     @IBOutlet weak var shopNameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
 
     @IBOutlet weak var relatedProductTitleLabel: UILabel!
-    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
+//    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
     @IBOutlet weak var reviewTitleLabel: UILabel!
-    @IBOutlet weak var submitButton: UIButton!
+//    @IBOutlet weak var submitButton: UIButton!
 
-    @IBOutlet weak var vistStoreButton: UIButton!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
+//    @IBOutlet weak var vistStoreButton: UIButton!
     @IBOutlet weak var favButton: UIButton!
 
     @IBOutlet weak var viewAllProducts: UIButton!
-    @IBOutlet weak var addReviewContainer: UIView!
+//    @IBOutlet weak var addReviewContainer: UIView!
 
-    var pageControl = PageControl()
     var homeViewModel = HomeViewModel()
 
     private(set) var rating: Int?
@@ -95,35 +91,32 @@ class ProductContentView: UIView, FeaturedCelldelegate {
         super.init(coder: coder)
         setup()
     }
-    @IBAction func vistStoreAction(_ sender: Any) {
-        self.delegate?.visatStoreTapped()
-    }
-    @IBAction func shareAction(_ sender: Any) {
-        delegate?.userDidTapShare(id: "1")
-    }
+//    @IBAction func vistStoreAction(_ sender: Any) {
+//        self.delegate?.visatStoreTapped()
+//    }
+  
     @IBAction func favAction(_ sender: Any) {
         delegate?.userDidTapFavIcon(id: "1")
     }
-    @IBAction func backAction(_ sender: Any) {
-        delegate?.userDidTapBack()
-    }
+    
+    
     @IBAction func viewAllAction(_ sender: Any) {
         delegate?.didTapOnViewAllproducts()
     }
 
-    @IBAction func submitButton(_ sender: Any) {
-        if rateTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || rateTextView.text.isEmpty {
-            self.delegate?.showTostMessage(with: "please add your review")
-            return
-        }
-
-        guard let rating = rating else {
-            self.delegate?.showTostMessage(with: "please rate this product")
-            return
-        }
-
-        delegate?.submiteReview(rateTextView.text, rating)
-    }
+//    @IBAction func submitButton(_ sender: Any) {
+//        if rateTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || rateTextView.text.isEmpty {
+//            self.delegate?.showTostMessage(with: "please add your review")
+//            return
+//        }
+//
+//        guard let rating = rating else {
+//            self.delegate?.showTostMessage(with: "please rate this product")
+//            return
+//        }
+//
+//        delegate?.submiteReview(rateTextView.text, rating)
+//    }
 
      func setup() {
         guard let view = self.loadViewFromNip(nipName: "ProductContentView") else {return}
@@ -132,11 +125,11 @@ class ProductContentView: UIView, FeaturedCelldelegate {
 
          relatedProductTitleLabel.text = "label.Related Products".localiz()
          reviewTitleLabel.text = "label.Review".localiz()
-         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
-         submitButton.setTitle("action.Submit".localiz(), for: .normal)
-         vistStoreButton.setTitle("action.Visit Store".localiz(), for: .normal)
-         rateTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
-         rateTextView.textAlignment = Helper.appLanguage ?? "en" == "en" ? .left : .right
+//         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
+//         submitButton.setTitle("action.Submit".localiz(), for: .normal)
+//         vistStoreButton.setTitle("action.Visit Store".localiz(), for: .normal)
+//         rateTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
+//         rateTextView.textAlignment = Helper.appLanguage ?? "en" == "en" ? .left : .right
 
              homeViewModel.getBannerList(page: 1, search: "") { [weak self] (error) in
              defer {
@@ -150,9 +143,9 @@ class ProductContentView: UIView, FeaturedCelldelegate {
              }
          }
 
-         rateTextView.delegate = self
-         rateTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
-         rateTextView.textColor = UIColor.lightGray
+//         rateTextView.delegate = self
+//         rateTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
+//         rateTextView.textColor = UIColor.lightGray
 
          relatedProductCollectionView.delegate = self
          relatedProductCollectionView.dataSource = self
@@ -166,35 +159,17 @@ class ProductContentView: UIView, FeaturedCelldelegate {
 
          reviewsTableView.delegate = self
          reviewsTableView.dataSource = self
-         reviewsTableView.rowHeight = UITableView.automaticDimension
+         reviewsTableView.rowHeight = 150
          reviewsTableView.estimatedRowHeight = 150
          reviewsTableView.separatorColor = .clear
          reviewsTableView.register(ReviewTableViewCell.self)
-         editedCosmosView.rating = 0
-         editedCosmosView.didFinishTouchingCosmos = { [weak self] rating in
-             self?.rating = Int(rating)
-         }
+//         editedCosmosView.rating = 0
+//         editedCosmosView.didFinishTouchingCosmos = { [weak self] rating in
+//             self?.rating = Int(rating)
+//         }
          viewAllProducts.addTapGestureRecognizer {[weak self] in
              self?.delegate?.didTapOnViewAllproducts()
          }
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        pagerConntainerView.backgroundColor = .clear
-        pagerConntainerView.addSubview(pageControl)
-        pagerConntainerView.bringSubviewToFront(pageControl)
-
-        pageControl.layout
-            .leading(.lessOrEqual, to: .superview, edge: .leading)
-            .trailing(.lessOrEqual, to: .superview, edge: .trailing)
-            .centerY(to: .superview)
-            .centerX(to: .superview)
-
-        bannerCollectionView.clipsToBounds = true
-        bannerCollectionView.cornerRadius = 30
-        bannerCollectionView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 
     private func updateUI(product: SingleProduct) {
@@ -267,7 +242,7 @@ extension ProductContentView: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == bannerCollectionView {
             return CGSize(width: bannerCollectionView.bounds.width, height: bannerCollectionView.bounds.height)
         } else {
-            return CGSize(width: 143, height: 201)
+            return CGSize(width: 250, height: 81)
         }
     }
 
@@ -286,18 +261,18 @@ extension ProductContentView: UICollectionViewDelegate, UICollectionViewDataSour
 
     func makeFeatured(indexPath:IndexPath,isBanner: Bool) -> FeaturedCell {
             let cell:FeaturedCell = bannerCollectionView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.ImageCornerRadius = 0
         cell.setup(images: storeProduct?.storeProduct?.storeProductFiles ?? [])
-        pageControl.numberOfPages = homeViewModel.getAllBanner().count
-        pageControl.isHidden = homeViewModel.getAllBanner().count == 1
-//
         cell.delegate = self
+        
         cell.showImages = { [weak self] in
             self?.delegate?.didTapOnBanner(productImagesFile: self?.storeProduct?.storeProduct?.storeProductFiles ?? [])
         }
         cell.layoutIfNeeded()
         return cell
     }
+    
     func displayedCellIndex(index: Int) {
-        pageControl.selectedIndex = index
+       
     }
 }

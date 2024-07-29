@@ -23,10 +23,10 @@ class HorizontalTagCollectionViewCell: UICollectionViewCell {
     func setup(with item: TagItem ,animate: Bool) {
         mainCategoryImageView.layer.cornerRadius = 35
 //        categoryNameLabel.textColor = .accent
-        categoryNameLabel.font = .font(for: .bold, size: 14)
+        categoryNameLabel.font = .font(for: .regular, size: 12)
         self.bringSubviewToFront(actionButton)
-        mainCategoryImageView.layer.borderWidth = 2
-        mainCategoryImageView.layer.borderColor = UIColor.accentOrange.cgColor
+//        mainCategoryImageView.layer.borderWidth = 2
+//        mainCategoryImageView.layer.borderColor = UIColor.accentOrange.cgColor
 //        updateStyle()
 //        if animate {
 //            let animations = [AnimationType.vector((CGVector(dx: 150, dy: 0))),

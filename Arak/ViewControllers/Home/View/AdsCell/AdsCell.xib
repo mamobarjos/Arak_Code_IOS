@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -12,9 +12,6 @@
     <customFonts key="customFonts">
         <array key="ArbFONTS-Droid Arabic Kufi.ttf">
             <string>DroidArabicKufi</string>
-        </array>
-        <array key="ArbFONTS-Droid-Arabic-Kufi-Bold.ttf">
-            <string>DroidArabicKufi-Bold</string>
         </array>
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
@@ -42,10 +39,10 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zrd-s0-WwH">
-                                <rect key="frame" x="20" y="20" width="12" height="20"/>
+                                <rect key="frame" x="0.0" y="221" width="392" height="25"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVE-y2-zIY">
-                                        <rect key="frame" x="6" y="1" width="0.0" height="18"/>
+                                        <rect key="frame" x="6" y="1" width="380" height="23"/>
                                         <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="9"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -54,44 +51,19 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.45000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="eVE-y2-zIY" secondAttribute="bottom" constant="1" id="6b2-e8-YjD"/>
-                                    <constraint firstAttribute="height" constant="20" id="KPe-bF-QTM"/>
+                                    <constraint firstAttribute="height" constant="25" id="KPe-bF-QTM"/>
                                     <constraint firstItem="eVE-y2-zIY" firstAttribute="leading" secondItem="Zrd-s0-WwH" secondAttribute="leading" constant="6" id="exy-ba-qbZ"/>
                                     <constraint firstAttribute="trailing" secondItem="eVE-y2-zIY" secondAttribute="trailing" constant="6" id="fTi-be-aWK"/>
                                     <constraint firstItem="eVE-y2-zIY" firstAttribute="top" secondItem="Zrd-s0-WwH" secondAttribute="top" constant="1" id="r0Y-vG-vbC"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="6"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rectangle 1315" translatesAutoresizingMaskIntoConstraints="NO" id="DBh-gx-sWN">
-                                <rect key="frame" x="0.0" y="191" width="392" height="55"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="5hy-jy-Uzf"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38J-ty-xnm">
-                                <rect key="frame" x="377" y="231" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" name="DroidArabicKufi-Bold" family="Droid Arabic Kufi" pointSize="9"/>
-                                <color key="textColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timer" translatesAutoresizingMaskIntoConstraints="NO" id="Fku-ix-t6w">
-                                <rect key="frame" x="358" y="224.5" width="14" height="13"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="13" id="Fvc-48-onV"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WzP-IP-9eI">
-                                <rect key="frame" x="15" y="231" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" name="DroidArabicKufi-Bold" family="Droid Arabic Kufi" pointSize="9"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWT-9M-29N">
-                                <rect key="frame" x="351" y="19" width="26" height="22"/>
+                                <rect key="frame" x="15" y="15" width="26" height="22"/>
                                 <state key="normal" image="Icon awesome-heart-1"/>
                                 <connections>
                                     <action selector="Favorate:" destination="Xth-cb-42R" eventType="touchUpInside" id="Gae-V0-euk"/>
@@ -117,28 +89,56 @@
                                     <action selector="learnMoreButtonAction:" destination="Xth-cb-42R" eventType="touchUpInside" id="Zgq-WD-EfB"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wtp-KH-TpY">
+                                <rect key="frame" x="332" y="10" width="50" height="21"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wBl-QN-3qO">
+                                        <rect key="frame" x="10" y="0.0" width="30" height="21"/>
+                                        <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="12"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="accentOrange"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="wBl-QN-3qO" secondAttribute="bottom" id="6KV-7i-miM"/>
+                                    <constraint firstAttribute="height" constant="21" id="Byl-wQ-CH5"/>
+                                    <constraint firstAttribute="trailing" secondItem="wBl-QN-3qO" secondAttribute="trailing" constant="10" id="Uqu-U9-N93"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="cJY-dW-5tG"/>
+                                    <constraint firstItem="wBl-QN-3qO" firstAttribute="top" secondItem="Wtp-KH-TpY" secondAttribute="top" id="k2x-He-T9C"/>
+                                    <constraint firstItem="wBl-QN-3qO" firstAttribute="leading" secondItem="Wtp-KH-TpY" secondAttribute="leading" constant="10" id="nmr-7q-tOU"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="specialAdsLogo" translatesAutoresizingMaskIntoConstraints="NO" id="0yv-jE-mQR">
+                                <rect key="frame" x="350" y="7" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="ZxB-OG-UFS"/>
+                                    <constraint firstAttribute="height" constant="35" id="bbQ-CM-Qbv"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="btV-Rz-xNB" secondAttribute="bottom" id="0AE-Lh-smw"/>
-                            <constraint firstItem="WzP-IP-9eI" firstAttribute="centerY" secondItem="38J-ty-xnm" secondAttribute="centerY" id="0J4-Qv-UFV"/>
-                            <constraint firstItem="Zrd-s0-WwH" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" constant="20" id="0SC-hP-8Rz"/>
-                            <constraint firstItem="Fku-ix-t6w" firstAttribute="centerY" secondItem="38J-ty-xnm" secondAttribute="centerY" id="8uQ-TN-Twf"/>
+                            <constraint firstAttribute="trailing" secondItem="Zrd-s0-WwH" secondAttribute="trailing" id="4c1-C7-Ueo"/>
+                            <constraint firstItem="aWT-9M-29N" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" constant="15" id="5uu-70-sOx"/>
+                            <constraint firstItem="Wtp-KH-TpY" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" constant="10" id="9hC-de-SNG"/>
                             <constraint firstItem="EyV-WZ-05D" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" constant="5" id="GcK-jT-zfu"/>
-                            <constraint firstAttribute="trailing" secondItem="38J-ty-xnm" secondAttribute="trailing" constant="15" id="JVh-UB-On1"/>
+                            <constraint firstAttribute="trailing" secondItem="0yv-jE-mQR" secondAttribute="trailing" constant="7" id="K8N-QD-4ft"/>
+                            <constraint firstAttribute="trailing" secondItem="Wtp-KH-TpY" secondAttribute="trailing" constant="10" id="Kfd-Hb-hIm"/>
                             <constraint firstItem="btV-Rz-xNB" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" id="MdC-as-zEv"/>
                             <constraint firstAttribute="trailing" secondItem="EyV-WZ-05D" secondAttribute="trailing" constant="5" id="NKC-MT-brh"/>
-                            <constraint firstItem="Zrd-s0-WwH" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" constant="20" id="OTr-xU-obG"/>
-                            <constraint firstAttribute="bottom" secondItem="DBh-gx-sWN" secondAttribute="bottom" id="PSc-e2-7bY"/>
-                            <constraint firstAttribute="trailing" secondItem="DBh-gx-sWN" secondAttribute="trailing" id="VAz-Ym-9cE"/>
-                            <constraint firstItem="38J-ty-xnm" firstAttribute="leading" secondItem="Fku-ix-t6w" secondAttribute="trailing" constant="5" id="f1W-NA-7qc"/>
-                            <constraint firstAttribute="bottom" secondItem="38J-ty-xnm" secondAttribute="bottom" constant="15" id="iCx-04-gfD"/>
+                            <constraint firstItem="0yv-jE-mQR" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" constant="7" id="RJx-CO-s8K"/>
+                            <constraint firstItem="aWT-9M-29N" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" constant="15" id="TR5-2t-Vh0"/>
                             <constraint firstItem="btV-Rz-xNB" firstAttribute="top" secondItem="sSQ-MW-00y" secondAttribute="top" id="kW6-vf-OAa"/>
-                            <constraint firstItem="aWT-9M-29N" firstAttribute="centerY" secondItem="eVE-y2-zIY" secondAttribute="centerY" id="lhB-vg-DB3"/>
-                            <constraint firstItem="DBh-gx-sWN" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" id="m43-4I-nV4"/>
-                            <constraint firstItem="WzP-IP-9eI" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" constant="15" id="nxx-vo-Tp0"/>
                             <constraint firstAttribute="trailing" secondItem="btV-Rz-xNB" secondAttribute="trailing" id="oxW-0L-HCS"/>
-                            <constraint firstAttribute="trailing" secondItem="aWT-9M-29N" secondAttribute="trailing" constant="15" id="w8J-0h-Z81"/>
+                            <constraint firstItem="Zrd-s0-WwH" firstAttribute="leading" secondItem="sSQ-MW-00y" secondAttribute="leading" id="wLh-Ie-uRA"/>
+                            <constraint firstAttribute="bottom" secondItem="Zrd-s0-WwH" secondAttribute="bottom" id="xPI-Y3-Y6p"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -151,13 +151,12 @@
             </collectionViewCellContentView>
             <size key="customSize" width="430" height="275"/>
             <connections>
+                <outlet property="categoryContainerView" destination="Wtp-KH-TpY" id="OZI-DJ-dCP"/>
+                <outlet property="categorylabel" destination="wBl-QN-3qO" id="6mJ-2V-amh"/>
                 <outlet property="favorateButton" destination="aWT-9M-29N" id="6jD-CL-PKl"/>
-                <outlet property="gradiantImageView" destination="DBh-gx-sWN" id="Per-Qr-Kcs"/>
                 <outlet property="learnMoreButton" destination="EyV-WZ-05D" id="btd-VP-ePq"/>
                 <outlet property="photoImageView" destination="btV-Rz-xNB" id="jmH-UT-XmF"/>
-                <outlet property="timeCountLabel" destination="38J-ty-xnm" id="lgl-h0-zua"/>
-                <outlet property="timerImageView" destination="Fku-ix-t6w" id="Wxd-ju-GyB"/>
-                <outlet property="titleLabel" destination="WzP-IP-9eI" id="BgM-cX-CpJ"/>
+                <outlet property="specialAdsLogo" destination="0yv-jE-mQR" id="aLX-RF-ozr"/>
                 <outlet property="typeLabel" destination="eVE-y2-zIY" id="vBH-D7-e2B"/>
                 <outlet property="typeView" destination="Zrd-s0-WwH" id="F4A-SQ-Pmj"/>
             </connections>
@@ -166,8 +165,10 @@
     </objects>
     <resources>
         <image name="Icon awesome-heart-1" width="26" height="22"/>
-        <image name="Rectangle 1315" width="161" height="66"/>
-        <image name="timer" width="14" height="14"/>
+        <image name="specialAdsLogo" width="35" height="31"/>
+        <namedColor name="accentOrange">
+            <color red="1" green="0.4309999942779541" blue="0.18000000715255737" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

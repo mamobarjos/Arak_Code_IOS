@@ -22,10 +22,10 @@ class LoginViewModel {
         compliation(error)
         return
       }
-      if (response?.data?.isActive == 0) {
-        compliation("The user has been blocked, please contact the administration".localiz())
-        return
-      }
+//      if (response?.data?.isActive == 0) {
+//        compliation("The user has been blocked, please contact the administration".localiz())
+//        return
+//      }
       Helper.userType = Helper.UserType.NORMAL.rawValue
       Helper.currentUser = response?.data
       Helper.userToken = response?.token ?? ""

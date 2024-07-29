@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Gelion-Bold.ttf">
+            <string>Gelion-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="U6b-Vx-4bR" customClass="TitleCollectionReusableView" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOF-Xh-bXX">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recent orders" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eN-eV-q5R">
+                            <rect key="frame" x="0.0" y="0.0" width="113.66666666666667" height="40"/>
+                            <fontDescription key="fontDescription" name="Gelion-Bold" family="Gelion" pointSize="18"/>
+                            <color key="textColor" red="0.1058823529" green="0.14117647059999999" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GY7-hq-toN">
+                            <rect key="frame" x="250" y="0.0" width="60" height="40"/>
+                            <fontDescription key="fontDescription" name="Gelion-Bold" family="Gelion" pointSize="14"/>
+                            <color key="tintColor" name="TextPrimary"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="See more">
+                                <color key="titleColor" red="0.45098039215686275" green="0.45098039215686275" blue="0.45098039215686275" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="seeAllButtonAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="J82-Ld-WOR"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LD7-fu-qcW">
+                            <rect key="frame" x="270" y="0.0" width="50" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="bSh-SX-UT4"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="Filter_Ellection"/>
+                            <connections>
+                                <action selector="filterButtonAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="0Zy-lq-LFF"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="LD7-fu-qcW" firstAttribute="top" secondItem="bOF-Xh-bXX" secondAttribute="top" id="4g8-7V-OET"/>
+                        <constraint firstAttribute="trailing" secondItem="LD7-fu-qcW" secondAttribute="trailing" id="5sh-sa-PW1"/>
+                        <constraint firstItem="3eN-eV-q5R" firstAttribute="top" secondItem="bOF-Xh-bXX" secondAttribute="top" id="90i-aU-UCd"/>
+                        <constraint firstItem="GY7-hq-toN" firstAttribute="top" secondItem="bOF-Xh-bXX" secondAttribute="top" id="9K5-5y-o4t"/>
+                        <constraint firstAttribute="bottom" secondItem="LD7-fu-qcW" secondAttribute="bottom" id="cTn-Ls-jPK"/>
+                        <constraint firstItem="3eN-eV-q5R" firstAttribute="leading" secondItem="bOF-Xh-bXX" secondAttribute="leading" id="fiQ-RN-1QP"/>
+                        <constraint firstAttribute="bottom" secondItem="GY7-hq-toN" secondAttribute="bottom" id="iCy-Sz-NlS"/>
+                        <constraint firstAttribute="height" constant="40" id="o0x-vJ-e7U"/>
+                        <constraint firstAttribute="trailing" secondItem="GY7-hq-toN" secondAttribute="trailing" constant="10" id="oYj-Od-AWJ"/>
+                        <constraint firstAttribute="bottom" secondItem="3eN-eV-q5R" secondAttribute="bottom" id="vGF-vq-7IY"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <constraints>
+                <constraint firstItem="bOF-Xh-bXX" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="U64-Dv-kh7"/>
+                <constraint firstAttribute="bottom" secondItem="bOF-Xh-bXX" secondAttribute="bottom" id="WOx-q6-x84"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="bOF-Xh-bXX" secondAttribute="trailing" id="eeQ-wR-sHk"/>
+                <constraint firstItem="bOF-Xh-bXX" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="uts-IH-aWt"/>
+            </constraints>
+            <connections>
+                <outlet property="filterButton" destination="LD7-fu-qcW" id="iEC-z9-piL"/>
+                <outlet property="seeAllButton" destination="GY7-hq-toN" id="gbJ-Ax-kej"/>
+                <outlet property="titleLabel" destination="3eN-eV-q5R" id="0XU-K3-VHG"/>
+            </connections>
+            <point key="canvasLocation" x="4.5801526717557248" y="16.901408450704228"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="Filter_Ellection" width="20" height="20"/>
+        <namedColor name="TextPrimary">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

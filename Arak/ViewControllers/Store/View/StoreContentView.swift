@@ -25,7 +25,7 @@ class StoreContentView: UIView {
     @IBOutlet weak var storeImageView: UIImageView!
     @IBOutlet weak var productsTableView: UITableView!
     
-    @IBOutlet var contentView: UIView!
+//    @IBOutlet var contentView: UIView!
 
     @IBOutlet weak var descreptionLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -34,30 +34,30 @@ class StoreContentView: UIView {
     @IBOutlet weak var reviewrTableView: UITableView!
     @IBOutlet weak var productsStoreTiltleLabel: UILabel!
     @IBOutlet weak var reviewStoreTitleLabel: UILabel!
-    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
-    @IBOutlet weak var submitButton: UIButton!
+//    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
+//    @IBOutlet weak var submitButton: UIButton!
 
     @IBOutlet weak var backButoon: UIButton!
-    @IBOutlet weak var favButton: UIButton!
+//    @IBOutlet weak var favButton: UIButton!
 //    @IBOutlet weak var editButton: UIButton!
 
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var faceButton: UIButton!
-    @IBOutlet weak var instaButton: UIButton!
-    @IBOutlet weak var twitterButton: UIButton!
-    @IBOutlet weak var linkedInButton: UIButton!
-    @IBOutlet weak var youTubeButton: UIButton!
+//    @IBOutlet weak var stackView: UIStackView!
+//    @IBOutlet weak var faceButton: UIButton!
+//    @IBOutlet weak var instaButton: UIButton!
+//    @IBOutlet weak var twitterButton: UIButton!
+//    @IBOutlet weak var linkedInButton: UIButton!
+//    @IBOutlet weak var youTubeButton: UIButton!
 
     @IBOutlet weak var heightConst: NSLayoutConstraint!
-    @IBOutlet weak var reviewsContainerView: UIView!
-    @IBOutlet weak var addReviewContainer: UIView!
+//    @IBOutlet weak var reviewsContainerView: UIView!
+//    @IBOutlet weak var addReviewContainer: UIView!
     @IBOutlet weak var cosmosView: CosmosView!
-    @IBOutlet weak var reviewTextView: UITextView!
+//    @IBOutlet weak var reviewTextView: UITextView!
 
-    @IBOutlet weak var snabButton: UIButton!
-    @IBOutlet weak var addButton: UIButton!
-
-    @IBOutlet weak var viewAllProductAction: UILabel!
+//    @IBOutlet weak var snabButton: UIButton!
+//    @IBOutlet weak var addButton: UIButton!
+//
+//    @IBOutlet weak var viewAllProductAction: UILabel!
 
     private(set) var rating: Int?
     var products: [StoreProduct] = [] {
@@ -65,21 +65,21 @@ class StoreContentView: UIView {
             productsTableView.reloadData()
             if products.isEmpty {
                 heightConst.constant = 0
-                viewAllProductAction.isHidden = true
+//                viewAllProductAction.isHidden = true
                 self.layoutIfNeeded()
             } else if products.count == 1 {
                 heightConst.constant = 175
-                viewAllProductAction.isHidden = true
+//                viewAllProductAction.isHidden = true
                 self.layoutIfNeeded()
             } else if products.count == 2 {
                 heightConst.constant = 350
-                viewAllProductAction.isHidden = true
+//                viewAllProductAction.isHidden = true
                 self.layoutIfNeeded()
             }
             if products.count > 3 {
-                viewAllProductAction.isHidden = false
+//                viewAllProductAction.isHidden = false
             } else {
-                viewAllProductAction.isHidden = true
+//                viewAllProductAction.isHidden = true
             }
         }
     }
@@ -118,27 +118,27 @@ class StoreContentView: UIView {
 
          productsStoreTiltleLabel.text = "label.Products Store".localiz()
          reviewStoreTitleLabel.text = "label.Review".localiz()
-         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
-         submitButton.setTitle("action.Submit".localiz(), for: .normal)
-         reviewTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
+//         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
+//         submitButton.setTitle("action.Submit".localiz(), for: .normal)
+//         reviewTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
 
-         reviewTextView.textAlignment = Helper.appLanguage ?? "en" == "en" ? .left : .right
-         addButton.setTitle("action.Add Your Store".localiz(), for: .normal)
-         addButton.isHidden = true
-         reviewTextView.delegate = self
-         favButton.isHidden = true
-         backButoon.isHidden = true
+//         reviewTextView.textAlignment = Helper.appLanguage ?? "en" == "en" ? .left : .right
+//         addButton.setTitle("action.Add Your Store".localiz(), for: .normal)
+//         addButton.isHidden = true
+//         reviewTextView.delegate = self
+//         favButton.isHidden = true
+//         backButoon.isHidden = true
 
          productsTableView.delegate = self
          productsTableView.dataSource = self
-         productsTableView.rowHeight = UITableView.automaticDimension
-         productsTableView.estimatedRowHeight = 150
+         productsTableView.rowHeight = 90
+         productsTableView.estimatedRowHeight = 90
          productsTableView.register(ProductTableViewCell.self)
          productsTableView.separatorColor = .clear
 
          reviewrTableView.delegate = self
          reviewrTableView.dataSource = self
-         reviewrTableView.rowHeight = UITableView.automaticDimension
+         reviewrTableView.rowHeight = 150
          reviewrTableView.estimatedRowHeight = 150
          reviewrTableView.separatorColor = .clear
          reviewrTableView.register(ReviewTableViewCell.self)
@@ -147,49 +147,49 @@ class StoreContentView: UIView {
              self?.rating = Int(rating)
          }
 
-         viewAllProductAction.addTapGestureRecognizer {[weak self] in
-             self?.delegate?.didTapViewAllProduct()
-         }
+//         viewAllProductAction.addTapGestureRecognizer {[weak self] in
+//             self?.delegate?.didTapViewAllProduct()
+//         }
     }
 
     private func updateUI(store: SingleStore) {
 
-        if store.facebook == nil || store.facebook == "" {
-            faceButton.removeFromSuperview()
-        }
+//        if store.facebook == nil || store.facebook == "" {
+//            faceButton.removeFromSuperview()
+//        }
+//
+//        if store.twitter == nil || store.twitter == "" {
+//            twitterButton.removeFromSuperview()
+//        }
+//
+//        if store.snapchat == nil || store.snapchat == "" {
+//            snabButton.removeFromSuperview()
+//        }
+//
+//        if store.linkedin == nil || store.linkedin == "" {
+//            linkedInButton.removeFromSuperview()
+//        }
+//
+//        if store.youtube == nil || store.youtube == "" {
+//            youTubeButton.removeFromSuperview()
+//        }
+//
+//        if store.instagram == nil || store.instagram == "" {
+//            instaButton.removeFromSuperview()
+//        }
 
-        if store.twitter == nil || store.twitter == "" {
-            twitterButton.removeFromSuperview()
-        }
-
-        if store.snapchat == nil || store.snapchat == "" {
-            snabButton.removeFromSuperview()
-        }
-
-        if store.linkedin == nil || store.linkedin == "" {
-            linkedInButton.removeFromSuperview()
-        }
-
-        if store.youtube == nil || store.youtube == "" {
-            youTubeButton.removeFromSuperview()
-        }
-
-        if store.instagram == nil || store.instagram == "" {
-            instaButton.removeFromSuperview()
-        }
-
-        [faceButton, instaButton, youTubeButton, instaButton, twitterButton, linkedInButton].forEach {
-            $0?.layer.cornerRadius = ($0?.frameWidth ?? 17) / 2
-            $0?.clipsToBounds = true
-        }
-        if let url = URL(string:store.img ?? "") {
-            self.storeImageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
-        }
+//        [faceButton, instaButton, youTubeButton, instaButton, twitterButton, linkedInButton].forEach {
+//            $0?.layer.cornerRadius = ($0?.frameWidth ?? 17) / 2
+//            $0?.clipsToBounds = true
+//        }
+//        if let url = URL(string:store.img ?? "") {
+//            self.storeImageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
+//        }
 
         storeImageView.contentMode = .scaleToFill
         storeImageView.layer.cornerRadius = 25
         storeImageView.clipsToBounds = true
-        addReviewContainer.isHidden = store.isReviewed == 0 ? false : true
+//        addReviewContainer.isHidden = store.isReviewed == 0 ? false : true
         self.titleLabel.text = store.name
         if let index = (store.createdAt?.range(of: "T")?.lowerBound){
             let dateBeforeT = String(store.createdAt?.prefix(upTo: index) ?? "")
@@ -199,117 +199,117 @@ class StoreContentView: UIView {
         self.descreptionLabel.text = store.desc
     }
 
-    @IBAction func AddProductAction(_ sender: Any) {
-        delegate?.didTapOnAddProduct()
-    }
-
-    @IBAction func submiteReviewAction(_ sender: Any) {
-        if reviewTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || reviewTextView.text.isEmpty {
-            self.delegate?.showTostMessage(with: "error.please add your review".localiz())
-            return
-        }
-
-        guard let rating = rating else {
-            self.delegate?.showTostMessage(with: "error.please rate this store".localiz())
-            return
-        }
-
-        delegate?.submiteReview(reviewTextView.text, rating)
-    }
-
-    @IBAction func faceBookAction(_ sender: Any) {
-        guard let faceURL = storeDetails?.facebook else {
-            return
-        }
-        let faceUrl = NSURL(string: faceURL)
-        if UIApplication.shared.canOpenURL(faceUrl! as URL) {
-            UIApplication.shared.openURL(faceUrl! as URL)
-        } else {
-          //redirect to safari because the user doesn't have Instagram
-            UIApplication.shared.openURL(NSURL(string: "https://web.facebook.com/")! as URL)
-        }
-    }
-
-    @IBAction func instaAction(_ sender: Any) {
-        guard let instaURL = storeDetails?.instagram else {
-            return
-        }
-        let instagramUrl = NSURL(string: instaURL)
-        if UIApplication.shared.canOpenURL(instagramUrl! as URL) {
-            UIApplication.shared.openURL(instagramUrl! as URL)
-        } else {
-          //redirect to safari because the user doesn't have Instagram
-            UIApplication.shared.openURL(NSURL(string: "http://instagram.com/")! as URL)
-        }
-    }
+//    @IBAction func AddProductAction(_ sender: Any) {
+//        delegate?.didTapOnAddProduct()
+//    }
+//
+//    @IBAction func submiteReviewAction(_ sender: Any) {
+//        if reviewTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || reviewTextView.text.isEmpty {
+//            self.delegate?.showTostMessage(with: "error.please add your review".localiz())
+//            return
+//        }
+//
+//        guard let rating = rating else {
+//            self.delegate?.showTostMessage(with: "error.please rate this store".localiz())
+//            return
+//        }
+//
+//        delegate?.submiteReview(reviewTextView.text, rating)
+//    }
+//
+//    @IBAction func faceBookAction(_ sender: Any) {
+//        guard let faceURL = storeDetails?.facebook else {
+//            return
+//        }
+//        let faceUrl = NSURL(string: faceURL)
+//        if UIApplication.shared.canOpenURL(faceUrl! as URL) {
+//            UIApplication.shared.openURL(faceUrl! as URL)
+//        } else {
+//          //redirect to safari because the user doesn't have Instagram
+//            UIApplication.shared.openURL(NSURL(string: "https://web.facebook.com/")! as URL)
+//        }
+//    }
+//
+//    @IBAction func instaAction(_ sender: Any) {
+//        guard let instaURL = storeDetails?.instagram else {
+//            return
+//        }
+//        let instagramUrl = NSURL(string: instaURL)
+//        if UIApplication.shared.canOpenURL(instagramUrl! as URL) {
+//            UIApplication.shared.openURL(instagramUrl! as URL)
+//        } else {
+//          //redirect to safari because the user doesn't have Instagram
+//            UIApplication.shared.openURL(NSURL(string: "http://instagram.com/")! as URL)
+//        }
+//    }
     @IBAction func backAction(_ sender: Any) {
         delegate?.didTapOnBack()
     }
-
-    @IBAction func favAction(_ sender: Any) {
-        delegate?.didTapOnFav(id: 1)
-    }
+//
+//    @IBAction func favAction(_ sender: Any) {
+//        delegate?.didTapOnFav(id: 1)
+//    }
 
 //    @IBAction func editAction(_ sender: Any) {
 //        delegate?.didTapOnEdit(id: 1)
 //    }
 
-    @IBAction func twitterAction(_ sender: Any) {
-        guard let twitterURL = storeDetails?.twitter else {
-            return
-        }
-        let twitterUrl = NSURL(string: twitterURL)
-        if UIApplication.shared.canOpenURL(twitterUrl! as URL) {
-            UIApplication.shared.openURL(twitterUrl! as URL)
-        } else {
-          //redirect to safari because the user doesn't have Instagram
-            UIApplication.shared.openURL(NSURL(string: "https://mobile.twitter.com/")! as URL)
-        }
-    }
-
-    @IBAction func linkedInAction(_ sender: Any) {
-        guard let instaURL = storeDetails?.linkedin else {
-            return
-        }
-        let instagramUrl = NSURL(string: instaURL)
-        if UIApplication.shared.canOpenURL(instagramUrl! as URL) {
-            UIApplication.shared.openURL(instagramUrl! as URL)
-        } else {
-          //redirect to safari because the user doesn't have Instagram
-            UIApplication.shared.openURL(NSURL(string: "https://www.linkedin.com/")! as URL)
-        }
-    }
-
-    @IBAction func whatsAppAction(_ sender: Any) {
-        let urlWhats = "whatsapp://send?phone=\(self.storeDetails?.phoneNo ?? "")"
-          if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed){
-              if let whatsappURL = URL(string: urlString) {
-                  if UIApplication.shared.canOpenURL(whatsappURL){
-                      if #available(iOS 10.0, *) {
-                          UIApplication.shared.open(whatsappURL, options: [:], completionHandler: nil)
-                      } else {
-                          UIApplication.shared.openURL(whatsappURL)
-                      }
-                  }
-                  else {
-                      print("Install Whatsapp")
-                  }
-              }
-          }
-    }
-
-    @IBAction func youtubeAction(_ sender: Any) {
-        guard let instaURL = storeDetails?.youtube else {
-            return
-        }
-        let instagramUrl = NSURL(string: instaURL)
-        if UIApplication.shared.canOpenURL(instagramUrl! as URL) {
-            UIApplication.shared.openURL(instagramUrl! as URL)
-        } else {
-          //redirect to safari because the user doesn't have Instagram
-            UIApplication.shared.openURL(NSURL(string: "https://www.youtube.com/")! as URL)
-        }
-    }
+//    @IBAction func twitterAction(_ sender: Any) {
+//        guard let twitterURL = storeDetails?.twitter else {
+//            return
+//        }
+//        let twitterUrl = NSURL(string: twitterURL)
+//        if UIApplication.shared.canOpenURL(twitterUrl! as URL) {
+//            UIApplication.shared.openURL(twitterUrl! as URL)
+//        } else {
+//          //redirect to safari because the user doesn't have Instagram
+//            UIApplication.shared.openURL(NSURL(string: "https://mobile.twitter.com/")! as URL)
+//        }
+//    }
+//
+//    @IBAction func linkedInAction(_ sender: Any) {
+//        guard let instaURL = storeDetails?.linkedin else {
+//            return
+//        }
+//        let instagramUrl = NSURL(string: instaURL)
+//        if UIApplication.shared.canOpenURL(instagramUrl! as URL) {
+//            UIApplication.shared.openURL(instagramUrl! as URL)
+//        } else {
+//          //redirect to safari because the user doesn't have Instagram
+//            UIApplication.shared.openURL(NSURL(string: "https://www.linkedin.com/")! as URL)
+//        }
+//    }
+//
+//    @IBAction func whatsAppAction(_ sender: Any) {
+//        let urlWhats = "whatsapp://send?phone=\(self.storeDetails?.phoneNo ?? "")"
+//          if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed){
+//              if let whatsappURL = URL(string: urlString) {
+//                  if UIApplication.shared.canOpenURL(whatsappURL){
+//                      if #available(iOS 10.0, *) {
+//                          UIApplication.shared.open(whatsappURL, options: [:], completionHandler: nil)
+//                      } else {
+//                          UIApplication.shared.openURL(whatsappURL)
+//                      }
+//                  }
+//                  else {
+//                      print("Install Whatsapp")
+//                  }
+//              }
+//          }
+//    }
+//
+//    @IBAction func youtubeAction(_ sender: Any) {
+//        guard let instaURL = storeDetails?.youtube else {
+//            return
+//        }
+//        let instagramUrl = NSURL(string: instaURL)
+//        if UIApplication.shared.canOpenURL(instagramUrl! as URL) {
+//            UIApplication.shared.openURL(instagramUrl! as URL)
+//        } else {
+//          //redirect to safari because the user doesn't have Instagram
+//            UIApplication.shared.openURL(NSURL(string: "https://www.youtube.com/")! as URL)
+//        }
+//    }
 }
 
 extension StoreContentView: UITextViewDelegate {

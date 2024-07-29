@@ -114,8 +114,8 @@ open class BubbleTabBarController: UITabBarController {
     
     private func setupUI() {
         clearItemsBar()
-        addBarItem(itemPostion: .Right, icon: #imageLiteral(resourceName: "settings-1") , isLogo: true,tag: 1, badgeCount: 0, leftCount: 0)
-        addBarItem(itemPostion: .Right, icon: #imageLiteral(resourceName: "Icon ionic-md-notifications") ,isNotification:  true, isLogo: true ,tag: 2, badgeCount: 4, leftCount: 0)
+        addBarItem(itemPostion: .Right, icon: #imageLiteral(resourceName: "notifications") , isLogo: true,tag: 1, badgeCount: 0, leftCount: 0)
+        addBarItem(itemPostion: .Right, icon: #imageLiteral(resourceName: "cart_nav_new") ,isNotification:  true, isLogo: true ,tag: 2, badgeCount: 4, leftCount: 0)
         addBarItem(itemPostion: .Left, icon: #imageLiteral(resourceName: "Arak Logo"), isLogo: true,tag: 3, badgeCount: 0, leftCount: 0)
     }
     
@@ -126,10 +126,11 @@ open class BubbleTabBarController: UITabBarController {
             return
         }
         if itemBar.tag == 1 {
-            let vc = initViewControllerWith(identifier: SettingsViewController.className, and: "") as! SettingsViewController
+//            let vc = initViewControllerWith(identifier: SettingsViewController.className, and: "") as! SettingsViewController
+            let vc = initViewControllerWith(identifier: NotificationViewController.className, and: "") as! NotificationViewController
             show(vc)
         } else if itemBar.tag == 2 {
-            let vc = initViewControllerWith(identifier: NotificationViewController.className, and: "") as! NotificationViewController
+            let vc = CartViewController.loadFromNib()
             show(vc)
         }
     }

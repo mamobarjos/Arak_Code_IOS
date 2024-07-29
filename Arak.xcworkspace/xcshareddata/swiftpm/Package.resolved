@@ -1,4 +1,5 @@
 {
+  "originHash" : "d075cf5d240bd4f8ede2f420ed7eb324a725a2e4e614cb9b3259aecdfca044c0",
   "pins" : [
     {
       "identity" : "dtphotoviewercontroller",
@@ -10,5 +11,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

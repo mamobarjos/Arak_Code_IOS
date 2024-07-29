@@ -40,6 +40,13 @@ extension UIViewController {
         viewModel.getUserBalance (compliation: compliation)
     }
     
+    static func loadFromNib() -> Self {
+        func instantiateFromNib<T: UIViewController>() -> T {
+            return T.init(nibName: String(describing: T.self), bundle: nil)
+        }
+        return instantiateFromNib()
+    }
+    
     func fetchProfile(accessToken:String , socialDelegate:SocialDelegate?) {
         let parameters = ["fields": "id, email, name, picture.type(large)"]
         let graphRequest = GraphRequest(graphPath: "me", parameters: parameters, tokenString: accessToken, version: "", httpMethod: HTTPMethod.get)

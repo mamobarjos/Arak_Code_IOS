@@ -16,9 +16,9 @@ class AddServiceViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
 
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var uploadImageButton: UIButton!
     @IBOutlet weak var continueButton: UIButton!
-    @IBOutlet weak var trashButton: UIButton!
 
     @IBOutlet weak var placeHolderImage: UIImageView!
 
@@ -27,33 +27,38 @@ class AddServiceViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
 
     @IBOutlet weak var priceTextField: UITextField!
-
+    @IBOutlet weak var discountPriceTextField: UITextField!
+    
     private var imagePicker = UIImagePickerController()
 
     private(set) var imageData: Data?
-    private(set) var imageUrl: String?
+    private(set) var uplaoadedImages: [String] = []
     private(set) var data: [String:Any]?
 
     public var mode: ProductMode = .add
     public var product: StoreProduct?
     public var relatedProduct: RelatedProducts?
 
+    private var images: [UIImage] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     private var viewModel: CreateServiceViewModel = .init()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupCollectionView()
+        
         setupUI()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.hiddenNavigation(isHidden: false)
     }
     private func setupUI() {
-        trashButton.isHidden = true
 
-        uploadImageButton.setTitle("action.Upload Image".localiz(), for: .normal)
         descTextField.text = "placeHolder.Description".localiz()
         titleTextField.placeholder = "placeHolder.Title".localiz()
         priceTextField.placeholder = "placeHolder.Price".localiz()
@@ -67,6 +72,20 @@ class AddServiceViewController: UIViewController {
             fillViewWithMyProduct()
         }
 
+    }
+    
+    private func setupCollectionView() {
+        let layout = CenteredCollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        // Initialize the collection view with the layout
+        collectionView.isPagingEnabled = false
+        collectionView.collectionViewLayout = layout
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(AddedProductImageCollectionViewCell.self)
+        collectionView.reloadData()
     }
 
     private func fillViewWithMyProduct() {
@@ -102,28 +121,10 @@ class AddServiceViewController: UIViewController {
         guard let content = getValidatedData() else {
             return
         }
-        self.showLoading()
-        viewModel.createService(data: content, completion: { [weak self] error in
-            defer {
-                self?.stopLoading()
-            }
-            if error != nil {
-                self?.showToast(message: error)
-                return
-            }
-            let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
-            vc.configure(for: .service)
-            self?.show(vc)
-        })
+        self.compliationUpload(content: content)
+        
     }
 
-    @IBAction func removeImageAction(_ sender: Any) {
-        trashButton.isHidden = true
-        imageView.image = UIImage(named: "orangeFrame")
-        uploadImageButton.isHidden = false
-        placeHolderImage.isHidden = false
-        imageUrl = nil
-    }
 
     private func getValidatedData() -> [String:Any]? {
         guard let productName = titleTextField.text else {
@@ -141,18 +142,19 @@ class AddServiceViewController: UIViewController {
             return nil
         }
 
-        guard let imageUrl = imageUrl else {
+        if images.isEmpty {
             self.showToast(message: "error.Please add Product Image".localiz())
             return nil
         }
 
-        let data: [String: Any] = [
+        var data: [String: Any] = [
             "name":productName,
             "desc":desc,
             "price":price,
-            "files[0][\(imageUrl)]":imageUrl,
         ]
-
+        
+        
+        
         return data
     }
 }
@@ -174,20 +176,37 @@ extension AddServiceViewController: UITextViewDelegate {
     }
 }
 
+extension AddServiceViewController: UICollectionViewDelegate ,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return images.count
+      }
+      
+      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+          let cell: AddedProductImageCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+          let item = images[indexPath.item]
+          cell.imageView.image = item
+          cell.onDeleteImage = { [weak self] productImage in
+              self?.images.removeAll(where: {$0 == productImage})
+          }
+          return cell
+      }
+      
+      // MARK: - UICollectionViewDelegateFlowLayout
+      
+
+      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+          return CGSize(width: 72, height: 60)
+      }
+}
+
 extension AddServiceViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         dismiss(animated: true, completion: nil)
         if let image = info[.editedImage] as? UIImage {
-            imageData = image.jpegData(compressionQuality: 0.8)
-            imageView.image = nil
-            imageView.image = image
-            uploadToImageFirebase()
-
-        }else if let image = info[.originalImage] as? UIImage {
-            imageData = image.jpegData(compressionQuality: 0.8)
-            imageView.image = nil
-            imageView.image = image
-            uploadToImageFirebase()
+            images.append(image)
+            
+        } else if let image = info[.originalImage] as? UIImage {
+            images.append(image)
         }
     }
 
@@ -203,34 +222,36 @@ extension AddServiceViewController: UIImagePickerControllerDelegate & UINavigati
         }
     }
 
-    private func uploadToImageFirebase() {
-        showLoading()
-        let url = (Helper.currentUser?.imgAvatar ?? "")
-        if url.contains("firebasestorage") {
-            UploadMedia.deleteMedia(dataArray: [url]) {
-                self.compliationUpload()
-            }
-        } else {
-            self.compliationUpload()
-        }
-    }
 
-    private func compliationUpload() {
+    private func compliationUpload(content: [String : Any]) {
         let userId = Helper.currentUser?.id ?? -1
-
-        if userId != -1  && imageData != nil {
+        showLoading()
+        if userId != -1 {
             let id = "\(userId)"
-            UploadMedia.saveImages(userId: id, imagesArray: [UIImage(data: imageData!)], completionHandler: { [weak self] url in
-                if let firstUrl: String = url.first {
-                    self?.imageUrl = firstUrl
-                    self?.trashButton.isHidden = false
-                    self?.uploadImageButton.isHidden = true
-                    self?.placeHolderImage.isHidden = true
-                    self?.stopLoading()
+            UploadMedia.saveImages(userId: id, imagesArray: images, completionHandler: { [weak self] url in
+                    self?.uplaoadedImages = url
+                var data = content
+                
+                for (index, string) in url.enumerated() {
+                    data["files[\(index)][\(string)]"] = string
                 }
+                
+                print(data)
+                self?.viewModel.createService(data: data, completion: {  error in
+                    defer {
+                        self?.stopLoading()
+                    }
+                    if error != nil {
+                        self?.showToast(message: error)
+                        return
+                    }
+                    let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
+                    vc.configure(for: .service)
+                    self?.show(vc)
+                })
             })
+        } else {
+            self.stopLoading()
         }
     }
 }
-
-

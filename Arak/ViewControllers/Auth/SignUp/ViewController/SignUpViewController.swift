@@ -31,7 +31,8 @@ class SignUpViewController: UIViewController,SocialDelegate {
   @IBOutlet weak var cityTextField: UITextField!
   @IBOutlet weak var countryTextField: UITextField!
 
-//    @IBOutlet weak var businessNameTextField: UITextField!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    //    @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var orButton: UIButton!
 //  @IBOutlet weak var loginFacebookLabel: UILabel!
 //  @IBOutlet weak var loginGoogleLabel: UILabel!
@@ -298,7 +299,7 @@ var haveWallet = -1
 
   private func localization() {
 
-    joinArakLabel.text = "Join Arak".localiz()
+    joinArakLabel.text = "Create Account".localiz()
     fullNameTextField.placeholder = "Full Name".localiz()
     dateTextField.placeholder = "Date of birth".localiz()
     passwordTextField.placeholder = "Password".localiz()
@@ -384,10 +385,13 @@ var haveWallet = -1
   }
   
   private func gestureTermsAndPrivacy() {
-    let attributedWithTextColor: NSAttributedString = "By signing up, you agree to our Terms & Conditions and Privacy Policy".localiz().attributedStringWithColor(["Terms & Conditions".localiz(), "Privacy Policy".localiz()], color: #colorLiteral(red: 1, green: 0.431372549, blue: 0.1803921569, alpha: 1))
-    termsPrivacyLabel.textColor = #colorLiteral(red: 0.7019607843, green: 0.7019607843, blue: 0.7019607843, alpha: 1)
-    termsPrivacyLabel.attributedText = attributedWithTextColor
-    termsPrivacyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel(_:))))
+      let attributedWithTextColor: NSAttributedString = "By signing up, you agree to our Terms & Conditions and Privacy Policy".localiz().attributedStringWithColor(["Terms & Conditions".localiz(), "Privacy Policy".localiz()], color: #colorLiteral(red: 1, green: 0.431372549, blue: 0.1803921569, alpha: 1))
+      let attributedWithTextColorForSubtitle: NSAttributedString = "Sign up today and enjoy adding your Ads and Stores".localiz().attributedStringWithColor(["Ads".localiz(), "Stores".localiz()], color: #colorLiteral(red: 1, green: 0.431372549, blue: 0.1803921569, alpha: 1))
+      subtitleLabel.textColor = #colorLiteral(red: 0.7019607843, green: 0.7019607843, blue: 0.7019607843, alpha: 1)
+      termsPrivacyLabel.textColor = #colorLiteral(red: 0.7019607843, green: 0.7019607843, blue: 0.7019607843, alpha: 1)
+      subtitleLabel.attributedText = attributedWithTextColorForSubtitle
+      termsPrivacyLabel.attributedText = attributedWithTextColor
+      termsPrivacyLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel(_:))))
   }
 
   @objc func handleTapOnLabel(_ gesture: UITapGestureRecognizer) {

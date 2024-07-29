@@ -19,10 +19,13 @@ class ProductViewController: UIViewController {
     public var storeId: Int?
     public var storeName: String?
     public var productId: Int?
-
+    
+    let favouritButton = UIButton(type: .custom)
+    let shareButton = UIButton(type: .custom)
+    let cartButton = UIButton(type: .custom)
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupNavigationButtons()
         view.addSubview(scrollView)
         view.addSubview(bottomView)
 
@@ -33,12 +36,11 @@ class ProductViewController: UIViewController {
             .trailing(to: .superview)
             .bottom(to: .superview)
 
-        scrollView.layout.fill(.superview)
+        scrollView.layout.fill(.safeArea)
         scrollView.scrollView.contentInset.bottom = 150
 
         contentView.delegate = self
 
-        hiddenNavigation(isHidden: true)
         configration(productId: productId ?? 0)
         connectAction()
 //        visitStoreButtom.addTarget(self, action: #selector(handleVisitStoreTap), for: .touchUpInside)
@@ -46,7 +48,7 @@ class ProductViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hiddenNavigation(isHidden: true)
+        hiddenNavigation(isHidden: false)
     }
 
     func configration(productId: Int) {
@@ -66,7 +68,72 @@ class ProductViewController: UIViewController {
             self?.contentView.reviews = self?.productViewModel.getStoreProduct()?.storeProduct?.reviews.map({.init(content: $0.content, rate: $0.rate, id: $0.id, createdAt: $0.createdAt, userid: $0.userid, updatedAt: $0.updatedAt, storeid: $0.storeProductid, user: nil)}) ?? []
         })
     }
+    
+    private func setupNavigationButtons() {
+        self.title = "Navigation Bar"
+               
+               // Create the custom view
+               let customView = UIView()
+               
+               // Create buttons with images
+              
+        favouritButton.setImage(UIImage(named: "favorite_heart_like_love_icon"), for: .normal)
+        favouritButton.addTarget(self, action: #selector(favouritButtonAction), for: .touchUpInside)
+               
+               
+               shareButton.setImage(UIImage(named: "share_social_icon"), for: .normal)
+        shareButton.addTarget(self, action: #selector(shareButtonAction), for: .touchUpInside)
+               
+              
+               cartButton.setImage(UIImage(named: "cart_nav_new"), for: .normal)
+        cartButton.addTarget(self, action: #selector(cartButtonAction), for: .touchUpInside)
+               
+               // Add buttons to the custom view
+               customView.addSubview(favouritButton)
+               customView.addSubview(shareButton)
+               customView.addSubview(cartButton)
+               
+               // Add constraints to position the buttons
+        customView.translatesAutoresizingMaskIntoConstraints = false
+        favouritButton.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        cartButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            cartButton.leadingAnchor.constraint(equalTo: customView.leadingAnchor),
+            cartButton.centerYAnchor.constraint(equalTo: customView.centerYAnchor),
+            cartButton.widthAnchor.constraint(equalToConstant: 30),
+            
+            shareButton.leadingAnchor.constraint(equalTo: cartButton.trailingAnchor, constant: 3),
+            shareButton.centerYAnchor.constraint(equalTo: customView.centerYAnchor),
+            shareButton.widthAnchor.constraint(equalToConstant: 30),
+            
+            favouritButton.leadingAnchor.constraint(equalTo: shareButton.trailingAnchor, constant: 3),
+            favouritButton.trailingAnchor.constraint(equalTo: customView.trailingAnchor),
+            favouritButton.centerYAnchor.constraint(equalTo: customView.centerYAnchor),
+            favouritButton.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        customView.widthAnchor.constraint(equalToConstant: 96).isActive = true // Adjust as needed
+        customView.heightAnchor.constraint(equalToConstant: 40).isActive = true // Adjust as
+               // Create a UIBarButtonItem with the custom view
+               let customBarButtonItem = UIBarButtonItem(customView: customView)
+               
+               // Add the custom view to the right side of the navigation bar
+               self.navigationItem.rightBarButtonItem = customBarButtonItem
+    }
 
+    @objc func favouritButtonAction() {
+          print("Button 1 tapped")
+      }
+
+      @objc func shareButtonAction() {
+          print("Button 2 tapped")
+      }
+
+      @objc func cartButtonAction() {
+          print("Button 3 tapped")
+      }
 //    @objc func handleVisitStoreTap() {
 //
 //        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
@@ -145,7 +212,7 @@ extension ProductViewController :ProductContentViewDelegate {
                 self?.contentView.reviews.append(review)
             }
 
-            self?.contentView.addReviewContainer.isHidden = true
+//            self?.contentView.addReviewContainer.isHidden = true
         }
     }
     
@@ -165,7 +232,7 @@ extension ProductViewController :ProductContentViewDelegate {
                 return
             }
 
-            self?.contentView.addReviewContainer.isHidden = false
+//            self?.contentView.addReviewContainer.isHidden = false
             self?.showToast(message: "Review deleted successfully")
             self?.contentView.reviews = self?.contentView.reviews.filter {$0.id != id
             } ?? []

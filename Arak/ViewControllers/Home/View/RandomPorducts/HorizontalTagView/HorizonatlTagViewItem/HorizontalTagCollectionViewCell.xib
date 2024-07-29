@@ -29,7 +29,7 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample1" translatesAutoresizingMaskIntoConstraints="NO" id="EST-uA-aLc">
                                                 <rect key="frame" x="51.666666666666657" y="29.333333333333329" width="70" height="70"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" red="1" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="tintColor" name="Background"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="70" id="JHG-Vn-6WT"/>
@@ -37,7 +37,7 @@
                                                 </constraints>
                                             </imageView>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="EST-uA-aLc" firstAttribute="centerX" secondItem="1LA-Sw-hbI" secondAttribute="centerX" id="96i-4f-kqC"/>
                                             <constraint firstItem="EST-uA-aLc" firstAttribute="centerY" secondItem="1LA-Sw-hbI" secondAttribute="centerY" id="SI2-nw-KtH"/>

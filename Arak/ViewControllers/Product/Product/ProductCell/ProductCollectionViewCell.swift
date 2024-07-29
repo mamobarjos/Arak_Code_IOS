@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Cosmos
 
 class ProductCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var productImageView: UIImageView!
@@ -13,6 +14,8 @@ class ProductCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var shopNameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
 
+    @IBOutlet weak var cosmosView: CosmosView!
+    @IBOutlet weak var cosmosRatLabel: UILabel!
     func setup(product: RelatedProducts) {
         self.productImageView.backgroundColor = #colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 1)
         productImageView.image = UIImage(named: "Summery Image")

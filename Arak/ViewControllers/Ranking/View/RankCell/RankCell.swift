@@ -34,7 +34,7 @@ class RankCell: UITableViewCell {
         videoTitleLabel.text = "Video View".localiz()
         videoNumberLabel.text = "\(user.adsVideosViews ?? 0)"
         rankNumberLabel.text = "\(rank)"
-        countryLabel.text = user.country ?? ""
+//        countryLabel.text = user.country ?? ""
         nameLabel.text = user.fullname ?? ""
         photoImageView.getAlamofireImage(urlString: user.imgAvatar)
     }

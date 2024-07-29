@@ -348,7 +348,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate,ASAuthorization
 extension LoginViewController {
     func checkSocialUser(socialMedia: SocialMedia?) {
         var data:[String : String] = [:]
-        data["social_token"] = socialMedia?.socialId ?? ""
+        data["idToken"] = socialMedia?.socialId ?? ""
         showLoading()
         signUpViewModel.socialRegisterLogin(data: data) { [weak self] (error) in
             defer {

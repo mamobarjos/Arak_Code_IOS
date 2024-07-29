@@ -74,7 +74,7 @@ struct StoreProduct: Codable {
     
     var priceformated: String {
         let price = String(format: "%.2f", self.price ?? 0.0)
-        return "$\(price)"
+        return "\(price)" + " " + "JD"
     }
     
     enum CodingKeys: String, CodingKey {

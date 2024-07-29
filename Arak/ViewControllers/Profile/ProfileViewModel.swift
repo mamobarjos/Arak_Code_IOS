@@ -68,7 +68,7 @@ class ProfileViewModel {
             compliation(error)
             return
           }
-        Helper.currentUser?.balance = response?.data
+        Helper.currentUser?.balance = "\(response?.data ?? 0)"
           compliation(nil)
         }
       }

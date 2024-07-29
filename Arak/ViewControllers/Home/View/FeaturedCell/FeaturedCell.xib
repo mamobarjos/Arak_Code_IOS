@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,40 +18,49 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2m-OZ-muh">
-                        <rect key="frame" x="0.0" y="0.0" width="383" height="235"/>
+                        <rect key="frame" x="0.0" y="0.0" width="383" height="225"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVf-8A-mzK" customClass="FSPagerView" customModule="FSPagerView">
-                                <rect key="frame" x="0.0" y="0.0" width="383" height="235"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kqy-hF-BQt" customClass="FSPageControl" customModule="FSPagerView">
-                                <rect key="frame" x="156.5" y="203" width="70" height="20"/>
-                                <color key="backgroundColor" red="0.36862745099999999" green="0.36470588240000001" blue="0.36470588240000001" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="L3C-Zz-5mq">
+                                <rect key="frame" x="0.0" y="0.0" width="383" height="225"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DVf-8A-mzK" customClass="FSPagerView" customModule="FSPagerView">
+                                        <rect key="frame" x="0.0" y="0.0" width="383" height="197"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="180" id="wIG-sx-g6h"/>
+                                        </constraints>
+                                    </view>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kqy-hF-BQt" customClass="FSPageControl" customModule="FSPagerView">
+                                        <rect key="frame" x="0.0" y="205" width="383" height="20"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" red="0.4039215686" green="0.45098039220000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="V5X-tA-EMK"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="V5X-tA-EMK"/>
+                                    <constraint firstAttribute="bottom" secondItem="kqy-hF-BQt" secondAttribute="bottom" id="p3S-jM-hCF"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="DVf-8A-mzK" firstAttribute="leading" secondItem="e2m-OZ-muh" secondAttribute="leading" id="3mc-EQ-Yny"/>
-                            <constraint firstItem="DVf-8A-mzK" firstAttribute="top" secondItem="e2m-OZ-muh" secondAttribute="top" id="IZR-Cf-zzF"/>
-                            <constraint firstAttribute="bottom" secondItem="kqy-hF-BQt" secondAttribute="bottom" constant="12" id="YH9-cL-fHX"/>
-                            <constraint firstAttribute="bottom" secondItem="DVf-8A-mzK" secondAttribute="bottom" id="Z08-hD-Eu9"/>
-                            <constraint firstItem="kqy-hF-BQt" firstAttribute="leading" secondItem="e2m-OZ-muh" secondAttribute="leading" constant="156.5" id="jbf-3L-Zyw"/>
-                            <constraint firstAttribute="trailing" secondItem="DVf-8A-mzK" secondAttribute="trailing" id="wzL-vW-jv4"/>
-                            <constraint firstItem="kqy-hF-BQt" firstAttribute="centerX" secondItem="e2m-OZ-muh" secondAttribute="centerX" id="zsm-2f-abY"/>
+                            <constraint firstItem="L3C-Zz-5mq" firstAttribute="leading" secondItem="e2m-OZ-muh" secondAttribute="leading" id="0Vx-d3-e1z"/>
+                            <constraint firstAttribute="trailing" secondItem="L3C-Zz-5mq" secondAttribute="trailing" id="JYT-eB-zEn"/>
+                            <constraint firstItem="L3C-Zz-5mq" firstAttribute="top" secondItem="e2m-OZ-muh" secondAttribute="top" id="dIE-mB-OXi"/>
+                            <constraint firstAttribute="bottom" secondItem="L3C-Zz-5mq" secondAttribute="bottom" id="wJ8-3l-dbf"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="e2m-OZ-muh" firstAttribute="top" secondItem="4fu-2U-myW" secondAttribute="top" id="IPX-MG-lJM"/>
-                    <constraint firstAttribute="bottom" secondItem="e2m-OZ-muh" secondAttribute="bottom" id="SjF-O3-rJ8"/>
+                    <constraint firstAttribute="bottom" secondItem="e2m-OZ-muh" secondAttribute="bottom" constant="10" id="SjF-O3-rJ8"/>
                     <constraint firstItem="e2m-OZ-muh" firstAttribute="leading" secondItem="4fu-2U-myW" secondAttribute="leading" id="Xys-hA-ZwN"/>
                     <constraint firstAttribute="trailing" secondItem="e2m-OZ-muh" secondAttribute="trailing" id="lsf-Yv-GiX"/>
                 </constraints>

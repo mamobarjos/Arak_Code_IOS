@@ -133,24 +133,24 @@ class EditProfileViewController: UIViewController {
         companyNameTextField.placeholder = "Business Name".localiz()
         cityTextField.placeholder = "City".localiz()
         
-        genderStackView.isHidden = Helper.currentUser?.socialToken != nil
-        companyStackView.isHidden = Helper.currentUser?.socialToken != nil || (Helper.currentUser?.companyName == nil) || (Helper.currentUser?.companyName ?? "").isEmpty
-        cityStackView.isHidden = Helper.currentUser?.socialToken != nil
-        countryStackView.isHidden = Helper.currentUser?.socialToken != nil
-        changePasswordStackView.isHidden = Helper.currentUser?.socialToken != nil
+//        genderStackView.isHidden = Helper.currentUser?.socialToken != nil
+//        companyStackView.isHidden = Helper.currentUser?.socialToken != nil || (Helper.currentUser?.companyName == nil) || (Helper.currentUser?.companyName ?? "").isEmpty
+//        cityStackView.isHidden = Helper.currentUser?.socialToken != nil
+//        countryStackView.isHidden = Helper.currentUser?.socialToken != nil
+//        changePasswordStackView.isHidden = Helper.currentUser?.socialToken != nil
     }
     
     
     private func setupBinding() {
         nameLabel.text = Helper.currentUser?.fullname ?? ""
         nameTextField.text = Helper.currentUser?.fullname ?? ""
-        emailTextField.text = Helper.currentUser?.email ?? ""
-        locationTextField.text = Helper.currentUser?.country ?? ""
+//        emailTextField.text = Helper.currentUser?.email ?? ""
+//        locationTextField.text = Helper.currentUser?.country ?? ""
         phoneLabel.text = Helper.currentUser?.phoneNo ?? ""
         genderTextField.text = Helper.currentUser?.gender ?? ""
-        companyNameTextField.text = Helper.currentUser?.companyName ?? ""
+//        companyNameTextField.text = Helper.currentUser?.companyName ?? ""
         profileImageView.getAlamofireImage(urlString: Helper.currentUser?.imgAvatar)
-        cityTextField.text = Helper.currentUser?.city ?? ""
+//        cityTextField.text = Helper.currentUser?.city ?? ""
     }
     
     func fetchImage() {

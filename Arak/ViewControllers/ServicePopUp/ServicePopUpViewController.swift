@@ -47,7 +47,7 @@ class ServicePopUpViewController: UIViewController {
         titleLabel.textAligment()
         descriptionLabel.textAligment()
         
-        emailTextField.text = Helper.currentUser?.email ?? ""
+//        emailTextField.text = Helper.currentUser?.email ?? ""
         nameTextField.text = Helper.currentUser?.fullname ?? ""
         let phoneNo = Helper.currentUser?.phoneNo ?? ""
         phoneNumberTextField.text = phoneNo.replacingOccurrences(of: "+962", with: "")

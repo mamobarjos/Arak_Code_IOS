@@ -128,7 +128,7 @@ enum APIRouter: APIConfiguration {
         case .adsFilteredList(_, type: let type):
             return "ads/get-ads-by-category-id/\(type)"
         case .register:
-            return "auth/register"
+            return "users"
         case .logout:
             return "auth/logout"
         case .forget:
@@ -142,7 +142,7 @@ enum APIRouter: APIConfiguration {
         case .transactions(_,let isFilter , let year, let month):
             return isFilter ? "transactions/filter-user-transactions/\(year)/\(month)": "transactions/get-user-transactions"
         case .socialRegisterLogin(_):
-            return "social-register-login"
+            return "auth/google"
         case .featuredAds(_,_):
             return "ads/get-featured-ads"
         case .arakFeedback(_):

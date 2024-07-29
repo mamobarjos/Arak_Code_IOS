@@ -8,8 +8,12 @@
 import UIKit
 
 class StoresViewController: UIViewController {
-    let tableView = UITableView()
-
+   
+    @IBOutlet weak var openStoreContainerView: UIView!
+    @IBOutlet weak var openStoreLabel: UILabel!
+    @IBOutlet weak var openStoreButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var horizontalTagView: HorizontalTagView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var banarCollectionView: UICollectionView!
@@ -17,8 +21,7 @@ class StoresViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchStoreTextField: UITextField!
     
-    @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var joinUsButton: UIButton!
+ 
 
     private var pageFeatured = 1
     private(set) var page = 1
@@ -34,29 +37,13 @@ class StoresViewController: UIViewController {
         }
     }
 
-    lazy var tagsView = createTagsView()
-
-
     // MARK: - Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        joinUsButton.setTitle("action.Add Your Store".localiz(), for: .normal)
+        openStoreButton.setTitle("action.Add Your Store".localiz(), for: .normal)
         searchStoreTextField.text = "placeHolder.Search Stores".localiz()
-
-        containerView.addSubview(tagsView)
-        containerView.addSubview(tableView)
-        tagsView.layout
-            .top(.equal, to: searchView, edge: .bottom, offset: -5)
-            .leading(to:.superview , offset: 10)
-            .trailing(to: .superview, offset: -10)
-
-        tableView.layout
-            .top(.equal, to: tagsView, edge: .bottom, offset: 0)
-            .leading(to:.superview)
-            .trailing(to: .superview)
-            .bottom(to: .safeArea)
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
@@ -66,31 +53,11 @@ class StoresViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.register(cellClass: StroreTableViewCell.self)
 
-        view.bringSubviewToFront(addButton)
-        view.bringSubviewToFront(joinUsButton)
         setupCollectionView()
         scrollView.contentInset.bottom = 220
 
-        tagsView.onItemSelection = {[weak self] item in
-            self?.categoryId = item.id
-            self?.page = 1
-            self?.showLoading()
-            self?.storesViewModel.canLoadMore = false
-            self?.storesViewModel.getStoresByCategory(by: item.id) {[weak self] error in
-                defer {
-                    self?.stopLoading()
-                }
-
-                guard error == nil else {
-                    self?.showToast(message: error)
-                    return
-                }
-                self?.stores = self?.storesViewModel.getStores() ?? []
-            }
-        }
+        horizontalTagView.delegate = self
         fetchStores()
-
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -98,17 +65,17 @@ class StoresViewController: UIViewController {
         hiddenNavigation(isHidden: false)
         dispatchGroup.enter()
         pageFeatured = 1
-        if Helper.currentUser?.hasStore == 1 {
-            self.joinUsButton.isHidden = false
-            self.addButton.isHidden = true
+        if Helper.currentUser?.hasStore == true {
+            self.openStoreContainerView.isHidden = false
+            banarCollectionView.isHidden = true
             return
         } else if Helper.store != nil {
-            self.joinUsButton.isHidden = true
-            self.addButton.isHidden = false
+            self.openStoreContainerView.isHidden = false
+            banarCollectionView.isHidden = true
             return
         } else {
-            self.joinUsButton.isHidden = false
-            self.addButton.isHidden = true
+            self.openStoreContainerView.isHidden = true
+            banarCollectionView.isHidden = false
         }
 
         dispatchGroup.notify(queue: .main) {
@@ -143,14 +110,13 @@ class StoresViewController: UIViewController {
                 return
             }
             if fillCategories {
-                self?.tagsView.items = []
-                self?.tagsView.items.append(HorizontalTagsView.TagItem(id: -1, title: "action.All".localiz()))
+                self?.horizontalTagView.items = []
+                self?.horizontalTagView.items.append(.init(id: -1, imageURL: "", title: "action.All".localiz(), storeId: -1))
                 self?.storesViewModel.getCategories().forEach({
-                    
-                    self?.tagsView.items.append(.init(id: $0.id, title:Helper.appLanguage ?? "en" == "en" ? $0.name : $0.arName))
+                    self?.horizontalTagView.items.append(.init(id: $0.id, imageURL: "", title: Helper.appLanguage ?? "en" == "en" ? $0.name : $0.arName, storeId: $0.id))
                     self?.fetchFeaturedAds()
                 })
-                self?.tagsView.selectedItemID = -1
+                self?.horizontalTagView.selectedItemID = -1
             }
             self?.stores = self?.storesViewModel.getStores() ?? []
         }
@@ -185,16 +151,12 @@ class StoresViewController: UIViewController {
         show(vc)
     }
 
-    @IBAction func addButtonAction(_ sender: Any) {
-        openCreateService()
-    }
-
     @IBAction func searchAction(_ sender: Any) {
             let vc = initViewControllerWith(identifier: SearchStoresViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! SearchStoresViewController
             show(vc)
     }
     
-    @IBAction func joinButtonAction(_ sender: Any) {
+    @IBAction func openStoreButtonAction(_ sender: Any) {
         let vc = initViewControllerWith(identifier: SignUpStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! SignUpStoreViewController
         show(vc)
     }
@@ -262,8 +224,9 @@ extension StoresViewController: UICollectionViewDelegate, UICollectionViewDataSo
                print("Invalid URL")
            }
        }
+    
     func makeFeatured(indexPath:IndexPath,isBanner: Bool) -> FeaturedCell {
-            let cell:FeaturedCell = banarCollectionView.dequeueReusableCell(forIndexPath: indexPath)
+        let cell:FeaturedCell = banarCollectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setup(bannerList: storesViewModel.getBanners())
         cell.layoutIfNeeded()
         cell.learnMore = {[weak self] item in
@@ -284,7 +247,26 @@ extension StoresViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         
         return cell
-       
+        
     }
+}
 
+extension StoresViewController: HorizontalTagViewDelegate {
+    func didTapItem(item: TagItem) {
+        self.categoryId = item.id
+        self.page = 1
+        self.showLoading()
+        self.storesViewModel.canLoadMore = false
+        self.storesViewModel.getStoresByCategory(by: item.id) {[weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+
+            guard error == nil else {
+                self?.showToast(message: error)
+                return
+            }
+            self?.stores = self?.storesViewModel.getStores() ?? []
+        }
+    }
 }

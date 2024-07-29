@@ -29,24 +29,23 @@ extension UIImageView {
     }
     
     func getAlamofireImage(urlString: String?,compliation: (()-> Void)? = nil) {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
             if let url = URL(string:  (urlString ?? "")) {
                 print(url)
-                self.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "Summery Image"), options: .highPriority, completed: {_,_,_,_ in
+                self.kf.setImage(with: url,placeholder:  #imageLiteral(resourceName: "Summery Image")) { _ in
                     compliation?()
-                })
+                }
             } else {
                 self.image = #imageLiteral(resourceName: "Summery Image")
             }
-        }
-        
+//        }
     }
 }
 
 extension AVAsset {
     
     func generateThumbnail(completion: @escaping (UIImage?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
+//        DispatchQueue.global(qos: .userInitiated).async {
             let imageGenerator = AVAssetImageGenerator(asset: self)
             let time = CMTime(seconds: 0.0, preferredTimescale: 600)
             let times = [NSValue(time: time)]
@@ -57,7 +56,7 @@ extension AVAsset {
                     completion(nil)
                 }
             })
-        }
+//        }
     }
 }
 

@@ -8,41 +8,55 @@
 import Foundation
 
 struct User: Codable {
+    let fullname: String?
+    let cityID, adsImgsViews: Int?
+//    let oauthID, preferences, imgAvatar: JSONNull?
+    var imgAvatar: String?
+    let notificationsEnabled: Bool?
+//    let updatedAt: JSONNull?
+    let hasStore: Bool?
+    var balance: String?
     let id: Int?
-    let fullname, email, city,country, gender: String?
-    var imgAvatar, emailVerifiedAt: String?
+    let gender: String?
+    let countryID: Int?
     var phoneNo: String?
-    let role: Int?
-    let roleLabel: String?
-    let  isActive, adsImgsViews, adsVideosViews, adsWebsiteViews: Int?
-    let isActiveLabel, createdAt, updatedAt: String?
-    let socialToken: String?
-    var balance: Double?
-    var companyName: String?
-    let hasStore: Int?
+    let fcmToken: String?
+    let birthdate: String?
+    let isActive, hasWallet: Bool?
+    let adsVideosViews: Int?
+    let role: String?
+//    let slProvider, deletedAt: JSONNull?
+    let createdAt, password: String?
+    let adsWebsiteViews: Int?
     
     var balanceTitle: String  {
-        return "\(balance ?? 0) \("JOD".localiz())"
+        return "\(balance ?? "") \("JOD".localiz())"
     }
     
     enum CodingKeys: String, CodingKey {
-        case id, fullname, email, city, gender,country
-        case imgAvatar = "img_avatar"
-        case emailVerifiedAt = "email_verified_at"
-        case phoneNo = "phone_no"
-        case role
-        case roleLabel = "role_label"
-        case balance
-        case isActive = "is_active"
-        case isActiveLabel = "is_active_label"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
+        case fullname
+        case cityID = "city_id"
         case adsImgsViews = "ads_imgs_views"
-        case adsVideosViews = "ads_videos_views"
-        case adsWebsiteViews = "ads_website_views"
-        case socialToken = "social_token"
-        case companyName = "company_name"
+//        case oauthID = "oauthId"
+//        case preferences
+//        case imgAvatar = "img_avatar"
+        case notificationsEnabled = "notifications_enabled"
+//        case updatedAt = "updated_at"
         case hasStore = "has_store"
+        case balance, id, gender
+        case countryID = "country_id"
+        case phoneNo = "phone_no"
+        case fcmToken = "fcm_token"
+        case birthdate
+        case isActive = "is_active"
+        case hasWallet = "has_wallet"
+        case adsVideosViews = "ads_videos_views"
+        case role
+//        case slProvider = "sl_provider"
+//        case deletedAt = "deleted_at"
+        case createdAt = "created_at"
+        case password
+        case adsWebsiteViews = "ads_website_views"
         
     }
 }

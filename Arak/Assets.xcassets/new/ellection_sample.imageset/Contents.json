@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ellection_sample.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -7,7 +7,7 @@ target 'Arak' do
   
   pod 'SDWebImage'
   pod 'IQKeyboardManagerSwift'
-  pod 'Alamofire', '~> 4.5'
+  pod 'Alamofire'
   pod 'NVActivityIndicatorView' , '~> 4.0.0'
   pod 'AwaitToast'
   pod 'Firebase/Messaging'
@@ -31,6 +31,7 @@ target 'Arak' do
   pod "Player", "~> 0.13.2"
   pod 'WWLayout'
   pod 'KeychainSwift', '~> 20.0'
+  pod "DTPhotoViewerController"
   
   pod 'FacebookSDK'
   pod 'FacebookSDK/LoginKit'
