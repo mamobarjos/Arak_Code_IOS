@@ -37,6 +37,7 @@ target 'Arak' do
   pod 'FacebookSDK/LoginKit'
   pod 'FacebookSDK/ShareKit'
   pod 'FacebookSDK/PlacesKit'
+  pod 'lottie-ios'
   
   #  pod 'FBSDKMessengerShareKit'
   

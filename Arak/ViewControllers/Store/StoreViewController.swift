@@ -40,7 +40,7 @@ class StoreViewController: UIViewController {
         scrollView.scrollView.contentInset.bottom = 10
 
         contentView.delegate = self
-        configration(storeId: storeId ?? 1)
+       
         if mode == .edit {
 //            contentView.favButton.isHidden = false
 //            contentView.favButton.setImage(UIImage(named: "Icon material-edit"), for: .normal)
@@ -53,6 +53,7 @@ class StoreViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hiddenNavigation(isHidden: true)
+        configration(storeId: storeId ?? 1)
     }
 
     func configration(storeId: Int) {
@@ -169,7 +170,9 @@ extension StoreViewController: StoreContentViewProtocol {
     }
 
     func didTapOnEdit(id: Int) {
-        self.showToast(message: "WIll be Implemented later 😎")
+        let vc = self.initViewControllerWith(identifier: SignUpStoreViewController.className, and: "Your Store".localiz(), storyboardName: Storyboard.storeAuth.rawValue) as! SignUpStoreViewController
+         vc.mode = .edit
+         show(vc)
     }
 
     func didTapOnBack() {

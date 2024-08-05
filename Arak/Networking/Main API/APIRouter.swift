@@ -52,15 +52,20 @@ enum APIRouter: APIConfiguration {
     case getNotificationsStatus
     case submitReview(content: String, rate: Int, ad_id: Int)
     case deleteReview(id: Int)
+    
+    case getEllectionFilters
+    case getEllectionData(governorate_id: Int?, district_id: Int?)
+    case getEllectionDetails(person_id: Int)
+    case cliQPayment(data: [String: String])
 
     
     
     // MARK: - HTTPMethod
     var method: HTTPMethod {
         switch self {
-        case .login , .register ,.forget,.editUserImg,.editUserInfo , .logout,.socialRegisterLogin,.arakFeedback,.otp,.resetPassword,.changePhone,.withDraw,.favorites,.editPassword,.updateToken,.createCoupon,.RequestArakService,.toggleNotifications, .submitReview:
+        case .login , .register ,.forget,.editUserImg,.editUserInfo , .logout,.socialRegisterLogin,.arakFeedback,.otp,.resetPassword,.changePhone,.withDraw,.favorites,.editPassword,.updateToken,.createCoupon,.RequestArakService,.toggleNotifications, .submitReview, .cliQPayment:
             return .post
-        case .adsType,.adsList,.adsFilteredList ,.getUserBalance , .adsDetail,.countries,.cities,.transactions,.featuredAds,.services,.digitalWallets,.getTopRanked,.notifications,.getFavorites,.userBanners,.getHistory,.getUserAds,.aboutData,.getNotificationsStatus, .getRandomProducts:
+        case .adsType,.adsList,.adsFilteredList ,.getUserBalance , .adsDetail,.countries,.cities,.transactions,.featuredAds,.services,.digitalWallets,.getTopRanked,.notifications,.getFavorites,.userBanners,.getHistory,.getUserAds,.aboutData,.getNotificationsStatus, .getRandomProducts, .getEllectionFilters, .getEllectionData, .getEllectionDetails:
             return .get
         case .deleteAds, .deleteAccount, .deleteReview:
             return .delete
@@ -113,6 +118,20 @@ enum APIRouter: APIConfiguration {
             return .body(["content":content, "rate":rate, "ad_id":ad_id])
         case .deleteReview:
             return .url([:])
+            
+        case .getEllectionFilters:
+            return .url([:])
+            
+        case .getEllectionData(governorate_id: let governorate_id, district_id: let district_id):
+            if governorate_id == nil {
+                return .url([:])
+            } else {
+                return .url(["governorate_id":governorate_id ?? 1/*, "district_id": district_id ?? 1*/])
+            }
+        case .getEllectionDetails(person_id: let person_id):
+            return .url(["person_id":person_id])
+        case .cliQPayment(data: let data):
+            return .body(data)
         }
     }
     
@@ -128,7 +147,7 @@ enum APIRouter: APIConfiguration {
         case .adsFilteredList(_, type: let type):
             return "ads/get-ads-by-category-id/\(type)"
         case .register:
-            return "users"
+            return "auth/register"
         case .logout:
             return "auth/logout"
         case .forget:
@@ -142,7 +161,7 @@ enum APIRouter: APIConfiguration {
         case .transactions(_,let isFilter , let year, let month):
             return isFilter ? "transactions/filter-user-transactions/\(year)/\(month)": "transactions/get-user-transactions"
         case .socialRegisterLogin(_):
-            return "auth/google"
+            return "social-register-login"
         case .featuredAds(_,_):
             return "ads/get-featured-ads"
         case .arakFeedback(_):
@@ -204,6 +223,15 @@ enum APIRouter: APIConfiguration {
             return "ad-reviews/add-review"
         case .deleteReview(id: let id):
             return "ad-reviews/delete-review/\(id)"
+        case .getEllectionFilters:
+            return "elections/get-governorates-and-districts"
+            
+        case .getEllectionData:
+            return "elections/get-election-data"
+        case .getEllectionDetails:
+            return "elections/get-election-data"
+        case .cliQPayment:
+            return "cliq"
         }
     }
     

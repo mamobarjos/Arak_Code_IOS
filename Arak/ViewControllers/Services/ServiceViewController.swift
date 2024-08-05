@@ -36,4 +36,9 @@ class ServiceViewController: UIViewController {
     let arakService = initViewControllerWith(identifier: ArakServiceViewController.className, and: "Arak Service".localiz()) as! ArakServiceViewController
     show(arakService)
   }
+    
+    @IBAction func addAdsButtonAction(_ sender: Any) {
+        let vc = initViewControllerWith(identifier: AdsViewController.className, and: "") as! AdsViewController
+        show(vc)
+    }
 }

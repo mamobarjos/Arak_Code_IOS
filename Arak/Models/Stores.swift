@@ -119,6 +119,7 @@ struct Banner: Codable {
     let status: Int
     let img: String?
     let id: Int
+    let storeId: Int?
     let createdAt: String?
     let isHomepage: Int?
     let websiteurl: String?
@@ -131,6 +132,7 @@ struct Banner: Codable {
         case status = "status"
         case img = "img"
         case id = "id"
+        case storeId = "store_id"
         case createdAt = "created_at"
         case isHomepage = "is_homepage"
         case websiteurl = "website_url"

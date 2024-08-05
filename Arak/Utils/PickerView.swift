@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CustomPickerViewDelegate: AnyObject {
-    func didSelectItem(_ selectedItem: String)
+    func didSelectItem(governorate: District, district: District)
 }
 
 class CustomPickerView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -17,15 +17,22 @@ class CustomPickerView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
 
     private let pickerView = UIPickerView()
     private let toolbar = UIToolbar()
-    private let pickerData: [String]
-    var selectedItem: String?
-    init(pickerData: [String]) {
-        self.pickerData = pickerData
-        selectedItem = pickerData.first
+    private let governorates: [District]
+    private let districts: [District]
+    var selectedItem: (District, District)?
+    
+    private let titleLabel1 = UILabel()
+    private let titleLabel2 = UILabel()
+    
+    init(governorate: [District], districts: [District]) {
+        self.governorates = governorate
+        self.districts = districts
+        selectedItem = (governorate.first!, governorate.first!)
         super.init(frame: .zero)
         
         setupPickerView()
         setupToolbar()
+        setupTitleLabels()
         setupLayout()
     }
     
@@ -43,31 +50,57 @@ class CustomPickerView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     private func setupToolbar() {
         toolbar.sizeToFit()
         toolbar.barStyle = .default
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissPicker))
+        let doneButton = UIBarButtonItem(title: "Done".localiz(), style: .plain, target: self, action: #selector(dismissPicker))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([flexibleSpace, doneButton], animated: true)
         addSubview(toolbar)
     }
     
+    private func setupTitleLabels() {
+        titleLabel1.text = "Governorates".localiz()
+        titleLabel1.textAlignment = .center
+        titleLabel2.text = "Districts".localiz()
+        titleLabel2.textAlignment = .center
+        titleLabel1.font = .systemFont(ofSize: 20, weight: .bold)
+        titleLabel2.font = .systemFont(ofSize: 20, weight: .bold)
+        toolbar.backgroundColor = .white
+        titleLabel1.backgroundColor = .white
+        titleLabel2.backgroundColor = .white
+        addSubview(titleLabel1)
+//        addSubview(titleLabel2)
+    }
+    
     private func setupLayout() {
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         toolbar.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel1.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel2.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             toolbar.leadingAnchor.constraint(equalTo: leadingAnchor),
             toolbar.trailingAnchor.constraint(equalTo: trailingAnchor),
             toolbar.topAnchor.constraint(equalTo: topAnchor),
             
+            titleLabel1.leadingAnchor.constraint(equalTo: leadingAnchor),
+            titleLabel1.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel1.topAnchor.constraint(equalTo: toolbar.bottomAnchor),
+            titleLabel1.heightAnchor.constraint(equalToConstant: 30),
+            
+//            titleLabel2.leadingAnchor.constraint(equalTo: centerXAnchor),
+//            titleLabel2.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            titleLabel2.topAnchor.constraint(equalTo: toolbar.bottomAnchor),
+//            titleLabel2.heightAnchor.constraint(equalToConstant: 30),
+//            
             pickerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             pickerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            pickerView.topAnchor.constraint(equalTo: toolbar.bottomAnchor),
+            pickerView.topAnchor.constraint(equalTo: titleLabel1.bottomAnchor),
             pickerView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
     @objc private func dismissPicker() {
-        guard let selectedItem = selectedItem else {return}
-        delegate?.didSelectItem(selectedItem)
+        guard let selectedItem = selectedItem else { return }
+        delegate?.didSelectItem(governorate: selectedItem.0, district: selectedItem.1)
         self.removeFromSuperview()
     }
     
@@ -78,18 +111,21 @@ class CustomPickerView: UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return governorates.count
     }
     
     // MARK: UIPickerViewDelegate
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let selectedItem = pickerData[row]
-        return selectedItem
+        return (Helper.appLanguage == "en" ? governorates[row].name : governorates[row].nameAr)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let selectedItem = pickerData[row]
-        self.selectedItem = selectedItem
+        selectedItem?.0 = governorates[row]
+//        if component == 0 {
+//           
+//        } else {
+//            selectedItem?.1 = districts[row]
+//        }
     }
 }

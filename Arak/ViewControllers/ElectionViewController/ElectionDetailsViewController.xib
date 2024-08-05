@@ -12,6 +12,17 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ElectionDetailsViewController" customModule="Arak" customModuleProvider="target">
             <connections>
+                <outlet property="bannerImageView" destination="dCm-IJ-0Ia" id="xJa-Bf-RDX"/>
+                <outlet property="clusterHeaderLabel" destination="cJp-47-FdO" id="tLP-rb-OxK"/>
+                <outlet property="clusterLabel" destination="9Yo-Cn-nTy" id="gC8-oy-56t"/>
+                <outlet property="descrriptionLabel" destination="Wkc-B4-qs0" id="sIf-Bn-VAy"/>
+                <outlet property="distrectLabel" destination="KdG-V9-Oc1" id="HYr-MR-fRW"/>
+                <outlet property="electoralDistricLabel" destination="Hou-7K-8k7" id="Ey0-hc-0NQ"/>
+                <outlet property="electoralDistrictHeaderLabel" destination="qb8-8h-njB" id="yrS-FR-Z5B"/>
+                <outlet property="governorateHeaderLabel" destination="IWT-iU-b2N" id="Iym-r6-aqS"/>
+                <outlet property="governorateLabel" destination="Yov-qe-rGN" id="A44-80-8Is"/>
+                <outlet property="nameLAbel" destination="ZGJ-Ki-PZI" id="unW-7d-Hdk"/>
+                <outlet property="profileImageView" destination="yGs-bU-gCn" id="5dz-IJ-ZHE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -108,6 +119,9 @@
                                             </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" image="call_ellection"/>
+                                            <connections>
+                                                <action selector="callButtonAction:" destination="-1" eventType="touchUpInside" id="css-xT-BTJ"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7NO-Yv-tVN">
                                             <rect key="frame" x="53" y="0.0" width="50" height="50"/>
@@ -117,6 +131,9 @@
                                             </constraints>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" image="message_ellection"/>
+                                            <connections>
+                                                <action selector="messageButtonAction:" destination="-1" eventType="touchUpInside" id="3uB-LV-2jL"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
@@ -143,13 +160,13 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="Wkc-B4-qs0">
                     <rect key="frame" x="10" y="300.33333333333326" width="373" height="402.66666666666674"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <mutableString key="text">بسم الله والحمد لله والصلاة والسلام على أفضل خلق الله محمد بن عبدالله عليه أفضل الصلاة والتسليم..
+                    <string key="text">بسم الله والحمد لله والصلاة والسلام على أفضل خلق الله محمد بن عبدالله عليه أفضل الصلاة والتسليم..
 إخواني وأخواتي.. أبنائي وبناتي في أمانة العاصمة صنعاء، عاصمة اليمنيين، عاصمة اليمن التاريخية، عاصمة اليمن الواحد.
 الإخوة والأخوات أبناء محافظة صنعاء، يا من قدمتم من كل حدب وصوب، وجبتم السهول والوديان؛ لإحياء هذا المهرجان المهيب الذي نختتم به مهرجانات الوطن الوطني اليمني بكل أقطاره..
 مرحباً بكم جميعاً إلى هذا المهرجان المهيب..
  
 أيها الحفل الكريم..
-إن هذا المهرجان الحاشد يتوج مهرجانات شعبنا بمناسبة إجراء الانتخابات الرئاسية المبكرة، انتخابات ارتضيناها وارتضينا عليها جميعاً لإخراج الوطن من حالة غير مسبوقة في تاريخه، من عناء لا يوصف، ومن تدهور اقتصادي ومعيشي لم يسلم منه أحد، ولم ينج من آثاره مواطن.</mutableString>
+إن هذا المهرجان الحاشد يتوج مهرجانات شعبنا بمناسبة إجراء الانتخابات الرئاسية المبكرة، انتخابات ارتضيناها وارتضينا عليها جميعاً لإخراج الوطن من حالة غير مسبوقة في تاريخه، من عناء لا يوصف، ومن تدهور اقتصادي ومعيشي لم يسلم منه أحد، ولم ينج من آثاره مواطن.</string>
                     <color key="textColor" systemColor="labelColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

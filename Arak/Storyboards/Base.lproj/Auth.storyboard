@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="ArbFONTS-Droid Arabic Kufi.ttf">
-            <string>DroidArabicKufi</string>
-        </array>
         <array key="ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf">
             <string>DroidArabicKufi-Bold</string>
+        </array>
+        <array key="ArbFONTS-DroidKufi-Regular.ttf">
+            <string>DroidArabicKufi</string>
         </array>
         <array key="PlayfairDisplay-Black.ttf">
             <string>PlayfairDisplay-Black</string>
@@ -29,68 +29,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dsL-bc-vK8">
-                                <rect key="frame" x="234" y="285" width="200" height="200"/>
-                                <color key="backgroundColor" red="0.97254902119999997" green="0.84313726430000002" blue="0.65882354970000001" alpha="0.79737988945578231" colorSpace="custom" customColorSpace="displayP3"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo 1" translatesAutoresizingMaskIntoConstraints="NO" id="oMg-F1-FVK">
+                                <rect key="frame" x="20" y="235" width="374" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="G9Q-NR-I5w"/>
-                                    <constraint firstAttribute="height" constant="200" id="tUu-wE-fH8"/>
+                                    <constraint firstAttribute="height" constant="300" id="aRe-g1-FKs"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="100"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qo9-B2-szF">
-                                <rect key="frame" x="-30" y="302" width="100" height="100"/>
-                                <color key="backgroundColor" red="0.96862745289999996" green="0.85098040100000005" blue="0.70588237050000002" alpha="0.60477784863945583" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="QMk-hU-aMF"/>
-                                    <constraint firstAttribute="height" constant="100" id="UfD-Ve-qLu"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="50"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XSq-ZY-Yce">
-                                <rect key="frame" x="20" y="97" width="150" height="150"/>
-                                <color key="backgroundColor" red="0.94901960784313721" green="0.74117647058823533" blue="0.63529411764705879" alpha="0.80102040816326525" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="bo6-wj-qVi"/>
-                                    <constraint firstAttribute="height" constant="150" id="w13-aS-Gh5"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="75"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ARAK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JYq-Hg-nKM">
-                                <rect key="frame" x="128" y="366" width="157.5" height="72"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="60"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NId-iq-Zeq"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="XSq-ZY-Yce" firstAttribute="centerY" secondItem="A3q-ZD-4ip" secondAttribute="centerY" constant="60" id="JJr-Ve-aTs"/>
-                            <constraint firstItem="dsL-bc-vK8" firstAttribute="centerY" secondItem="NId-iq-Zeq" secondAttribute="centerY" id="K1u-zc-oXO"/>
-                            <constraint firstItem="Qo9-B2-szF" firstAttribute="centerY" secondItem="A3q-ZD-4ip" secondAttribute="centerY" constant="-50" id="QiH-2i-u7k"/>
+                            <constraint firstItem="oMg-F1-FVK" firstAttribute="centerX" secondItem="NId-iq-Zeq" secondAttribute="centerX" id="CqT-oN-jVk"/>
+                            <constraint firstItem="NId-iq-Zeq" firstAttribute="trailing" secondItem="oMg-F1-FVK" secondAttribute="trailing" constant="20" id="ERE-vL-gQa"/>
+                            <constraint firstItem="oMg-F1-FVK" firstAttribute="leading" secondItem="NId-iq-Zeq" secondAttribute="leading" constant="20" id="VMI-f6-YWM"/>
+                            <constraint firstItem="oMg-F1-FVK" firstAttribute="centerY" secondItem="NId-iq-Zeq" secondAttribute="centerY" id="gP6-o8-Wu8"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qDy-Pm-EcQ"/>
-                    <connections>
-                        <outlet property="arakLabel" destination="JYq-Hg-nKM" id="Ghg-C1-GYr"/>
-                        <outlet property="view1" destination="Qo9-B2-szF" id="LhF-EM-ogR"/>
-                        <outlet property="view2" destination="dsL-bc-vK8" id="Z6e-Zj-QS7"/>
-                        <outlet property="view3" destination="XSq-ZY-Yce" id="DkX-SN-gOB"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vig-47-QB2" sceneMemberID="firstResponder"/>
             </objects>
@@ -3752,6 +3707,7 @@
         <image name="Background" width="438" height="812"/>
         <image name="Facebook" width="20" height="20"/>
         <image name="Icon awesome-apple" width="16" height="18"/>
+        <image name="Logo 1" width="270" height="209"/>
         <image name="check 1" width="64" height="64"/>
         <image name="faceid" catalog="system" width="128" height="115"/>
         <image name="male" width="375" height="338"/>

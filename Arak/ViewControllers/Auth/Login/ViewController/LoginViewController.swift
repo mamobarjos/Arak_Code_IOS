@@ -181,7 +181,14 @@ class LoginViewController: UIViewController, SocialDelegate {
         if validPhone.starts(with: "00") {
             validPhone = "\(validPhone.dropFirst(2))"
         }
-        viewModel.login(phone: phoneNumberTextField.text!, password: passwordTextField.text!) { [weak self] (error) in
+        if validPhone .starts(with: "0") {
+            validPhone = "\(validPhone.dropFirst(1))"
+        }
+        
+        if  validPhone.count == 9 {
+            validPhone = "+962" + validPhone
+        }
+        viewModel.login(phone: validPhone, password: passwordTextField.text!) { [weak self] (error) in
             
             defer {
                 self?.stopLoading()

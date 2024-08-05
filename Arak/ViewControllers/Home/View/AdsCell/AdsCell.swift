@@ -44,6 +44,7 @@ class AdsCell: FSPagerViewCell {
     }
     
     func setupBanner(path: String) {
+        photoImageView.image = nil
         categoryContainerView.isHidden = true
         specialAdsLogo.isHidden = true
         learnMoreButton.isHidden = false
@@ -55,7 +56,7 @@ class AdsCell: FSPagerViewCell {
 //        timerImageView.isHidden = true
 //        gradiantImageView.isHidden = true
         photoImageView.getAlamofireImage(urlString: path)
-        photoImageView.contentMode = .scaleAspectFill
+        photoImageView.contentMode = .scaleToFill
         photoImageView.clipsToBounds = true
         
     }
@@ -67,7 +68,7 @@ class AdsCell: FSPagerViewCell {
             photoImageView.layer.cornerRadius = 0
         } else {
             specialAdsLogo.isHidden = true
-            categoryContainerView.isHidden = false
+            categoryContainerView.isHidden = true
             typeView.isHidden = false
             photoImageView.layer.cornerRadius = 7
         }
@@ -76,6 +77,7 @@ class AdsCell: FSPagerViewCell {
        
        
         categorylabel.text = "Electric"
+        categorylabel.isHidden = true
         self.playVideo = playVideo
         self.favorateBlock = favorateBlock
 //        titleLabel.text = ads.title ?? ""
@@ -86,6 +88,9 @@ class AdsCell: FSPagerViewCell {
             photoImageView.getAlamofireImage(urlString: path)
             typeLabel.text = "Image".localiz()
 //            timeCountLabel.text = timeCountTitle
+            photoImageView.addTapGestureRecognizer {
+                self.playVideo?()
+            }
         }else if ads.adCategoryID == AdsTypes.video.rawValue {
             photoImageView.getAlamofireImage(urlString: ads.thumbUrl)
 //            timeCountLabel.text = timeCountTitle
@@ -99,6 +104,9 @@ class AdsCell: FSPagerViewCell {
 //            timeCountLabel.text = timeCountTitle
             typeLabel.text = "Website".localiz()
 //            titleLabel.text = ads.title ?? ""
+            photoImageView.addTapGestureRecognizer {
+                self.playVideo?()
+            }
         }
     }
     

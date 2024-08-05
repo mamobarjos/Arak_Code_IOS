@@ -18,10 +18,13 @@ class StoresViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var banarCollectionView: UICollectionView!
 
+    @IBOutlet weak var storesHeaderLabel: UILabel!
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchStoreTextField: UITextField!
     
- 
+    @IBOutlet weak var createProductbutton: UIButton!
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    
 
     private var pageFeatured = 1
     private(set) var page = 1
@@ -41,23 +44,26 @@ class StoresViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        storesHeaderLabel.text = "Stores".localiz()
         openStoreButton.setTitle("action.Add Your Store".localiz(), for: .normal)
         searchStoreTextField.text = "placeHolder.Search Stores".localiz()
+        openStoreLabel.text = "Join us to open your online store".localiz()
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 250
         tableView.separatorColor = .clear
-        tableView.contentInset.bottom = 150
+//        scrollView.contentInset.bottom = 150
         tableView.showsVerticalScrollIndicator = false
+        tableView.isScrollEnabled = false
         tableView.register(cellClass: StroreTableViewCell.self)
 
         setupCollectionView()
-        scrollView.contentInset.bottom = 220
+        scrollView.contentInset.bottom = 400
 
         horizontalTagView.delegate = self
-        fetchStores()
+//        fetchStores()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -65,17 +71,21 @@ class StoresViewController: UIViewController {
         hiddenNavigation(isHidden: false)
         dispatchGroup.enter()
         pageFeatured = 1
-        if Helper.currentUser?.hasStore == true {
-            self.openStoreContainerView.isHidden = false
-            banarCollectionView.isHidden = true
+        fetchStores()
+        if Helper.currentUser?.hasStore == 1 {
+            self.createProductbutton.isHidden = false
+            self.openStoreContainerView.isHidden = true
+            banarCollectionView.isHidden = false
             return
         } else if Helper.store != nil {
+            self.createProductbutton.isHidden = true
             self.openStoreContainerView.isHidden = false
             banarCollectionView.isHidden = true
             return
         } else {
-            self.openStoreContainerView.isHidden = true
-            banarCollectionView.isHidden = false
+            self.createProductbutton.isHidden = true
+            self.openStoreContainerView.isHidden = false
+            banarCollectionView.isHidden = true
         }
 
         dispatchGroup.notify(queue: .main) {
@@ -160,6 +170,11 @@ class StoresViewController: UIViewController {
         let vc = initViewControllerWith(identifier: SignUpStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! SignUpStoreViewController
         show(vc)
     }
+    
+    @IBAction func MakeAd(_ sender: Any) {
+        let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "Add Product".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
+        show(vc)
+    }
 }
 
 extension StoresViewController: UITableViewDelegate, UITableViewDataSource {
@@ -189,6 +204,11 @@ extension StoresViewController: UITableViewDelegate, UITableViewDataSource {
             default : fetchStoresByCategory(page: page)
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        tableViewHeight.constant = tableView.contentSize.height
+        return UITableView.automaticDimension
     }
 }
 
@@ -238,8 +258,10 @@ extension StoresViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         cell.showDetails = {[weak self] item in
             if item.websiteurl == nil {
+                guard let storeId = item.storeId else {return}
                 let vc = self?.initViewControllerWith(identifier: StoreViewController.className, and: item.title ?? "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
-                vc.storeId = item.id
+               
+                vc.storeId = storeId
                 self?.show(vc)
             } else {
                 self?.openExternalURL(item.websiteurl ?? "https://www.google.com/?client=safari&channel=iphone_bm")

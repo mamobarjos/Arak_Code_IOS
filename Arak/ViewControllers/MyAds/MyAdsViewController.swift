@@ -32,6 +32,11 @@ class MyAdsViewController: UIViewController {
         fetchUserAds()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hiddenNavigation(isHidden: false)
+    }
+    
     @IBAction func SelectDate(_ sender: Any) {
         
         datePicker.show("Select Date range".localiz()  ,

@@ -92,7 +92,7 @@ class ElectionCollectionView: UIView {
            // Section
            let section = NSCollectionLayoutSection(group: horizontalGroup)
            section.interGroupSpacing = 10
-           section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 100)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Helper.appLanguage == "en" ? 0 : 100, bottom: 0, trailing: Helper.appLanguage == "en" ? 100 : 0)
         section.orthogonalScrollingBehavior = .continuous
            
            // Layout
@@ -100,10 +100,10 @@ class ElectionCollectionView: UIView {
            return layout
     }
 
-    public func setupCategories(products: [RelatedProducts]) {
-        items = products.map({.init(id: $0.id ?? 0, imageURL: $0.storeProductFiles?.first?.path ?? "", title: $0.name ?? "", storeId: $0.storeid ?? 0)})
+    public func setupCategories(products: [EllectionPeople]) {
+        items = products.map({.init(id: $0.id ?? 0, imageURL: $0.img ?? "", title: $0.name ?? "", storeId: 0)})
 
-        if products.isEmpty {return}
+//        if products.isEmpty {return}
        
 //        selectedItemID = categories.first?.id ?? 1
         self.collectionView.reloadData()

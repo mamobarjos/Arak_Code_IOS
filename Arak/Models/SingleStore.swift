@@ -9,31 +9,33 @@ import Foundation
 // MARK: - SingleStore
 struct SingleStore: Codable {
     let totalRates: Double?
-        let youtube: String?
-        let isReviewed: Int?
-        let userid: Int?
-        let isFeatured: Int?
-        let img: String?
-        let facebook: String?
-        let lon: String
-        let storeCategoryid: Int?
-        let updatedAt: String?
-        let cover: String?
-        let storeReviews: [ReviewResponse]
-        let name: String?
-        let twitter: String?
-        let linkedin: String?
-        let id: Int?
-        let website: String?
-        let phoneNo: String?
-        let instagram: String?
-        let lat: String?
-        let createdAt: String?
-        let desc: String?
-        let snapchat: String?
-        let storeProducts: [StoreProduct]
+    let youtube: String?
+    let isReviewed: Int?
+    let userid: Int?
+    let isFeatured: Int?
+    let img: String?
+    let facebook: String?
+    let lon: String?
+    let storeCategoryid: Int?
+    let updatedAt: String?
+    let cover: String?
+    let cover_img: String?
+    let storeReviews: [ReviewResponse]
+    let name: String?
+    let twitter: String?
+    let linkedin: String?
+    let id: Int?
+    let website: String?
+    let phoneNo: String?
+    let instagram: String?
+    let lat: String?
+    let createdAt: String?
+    let desc: String?
+    let snapchat: String?
+    let storeProducts: [StoreProduct]
     
     enum CodingKeys: String, CodingKey {
+        case cover_img
         case totalRates = "total_rates"
         case youtube = "youtube"
         case isReviewed = "is_reviewed"

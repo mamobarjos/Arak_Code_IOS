@@ -119,10 +119,12 @@ struct AdBanner: Codable {
     var id: Int?
     var path: String?
     var user_id: Int?
+    var website: String?
     var createdAt, updatedAt: String?
     
     enum CodingKeys: String, CodingKey {
         case path = "img"
+        case website = "website_url"
         case id
         case user_id
         case createdAt = "created_at"

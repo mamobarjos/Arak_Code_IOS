@@ -57,7 +57,7 @@ class MyWalletViewController: UIViewController {
     private func getBalance() {
         fetchBalance { error in
             if error == nil {
-                self.earningValueLabel.text = "\(Helper.currentUser?.balanceTitle ?? "")"
+                self.earningValueLabel.text = "\(Helper.currentUser?.balance ?? 0)" + " " + "JOD".localiz()
             }
         }
     }

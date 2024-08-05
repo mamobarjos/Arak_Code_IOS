@@ -31,15 +31,17 @@ class FeaturedCell: UICollectionViewCell {
     private var bannerList: [AdBanner] = []
     private var images: [StoreProductFile] = []
     private var storeBanners: [Banner] = []
+    private var ellectionBannerList: [EllectionDataBanner] = []
     private var playVideoBlock:PlayVideoBlock?
     private var favorateBlock:FavorateBlock?
     private var moreBlock:MoreBlock?
     public var showImages:ShowImages?
     public var learnMore: ((Banner) -> Void)?
     public var showDetails: ((Banner) -> Void)?
-
+   
     private var isFavorate: Bool = false
     var isBanner: Bool = false
+    var isEllectionBanner: Bool = false
     var isStoreBanner: Bool = false
     var isImage: Bool = false
     weak var delegate: FeaturedCelldelegate?
@@ -47,9 +49,12 @@ class FeaturedCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         bannerList = []
+        images = []
         featuredAdsList = []
+        ellectionBannerList = []
         isFavorate = false
         isBanner = false
+        isEllectionBanner = false
         pageControl.numberOfPages = 0
        
         featuredPagerView.reloadData()
@@ -79,6 +84,7 @@ class FeaturedCell: UICollectionViewCell {
     }
 
     func setup(bannerList: [Banner]) {
+        pageControl.numberOfPages = 0
         self.storeBanners = bannerList
         isStoreBanner = true
         pageControl.numberOfPages = bannerList.count
@@ -90,6 +96,7 @@ class FeaturedCell: UICollectionViewCell {
     }
 
     func setup(featuredAdsList: [Adverisment],isFavorate: Bool,playVideoBlock:PlayVideoBlock?,favorateBlock:FavorateBlock?,moreBlock:MoreBlock?) {
+        pageControl.numberOfPages = 0
         self.featuredAdsList = featuredAdsList
         self.playVideoBlock = playVideoBlock
         self.moreBlock = moreBlock
@@ -102,9 +109,23 @@ class FeaturedCell: UICollectionViewCell {
     }
     
     func setup(bannerList: [AdBanner],moreBlock:MoreBlock?,playVideoBlock:PlayVideoBlock?) {
+        pageControl.numberOfPages = 0
         isBanner = true
         self.moreBlock = moreBlock
         self.bannerList = bannerList
+        self.playVideoBlock = playVideoBlock
+        pageControl.setFillColor(UIColor.accentOrange, for: .selected)
+        pageControl.setFillColor(UIColor.accentOrange.withAlphaComponent(0.5), for: .normal)
+        pageControl.numberOfPages = bannerList.count
+        self.setupSlider()
+        featuredPagerView.isInfinite = true
+    }
+    
+    func setup(bannerList: [EllectionDataBanner],moreBlock:MoreBlock?,playVideoBlock:PlayVideoBlock?) {
+        pageControl.numberOfPages = 0
+        isEllectionBanner = true
+        self.moreBlock = moreBlock
+        self.ellectionBannerList = bannerList
         self.playVideoBlock = playVideoBlock
         pageControl.setFillColor(UIColor.accentOrange, for: .selected)
         pageControl.setFillColor(UIColor.accentOrange.withAlphaComponent(0.5), for: .normal)
@@ -151,20 +172,26 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
             return cell
         }
 
-        if isBanner {
-            if index == bannerList.count {
-                guard let cell: MoreCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "moreCell", at: index) as? MoreCell else {
-                    return FSPagerViewCell()
-                }
-                cell.setup { [weak self] in
-                    self?.moreBlock?()
-                }
-                return cell
-            }
+        if isEllectionBanner {
             guard let cell: AdsCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index) as? AdsCell else {
                 return FSPagerViewCell()
             }
             
+            cell.photoImageView.cornerRadius = ImageCornerRadius
+            cell.setupBanner(path: ellectionBannerList[index].img ?? "")
+            cell.learnMoreButton.isHidden = true
+            cell.learnMoreBlock = {
+                print("learn more")
+            }
+            return cell
+        }
+        
+        if isBanner {
+            guard let cell: AdsCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index) as? AdsCell else {
+                return FSPagerViewCell()
+            }
+            
+            cell.photoImageView.cornerRadius = ImageCornerRadius
             cell.setupBanner(path: bannerList[index].path ?? "")
             cell.learnMoreButton.isHidden = true
             cell.learnMoreBlock = {
@@ -181,9 +208,11 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
                 }
                 return cell
             }
+            
             guard let cell: AdsCell = featuredPagerView.dequeueReusableCell(withReuseIdentifier: "cell", at: index) as? AdsCell else {
                 return FSPagerViewCell()
             }
+            cell.photoImageView.cornerRadius = ImageCornerRadius
             cell.setupBanner(path: storeBanners[index].img ?? "")
             cell.learnMoreBlock = { [unowned self] in
                 self.learnMore?(self.storeBanners[index])
@@ -227,11 +256,14 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
     }
     
     func numberOfItems(in pagerView: FSPagerView) -> Int {
-
         if isImage {
             return images.count
         }
 
+        if isEllectionBanner {
+            return ellectionBannerList.count
+        }
+        
         if isBanner {
             return self.bannerList.count
         } else if isStoreBanner {

@@ -82,12 +82,12 @@ extension NotificationViewModel {
     }
     
     func updateToken(compliation: @escaping CompliationHandler) {
-        Network.shared.request(request: APIRouter.updateToken(token: Messaging.messaging().fcmToken ?? ""), decodable: String.self) { (response, error) in
+        Network.shared.request(request: APIRouter.updateToken(token: Messaging.messaging().fcmToken ?? ""), decodable: User.self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
             }
-            
+            Helper.currentUser = response?.data
             compliation(nil)
         }
     }

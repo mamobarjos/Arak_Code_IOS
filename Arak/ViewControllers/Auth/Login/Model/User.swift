@@ -14,23 +14,23 @@ struct User: Codable {
     var imgAvatar: String?
     let notificationsEnabled: Bool?
 //    let updatedAt: JSONNull?
-    let hasStore: Bool?
-    var balance: String?
+    var hasStore: Int?
+    var balance: Double?
     let id: Int?
     let gender: String?
     let countryID: Int?
     var phoneNo: String?
     let fcmToken: String?
     let birthdate: String?
-    let isActive, hasWallet: Bool?
+    let isActive, hasWallet: Int?
     let adsVideosViews: Int?
-    let role: String?
+    let role: Int?
 //    let slProvider, deletedAt: JSONNull?
     let createdAt, password: String?
     let adsWebsiteViews: Int?
     
     var balanceTitle: String  {
-        return "\(balance ?? "") \("JOD".localiz())"
+        return "\(balance ?? 0) \("JOD".localiz())"
     }
     
     enum CodingKeys: String, CodingKey {

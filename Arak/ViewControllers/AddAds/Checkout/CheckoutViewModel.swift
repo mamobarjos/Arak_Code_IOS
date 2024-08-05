@@ -28,4 +28,15 @@ class CheckoutViewModel {
       compliation(nil)
     }
   }
+    
+    func createCliQTransaction(amount: String, imageURL: String ,compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.cliQPayment(data: ["amount":amount, "img_url":imageURL]), decodable: [String].self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            
+            compliation(nil)
+        }
+    }
 }

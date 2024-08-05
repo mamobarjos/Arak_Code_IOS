@@ -89,6 +89,11 @@ class DetailView: UIView {
     var sender: DetailViewController?
     var reviews: [ReviewResponse] = [] {
         didSet {
+            if reviews.isEmpty {
+                reviewsContainerView.isHidden = true
+            } else {
+                reviewsContainerView.isHidden = false
+            }
             reviewrTableView.reloadData()
         }
     }
@@ -107,7 +112,7 @@ class DetailView: UIView {
     private func setupTableView() {
         reviewrTableView.delegate = self
         reviewrTableView.dataSource = self
-        reviewrTableView.rowHeight = UITableView.automaticDimension
+        reviewrTableView.rowHeight = 150
         reviewrTableView.estimatedRowHeight = 150
         reviewrTableView.separatorColor = .clear
         reviewrTableView.register(ReviewTableViewCell.self)
@@ -145,6 +150,7 @@ class DetailView: UIView {
         }
         
         if (viewMode == .view) {
+            addReviewContainer.isHidden = true
             summaryView.isHidden = false
             if (ads.adImages?.count ?? 0 != 0) {
                 self.mediaList = ads.adImages ?? []

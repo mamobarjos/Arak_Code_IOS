@@ -25,7 +25,7 @@ class ProductViewController: UIViewController {
     let cartButton = UIButton(type: .custom)
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationButtons()
+//        setupNavigationButtons()
         view.addSubview(scrollView)
         view.addSubview(bottomView)
 
@@ -192,6 +192,7 @@ extension ProductViewController {
         guard let product = product else {
             return
         }
+        self.title = product.storeProduct?.name
         contentView.storeProduct = product
     }
 }

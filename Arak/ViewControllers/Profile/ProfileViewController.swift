@@ -47,7 +47,7 @@ class ProfileViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if Helper.currentUser?.hasStore == true || Helper.store != nil {
+        if Helper.currentUser?.hasStore == 1 || Helper.store != nil {
             myStoreStackView.isHidden = false
             myProductsStackView.isHidden = false
         } else {
@@ -185,14 +185,13 @@ class ProfileViewController: UIViewController {
     
     @IBAction func MyStore(_ sender: Any) {
         
-        
-        let vc = initViewControllerWith(identifier: UserStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! UserStoreViewController
-        show(vc)
-        
-//        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "label.Your Store".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
-//        vc.mode = .edit
-//        vc.storeType = .myStore
+//        let vc = initViewControllerWith(identifier: UserStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! UserStoreViewController
 //        show(vc)
+        
+        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "label.Your Store".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+        vc.mode = .edit
+        vc.storeType = .myStore
+        show(vc)
     }
 
     @IBAction func myProductsAction(_ sender: Any) {

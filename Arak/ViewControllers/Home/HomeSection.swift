@@ -10,6 +10,7 @@ import Foundation
 enum HomeSectionIdentifier: Int, CaseIterable, Comparable, Equatable {
     case banners = 0
     case ellection
+    case ellectionBanner
     case SpecialAds
     case randomProducts
     case Ads
@@ -19,6 +20,7 @@ enum HomeSectionIdentifier: Int, CaseIterable, Comparable, Equatable {
         case .banners: return false
         case .randomProducts: return false
         case .ellection: return false
+        case .ellectionBanner: return false
         case .Ads: return false
         case .SpecialAds: return false
         }
@@ -29,6 +31,7 @@ enum HomeSectionIdentifier: Int, CaseIterable, Comparable, Equatable {
         case .banners: return true
         case .randomProducts: return true
         case .ellection: return true
+        case .ellectionBanner: return true
         case .Ads: return true
         case .SpecialAds: return false
         }
@@ -46,7 +49,8 @@ enum HomeSectionIdentifier: Int, CaseIterable, Comparable, Equatable {
 enum HomeSection: Comparable, Equatable {
     case banners([AdBanner])
     case randomProducts([RelatedProducts])
-    case ellection([RelatedProducts])
+    case ellection([EllectionPeople])
+    case ellectionBanner([EllectionDataBanner])
     case SpecialAds([Adverisment])
     case Ads([Adverisment])
 
@@ -55,6 +59,7 @@ enum HomeSection: Comparable, Equatable {
         case .banners: return nil
         case .randomProducts: return "label.home.categories".localiz()
         case .ellection: return ""
+        case .ellectionBanner: return ""
         case .Ads: return nil
         case .SpecialAds: return "label.home.popularproducts".localiz()
         }
@@ -65,6 +70,7 @@ enum HomeSection: Comparable, Equatable {
         case .banners: return false
         case .randomProducts: return false
         case .ellection: return true
+        case .ellectionBanner: return true
         case .SpecialAds: return true
         case .Ads: return false
         }
@@ -75,6 +81,7 @@ enum HomeSection: Comparable, Equatable {
         case .banners(let items): return items.isEmpty ? 0 : 1
         case .randomProducts(let items): return items.count
         case .ellection(let items): return items.count
+        case .ellectionBanner(let items): return items.count
         case .SpecialAds(let items): return items.count
         case .Ads(let items): return items.count
         }
@@ -85,6 +92,7 @@ enum HomeSection: Comparable, Equatable {
         case .banners: return .banners
         case .randomProducts: return .randomProducts
         case .ellection: return .ellection
+        case .ellectionBanner: return .ellectionBanner
         case .SpecialAds: return .SpecialAds
         case .Ads: return .Ads
         }

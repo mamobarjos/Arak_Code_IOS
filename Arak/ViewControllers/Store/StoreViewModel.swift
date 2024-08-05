@@ -44,6 +44,7 @@ class StoreViewModel {
             self?.storDetails = response?.data
             self?.storeProduct = response?.data?.storeProducts ?? []
             self?.reviews = response?.data?.storeReviews ?? []
+            Helper.store = response?.data
             complition(nil)
         }
     }

@@ -7,13 +7,18 @@
 
 import UIKit
 
+protocol TitleCollectionReusableViewDelegate: AnyObject {
+    func didUserSelectFilteElection(governorate: District, district: District)
+}
+
 class TitleCollectionReusableView: UICollectionReusableView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var seeAllButton: UIButton!
     @IBOutlet weak var filterButton: UIButton!
     
     private var filterPickerView = ToolbarPickerView()
-    private var filter: [(AdsTypes, String)] = [(.all, "All".localiz()), (.image, "One".localiz())]
+    public var filter: EllectionFilters?
+    weak var delegate: TitleCollectionReusableViewDelegate?
     weak var vc: UIViewController?
     var onSeeAllAction: (() -> Void)?
     var onFilterAction: (() -> Void)?
@@ -32,9 +37,12 @@ class TitleCollectionReusableView: UICollectionReusableView {
     }
     
     @objc func showPicker() {
-        guard let vc = vc else {return}
-            let pickerData = ["All", "Option 1"]
-            let customPicker = CustomPickerView(pickerData: pickerData)
+        guard let vc else {return}
+        var governorates: [District] = filter?.governorates ?? []
+        let districts: [District] = filter?.districts ?? []
+        governorates.insert(District(id: nil, name: "All", nameAr: "الكل", governorateID: nil), at: 0)
+        if governorates.isEmpty {return}
+        let customPicker = CustomPickerView(governorate: governorates, districts:[] )
             customPicker.delegate = self
             customPicker.translatesAutoresizingMaskIntoConstraints = false
         vc.view.addSubview(customPicker)
@@ -56,8 +64,8 @@ class TitleCollectionReusableView: UICollectionReusableView {
 }
 
 extension TitleCollectionReusableView: CustomPickerViewDelegate {
-    func didSelectItem(_ selectedItem: String) {
-            print("Selected Item: \(selectedItem)")
-            // Perform any action with the selected item
-        }
+    func didSelectItem(governorate: District, district: District) {
+        print("Selected Item: \(governorate), \(district)")
+        delegate?.didUserSelectFilteElection(governorate: governorate, district: district)
+    }
 }

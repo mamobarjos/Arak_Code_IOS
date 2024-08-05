@@ -10,9 +10,9 @@ import Alamofire
 
 struct Constants {
     struct ProductionServer {
-//        static let baseURL = "https://arakads.live/api/"
+        static let baseURL = "https://arakads.live/api/"
 //        static let baseURL = "https://stg.arakads.live/api/"
-        static let baseURL = "https://arak-be.solutionslap.com/api/v2/"
+//        static let baseURL = "https://arak-be.solutionslap.com/api/v2/"
         
     }
 }

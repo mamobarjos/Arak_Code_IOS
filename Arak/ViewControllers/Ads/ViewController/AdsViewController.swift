@@ -28,6 +28,7 @@ class AdsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
+        hiddenNavigation(isHidden: false)
       setupNavigation()
       fetchAds()
     }

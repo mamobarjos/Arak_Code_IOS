@@ -17,7 +17,9 @@ class NewHomeViewModel {
     var hasMoreBannerAds: Bool = true
     var randomProducts: [RelatedProducts] = []
     var bannerList:[AdBanner] = []
-    
+    var ellectionFilters: EllectionFilters?
+    var ellectionData: EllectionData?
+    var ellectionPerson: EllectionPeople?
     var itemCount: Int {
         return adsList.count
     }
@@ -28,22 +30,41 @@ class NewHomeViewModel {
 
     // MARK: - Protected Methods
     func adsList(page:Int , search:String, adsType: AdsTypes ,compliation: @escaping CompliationHandler) {
-        if page == 1 {
-            adsList = []
-            bannerList = []
-        }
-        Network.shared.request(request: APIRouter.adsList(page: page, search: search), decodable: AdverismentResponse.self) { (response, error) in
-            if error != nil {
-                compliation(error)
-                return
-            }
-            self.adsList.append(contentsOf: response?.data?.ads?.data ?? [])
-            self.hasMore = (response?.data?.ads?.data ?? []).count != 0
+        if adsType == .all {
             if page == 1 {
-                self.bannerList = (response?.data?.banners?.data ?? [])
-                self.hasMoreBannerAds = (response?.data?.banners?.data ?? []).count > 0
+                adsList = []
+                bannerList = []
             }
-            compliation(nil)
+            Network.shared.request(request: APIRouter.adsList(page: page, search: search), decodable: AdverismentResponse.self) { (response, error) in
+                if error != nil {
+                    compliation(error)
+                    return
+                }
+                self.adsList.append(contentsOf: response?.data?.ads?.data ?? [])
+                self.hasMore = (response?.data?.ads?.data ?? []).count != 0
+                if page == 1 {
+//                    self.bannerList = (response?.data?.banners?.data ?? [])
+                    self.hasMoreBannerAds = (response?.data?.banners?.data ?? []).count > 0
+                }
+                compliation(nil)
+            }
+        } else {
+            if page == 1 {
+                adsList = []
+            }
+            Network.shared.request(request: APIRouter.adsFilteredList(page: page, type: adsType.rawValue), decodable: PagingModel<[Adverisment]>.self) { (response, error) in
+                if error != nil {
+                    compliation(error)
+                    return
+                }
+                self.adsList.append(contentsOf: response?.data?.data ?? [])
+                self.hasMore = (response?.data?.data ?? []).count != 0
+//                if page == 1 {
+//                    self.bannerList = (response?.data?.banners?.data ?? [])
+//                    self.hasMoreBannerAds = (response?.data?.banners?.data ?? []).count > 0
+//                }
+                compliation(nil)
+            }
         }
     }
     
@@ -127,7 +148,7 @@ class NewHomeViewModel {
                 compliation(error)
                 return
             }
-            self.bannerList.append(contentsOf: response?.data??.data ?? [])
+            self.bannerList = response?.data??.data ?? []
             self.hasMoreBannerAds = (response?.data??.data ?? []).count > 0
             compliation(nil)
         }
@@ -160,4 +181,41 @@ class NewHomeViewModel {
             compliation(nil)
         }
     }
+    
+    func getEllectionFilter(compliation: @escaping CompliationHandler) {
+        
+        Network.shared.request(request: APIRouter.getEllectionFilters, decodable: EllectionFilters.self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            self.ellectionFilters = response?.data
+            compliation(nil)
+        }
+    }
+    
+    func getEllectionData(governorateId: Int?,districtId: Int? ,compliation: @escaping CompliationHandler) {
+        
+        Network.shared.request(request: APIRouter.getEllectionData(governorate_id: governorateId, district_id: districtId), decodable: EllectionData.self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            self.ellectionData = nil
+            self.ellectionData = response?.data
+            compliation(nil)
+        }
+    }
+    
+    func getEllectionDetails(personId: Int ,compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.getEllectionDetails(person_id: personId), decodable: EllectionPeople.self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            self.ellectionPerson = response?.data
+            compliation(nil)
+        }
+    }
 }
+

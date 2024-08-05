@@ -24,13 +24,16 @@ class StoreContentView: UIView {
 
     @IBOutlet weak var storeImageView: UIImageView!
     @IBOutlet weak var productsTableView: UITableView!
+    @IBOutlet weak var addProductButtonContainerview: UIView!
+    @IBOutlet weak var addProductButton: UIButton!
     
-//    @IBOutlet var contentView: UIView!
+    //    @IBOutlet var contentView: UIView!
 
     @IBOutlet weak var descreptionLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
 
+    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var reviewrTableView: UITableView!
     @IBOutlet weak var productsStoreTiltleLabel: UILabel!
     @IBOutlet weak var reviewStoreTitleLabel: UILabel!
@@ -39,7 +42,7 @@ class StoreContentView: UIView {
 
     @IBOutlet weak var backButoon: UIButton!
 //    @IBOutlet weak var favButton: UIButton!
-//    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
 
 //    @IBOutlet weak var stackView: UIStackView!
 //    @IBOutlet weak var faceButton: UIButton!
@@ -48,11 +51,18 @@ class StoreContentView: UIView {
 //    @IBOutlet weak var linkedInButton: UIButton!
 //    @IBOutlet weak var youTubeButton: UIButton!
 
+    @IBOutlet weak var viewAllProductsButton: UIButton!
+    @IBOutlet weak var seeAllReviewsButton: UIButton!
+    @IBOutlet weak var viewAllReviewsStackView: UIStackView!
+    @IBOutlet weak var viewAllProductsStackView: UIStackView!
     @IBOutlet weak var heightConst: NSLayoutConstraint!
 //    @IBOutlet weak var reviewsContainerView: UIView!
 //    @IBOutlet weak var addReviewContainer: UIView!
     @IBOutlet weak var cosmosView: CosmosView!
-//    @IBOutlet weak var reviewTextView: UITextView!
+    @IBOutlet weak var rateLabel: UILabel!
+    @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var addReviewButton: UIButton!
+    //    @IBOutlet weak var reviewTextView: UITextView!
 
 //    @IBOutlet weak var snabButton: UIButton!
 //    @IBOutlet weak var addButton: UIButton!
@@ -65,27 +75,37 @@ class StoreContentView: UIView {
             productsTableView.reloadData()
             if products.isEmpty {
                 heightConst.constant = 0
-//                viewAllProductAction.isHidden = true
+                viewAllProductsStackView.alpha = 0
                 self.layoutIfNeeded()
             } else if products.count == 1 {
                 heightConst.constant = 175
-//                viewAllProductAction.isHidden = true
+                viewAllProductsStackView.alpha = 1
+                viewAllProductsButton.isHidden = true
                 self.layoutIfNeeded()
             } else if products.count == 2 {
                 heightConst.constant = 350
-//                viewAllProductAction.isHidden = true
+                viewAllProductsStackView.alpha = 1
+                viewAllProductsButton.isHidden = true
                 self.layoutIfNeeded()
             }
             if products.count > 3 {
-//                viewAllProductAction.isHidden = false
+                viewAllProductsStackView.alpha = 1
+                viewAllProductsButton.isHidden = false
             } else {
-//                viewAllProductAction.isHidden = true
+                viewAllProductsButton.isHidden = true
             }
         }
     }
 
     var reviews: [ReviewResponse] = [] {
         didSet {
+            if reviews.isEmpty {
+                viewAllReviewsStackView.isHidden = true
+                reviewrTableView.isHidden = true
+            } else {
+                viewAllReviewsStackView.isHidden = false
+                reviewrTableView.isHidden = false
+            }
             reviewrTableView.reloadData()
         }
     }
@@ -118,6 +138,7 @@ class StoreContentView: UIView {
 
          productsStoreTiltleLabel.text = "label.Products Store".localiz()
          reviewStoreTitleLabel.text = "label.Review".localiz()
+         callButton.setTitle("Call".localiz(), for: .normal)
 //         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
 //         submitButton.setTitle("action.Submit".localiz(), for: .normal)
 //         reviewTextView.text = "placeHolder.Enter your review for this service provider...".localiz()
@@ -147,11 +168,41 @@ class StoreContentView: UIView {
              self?.rating = Int(rating)
          }
 
-//         viewAllProductAction.addTapGestureRecognizer {[weak self] in
-//             self?.delegate?.didTapViewAllProduct()
-//         }
+    }
+    
+    func makePhoneCall(to phoneNumber: String) {
+        // Ensure the phone number is properly formatted
+        let formattedPhoneNumber = phoneNumber.filter { "0123456789".contains($0) }
+        
+        // Create the URL with the tel scheme
+        if let phoneURL = URL(string: "tel://\(formattedPhoneNumber)"), UIApplication.shared.canOpenURL(phoneURL) {
+            // Open the URL to initiate the phone call
+            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+        } else {
+            // Handle the error (e.g., device cannot make phone calls)
+            print("Error: Cannot make phone call")
+        }
     }
 
+    @IBAction func addProductButtonAction(_ sender: Any) {
+        delegate?.didTapOnAddProduct()
+    }
+    
+    @IBAction func callButtonAction(_ sender: Any) {
+        makePhoneCall(to: storeDetails?.phoneNo ?? "")
+    }
+    
+    @IBAction func viewAllProductAction(_ sender: Any) {
+        self.delegate?.didTapViewAllProduct()
+    }
+    
+    @IBAction func addReviewButtonAction(_ sender: Any) {
+        let vc = UIApplication.shared.topViewController?.initViewControllerWith(identifier: RateViewController.className, and: "", storyboardName: "Main") as! RateViewController
+        vc.delegate = self
+        UIApplication.shared.topViewController?.present(vc)
+       
+    }
+    
     private func updateUI(store: SingleStore) {
 
 //        if store.facebook == nil || store.facebook == "" {
@@ -182,26 +233,36 @@ class StoreContentView: UIView {
 //            $0?.layer.cornerRadius = ($0?.frameWidth ?? 17) / 2
 //            $0?.clipsToBounds = true
 //        }
-//        if let url = URL(string:store.img ?? "") {
-//            self.storeImageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
-//        }
-
+        if let url = URL(string:store.img ?? "") {
+            self.storeImageView.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
+        }
+        
+        if Helper.currentUser?.id == store.userid {
+            editButton.isHidden = false
+            addProductButtonContainerview.isHidden = false
+        } else {
+            editButton.isHidden = true
+            addProductButtonContainerview.isHidden = true
+        }
+        addProductButton.setTitle("Add Product".localiz(), for: .normal)
+        backgroundImage.getAlamofireImage(urlString: store.cover ?? "")
+        cosmosView.rating = store.totalRates ?? 0
+        rateLabel.text = String(format: "%.2f", store.totalRates ?? 0.0)
         storeImageView.contentMode = .scaleToFill
-        storeImageView.layer.cornerRadius = 25
+        storeImageView.layer.cornerRadius = 40
         storeImageView.clipsToBounds = true
-//        addReviewContainer.isHidden = store.isReviewed == 0 ? false : true
+        addReviewButton.isHidden = store.isReviewed == 0 ? false : true
         self.titleLabel.text = store.name
         if let index = (store.createdAt?.range(of: "T")?.lowerBound){
             let dateBeforeT = String(store.createdAt?.prefix(upTo: index) ?? "")
             self.subtitleLabel.text = "Member Since: \(dateBeforeT) "
+        } else {
+            self.subtitleLabel.text = ""
         }
 
         self.descreptionLabel.text = store.desc
     }
 
-//    @IBAction func AddProductAction(_ sender: Any) {
-//        delegate?.didTapOnAddProduct()
-//    }
 //
 //    @IBAction func submiteReviewAction(_ sender: Any) {
 //        if reviewTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || reviewTextView.text.isEmpty {
@@ -250,9 +311,9 @@ class StoreContentView: UIView {
 //        delegate?.didTapOnFav(id: 1)
 //    }
 
-//    @IBAction func editAction(_ sender: Any) {
-//        delegate?.didTapOnEdit(id: 1)
-//    }
+    @IBAction func editAction(_ sender: Any) {
+        delegate?.didTapOnEdit(id: self.storeDetails?.id ?? 0)
+    }
 
 //    @IBAction func twitterAction(_ sender: Any) {
 //        guard let twitterURL = storeDetails?.twitter else {
@@ -310,6 +371,13 @@ class StoreContentView: UIView {
 //            UIApplication.shared.openURL(NSURL(string: "https://www.youtube.com/")! as URL)
 //        }
 //    }
+}
+
+extension StoreContentView: RateViewControllerDelegate {
+    func submiteReview(_ sender: RateViewController, context: String, rating: Double) {
+        sender.dismiss(animated: true)
+        delegate?.submiteReview(context, Int(rating))
+    }
 }
 
 extension StoreContentView: UITextViewDelegate {

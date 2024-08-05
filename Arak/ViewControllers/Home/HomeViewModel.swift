@@ -109,7 +109,6 @@ class HomeViewModel {
                 compliation(nil)
             }
         }
-       
     }
     
     func searchList(page:Int , search:String,compliation: @escaping CompliationHandler) {

@@ -26,7 +26,7 @@ class Helper {
     }
     
     static var apiKey: String {
-        return "w0QEzdIHjitCUB902JGf6q2xgyGKoP9A"
+        return "yzjPf7Ng7ccQwJeBjVa6Uj3hWM8PcMyz"
     }
     
     static func verifyUrl (urlString: String?) -> Bool {
@@ -216,11 +216,11 @@ class Helper {
         }
     }
 
-    static var store: StoreResponse? {
+    static var store: SingleStore? {
         get {
             let userDefaults = UserDefaults.standard
             do {
-                let user = try userDefaults.getObject(forKey: "store", castTo: StoreResponse.self)
+                let user = try userDefaults.getObject(forKey: "store", castTo: SingleStore.self)
                 return user
             } catch {
                 print(error.localizedDescription)

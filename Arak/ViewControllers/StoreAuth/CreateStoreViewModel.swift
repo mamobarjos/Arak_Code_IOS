@@ -21,7 +21,7 @@ class CreateStoreViewModel {
                 compliation(error)
                 return
             }
-            Helper.store = response?.data
+//            Helper.store = response?.data
             compliation(nil)
         }
     }
@@ -32,7 +32,7 @@ class CreateStoreViewModel {
                 compliation(error)
                 return
             }
-            Helper.store = response?.data
+//            Helper.store = response?.data
             compliation(nil)
         }
     }

@@ -191,6 +191,7 @@ PODS:
   - KDCircularProgress (1.5.4)
   - KeychainSwift (20.0.0)
   - Kingfisher (7.12.0)
+  - lottie-ios (4.5.0)
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -232,6 +233,7 @@ DEPENDENCIES:
   - KDCircularProgress
   - KeychainSwift (~> 20.0)
   - Kingfisher (~> 7.0)
+  - lottie-ios
   - NVActivityIndicatorView (~> 4.0.0)
   - OTPFieldView
   - Player (~> 0.13.2)
@@ -278,6 +280,7 @@ SPEC REPOS:
     - KDCircularProgress
     - KeychainSwift
     - Kingfisher
+    - lottie-ios
     - nanopb
     - NVActivityIndicatorView
     - OTPFieldView
@@ -326,6 +329,7 @@ SPEC CHECKSUMS:
   KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
   Kingfisher: 53a10ea35051a436b5fb626ca2dd8f3144d755e9
+  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   NVActivityIndicatorView: 77ed6d7b571643e24899e7858bf9ae2ee4c21f31
   OTPFieldView: 700a752fe62c41d1c4914c78aa500fb30d97c255
@@ -335,6 +339,6 @@ SPEC CHECKSUMS:
   SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
   WWLayout: 0ff533a6b9d0ae2ca2bdf91b6aefc04234b61f1b
 
-PODFILE CHECKSUM: e3102e66ea5d99f226f46a5847a48a8ad9ea9554
+PODFILE CHECKSUM: 582e5a5cced70cd55b91dc85826da34c5188370b
 
 COCOAPODS: 1.15.2

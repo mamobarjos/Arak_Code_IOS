@@ -55,10 +55,7 @@ class SocialMediaSignUPViewController: UIViewController {
     }
 
     @IBAction func submittAction(_ sender: Any) {
-        if Helper.store != nil {
-            self.showToast(message:"error.you already have store".localiz())
-            return
-        }
+        
         if let content =  data?.merging(parseContent() ?? [:]) {(current, _) in current} {
             print(content)
             self.showLoading()
@@ -72,6 +69,7 @@ class SocialMediaSignUPViewController: UIViewController {
                     return
                 }
                 let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
+                Helper.currentUser?.hasStore = 1
                 self?.show(vc)
             })
             } else {

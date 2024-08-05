@@ -16,7 +16,7 @@ struct GenericModel<T:Codable>: Codable {
   var token: String?
   
   enum CodingKeys: String, CodingKey {
-    case statusCode = "status_code"
+    case statusCode = "statusCode"
     case message
     case generalDescription = "description"
     case data,token

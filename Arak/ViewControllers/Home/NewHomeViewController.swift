@@ -19,6 +19,7 @@ class NewHomeViewController: UIViewController {
     /// The view that contains the search functionality.
     @IBOutlet weak var searchView: UIView!
     
+    @IBOutlet weak var searchTextField: UITextField!
     // MARK: - Properties
     
     /// Refresh control to handle pull-to-refresh actions.
@@ -33,6 +34,9 @@ class NewHomeViewController: UIViewController {
     /// Dispatch group to synchronize multiple asynchronous tasks.
     private var dispatchGroup: DispatchGroup?
     
+    
+    private var electionFilter: (Gov:District?, Dis:District?) = (Gov: nil, Dis: nil)
+    private var adsType: AdsTypes = .all
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
@@ -41,6 +45,7 @@ class NewHomeViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         collectionView.alwaysBounceVertical = true
         collectionView.refreshControl = refreshControl // iOS 10+
+        searchTextField.placeholder = "Search videos,images and many more".localiz()
         getHomeData()
     }
     
@@ -58,6 +63,7 @@ class NewHomeViewController: UIViewController {
         collectionView.register(HomeFilterCollectionViewCell.self)
         collectionView.register(ElectionCollectionViewCell.self)
         collectionView.register(UINib(nibName: TitleCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleCollectionReusableView.identifier)
+        collectionView.register(UINib(nibName: AdsHomeFilterCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdsHomeFilterCollectionReusableView.identifier)
         
     }
     
@@ -68,6 +74,7 @@ class NewHomeViewController: UIViewController {
              case .banners: return .banner()
              case .randomProducts: return .mainCategories()
              case .ellection: return .ellectionSection()
+             case .ellectionBanner: return .banner()
              case .SpecialAds: return .sepecialAds()
              case .Ads: return .products()
              }
@@ -80,10 +87,11 @@ class NewHomeViewController: UIViewController {
     private func getHomeData() {
         showLoading()
         dispatchGroup = DispatchGroup()
+        getEllection()
         getBanners()
         getRandomProducts()
         fetchFeaturedAds()
-        fetchAds(adsType: .all)
+        fetchAds(adsType: adsType)
         
         dispatchGroup?.notify(queue: .main) {
             self.stopLoading()
@@ -92,16 +100,10 @@ class NewHomeViewController: UIViewController {
                 self.sections.append(.banners(self.viewModel.bannerList))
             }
             
-            if !self.viewModel.randomProducts.isEmpty {
-                // TODO: - Rmove this code
-                var products: [RelatedProducts]  = []
-                products.append(contentsOf: self.viewModel.randomProducts)
-                products.append(contentsOf: self.viewModel.randomProducts)
-                products.append(contentsOf: self.viewModel.randomProducts)
-                products.append(contentsOf: self.viewModel.randomProducts)
-                products.append(contentsOf: self.viewModel.randomProducts)
-                self.sections.append(.ellection((products)))
-                self.sections.append(.banners(self.viewModel.bannerList))
+            self.sections.append(.ellection(self.viewModel.ellectionData?.people?.data ?? []))
+            
+            if !(self.viewModel.ellectionData?.banners?.data?.isEmpty ?? false) {
+                self.sections.append(.ellectionBanner(self.viewModel.ellectionData?.banners?.data ?? []))
             }
             
             if !self.viewModel.featuredAdsList.isEmpty {
@@ -116,6 +118,7 @@ class NewHomeViewController: UIViewController {
                 self.sections.append(.Ads(self.viewModel.adsList))
             }
             
+          
            
             self.dispatchGroup?.wait()
             self.collectionView.reloadData()
@@ -174,6 +177,25 @@ class NewHomeViewController: UIViewController {
         }
     }
     
+    private func getEllection() {
+        dispatchGroup?.enter()
+        viewModel.getEllectionFilter {[weak self] (error) in
+            self?.viewModel.getEllectionData(governorateId: self?.electionFilter.Gov?.id , districtId: self?.electionFilter.Dis?.id , compliation: { error in
+                self?.dispatchGroup?.leave()
+                
+                if error != nil {
+                    self?.showToast(message: error)
+                    return
+                }
+            })
+            
+            if error != nil {
+                self?.showToast(message: error)
+                return
+            }
+        }
+    }
+    
     // MARK: - Helper Methods
     
     /// Handles pull-to-refresh action.
@@ -182,6 +204,26 @@ class NewHomeViewController: UIViewController {
         refreshControl.endRefreshing()
     }
 
+    func openExternalURL(_ urlString: String) {
+        let vc = self.initViewControllerWith(identifier: WebViewViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! WebViewViewController
+        vc.confige(title: "", path: urlString , processType: .Other, imageFirebasePath: "")
+        self.show(vc)
+        
+//           if let url = URL(string: urlString) {
+//               // Check if the URL can be opened
+//               if UIApplication.shared.canOpenURL(url) {
+//                   // Open the URL with default web browser
+//                   UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//               } else {
+//                   // Handle the error if the URL cannot be opened
+//                   print("Cannot open URL")
+//               }
+//           } else {
+//               // Handle the error if the URL is invalid
+//               print("Invalid URL")
+//           }
+       }
+    
     // MARK: - Cell Creation Methods
     
     /// Creates and returns a configured `FeaturedCell` for a banner at the specified index path.
@@ -190,13 +232,63 @@ class NewHomeViewController: UIViewController {
     func makeBanner(indexPath: IndexPath) -> FeaturedCell {
         let cell: FeaturedCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.setup(bannerList: viewModel.bannerList) { [weak self] in
-            let vc = self?.initViewControllerWith(identifier: BannerViewController.className, and: "") as! BannerViewController
-            vc.confige(adsType: .Banner)
-            self?.show(vc)
+            let item = self?.viewModel.bannerList.first
+            if item?.website == nil {
+                let vc = self?.initViewControllerWith(identifier: ImageSliderViewController.className, and: "") as! ImageSliderViewController
+                vc.confige(imageNames: [item?.path ?? ""])
+                self?.show(vc)
+            } else {
+                self?.openExternalURL(item?.website ?? "https://www.google.com/?client=safari&channel=iphone_bm")
+            }
         } playVideoBlock: {  [weak self] index in
-            let vc = self?.initViewControllerWith(identifier: ImageSliderViewController.className, and: "") as! ImageSliderViewController
-            vc.confige(imageNames: [self?.viewModel.bannerList[index].path ?? ""])
-            self?.show(vc)
+            
+            let item = self?.viewModel.bannerList[index]
+            if item?.website == nil {
+                let vc = self?.initViewControllerWith(identifier: ImageSliderViewController.className, and: "") as! ImageSliderViewController
+                vc.confige(imageNames: [item?.path ?? ""])
+                self?.show(vc)
+            } else {
+                self?.openExternalURL(item?.website ?? "https://www.google.com/?client=safari&channel=iphone_bm")
+            }
+        }
+        cell.layoutIfNeeded()
+        cell.featuredPagerView.reloadData()
+        return cell
+    }
+    
+    
+    /// Creates and returns a configured `FeaturedCell` for a banner at the specified index path.
+    /// - Parameter indexPath: The index path of the cell.
+    /// - Returns: A configured `FeaturedCell` instance.
+    func makeEllectionBanner(indexPath: IndexPath) -> FeaturedCell {
+        let cell: FeaturedCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.setup(bannerList: viewModel.ellectionData?.banners?.data ?? []) { [weak self] in
+            self?.showLoading()
+            self?.viewModel.getEllectionDetails(personId: self?.viewModel.ellectionData?.banners?.data?.first?.id ?? 0) { [weak self] error in
+                self?.stopLoading()
+                if error != nil {
+                    self?.showToast(message: error)
+                    return
+                }
+                
+                let vc = ElectionDetailsViewController.loadFromNib()
+                vc.electionPerson = self?.viewModel.ellectionPerson
+                self?.show(vc)
+            }
+        } playVideoBlock: {  [weak self] index in
+            if self?.viewModel.ellectionData?.banners?.data?.count == index {return}
+            self?.showLoading()
+            self?.viewModel.getEllectionDetails(personId: self?.viewModel.ellectionData?.banners?.data?[index].id ?? 0) { [weak self] error in
+                self?.stopLoading()
+                if error != nil {
+                    self?.showToast(message: error)
+                    return
+                }
+                
+                let vc = ElectionDetailsViewController.loadFromNib()
+                vc.electionPerson = self?.viewModel.ellectionPerson
+                self?.show(vc)
+            }
         }
         cell.layoutIfNeeded()
         cell.featuredPagerView.reloadData()
@@ -221,6 +313,7 @@ class NewHomeViewController: UIViewController {
         return cell
     }
     
+   
     /// Creates and returns a configured `AdsCell` for an ad at the specified index path.
     /// - Parameters:
     ///   - ads: The list of advertisements to display.
@@ -231,9 +324,18 @@ class NewHomeViewController: UIViewController {
         cell.photoImageView.image = nil
         cell.setup(indexItem: indexPath.row, isFavorate: false, ads: ads[indexPath.row]) { [weak self] in
             guard let self = self else { return }
-            let vc = self.initViewControllerWith(identifier: StoryViewController.className, and: "") as! StoryViewController
-            vc.config(viewModel: StoryViewModel(adsList: self.viewModel.adsList, index: indexPath.row), source: .Home)
-            self.show(vc)
+            if ads[indexPath.row].adCategoryID == AdsTypes.video.rawValue {
+                let vc = self.initViewControllerWith(identifier: StoryViewController.className, and: "") as! StoryViewController
+                vc.config(viewModel: StoryViewModel(adsList: self.viewModel.adsList, index: indexPath.row), source: .Home)
+                self.show(vc)
+            } else {
+                let vc = self.initViewControllerWith(identifier: StoryViewController.className, and: "") as! StoryViewController
+                vc.config(viewModel: StoryViewModel(adsList: self.viewModel.adsList, index: indexPath.row), source: .Home)
+                self.show(vc)
+//                let detailVC = self.initViewControllerWith(identifier: DetailViewController.className, and: "") as! DetailViewController
+//                detailVC.confige(id: ads[indexPath.row].id ?? -1)
+//                self.show(detailVC)
+            }
         } favorateBlock: { [weak self] in
         }
         return cell
@@ -247,6 +349,12 @@ class NewHomeViewController: UIViewController {
         let vc = initViewControllerWith(identifier: SearchViewController.className, and: "") as! SearchViewController
         show(vc)
     }
+    
+    @IBAction func addAdsButtonAction(_ sender: Any) {
+        let vc = initViewControllerWith(identifier: AdsViewController.className, and: "") as! AdsViewController
+        show(vc)
+    }
+    
 }
 
 // MARK: - UICollectionView Methods
@@ -264,6 +372,8 @@ extension NewHomeViewController: UICollectionViewDelegate, UICollectionViewDataS
         case .randomProducts:
             return 1
         case .ellection:
+            return 1
+        case .ellectionBanner:
             return 1
         case .SpecialAds:
             return 1
@@ -288,6 +398,8 @@ extension NewHomeViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.electionCollectionView.setupCategories(products: candidates)
             cell.delegate = self
             return cell
+        case .ellectionBanner(let banners):
+            return makeEllectionBanner(indexPath: indexPath)
         case .SpecialAds(_):
             return makeFeatured(indexPath: indexPath)
         case .Ads(let ads):
@@ -312,12 +424,19 @@ extension NewHomeViewController: UICollectionViewDelegate, UICollectionViewDataS
         case .ellection(_):
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleCollectionReusableView.identifier, for: indexPath) as! TitleCollectionReusableView
             view.vc = self
+            view.delegate = self
+            view.filter = viewModel.ellectionFilters
             view.titleLabel.text = "Election Candidates".localiz()
             view.seeAllButton.isHidden = true
             view.filterButton.isHidden = false
             view.onFilterAction = {
                 
             }
+            return view
+            
+        case .ellectionBanner:
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleCollectionReusableView.identifier, for: indexPath) as! TitleCollectionReusableView
+            view.filterButton.isHidden = true
             return view
             
         case .SpecialAds(_):
@@ -333,15 +452,8 @@ extension NewHomeViewController: UICollectionViewDelegate, UICollectionViewDataS
             return view
     
         case .Ads(_):
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TitleCollectionReusableView.identifier, for: indexPath) as! TitleCollectionReusableView
-            view.titleLabel.text = "Regular ads".localiz()
-            view.filterButton.isHidden = true
-            view.seeAllButton.isHidden = false
-            view.onSeeAllAction = { [weak self] in
-                let vc = self?.initViewControllerWith(identifier: FavoriteViewController.className, and: "Regular ads".localiz(), storyboardName: Storyboard.Main.rawValue) as! FavoriteViewController
-                vc.source = .comeFromHome(isAds: true)
-                self?.show(vc)
-            }
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdsHomeFilterCollectionReusableView.identifier, for: indexPath) as! AdsHomeFilterCollectionReusableView
+            view.delegate = self
             return view
         }
     }
@@ -359,7 +471,32 @@ extension NewHomeViewController: CategoriesCollectionViewCellDelegate {
 
 extension NewHomeViewController: ElectionCollectionViewCellDelegate {
     func didUserTapOnCandidateItem(item: TagItem) {
-        let vc = ElectionDetailsViewController.loadFromNib()
-        self.show(vc)
+        showLoading()
+        viewModel.getEllectionDetails(personId: item.id) { [weak self] error in
+            self?.stopLoading()
+            if error != nil {
+                self?.showToast(message: error)
+                return
+            }
+            
+            let vc = ElectionDetailsViewController.loadFromNib()
+            vc.electionPerson = self?.viewModel.ellectionPerson
+            self?.show(vc)
+        }
+       
+    }
+}
+
+extension NewHomeViewController: TitleCollectionReusableViewDelegate {
+    func didUserSelectFilteElection(governorate: District, district: District) {
+        self.electionFilter = (Gov: governorate, Dis: district)
+        self.getHomeData()
+    }
+}
+
+extension NewHomeViewController: AdsHomeFilterCollectionReusableViewDelegate {
+    func didtapChooseFilter(_ sender: AdsHomeFilterCollectionReusableView, adsType: AdsTypes) {
+        self.adsType = adsType
+        getHomeData()
     }
 }

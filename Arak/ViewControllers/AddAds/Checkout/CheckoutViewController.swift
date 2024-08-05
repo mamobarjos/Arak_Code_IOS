@@ -22,13 +22,14 @@ class CheckoutViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
+      cardView.isHidden = true
   }
   func confige(ads:Adverisment?)  {
     self.ads = ads
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+      hiddenNavigation(isHidden: false)
     setup()
   }
 
@@ -38,8 +39,8 @@ class CheckoutViewController: UIViewController {
   }
 
   private func setupUI()  {
-    cardView.addShadow(position: .all)
-    walletView.addShadow(position: .all)
+//    cardView.addShadow(position: .all)
+//    walletView.addShadow(position: .all)
   }
 
     
@@ -47,7 +48,7 @@ class CheckoutViewController: UIViewController {
   private func loclization() {
     title = "Checkout".localiz()
     myWalletLabel.text = "My Wallet".localiz()
-    doublePaymentLabel.text = "Double Payment".localiz()
+    doublePaymentLabel.text = "CLIQ".localiz()
     cardLabel.text = "Card".localiz()
   }
 
@@ -58,23 +59,16 @@ class CheckoutViewController: UIViewController {
     show(vc)
 
   }
+    
   @IBAction func Card(_ sender: Any) {
     type = 1
     uploadData()
   }
     
     @IBAction func DoublePayment(_ sender: Any) {
-        let vc = initViewControllerWith(identifier: WalletInsufficientViewController.className, and: "") as! WalletInsufficientViewController
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
-        vc.confige(confirmBlock: { confirm in
-            vc.dismiss(animated: true, completion: nil)
-            if confirm {
-                self.type = 2
-                self.uploadData()
-            }
-        },title: "Payment combined".localiz(), description: "In this type, payment using wallet and credit card is combined. Would you like to continue?".localiz(), buttonTitle: "Continue".localiz())
-        self.present(vc, animated: true, completion: nil)
+        let vc = initViewControllerWith(identifier: CliQViewController.className, and: "CliQ".localiz()) as! CliQViewController
+        vc.ads = ads
+        show(vc)
     }
     
     func completeUpload(data: [String : Any]) {

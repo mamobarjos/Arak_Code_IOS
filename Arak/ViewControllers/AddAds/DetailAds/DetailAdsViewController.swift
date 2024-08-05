@@ -129,8 +129,8 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
         descriptionTextView.text = "Description".localiz()
         continueButton.setTitle("Continue".localiz(), for: .normal)
         titleTextField.placeholder = "Title".localiz()
-        let phoneNo = Helper.currentUser?.phoneNo ?? ""
-        phoneTextField.text = phoneNo.replacingOccurrences(of: "+962", with: "")
+//        let phoneNo = Helper.currentUser?.phoneNo ?? ""
+//        phoneTextField.text = phoneNo.replacingOccurrences(of: "+962", with: "")
         locationTextField.text = ""
         
     }

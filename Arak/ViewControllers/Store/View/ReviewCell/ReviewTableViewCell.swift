@@ -65,7 +65,7 @@ class ReviewTableViewCell: UITableViewCell {
             ReviewerImage.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
         }
         cosmosView.rating = Double(review.rate ?? 5)
-//        titaleLabel.text = review.user?.fullname
+        titaleLabel.text = review.user?.fullname
         descLabel.text = review.content
         descLabel.numberOfLines = 0
         if Helper.currentUser?.id == review.user?.id {
