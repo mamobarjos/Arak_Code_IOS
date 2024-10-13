@@ -23,11 +23,12 @@ class HorizontalTagCollectionViewCell: UICollectionViewCell {
     func setup(with item: TagItem ,animate: Bool) {
         mainCategoryImageView.layer.cornerRadius = 35
 //        categoryNameLabel.textColor = .accent
+//        mainCategoryImageView.contentMode = .scaleToFill
         categoryNameLabel.font = .font(for: .regular, size: 12)
         self.bringSubviewToFront(actionButton)
 //        mainCategoryImageView.layer.borderWidth = 2
 //        mainCategoryImageView.layer.borderColor = UIColor.accentOrange.cgColor
-//        updateStyle()
+        updateStyle()
 //        if animate {
 //            let animations = [AnimationType.vector((CGVector(dx: 150, dy: 0))),
 //                              AnimationType.zoom(scale: 0.6)]
@@ -37,16 +38,17 @@ class HorizontalTagCollectionViewCell: UICollectionViewCell {
 //        }
     }
 
-//    private func updateStyle() {
-//        if tagIsSelected {
-//            self.indicatorView.backgroundColor = .accentOrange
-//            self.categoryNameLabel.font = .font(for: .bold, size: 18)
-//        } else {
-//            self.indicatorView.backgroundColor = .clear
-//            self.categoryNameLabel.font = .font(for: .regular, size: 18)
-//        }
-//
-//    }
+    private func updateStyle() {
+        if tagIsSelected {
+            self.mainCategoryImageView.borderWidth = 2
+            self.mainCategoryImageView.borderColor = .accentOrange
+            self.categoryNameLabel.font = .font(for: .bold, size: 12)
+        } else {
+            self.mainCategoryImageView.borderWidth = 0
+            self.mainCategoryImageView.borderColor = .clear
+            self.categoryNameLabel.font = .font(for: .regular, size: 12)
+        }
+    }
 
     @IBAction func tapItemAction(_ sender: Any) {
         self.onAction?()

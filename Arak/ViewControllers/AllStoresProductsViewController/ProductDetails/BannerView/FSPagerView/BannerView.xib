@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BannerView" customModule="Arak" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="7gc-jN-bAb" id="bxN-Vw-mTx"/>
+                <outlet property="pagerControl" destination="VDc-ML-HrQ" id="NOH-pG-rYM"/>
+                <outlet property="pagerView" destination="rpM-Cf-HrJ" id="NhZ-d8-bWC"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="413" height="198"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7gc-jN-bAb">
+                    <rect key="frame" x="0.0" y="0.0" width="413" height="130"/>
+                    <subviews>
+                        <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="rpM-Cf-HrJ" customClass="FSPagerView" customModule="FSPagerView">
+                            <rect key="frame" x="0.0" y="0.0" width="413" height="100"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="sof-Wo-syW"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VDc-ML-HrQ" customClass="UIPageControl">
+                            <rect key="frame" x="70" y="110" width="273" height="10"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="10" id="cJj-NO-Ue3"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColorV">
+                                    <color key="value" systemColor="systemGrayColor"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidthV">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="rpM-Cf-HrJ" firstAttribute="top" secondItem="7gc-jN-bAb" secondAttribute="top" id="ANY-DN-3L0"/>
+                        <constraint firstItem="rpM-Cf-HrJ" firstAttribute="leading" secondItem="7gc-jN-bAb" secondAttribute="leading" id="EjK-3B-iuG"/>
+                        <constraint firstAttribute="trailing" secondItem="rpM-Cf-HrJ" secondAttribute="trailing" id="K1q-p4-Ogb"/>
+                        <constraint firstAttribute="trailing" secondItem="VDc-ML-HrQ" secondAttribute="trailing" constant="70" id="QIB-OX-a7J"/>
+                        <constraint firstAttribute="bottom" secondItem="VDc-ML-HrQ" secondAttribute="bottom" constant="10" id="gtV-8X-Kfv"/>
+                        <constraint firstItem="VDc-ML-HrQ" firstAttribute="leading" secondItem="7gc-jN-bAb" secondAttribute="leading" constant="70" id="qjG-c9-UAU"/>
+                        <constraint firstItem="VDc-ML-HrQ" firstAttribute="top" secondItem="rpM-Cf-HrJ" secondAttribute="bottom" constant="10" id="spo-Cv-Xcz"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="7gc-jN-bAb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MWT-sQ-wGt"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7gc-jN-bAb" secondAttribute="trailing" id="blY-eK-ou6"/>
+                <constraint firstItem="7gc-jN-bAb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lI6-kS-IKF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="83.206106870229007" y="41.549295774647888"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

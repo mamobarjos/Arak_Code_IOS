@@ -20,8 +20,8 @@ class ServiceViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if HomeViewController.goToMyAds {
-            HomeViewController.goToMyAds = false
+        if NewHomeViewController.goToMyAds {
+            NewHomeViewController.goToMyAds = false
             let vc = initViewControllerWith(identifier: MyAdsViewController.className, and: "My Ads".localiz()) as! MyAdsViewController
             show(vc)
         }

@@ -21,6 +21,7 @@ struct ArakLinks: Codable {
     var tiktok: String?
     var x: String?
     var facebook: String?
+    var isLive: Bool?
     
   var terms: String {
     return Helper.appLanguage ?? "en" == "en" ? (termsEn ?? "") : (termsAr ?? "")
@@ -50,6 +51,7 @@ struct ArakLinks: Codable {
         case needHelp = "need_help"
         case needHelpAr = "need_help_ar"
         case needHelpEn = "need_help_en"
+      case isLive = "is_live"
       case instagram, linkedin, youtube, tiktok, x, facebook
 
     }

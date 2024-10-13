@@ -11,6 +11,7 @@ import Foundation
 import AVKit
 import WebKit
 import Player
+
 class StoryViewController: UIViewController {
     
     enum Source {
@@ -19,6 +20,8 @@ class StoryViewController: UIViewController {
         case History
     }
     // MARK: - Outlets
+    @IBOutlet weak var gifImageView: UIImageView!
+    @IBOutlet weak var lotteAnimationView: UIView!
     @IBOutlet weak var videoView: UIView!
     @IBOutlet weak var timerLable: UILabel!
     @IBOutlet weak var learnMoreButton: UIButton!
@@ -32,13 +35,14 @@ class StoryViewController: UIViewController {
 
     // MARK: - Properties
     
+    private var canPlayVideo: Bool = true
     private var count: Double = 0
     private var activeIndex = 0
     private var activeAds:Adverisment?
-    private var timer = Timer()
+    private var timer: Timer?
     private var viewModel: StoryViewModel?
     private var adsType: AdsTypes = .image
-    private var avPlayerController = AVPlayerViewController()
+    private var avPlayerController: AVPlayerViewController?
     private var activityIndicator: UIActivityIndicatorView!
     private var path = ""
     private var detailViewModel = DetailViewModel()
@@ -48,13 +52,17 @@ class StoryViewController: UIViewController {
     // MARK: - Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        canPlayVideo = true
+        player.playbackResumesWhenEnteringForeground = true
         activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .gray
         self.view.addSubview(activityIndicator)
-        
+        NotificationCenter.default.addObserver(self,
+                                                      selector: #selector(handleAppDidEnterBackground),
+                                                      name: UIApplication.didEnterBackgroundNotification,
+                                                      object: nil)
         forwardButtonImage.isHidden = true
         backwardButtonImage.isHidden = true
         if let viewModel = viewModel {
@@ -79,21 +87,34 @@ class StoryViewController: UIViewController {
     }
     
     deinit {
-       
+        canPlayVideo = false
         self.player.willMove(toParent: nil)
         
         self.player.view.removeFromSuperview()
         self.player.removeFromParent()
+        NotificationCenter.default.removeObserver(self,
+                                                         name: UIApplication.didEnterBackgroundNotification,
+                                                         object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        
         super.viewWillDisappear(animated)
+        canPlayVideo = false
         self.hiddenNavigation(isHidden: false)
+        player.stop()
+        player.playbackResumesWhenEnteringForeground = false
+        avPlayerController?.player?.pause()
+        avPlayerController?.player = nil
+        avPlayerController?.dismiss(animated: false, completion: nil)
+        avPlayerController = nil
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        canPlayVideo = false
         self.hiddenNavigation(isHidden: false)
         player.stop()
+        player.playbackResumesWhenEnteringForeground = false
         player.viewDidDisappear(animated)
     }
     
@@ -112,11 +133,21 @@ class StoryViewController: UIViewController {
         }
         
     }
+    
+    @objc func handleAppDidEnterBackground() {
+           // Pause or stop the player when app goes to background
+        player.stop()
+        avPlayerController?.player?.pause()
+        avPlayerController?.player = nil
+        avPlayerController?.dismiss(animated: true, completion: nil)
+        avPlayerController = nil
+       }
     // MARK: - Protected Methods
     private func setupUI() {
         learnMoreButton.setTitle("Learn More".localiz(), for: .normal)
         if (source != .Home) {
-            timer.invalidate()
+            timer?.invalidate()
+            timer = nil
             learnMoreView.isHidden = false
             gradiantView.backgroundColor = .clear
             learnMoreButton.isHidden = false
@@ -156,7 +187,7 @@ class StoryViewController: UIViewController {
                     imageView.isHidden = false
                     videoView.isHidden = true
                     webView.isHidden = true
-                    count = Double(activeAds.duration ?? "5") ?? 5
+                    count = Double(activeAds.duration ?? 5)
                     imageView.getAlamofireImage(urlString: activeAds.adImages?.first?.path)
                     fetchImageDetail(id: activeAds.id ?? 0 )
                     print(activeAds.adImages)
@@ -167,7 +198,7 @@ class StoryViewController: UIViewController {
                     webView.isHidden = true
                     setupVideo(path: activeAds.adImages?.first?.path ?? "")
                 } else {
-                    count = Double(activeAds.duration ?? "5") ?? 5
+                    count = Double(activeAds.duration ?? 5)
                     prepare()
                     imageView.isHidden = true
                     videoView.isHidden = true
@@ -199,7 +230,8 @@ class StoryViewController: UIViewController {
             setView(view: gradiantView, hidden: true)
         } else {
             updateDetail()
-            timer.invalidate()
+            timer?.invalidate()
+            timer = nil
             timerLable.isHidden = true
             timerImageView.isHidden = true
             learnMoreView.isHidden = false
@@ -227,11 +259,24 @@ class StoryViewController: UIViewController {
     
  
     private func setView(view: UIView, hidden: Bool) {
+        if hidden == false {
+            gifImageView.loadGIF(name: "addToWalleAnimation")
+            lotteAnimationView.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                self.lotteAnimationView.isHidden = true
+            })
+        } else {
+            lotteAnimationView.isHidden = true
+        }
+        
         UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
             view.isHidden = hidden
         })
     }
+    
     private func prepare() {
+        timer?.invalidate()
+        timer = nil
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
     
@@ -331,7 +376,7 @@ class StoryViewController: UIViewController {
             Helper.resetLoggingData()
             return
         }
-//        player.forceStop()
+        player.stop()
         let detailVC = self.initViewControllerWith(identifier: DetailViewController.className, and: "") as! DetailViewController
         detailVC.confige(id: activeAds?.id)
         self.show(detailVC)
@@ -359,14 +404,15 @@ extension Double {
 }
 extension StoryViewController: PlayerDelegate {
     func playerReady(_ player: Player) {
-        print("\(#function) ready")
-        self.activityIndicator.stopAnimating()
-        self.count = Double(activeAds?.duration ?? "5") ?? 5
-        if source == .Home {
-            self.prepare()
+        if canPlayVideo {
+            print("\(#function) ready")
+            self.activityIndicator.stopAnimating()
+            self.count = Double(activeAds?.duration ?? 5)
+            if source == .Home {
+                self.prepare()
+            }
+            self.player.playFromBeginning()
         }
-        self.player.playFromBeginning()
-        
     }
     
     func playerPlaybackStateDidChange(_ player: Player) {
@@ -391,9 +437,13 @@ extension StoryViewController: PlayerDelegate {
 extension StoryViewController: PlayerPlaybackDelegate {
     
     func playerCurrentTimeDidChange(_ player: Player) {
+        if player.playbackState == .paused {
+            timer?.invalidate()
+        }
     }
     
     func playerPlaybackWillStartFromBeginning(_ player: Player) {
+        prepare()
     }
     
     func playerPlaybackDidEnd(_ player: Player) {
@@ -403,5 +453,20 @@ extension StoryViewController: PlayerPlaybackDelegate {
     }
     
     func playerPlaybackDidLoop(_ player: Player) {
+    }
+}
+
+extension UIImageView {
+    func loadGIF(name: String, in bundle: Bundle = .main) {
+        if let data = NSDataAsset(name: name, bundle: bundle)?.data {
+            CGAnimateImageDataWithBlock(data as CFData, nil) { [weak self] (index, cgImage, stop) in
+                // NOTE: without 'stop.pointee = true', even if self is nil, animating will not be stopped
+                guard let self = self else {
+                    stop.pointee = true
+                    return
+                }
+                self.image = UIImage(cgImage: cgImage)
+            }
+        }
     }
 }

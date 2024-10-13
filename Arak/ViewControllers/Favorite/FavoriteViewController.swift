@@ -32,6 +32,7 @@ class FavoriteViewController: UIViewController, UITextFieldDelegate {
     private let minimumInteritemSpacing: CGFloat = 10
     private  let cellsPerRow = 2
     private var isFavorate: Bool = false
+    private var adsType: AdCategory?
     
     
     // MARK: - Override Methods
@@ -80,16 +81,28 @@ class FavoriteViewController: UIViewController, UITextFieldDelegate {
             }
         case .comeFromHome(isAds: let isAds):
             if isAds {
-                viewModel.adsList(page: pageAds, search: "", adsType: .all) { [weak self] (error) in
-                    defer {
-                        self?.stopLoading()
-                    }
+                
+                viewModel.getAdsCategory {[weak self] error in
                     
                     if error != nil {
                         self?.showToast(message: error)
                         return
                     }
-                    self?.adsCollectionView.reloadData()
+//                    if self?.adsType == nil {
+//                        self?.adsType = self?.viewModel.adCategory.first
+//                    }
+                    self?.viewModel.adsList(page: 1, search: "", adsType: self?.adsType?.id) { (error) in
+                        defer {
+                            self?.stopLoading()
+                        }
+                        
+                        if error != nil {
+                            self?.showToast(message: error)
+                            return
+                        }
+                        
+                        self?.adsCollectionView.reloadData()
+                    }
                 }
             } else {
                 viewModel.featuredList(page: pageAds, search: "") { [weak self] (error) in
@@ -115,6 +128,7 @@ class FavoriteViewController: UIViewController, UITextFieldDelegate {
         adsCollectionView.dataSource = self
         adsCollectionView.register(AdsCell.self)
         adsCollectionView.register(FeaturedCell.self)
+        adsCollectionView.register(UINib(nibName: AdsHomeFilterCollectionReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AdsHomeFilterCollectionReusableView.identifier)
     }
     
     private func setupRefershControl() {
@@ -137,12 +151,22 @@ class FavoriteViewController: UIViewController, UITextFieldDelegate {
         cell.photoImageView.image = nil
         cell.setup(indexItem: indexPath.row, isFavorate: true, ads: ads[indexPath.row]) { [weak self] in
             guard let self = self else { return }
+            if ads[indexPath.row].adCategoryID == AdsTypes.store.rawValue {
+                let ad = self.viewModel.adsList[indexPath.item]
+                let vc = self.initViewControllerWith(identifier: StoreViewController.className, and: "", storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+                vc.storeId = ad.storeId
+                self.show(vc)
+                return
+            }
+            
             let vc = self.initViewControllerWith(identifier: StoryViewController.className, and: "") as! StoryViewController
             vc.config(viewModel: StoryViewModel(adsList: source == .comeFromHome(isAds: false) ? self.viewModel.featuredAdsList : self.viewModel.adsList, index: indexPath.row), source: .Home)
             self.show(vc)
+            
+//
         } favorateBlock: { [weak self]  in
             guard let self = self else { return }
-            self.addToFavorate(id: ads[indexPath.row].id ?? -1, isFavorate: (ads[indexPath.row].isFav), index: indexPath.row, complation: { [weak self] value in
+            self.addToFavorate(id: ads[indexPath.row].id ?? -1, isFavorate: (ads[indexPath.row].isFav ?? false), index: indexPath.row, complation: { [weak self] value in
                 if value {
                     self?.pageAds = 1
                     self?.fetchAds(source: self?.source ?? .Favrate)
@@ -171,7 +195,7 @@ extension FavoriteViewController: UICollectionViewDelegate , UICollectionViewDat
     
     func addToFavorate(id: Int,isFavorate: Bool,index: Int,complation: @escaping (Bool) -> Void) {
         showLoading()
-        self.detailViewModel.favorite(id: id, isFavorate: isFavorate) { [weak self] (error) in
+        self.detailViewModel.favorite(id: id) { [weak self] (error) in
             defer {
                 self?.stopLoading()
             }
@@ -213,9 +237,37 @@ extension FavoriteViewController: UICollectionViewDelegate , UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if viewModel.hasMore && viewModel.itemCount - 1 == indexPath.row  {
-            pageAds += 1
-            fetchAds(source: source)
+//            pageAds += 1
+//            fetchAds(source: source)
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+           if kind == UICollectionView.elementKindSectionHeader {
+               let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "AdsHomeFilterCollectionReusableView", for: indexPath) as! AdsHomeFilterCollectionReusableView
+               
+               // Configure your header view
+               headerView.filter = viewModel.adCategory
+               headerView.delegate = self
+               return headerView
+           }
+           return UICollectionReusableView()
+       }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if source == .comeFromHome(isAds: true) {
+            return CGSize(width: collectionView.frame.width - 30, height: 100) // Adjust height as needed
+        } else {
+            return CGSize(width: collectionView.frame.width - 30, height: 0) // Adjust height as needed
+        }
+          
+       }
+    
+}
+
+extension FavoriteViewController: AdsHomeFilterCollectionReusableViewDelegate {
+    func didtapChooseFilter(_ sender: AdsHomeFilterCollectionReusableView, adsType: AdCategory) {
+        self.adsType = adsType
+        fetchAds(source: source)
+    }
 }

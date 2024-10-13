@@ -29,15 +29,29 @@ struct AdsCategory: Codable {
           case packages
       }
 }
+
+struct PackageContainer: Codable {
+    let adPackages: [Package]?
+//    let total: Int
+//    let page: Int
+//    let lastPage: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case adPackages = "adPackages"
+//        case total
+//        case page
+//        case lastPage = "lastPage"
+    }
+}
 // MARK: - Package
 struct Package: Codable {
     var id: Int?
     var nameEn, nameAr: String?
     var icon: String?
-    var reach: String?
-    var price: Double?
+    var reach: Int?
+    var price: String?
     var noOfImgs: Int?
-    var seconds: String?
+    var seconds: Double?
     var adCategoryID: Int?
     var isVideo: Bool {
       return adCategoryID ?? -1 == AdsTypes.video.rawValue

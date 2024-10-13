@@ -107,11 +107,12 @@ extension UIViewController: NVActivityIndicatorViewable {
     public func presentWithNavigation<T: UIViewController>(
         _ viewController: T,
         animated: Bool = true,
+        modalPresentationStyle: UIModalPresentationStyle = .fullScreen,
         configure: ((T) -> Void)? = nil,
         completion: ((T) -> Void)? = nil
     ) {
         let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalPresentationStyle = modalPresentationStyle
         configure?(viewController)
         present(navigationController, animated: animated) {
             completion?(viewController)
@@ -182,8 +183,12 @@ extension UIViewController {
                 self.rightTapped(itemBar: rightItem)
             }
             
+            if badgeCount >= 0 && tag == 2 {
+                rightItem.setBadge(with: "\(Helper.CartItemsCount ?? 0)")
+            }
+        
             if isNotification {
-                if badgeCount >= 0 {
+                if badgeCount >= 0 && tag != 2 {
                     rightItem.setBadge(with: Helper.notificationCount)
                 }
             }

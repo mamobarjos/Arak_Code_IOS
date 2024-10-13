@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -42,26 +42,21 @@
                                     <constraint firstAttribute="height" constant="50" id="iKf-Bk-Rbz"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SOE-1b-4g0">
-                                <rect key="frame" x="69.5" y="83.5" width="32" height="32"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add-2" translatesAutoresizingMaskIntoConstraints="NO" id="Wme-hE-tdY">
+                                <rect key="frame" x="70.5" y="84.5" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="kwr-PL-JeT"/>
-                                    <constraint firstAttribute="width" constant="32" id="vqA-Rc-VNp"/>
+                                    <constraint firstAttribute="height" constant="30" id="O2q-O0-0Wn"/>
+                                    <constraint firstAttribute="width" constant="30" id="Q1Y-lX-5Ms"/>
                                 </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="Add"/>
-                                <connections>
-                                    <action selector="Add:" destination="H6I-1l-RkR" eventType="touchUpInside" id="uAu-Ea-UuZ"/>
-                                </connections>
-                            </button>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.43137254899999999" blue="0.18039215689999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="SOE-1b-4g0" firstAttribute="centerX" secondItem="Du1-VK-BHY" secondAttribute="centerX" id="Z4z-VX-B48"/>
+                            <constraint firstItem="Wme-hE-tdY" firstAttribute="centerY" secondItem="Du1-VK-BHY" secondAttribute="centerY" id="IBr-qS-Dex"/>
+                            <constraint firstItem="Wme-hE-tdY" firstAttribute="centerX" secondItem="Du1-VK-BHY" secondAttribute="centerX" id="RaT-Wv-UHf"/>
                             <constraint firstItem="Lak-RJ-64p" firstAttribute="leading" secondItem="Du1-VK-BHY" secondAttribute="leading" id="hR6-Lm-6NE"/>
                             <constraint firstAttribute="trailing" secondItem="Lak-RJ-64p" secondAttribute="trailing" id="nbw-l2-fXI"/>
                             <constraint firstAttribute="bottom" secondItem="Lak-RJ-64p" secondAttribute="bottom" id="vSD-kf-taD"/>
-                            <constraint firstItem="SOE-1b-4g0" firstAttribute="centerY" secondItem="Du1-VK-BHY" secondAttribute="centerY" id="xbz-GL-b0e"/>
                             <constraint firstAttribute="bottom" secondItem="Lak-RJ-64p" secondAttribute="bottom" id="zBv-SH-F3Q"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -92,6 +87,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Add" width="24" height="24"/>
+        <image name="Add-2" width="12" height="12"/>
     </resources>
 </document>

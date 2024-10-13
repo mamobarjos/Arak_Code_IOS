@@ -7,12 +7,15 @@
 
 import UIKit
 import FirebaseMessaging
+import DropDown
 class Helper {
+    typealias CompletionHandler = (Index, String) -> Void
     enum UserType: String {
         case GUEST
         case NORMAL
     }
     
+    static var currencyCode = Helper.country?.currency?.symbol
     static func CellPhone(_ phone:String)  {
         if (phone == ""){
             return
@@ -26,7 +29,7 @@ class Helper {
     }
     
     static var apiKey: String {
-        return "yzjPf7Ng7ccQwJeBjVa6Uj3hWM8PcMyz"
+        return "w0QEzdIHjitCUB902JGf6q2xgyGKoP9A"
     }
     
     static func verifyUrl (urlString: String?) -> Bool {
@@ -139,6 +142,17 @@ class Helper {
         }
     }
     
+    static var CartItemsCount:Int? {
+        get{
+            let firstLunch = UserDefaults.standard.string(forKey: "CartItemsCount") ?? "1"
+            return Int(firstLunch)
+        }
+        set{
+            UserDefaults.standard.set(newValue, forKey: "CartItemsCount")
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     static var userType:String? {
         get{
             let firstLunch = UserDefaults.standard.string(forKey: "userType")
@@ -194,6 +208,28 @@ class Helper {
         }
     }
     
+    static var country:Country? {
+        get {
+            let userDefaults = UserDefaults.standard
+            do {
+                let user = try userDefaults.getObject(forKey: "country", castTo: Country.self)
+                return user
+            } catch {
+                print(error.localizedDescription)
+            }
+            return nil
+        }
+        set{
+            let userDefaults = UserDefaults.standard
+            do {
+                try userDefaults.setObject(newValue, forKey: "country")
+                userDefaults.synchronize()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     static var currentUser:User? {
         get {
             let userDefaults = UserDefaults.standard
@@ -216,11 +252,33 @@ class Helper {
         }
     }
 
-    static var store: SingleStore? {
+    static var UserStoreId: Int? {
         get {
             let userDefaults = UserDefaults.standard
             do {
-                let user = try userDefaults.getObject(forKey: "store", castTo: SingleStore.self)
+                let user = try userDefaults.getObject(forKey: "UserStoreId", castTo: Int.self)
+                return user
+            } catch {
+                print(error.localizedDescription)
+            }
+            return nil
+        }
+        set{
+            let userDefaults = UserDefaults.standard
+            do {
+                try userDefaults.setObject(newValue, forKey: "UserStoreId")
+                userDefaults.synchronize()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    static var store: Store? {
+        get {
+            let userDefaults = UserDefaults.standard
+            do {
+                let user = try userDefaults.getObject(forKey: "store", castTo: Store.self)
                 return user
             } catch {
                 print(error.localizedDescription)
@@ -235,6 +293,40 @@ class Helper {
             } catch {
                 print(error.localizedDescription)
             }
+        }
+    }
+    
+    class func setupDropDown(dropDownBtn: UIView , dropDown: DropDown , imagesArr: [UIImage]? = nil , stringsArr : [String] ,  completion: @escaping CompletionHandler) {
+        self.customizeDropDown()
+        dropDown.anchorView = dropDownBtn
+        dropDown.bottomOffset = CGPoint(x: 0, y: dropDownBtn.bounds.height)
+        dropDown.dataSource = stringsArr
+        if imagesArr != nil {
+            dropDown.cellNib = UINib(nibName: "dropDownTableCell", bundle: nil)
+            dropDown.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
+                cell.textLabel?.textAlignment = .right
+                print("Item\(item)")
+            }
+        }
+        dropDown.selectionAction = { (index, item) in
+            completion(index , item)
+        }
+    }
+    
+    class func customizeDropDown() {
+        let appearance = DropDown.appearance()
+        appearance.backgroundColor = .white
+        appearance.selectionBackgroundColor = #colorLiteral(red: 1, green: 0.4309999943, blue: 0.1800000072, alpha: 0.5)
+        appearance.layer.cornerRadius = 20
+        appearance.layer.masksToBounds = true
+        appearance.layer.shadowColor = UIColor(white: 0.6, alpha: 1).cgColor
+        appearance.layer.shadowOpacity = 0.9
+        appearance.layer.shadowRadius = 10
+        appearance.animationduration = 0.2
+        appearance.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        //        appearance.textFont = UIFont.appFontRegular(ofSize: 13)
+        if #available(iOS 11.0, *) {
+            appearance.setupMaskedCorners([.layerMaxXMaxYCorner, .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner])
         }
     }
 }

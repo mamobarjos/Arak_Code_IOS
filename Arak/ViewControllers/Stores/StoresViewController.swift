@@ -71,8 +71,10 @@ class StoresViewController: UIViewController {
         hiddenNavigation(isHidden: false)
         dispatchGroup.enter()
         pageFeatured = 1
+        getCategories()
         fetchStores()
-        if Helper.currentUser?.hasStore == 1 {
+        fetchBanners()
+        if Helper.currentUser?.hasStore == true {
             self.createProductbutton.isHidden = false
             self.openStoreContainerView.isHidden = true
             banarCollectionView.isHidden = false
@@ -92,8 +94,8 @@ class StoresViewController: UIViewController {
             self.banarCollectionView.reloadData()
         }
 
-        if HomeViewController.goToMyAds {
-            HomeViewController.goToMyAds = false
+        if NewHomeViewController.goToMyAds {
+            NewHomeViewController.goToMyAds = false
             let vc = initViewControllerWith(identifier: MyAdsViewController.className, and: "My Ads".localiz()) as! MyAdsViewController
             show(vc)
         }
@@ -107,6 +109,42 @@ class StoresViewController: UIViewController {
         banarCollectionView.register(FeaturedCell.self)
     }
 
+    private func fetchBanners() {
+        storesViewModel.getBannerList(page: 1) { [weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+            
+            guard error == nil else {
+                self?.showToast(message: error)
+                return
+            }
+            self?.banarCollectionView.reloadData()
+            
+        }
+    }
+    
+    private func getCategories() {
+        storesViewModel.categories { [weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+            
+            guard error == nil else {
+                self?.showToast(message: error)
+                return
+            }
+            
+            self?.horizontalTagView.items = []
+            self?.horizontalTagView.items.append(.init(id: -1, imageURL: "", title: "action.All".localiz(), storeId: -1))
+            self?.storesViewModel.getCategories().forEach({
+                self?.horizontalTagView.items.append(.init(id: $0.id ?? 0, imageURL: $0.iconUrl ?? "", title: (Helper.appLanguage ?? "en" == "en" ? $0.name : $0.arName) ?? "", storeId: $0.id ?? 0))
+              
+            })
+            self?.horizontalTagView.selectedItemID = -1
+        }
+        
+    }
 
     private func fetchStores(page: Int = 1 ,fillCategories: Bool = true) {
         self.showLoading()
@@ -118,15 +156,6 @@ class StoresViewController: UIViewController {
             guard error == nil else {
                 self?.showToast(message: error)
                 return
-            }
-            if fillCategories {
-                self?.horizontalTagView.items = []
-                self?.horizontalTagView.items.append(.init(id: -1, imageURL: "", title: "action.All".localiz(), storeId: -1))
-                self?.storesViewModel.getCategories().forEach({
-                    self?.horizontalTagView.items.append(.init(id: $0.id, imageURL: "", title: Helper.appLanguage ?? "en" == "en" ? $0.name : $0.arName, storeId: $0.id))
-                    self?.fetchFeaturedAds()
-                })
-                self?.horizontalTagView.selectedItemID = -1
             }
             self?.stores = self?.storesViewModel.getStores() ?? []
         }
@@ -148,7 +177,7 @@ class StoresViewController: UIViewController {
     }
 
     private func fetchFeaturedAds() {
-        self.banarCollectionView.reloadData()
+       
     }
 
     private func createTagsView() -> HorizontalTagsView {
@@ -172,7 +201,7 @@ class StoresViewController: UIViewController {
     }
     
     @IBAction func MakeAd(_ sender: Any) {
-        let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "Add Product".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
+        let vc = initViewControllerWith(identifier: AdsViewController.className, and: "") as! AdsViewController
         show(vc)
     }
 }

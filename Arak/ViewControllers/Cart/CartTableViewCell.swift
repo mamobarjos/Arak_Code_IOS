@@ -33,18 +33,31 @@ class CartTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    public func setupCell(product: String) {
-//        productImageView.kf.setImage(with: URL(string: product.image ?? ""))
-//        titleLabel.text = product.title
-//        priceLabel.text = product.unitPrice
-//        brandlabel.text = product.categoryName
-//        if let quantity = product.quantity {
-//            quantityLabel.text = String(quantity)
-//        }
+    public func setupCell(product: ArakProduct) {
+        titleLabel.text = product.name
+        let totalPrice  = ((Double(product.price ?? "0.0") ?? 0.0))
+        priceLabel.text = String(format: "%.2f", totalPrice) + " " + (Helper.currencyCode ?? "JD")
+        brandlabel.text = (product.selectedVariant?.name ?? "")
+        productImageView.getAlamofireImage(urlString: product.images?.map({$0.src ?? ""}).first )
+        quantityLabel.text = "\(product.quantity ?? 1)"
+        offerPricelabel.isHidden = true
         
-        // Set the offer price with strikethrough and custom color
-//        let offerPrice = "1000,000JD" 
-//            offerPricelabel.setStrikethroughText(offerPrice, color: UIColor(hex: "#FF6E2E"))
+        
+        if product.quantity == 1 {
+            minusButton.image = UIImage(systemName: "trash")
+            minusButton.tintColor = .accentOrange
+            minusButton.contentMode = .scaleAspectFit
+        } else {
+            minusButton.image = UIImage(named: "minus")
+            minusButton.contentMode = .center
+        }
+        plusButton.addTapGestureRecognizer { [weak self] in
+            self?.plusButtonAction?()
+        }
+        
+        minusButton.addTapGestureRecognizer { [weak self] in
+            self?.minusButtonAction?()
+        }
         
     }
 }

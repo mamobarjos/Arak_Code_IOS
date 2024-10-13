@@ -15,6 +15,7 @@ struct StoreUserService {
 }
 class UserStoreViewController: UIViewController {
 
+    @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var storeImageView: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var storeTitleLabel: UILabel!
@@ -25,7 +26,7 @@ class UserStoreViewController: UIViewController {
     private let inset: CGFloat = 10
     private let minimumLineSpacing: CGFloat = 10
     private let minimumInteritemSpacing: CGFloat = 10
-    
+    var storeViewModel: StoreViewModel = StoreViewModel()
     private var storeUserService: [StoreUserService] = [] {
         didSet {
             collectionView.reloadData()
@@ -35,6 +36,9 @@ class UserStoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        if let userStore = Helper.store {
+            fillUI(with: userStore)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,16 +51,28 @@ class UserStoreViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.register(UserStoreServiceItemCollectionViewCell.self)
         
-        storeUserService = [.init(id: 1, image: "Add_product", title: "Add product"),
-//                            .init(id: 2, image: "Sales_balance", title: "Sales balance"),
+        storeUserService = [
+            .init(id: 1, image: "Add_product", title: "Add Product".localiz()),
+            .init(id: 2, image: "shopping-store", title: "label.My Store".localiz()),
 //                            .init(id: 3, image: "Undelivered_requests", title: "Undelivered requests"),
 //                            .init(id: 4, image: "Delivered_requests", title: "Delivered requests"),
-                            .init(id: 5, image: "Statistics", title: "Statistics"),
-                            .init(id: 6, image: "My_product", title: "My product")]
+//            .init(id: 5, image: "Statistics", title: "Statistics".localiz()),
+            .init(id: 6, image: "My_product", title: "label.My Products".localiz())
+        ]
         
     }
     
 
+    private func fillUI(with store: Store) {
+        coverImageView.kf.setImage(with: URL(string: store.cover ?? ""))
+        storeImageView.kf.setImage(with: URL(string: store.img ?? ""))
+        storeTitleLabel.text = store.name
+        storeLocationLabel.text = store.locationName
+        cosmosView.rating = Double(store.totalRates ?? 5) ?? 5
+        rateLabel.text = "[\(store.totalRates?.rounded(toPlaces: 1) ?? 5)]"
+    }
+    
+    
     @IBAction func backButtonaction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -84,9 +100,14 @@ extension UserStoreViewController: UICollectionViewDelegate, UICollectionViewDat
         
         switch item.id {
         case 1 :
-            let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "Add Product", storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
+            let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "Add Product".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
             show(vc)
             
+        case 2:
+            let vc = initViewControllerWith(identifier: StoreViewController.className, and: "label.Your Store".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
+            vc.mode = .edit
+            vc.storeType = .myStore
+            show(vc)
         case 5:
             let vc = StatisticsViewController.loadFromNib()
             show(vc)

@@ -42,11 +42,11 @@
 "Submit" = "ارسال";
 "Please check your email" = " يرجى التحقق من البريد الالكتروني لديك ";
 "OR" = "أو";
-"Male" = "ذكر";
-"Female" = "أنثى";
+"Male" = "MALE";
+"Female" = "FEMALE";
 "Image" = "صورة";
 "Video" = "فيديو";
-"Website" = "ويب";
+//"Website" = "ويب";
 
 
 "Title" = "العنوان";
@@ -164,8 +164,8 @@
 "JOD" = "د.أ";
 "Enter Name" = "ادخل الاسم";
 "Enter Phone Number" = "7xxxxxxxx";
-"Wallet Type" = "نوع المحفظة";
-"Select Wallet Type" = "أدخل نوع المحفظة";
+"Wallet Type" = "نوع البنك";
+"Select Wallet Type" = "حدد نوع البنك";
 "Continue" = "المتابعة";
 "Enter Amount" = "ادخل القيمة";
 "Your request has been successfully uploaded" = "تم تحميل طلبك بنجاح";
@@ -211,7 +211,7 @@
 
 //Profile
 "Edit Profile" = "تعديل الملف الشخصي";
-"My Detail" = "تفاصيلي";
+"My profile" = "تفاصيلي";
 "Sign out" = "تسجيل الخروج";
 "Follow Us" = "تابعنا";
 "Favorite" = "المفضلات";
@@ -242,8 +242,8 @@
 "Legal" = "السياسات";
 
 "Arak" = "أراك";
-
-
+"See All" = "مشاهدة الكل";
+"Products" = "المنتجات";
 "All" = "الكل";
 "Stores" = "المتاجر";
 "Images" = "الصور";
@@ -253,7 +253,7 @@
 
 //Addiational
 "Withdrawal Request Successful" = "تم طلب السحب بنجاح";
-"Your withdrawal request has been confirmed" = "تم تأكيد طلب السحب الخاص بك";
+"Your withdrawal request has been confirmed" = "لقد تلقينا طلب السحب الخاص بك يرجى العلم أن تنفيذ العملية يستغرق يومين عمل شكرا لك";
 "Go to My Wallet" = "اذهب إلى محفظتي";
 "Business Name" = "الاسم التجاري";
 "Custom" = "مخصص";
@@ -320,7 +320,7 @@
 "Please enter website" = "الرجاء إدخال الموقع";
 "Please enter valid url for website" = "الرجاء إدخال عنوان موقع صحيح";
 "Join us and be one of the thousands of registered members" = "انضم إلينا وكن واحدًا من آلاف الأعضاء المسجلين";
-"We apologize, the minimum amount for withdrawal is 5 dinars" = "معذرة الحد الادنى للسحب 5 دنانير";
+"We apologize, the minimum amount for withdrawal is 3 dinars" = "معذرة الحد الادنى للسحب 3 دنانير";
 "Please contact us to purchase a coupon" = "يرجى الاتصال بنا لشراء قسيمة";
 
 
@@ -372,7 +372,7 @@
 "error.Please Enter Store Description" = "الرجاء إدخال وصف المتجر";
 "error.Please Enter Store Phone Number" = "الرجاء إدخال رقم هاتف المتجر";
 "error.Please Enter your Store Location" = "الرجاء إدخال موقع متجرك";
-"error.Please Choose Store Category Type" = "الرجاء اختيار نوع فئة المتجر";
+"error.Please Choose Store Category Type" = "فئة المتجر";
 "error.Please Add Your Store Image" = "الرجاء إضافة صورة متجرك";
 "error.Please Add Your Store Cover Image" = "يرجى إضافة صورة غلاف متجرك";
 "error.you already have store" = "لديك بالفعل متجر";
@@ -395,3 +395,57 @@
 "Join us to open your online store" = "انضم إلينا لفتح متجرك الإلكتروني";
 "Call" = "اتصال";
 "Add Product" = "أضف منتج";
+"Interests" = "الاهتمامات";
+"Choose Your interests" = "اختر اهتماماتك";
+
+"Suggestions Of Stores" = "اقتراحات المتاجر";
+"Please select at least one Category" = "الرجاء اختيار فئة واحدة على الأقل";
+"Social media accounts" = "حسابات التواصل الاجتماعي";
+"Review deleted successfully" = "تم حذف المراجعة بنجاح";
+"label.Reviews" = "المراجعات";
+"Upload Cover Image" = "تحميل صورة الغلاف";
+"Store Information" = "معلومات المتجر";
+"Add social link" = "إضافة الروابط الاجتماعية";
+"Add" = "أضف";
+"  Social media links  " = "  روابط وسائل التواصل الاجتماعي  ";
+"Statistics" = "إحصائيات";
+"Choose the option you want to apply" = "اختر الخيار الذي تريد تطبيقه";
+"View" = "عرض";
+"Edit" = "تعديل";
+"Dismiss" = "إغلاق";
+"Cart" = "السلة";
+"Your Cart is empty" = "عربة التسوق الخاصة بك فارغة";
+"error.Please Enter First Name" = "الرجاء إدخال الاسم الأول";
+"error.Please Enter Last Name" = "الرجاء إدخال الاسم الأخير";
+"error.Please Enter address" = "الرجاء إدخال العنوان";
+"error.Please Enter Post Code" = "الرجاء إدخال الرمز البريدي";
+"error.Please Enter Phone Number" = "الرجاء إدخال رقم الهاتف";
+"error.Please Chooose Payment Type" = "الرجاء اختيار طريقة الدفع";
+"Shipping Details" = "تفاصيل الشحن";
+"Arak Store" = "متجر اراك";
+"Product details" = "تفاصيل المنتج";
+"Quantity:" = "كمية:";
+"Price:" = "سعر:";
+"Choose Type:" = "اختر النوع:";
+"Add your notes here" = "أضف ملاحظاتك هنا";
+"Special note" = "ملاحظة خاصة";
+"Payment summary" = "ملخص الدفع";
+"Cart total" = "إجمالي السلة";
+"Total amount" = "المبلغ الإجمالي";
+"Place order" = "إتمام الطلب";
+"First Name" = "الاسم الأول";
+"Last Name" = "اسم العائلة";
+"Address" = "العنوان";
+"Post code" = "الرمز البريدي";
+"Choose Payment Method:" = "اختر طريقة الدفع:";
+"Thanks for using ARAK" = "شكرًا لاستخدامك ARAK";
+"Your order on the way! enjoy it." = "طلبك في الطريق! استمتع به.";
+"Store ads" = "إعلانات المتجر";
+"Requierd" = "مطلوب";
+"Please selecte the quantity" = "الرجاء تحديد الكمية";
+"Add To Cart" = "أضف إلى السلة";
+"Products add to cart" = "تمت إضافة المنتجات إلى سلة التسوق";
+"Product deleted successfully" = "تم حذف المنتج بنجاح";
+"Store" = "متجر";
+"Set location on map" = "تحديد الموقع على الخريطة";
+"Watched" = "تمت مشاهدته";

@@ -15,19 +15,19 @@ struct EllectionFilters: Codable {
 struct District: Codable {
     let id: Int?
     let name, nameAr: String?
-    let governorateID: Int?
+//    let governorateID: Int?
 
     enum CodingKeys: String, CodingKey {
         case id, name
         case nameAr = "name_ar"
-        case governorateID = "governorate_id"
+//        case governorateID = "governorate_id"
     }
 }
 
 
 struct EllectionData: Codable {
-    let people: People?
-    let banners: Banners?
+    let electedPeople: [EllectionPeople]?
+//    let banners: Banners?
 }
 
 // MARK: - Banners
@@ -66,14 +66,14 @@ struct EllectionPeople: Codable {
     let img: String?
     let coverImg: String?
     let email, phoneNo, cluster: String?
-    let governorate, district: District?
+    let governorate: District?
     
     enum CodingKeys: String, CodingKey {
         case id, name, description, img
         case coverImg = "cover_img"
         case email
         case phoneNo = "phone_no"
-        case cluster, governorate, district
+        case cluster, governorate
     }
 }
 

@@ -13,7 +13,7 @@ import AVKit
 class DetailAdsViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var locationButton: UIButton!
-    @IBOutlet weak var companyButton: UIButton!
+//    @IBOutlet weak var companyButton: UIButton!
     @IBOutlet weak var companyStackView: UIStackView!
     @IBOutlet weak var titleTextField: UITextField!
     
@@ -24,21 +24,24 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var companyTextField: UITextField!
-    @IBOutlet weak var individualButton: UIButton!
+//    @IBOutlet weak var individualButton: UIButton!
     @IBOutlet weak var slider: FSPagerView!
     @IBOutlet weak var pageControl: UIPageControl!
     
+    @IBOutlet weak var phoneContainerView: UIView!
+    @IBOutlet weak var phoneStackView: UIStackView!
+    @IBOutlet weak var phoneExtensionButton: UIButton!
     @IBOutlet weak var sliderView: UIView!
     @IBOutlet weak var contactView: UIView!
     
     @IBOutlet weak var infoView: UIView!
-    @IBOutlet weak var typeAdsView: UIView!
+//    @IBOutlet weak var typeAdsView: UIView!
     
     private var imagePicker = UIImagePickerController()
     private var mediaList: [UIImage] = []
     private var videoUrl: URL?
     private var categoryType: AdsTypes = .image
-    private var adCategory: AdsCategory?
+    private var adCategory: AdCategory?
     private var packageSelect: Package?
     private var error = ""
     private var typeAds = 1 // 1 for individual , 2 company
@@ -48,19 +51,20 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+//        phoneContainerView.semanticContentAttribute = .forceLeftToRight
+        phoneTextField.keyboardType = .phonePad
+        phoneTextField.textAlignment = .left
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.coloredNavigationBar()
+//        navigationController?.navigationBar.coloredNavigationBar()
         
     }
     
+    
     private func setup() {
         self.setupHideKeyboardOnTap()
-        // phoneNumberStackView.semanticContentAttribute = .forceLeftToRight
-        phoneTextField.semanticContentAttribute = .forceLeftToRight
-        phoneTextField.textAlignment = .left
         
         pageControl.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.1)
         pageControl.addRoundedCorners(cornerRadius: 10)
@@ -76,13 +80,15 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
             categoryType =  AdsTypes.videoWeb
             websiteStackView.isHidden = false
         }
-        sliderView.addShadow(position: .all)
-        infoView.addShadow(position: .all)
-        typeAdsView.addShadow(position: .all)
-        contactView.addShadow(position: .all)
-        continueButton.addShadow(position: .all)
-        phoneTextField.setRightImage(image: #imageLiteral(resourceName: "edit"))
-        locationTextField.setRightImage(image: #imageLiteral(resourceName: "Pin"))
+        
+//        sliderView.addShadow(position: .all)
+//        infoView.addShadow(position: .all)
+//        typeAdsView.addShadow(position: .all)
+//        contactView.addShadow(position: .all)
+//        continueButton.addShadow(position: .all)
+//        phoneTextField.setRightImage(image: #imageLiteral(resourceName: "edit"))
+//        locationTextField.setRightImage(image: #imageLiteral(resourceName: "Pin"))
+        getCountry()
         websiteTextField.setRightImage(image: #imageLiteral(resourceName: "world-wide-web"))
         
         companyTextField.addDoneButtonOnKeyboard()
@@ -97,6 +103,16 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
         companyStackView.isHidden = true
         
         
+    }
+    
+    func getCountry() {
+      Network.shared.request(request: APIRouter.countries, decodable: CountryContainer.self) {[weak self] (response, error) in
+        if error != nil {
+          
+          return
+        }
+          self?.phoneExtensionButton.setTitle(response?.data?.countries?.first(where: {$0.id == Helper.currentUser?.countryID})?.countryCode ?? "+962", for: .normal)
+      }
     }
     
     private func setupDescription() {
@@ -122,8 +138,8 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
     }
     
     private func loclization() {
-        companyButton.setTitle("Company".localiz(), for: .normal)
-        individualButton.setTitle("Individual".localiz(), for: .normal)
+//        companyButton.setTitle("Company".localiz(), for: .normal)
+//        individualButton.setTitle("Individual".localiz(), for: .normal)
         companyTextField.placeholder = "Company Name".localiz()
         
         descriptionTextView.text = "Description".localiz()
@@ -131,10 +147,12 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
         titleTextField.placeholder = "Title".localiz()
 //        let phoneNo = Helper.currentUser?.phoneNo ?? ""
 //        phoneTextField.text = phoneNo.replacingOccurrences(of: "+962", with: "")
-        locationTextField.text = ""
+        locationTextField.placeholder = "Set location on map".localiz()
+        phoneTextField.placeholder = "Phone Number".localiz()
+        websiteTextField.placeholder = "Website".localiz()
         
     }
-    func confige(adCategory: AdsCategory?,packageSelect: Package?) {
+    func confige(adCategory: AdCategory?,packageSelect: Package?) {
         self.adCategory = adCategory
         self.packageSelect = packageSelect
         
@@ -149,6 +167,7 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
         slider.dataSource = self
         pageControl.hidesForSinglePage = true
     }
+    
     @IBAction func PickLocation(_ sender: Any) {
         let vc = initViewControllerWith(identifier: MapViewController.className, and: "") as! MapViewController
         vc.configue {
@@ -161,19 +180,19 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
         
     }
     
-    @IBAction func Company(_ sender: Any) {
-        typeAds = 2
-        companyButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 1), for: .normal)
-        individualButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 0.35), for: .normal)
-        companyStackView.isHidden = false
-    }
+//    @IBAction func Company(_ sender: Any) {
+//        typeAds = 2
+//        companyButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 1), for: .normal)
+//        individualButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 0.35), for: .normal)
+//        companyStackView.isHidden = false
+//    }
     
-    @IBAction func Individual(_ sender: Any) {
-        typeAds = 1
-        companyButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 0.35), for: .normal)
-        individualButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 1), for: .normal)
-        companyStackView.isHidden = true
-    }
+//    @IBAction func Individual(_ sender: Any) {
+//        typeAds = 1
+//        companyButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 0.35), for: .normal)
+//        individualButton.setTitleColor(#colorLiteral(red: 0.1402117312, green: 0.2012455165, blue: 0.4366841316, alpha: 1), for: .normal)
+//        companyStackView.isHidden = true
+//    }
     
     @IBAction func Continue(_ sender: Any) {
         if !valid() {
@@ -181,19 +200,19 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
             return
         }
         
-        var adsImages:[AdImage] = []
+        var adsImages:[AdFile] = []
         var adsImagesPrepareing: [AdImagePrepare] = []
         
         if videoUrl != nil {
             if let cell:UploadCell = slider.cellForItem(at: 0) as? UploadCell  {
                 videoUrl?.absoluteString.getDuration(compliation: { duration in
-                    adsImages.append(AdImage(id: 0, path: self.videoUrl?.absoluteString, adID: -1, createdAt: nil, updatedAt: nil,thumbnilData: cell.photoImageView.image,duration: duration))
+                    adsImages.append(AdFile(id: 0, path: self.videoUrl?.absoluteString, thumbnilData: cell.photoImageView.image, duration: duration, adID: -1))
                     self.continueProcess(adsImagesPrepareing: adsImagesPrepareing, adsImages: adsImages)
                 })
                 
             } else {
                 videoUrl?.absoluteString.getDuration(compliation: { duration in
-                    adsImages.append(AdImage(id: 0, path: self.videoUrl?.absoluteString, adID: -1, createdAt: nil, updatedAt: nil,thumbnilData:UIImage(named: "Summery Image-2"),duration: duration))
+                    adsImages.append(AdFile(id: 0, path: self.videoUrl?.absoluteString))
                     self.continueProcess(adsImagesPrepareing: adsImagesPrepareing, adsImages: adsImages)
                 })
             }
@@ -208,11 +227,67 @@ class DetailAdsViewController: UIViewController, UITextViewDelegate {
         
     }
     
-    private func continueProcess(adsImagesPrepareing:[AdImagePrepare] , adsImages:[AdImage] ) {
+    private func continueProcess(adsImagesPrepareing:[AdImagePrepare] , adsImages:[AdFile] ) {
         var totalAmount = ""
-        totalAmount = "\(packageSelect?.price ?? 0) \("JOD".localiz())"
+        totalAmount = "\(packageSelect?.price ?? "0") \((Helper.currencyCode ?? "JOD"))"
+//        let adfs = Adverisment(
+//            id: -1,
+//            title: titleTextField.text,
+//            desc: descriptionTextView.text,
+//            lon: "\(currentLocation?.coordinate.longitude ?? 0.0)",
+//            lat: "\(currentLocation?.coordinate.latitude ?? 0.0)",
+//            locationTitle: locationTextField.text,
+//            phoneNo:  "+962" + (phoneTextField.text ?? ""),
+//            alternativePhoneNo: "\(packageSelect?.noOfImgs ?? 0)",
+//            companyName: companyTextField.text,
+//            adCategoryID: adCategory?.id,
+//            packageID: packageSelect?.id,
+//            userID: Helper.currentUser?.id,
+//            createdAt:  packageSelect?.seconds ?? "",
+//            updatedAt: packageSelect?.reach,
+//            duration: videoUrl != nil ? "\(adsImages.first?.duration ?? 5)" : "\(TimeInterval(((Int(self.packageSelect?.seconds ?? "1") ?? 1) )))",
+//            totalAmount: totalAmount,
+//            adImages: adsImages,
+//            adFileImagesPreparing: adsImagesPrepareing,
+//            websiteURL: websiteTextField.text,
+//            reviews: [])
         
-        let ads = Adverisment(id: -1, title: titleTextField.text, desc: descriptionTextView.text, lon: "\(currentLocation?.coordinate.longitude ?? 0.0)", lat: "\(currentLocation?.coordinate.latitude ?? 0.0)",locationTitle: locationTextField.text, phoneNo:  "+962" + (phoneTextField.text ?? ""), alternativePhoneNo: "\(packageSelect?.noOfImgs ?? 0)", companyName: companyTextField.text, adCategoryID: adCategory?.id, packageID: packageSelect?.id, userID: Helper.currentUser?.id, createdAt:  packageSelect?.seconds ?? "", updatedAt: packageSelect?.reach, duration: videoUrl != nil ? "\(adsImages.first?.duration ?? 5)" : "\(TimeInterval(((Int(self.packageSelect?.seconds ?? "1") ?? 1) )))",totalAmount: totalAmount, adImages: adsImages,adFileImagesPreparing: adsImagesPrepareing, websiteURL: websiteTextField.text, reviews: [])
+        
+        let ads = Adverisment(
+            isVisited: nil,  // Or provide the appropriate value
+            statusTitle: nil,  // Or provide the appropriate value
+            title: titleTextField.text,
+            adPackageID: packageSelect?.id,
+            adImages: adsImages,  // Or provide the appropriate array of AdFile
+            duration: 5,
+            userID: Helper.currentUser?.id,
+            updatedAt: "\(packageSelect?.reach ?? 0)",
+            isPaymentCompleted: nil,  // Or provide the appropriate value
+            views: nil,  // Or provide the appropriate value
+            adCategory: nil,  // Or provide the appropriate value
+            package: nil,  // Or provide the appropriate Package
+            isFav: false,  // Or provide the appropriate value
+            id: -1,
+            storeId: nil,
+            phoneNo: "+962" + (phoneTextField.text ?? ""),
+            adCategoryID: adCategory?.id,
+            createdAt: "\(packageSelect?.seconds ?? 0)",
+            thumbUrl: nil,  // Or provide the appropriate value
+            reviews: [],  // Or provide the appropriate array of ReviewResponse
+            websiteURL: websiteTextField.text,
+            desc: descriptionTextView.text,
+            locationTitle: locationTextField.text,
+            alternativePhoneNo: "\(packageSelect?.noOfImgs ?? 0)",
+            companyName: companyTextField.text,
+            totalAmount: totalAmount,
+            lon: "\(currentLocation?.coordinate.longitude ?? 0.0)",
+            lat: "\(currentLocation?.coordinate.latitude ?? 0.0)",
+            isReviewed: false, checkOutURL: "",
+            adFileImagesPreparing: adsImagesPrepareing
+            
+        )
+            
+
         let vc = initViewControllerWith(identifier: SummaryViewController.className, and: "") as! SummaryViewController
         
         vc.confige(ads: ads)
@@ -421,7 +496,7 @@ extension DetailAdsViewController : FSPagerViewDelegate ,  FSPagerViewDataSource
             imagePicker.videoQuality = .typeMedium
             imagePicker.videoExportPreset = AVAssetExportPresetMediumQuality
             imagePicker.allowsEditing = true
-            imagePicker.videoMaximumDuration = TimeInterval(((Int(self.packageSelect?.seconds ?? "1") ?? 1)))
+            imagePicker.videoMaximumDuration = TimeInterval(((Int(self.packageSelect?.seconds ?? 1))))
             imagePicker.modalPresentationStyle = .fullScreen
             present(imagePicker, animated: true, completion: nil)
         }

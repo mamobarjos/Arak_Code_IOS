@@ -25,6 +25,8 @@ class AdsCell: FSPagerViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var favorateButton: UIButton!
 //    @IBOutlet weak var timerImageView: UIImageView!
+    @IBOutlet weak var watchedView: UIView!
+    @IBOutlet weak var watchedLabel: UILabel!
     
     private var playVideo: PlayVideo?
     private var favorateBlock: FavorateBlock?
@@ -40,6 +42,7 @@ class AdsCell: FSPagerViewCell {
         typeLabel.text = ""
         categoryContainerView.isHidden = true
         specialAdsLogo.isHidden = true
+        watchedView.isHidden = true
         
     }
     
@@ -71,6 +74,14 @@ class AdsCell: FSPagerViewCell {
             categoryContainerView.isHidden = true
             typeView.isHidden = false
             photoImageView.layer.cornerRadius = 7
+            if !isFavorate && (ads.isVisited == true) {
+                watchedView.isHidden = false
+                watchedLabel.text = "Watched".localiz()
+                watchedLabel.font = .font(for: .regular, size: 14)
+            } else {
+                watchedView.isHidden = true
+            }
+            
         }
         
         learnMoreButton.isHidden = true
@@ -82,7 +93,7 @@ class AdsCell: FSPagerViewCell {
         self.favorateBlock = favorateBlock
 //        titleLabel.text = ads.title ?? ""
         favorateButton.isHidden = !isFavorate
-        favorateButton.setImage(ads.isFav ? #imageLiteral(resourceName: "Icon awesome-heart") : #imageLiteral(resourceName: "Icon awesome-heart-1"), for: .normal)
+        favorateButton.setImage(ads.isFav ?? false ? #imageLiteral(resourceName: "Icon awesome-heart") : #imageLiteral(resourceName: "Icon awesome-heart-1"), for: .normal)
         let path = ads.adImages?.first?.path ?? ""
         if ads.adCategoryID == AdsTypes.image.rawValue {
             photoImageView.getAlamofireImage(urlString: path)
@@ -91,10 +102,18 @@ class AdsCell: FSPagerViewCell {
             photoImageView.addTapGestureRecognizer {
                 self.playVideo?()
             }
+            
+            watchedView.addTapGestureRecognizer {
+                self.playVideo?()
+            }
         }else if ads.adCategoryID == AdsTypes.video.rawValue {
             photoImageView.getAlamofireImage(urlString: ads.thumbUrl)
 //            timeCountLabel.text = timeCountTitle
             photoImageView.addTapGestureRecognizer {
+                self.playVideo?()
+            }
+            
+            watchedView.addTapGestureRecognizer {
                 self.playVideo?()
             }
             
@@ -105,6 +124,22 @@ class AdsCell: FSPagerViewCell {
             typeLabel.text = "Website".localiz()
 //            titleLabel.text = ads.title ?? ""
             photoImageView.addTapGestureRecognizer {
+                self.playVideo?()
+            }
+            
+            watchedView.addTapGestureRecognizer {
+                self.playVideo?()
+            }
+        }else if ads.adCategoryID == AdsTypes.store.rawValue {
+            photoImageView.getAlamofireImage(urlString: path)
+//            timeCountLabel.text = timeCountTitle
+            typeLabel.text = "Store".localiz()
+//            titleLabel.text = ads.title ?? ""
+//            favorateButton.isHidden = true
+            photoImageView.addTapGestureRecognizer {
+                self.playVideo?()
+            }
+            watchedView.addTapGestureRecognizer {
                 self.playVideo?()
             }
         }

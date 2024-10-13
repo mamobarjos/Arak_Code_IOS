@@ -13,16 +13,19 @@ import Foundation
 class AdsViewController: UIViewController {
 
     // MARK: - Outlets
-  @IBOutlet weak var adsTableView: UITableView!
-  @IBOutlet weak var bottomTableConstraint: NSLayoutConstraint!
-
+  
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    private let inset: CGFloat = 15
+    private let minimumLineSpacing: CGFloat = 10
+    private let minimumInteritemSpacing: CGFloat = 10
 
     var viewModel: AdsViewModel = AdsViewModel()
 
     // MARK: - Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "Ads Type".localiz()
         setupUI()
     }
 
@@ -50,8 +53,9 @@ class AdsViewController: UIViewController {
   }
     // MARK: - Protected Methods
     private func setupUI() {
-      adsTableView.register(AdsTypeCell.self)
-      bottomTableConstraint.constant = Helper.hasTopNotch ? -50 : -80
+      collectionView.register(AdsTypeCollectionViewCell.self)
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
 
   func fetchAds() {
@@ -67,32 +71,49 @@ class AdsViewController: UIViewController {
         self?.showToast(message: error)
         return
       }
-      self?.adsTableView.reloadData()
+      self?.collectionView.reloadData()
     }
   }
 
 }
-extension AdsViewController : UITableViewDelegate , UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    viewModel.adsTypeCount == 0 ?  self.adsTableView.setEmptyView(onClickButton: {
-        self.fetchAds()
-    }) : self.adsTableView.restore()
-    return viewModel.adsTypeCount
-  }
 
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell:AdsTypeCell = adsTableView.dequeueReusableCell(forIndexPath: indexPath)
-    cell.configeUI(adCategory: viewModel.itemType(at: indexPath.row))
-    return cell
-  }
+extension AdsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.adsTypeCount
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell:AdsTypeCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+        cell.configeUI(adCategory: viewModel.itemType(at: indexPath.row))
+        cell.onButtonAction = { [weak self] in
+            guard let self else {return}
+            let vc = self.initViewControllerWith(identifier: PackageViewController.className, and: "") as! PackageViewController
 
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-   
-    let vc = initViewControllerWith(identifier: PackageViewController.className, and: "") as! PackageViewController
+            vc.confige(adCategory:self.viewModel.itemType(at: indexPath.row))
 
-    vc.confige(adCategory:viewModel.itemType(at: indexPath.row))
+            self.show(vc)
+        }
+        return cell
+    }
 
-    show(vc)
-  }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: (collectionView.frame.width / 2) - 20, height: 150)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return minimumLineSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return minimumInteritemSpacing
+    }
 }

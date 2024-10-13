@@ -21,8 +21,8 @@ class MyWalletViewModel {
     }
     
     // MARK: - Protected Methods
-    func getTransactions(page: Int,isFilter: Bool , year:String, month: String,compliation: @escaping CompliationHandler) {
-        Network.shared.request(request: APIRouter.transactions(page: page, isFilter: isFilter, year: year, month: month), decodable: PagingModel<[Transaction]>.self) { (response, error) in
+    func getTransactions(page: Int , from:String, to: String,compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.transactions(page: page, from: from, to: to), decodable: TransactionContainer.self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
@@ -31,13 +31,13 @@ class MyWalletViewModel {
                 self.transactionList = []
             }
             self.transactionList.append(contentsOf: response?.data?.data ?? [])
-            self.hasMore = (response?.data?.data ?? []).count != 0
+            self.hasMore = false
             compliation(nil)
         }
     }
     
     func createCoupon(code: String ,compliation: @escaping CompliationHandler)   {
-        Network.shared.request(request: APIRouter.createCoupon(code: code) ,decodable: String.self) { (response, error) in
+        Network.shared.request(request: APIRouter.createCoupon(code: code) ,decodable: CouponResponse.self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
@@ -47,4 +47,8 @@ class MyWalletViewModel {
         }
     }
     
+}
+
+struct CouponResponse: Codable {
+    let balance: String?
 }

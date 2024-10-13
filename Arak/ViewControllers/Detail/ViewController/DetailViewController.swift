@@ -11,6 +11,9 @@ class DetailViewController: UIViewController {
     
     private var id: Int = -1
     private var viewModel = DetailViewModel()
+//    Fav
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,7 +78,12 @@ class DetailViewController: UIViewController {
         
     }
     private func loadDetailView() {
-        
+        if viewModel.ad?.isMe == false {
+            let rightButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: viewModel.ad?.isFav ?? false ? "Fav" : "favorite_heart_like_love_icon"), style: .plain, target: self, action: #selector(Favorite))
+            rightButton.tintColor = UIColor.accentOrange
+            navigationItem.rightBarButtonItem = rightButton
+        }
+       
         title = viewModel.ad?.title ?? ""
         guard let detailView = Bundle.main.loadNibNamed("DetailView", owner: self, options: nil)?.first as? DetailView else {
             navigationController?.popViewController(animated: true)
@@ -122,7 +130,7 @@ class DetailViewController: UIViewController {
             case .whatsapp(phone: let phone):
                 self.whatsapp(number: phone, isMe: self.viewModel.ad?.isMe ?? false)
             case .favorite(id: let id):
-                self.Favorite(id: id,isFavorate: !(self.viewModel.ad?.isFav ?? false))
+                self.Favorite()
             case .backToHome:
                 self.navigationController?.popToViewController(ofClass: BubbleTabBarController.self)
             }
@@ -164,9 +172,9 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func Favorite(id: Int,isFavorate: Bool) {
+    @objc func Favorite() {
         showLoading()
-        viewModel.favorite(id: id, isFavorate: isFavorate) { [weak self] (error) in
+        viewModel.favorite(id: id) { [weak self] (error) in
             defer {
                 self?.stopLoading()
             }

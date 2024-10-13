@@ -26,7 +26,7 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet weak var oldPasswordTextField: UITextField!
     // MARK: - Properties
     
-    
+    let keyChain = KeychainPasswordStoreService()
     var viewModel: ResetPasswordViewModel = ResetPasswordViewModel()
     private var error = ""
     private var typeProcess:TypeProcess = .reset
@@ -151,7 +151,7 @@ class ResetPasswordViewController: UIViewController {
           data = [:]
           data["old_password"] = oldPasswordTextField.text ?? ""
           data["new_password"] = passwordTextField.text ?? ""
-          data["confirmed_password"] = confirmPasswordTextField.text ?? ""
+//          data["confirmed_password"] = confirmPasswordTextField.text ?? ""
 
           viewModel.editPassword(data: data) { [weak self] (error) in
             defer {
@@ -162,6 +162,9 @@ class ResetPasswordViewController: UIViewController {
               self?.showToast(message: error)
               return
             }
+              self?.keyChain.save(credentials: .init(
+                phoneNumber: Helper.currentUser?.phoneNo ?? "",
+                  password: self?.passwordTextField.text ?? ""))
             self?.showToast(message: "Edit Password has been Successfully".localiz())
             self?.navigationController?.popViewController(animated: true)
             
@@ -169,8 +172,7 @@ class ResetPasswordViewController: UIViewController {
         } else {
           data = [:]
           data["otp_code"] = otpCode
-          data["password1"] = passwordTextField.text ?? ""
-          data["password2"] = confirmPasswordTextField.text ?? ""
+          data["new_password"] = confirmPasswordTextField.text ?? ""
           data["phone_no"] = email
 
           viewModel.resetPassword(data: data) { [weak self] (error) in
@@ -182,6 +184,10 @@ class ResetPasswordViewController: UIViewController {
               self?.showToast(message: error)
               return
             }
+              
+              self?.keyChain.save(credentials: .init(
+                phoneNumber: Helper.currentUser?.phoneNo ?? "",
+                  password: self?.confirmPasswordTextField.text ?? ""))
             let successViewController =  self?.initViewControllerWith(identifier: SuccessViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! SuccessViewController
             successViewController.confige(source: .reset)
             self?.show(successViewController)

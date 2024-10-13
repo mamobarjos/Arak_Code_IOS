@@ -23,6 +23,10 @@ class CongretsStoreViewController: UIViewController {
         createAdLabel.text = congretsType.actionTitle
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hiddenNavigation(isHidden: false)
+    }
     public func configure(for type: CongretsType = .store) {
         congretsType = type
     }
@@ -69,11 +73,11 @@ extension CongretsStoreViewController {
             switch self {
             case .store:
                 let vc = initViewControllerWith(identifier: StoreViewController.className, and:  "") as! StoreViewController
-                vc.storeId = Helper.store?.id
+                vc.storeId = Helper.UserStoreId
                 return vc
             case .service:
                 let vc = initViewControllerWith(identifier: StoreViewController.className, and:  "") as! StoreViewController
-                vc.storeId = Helper.store?.id
+                vc.storeId = Helper.UserStoreId
                 vc.mode = .edit
                 return vc
             }

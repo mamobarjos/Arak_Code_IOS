@@ -63,31 +63,47 @@ struct SingleStore: Codable {
     }
 }
 // MARK: - StoreProduct
+
+struct StoreProductContainer : Codable {
+    let storeProducts : [StoreProduct]?
+    
+    enum CodingKeys: String, CodingKey {
+        case storeProducts = "storeProducts"
+    }
+}
+
 struct StoreProduct: Codable {
-    let id: Int
+    let id: Int?
     let name: String?
     let desc: String?
-    let price: Double?
+    let price: String?
+    let salePrice: String?
     let totalRates: Double?
     let storeid: Int?
     let createdAt: String?
     let updatedAt: String?
     let storeProductsFile: [StoreProductFile]
+    let storeProductReviews: [ReviewResponse]?
+    let isReviewed: Bool?
+    var store: Store?
     
     var priceformated: String {
-        let price = String(format: "%.2f", self.price ?? 0.0)
-        return "\(price)" + " " + "JD"
+        return (self.price ?? "") + " " + (Helper.currencyCode ?? "JOD")
     }
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
-        case desc = "desc"
+        case desc = "description"
+        case salePrice = "sale_price"
         case price = "price"
-        case totalRates = "total_rates"
+        case totalRates = "rating"
         case storeid = "store_id"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case storeProductsFile = "store_product_files"
+        case storeProductReviews = "store_product_reviews"
+        case isReviewed = "is_reviewed"
+        case store
     }
 }

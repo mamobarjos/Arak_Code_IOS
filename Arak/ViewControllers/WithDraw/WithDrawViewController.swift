@@ -69,7 +69,7 @@ class WithDrawViewController: UIViewController {
         withDrawTitleLabel.text = "Withdraw".localiz()
         amountTextField.placeholder = "Enter Amount".localiz()
         earningLabel.text = "Earning".localiz()
-        jodLabel.text = "JOD".localiz()
+        jodLabel.text = (Helper.currencyCode ?? "JOD")
         nameLabel.text = "Name".localiz()
         nameTextField.placeholder = "Enter Name".localiz()
         phoneNumberLabel.text = "Phone Number".localiz()
@@ -88,8 +88,9 @@ class WithDrawViewController: UIViewController {
         
         var data:[String : String] = [:]
         
+        let validPhone = "00962" + (phoneTextField.text ?? "")
         data["amount"] = amountTextField.text ?? ""
-        data["phone_no"] = phoneTextField.text ?? ""
+        data["phone_no"] = validPhone
         data["name"] = nameTextField.text ?? ""
         data["wallet_type"] = walletTypeTextField.text ?? ""
         showLoading()
@@ -100,7 +101,7 @@ class WithDrawViewController: UIViewController {
             }
 
             if error != nil {
-              self?.showToast(message: "We apologize, the minimum amount for withdrawal is 5 dinars".localiz())
+              self?.showToast(message: "We apologize, the minimum amount for withdrawal is 3 dinars".localiz())
               return
             }
             

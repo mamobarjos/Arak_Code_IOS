@@ -15,19 +15,21 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var profileImageView: UIImageView!
+//    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var myDetailLabel: UILabel!
     @IBOutlet weak var myAdsLabel: UILabel!
     @IBOutlet weak var signOutLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
+//    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var favorateLabel: UILabel!
     @IBOutlet weak var historyLabel: UILabel!
-    @IBOutlet weak var generalLabel: UILabel!
+//    @IBOutlet weak var generalLabel: UILabel!
     @IBOutlet weak var myStoreLabel: UILabel!
     @IBOutlet weak var myStoreView: UIView!
     @IBOutlet weak var myStoreStackView: UIStackView!
     @IBOutlet weak var myProductsStackView: UIStackView!
     @IBOutlet weak var myProductsLabel: UILabel!
+    @IBOutlet weak var arakServicesLabel: UILabel!
+    @IBOutlet weak var settingsLabel: UILabel!
     
     @IBOutlet weak var followUsLabel: UILabel!
     @IBOutlet weak var facebookImageView: UIImageView!
@@ -39,6 +41,7 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Properties
     var viewModel: ProfileViewModel = ProfileViewModel()
+    var storeViewModel: StoreViewModel = StoreViewModel()
 
     // MARK: - Override Methods
     override func viewDidLoad() {
@@ -47,12 +50,13 @@ class ProfileViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if Helper.currentUser?.hasStore == 1 || Helper.store != nil {
+        hiddenNavigation(isHidden: false)
+        if Helper.currentUser?.hasStore == true || Helper.store != nil {
             myStoreStackView.isHidden = false
-            myProductsStackView.isHidden = false
+//            myProductsStackView.isHidden = false
         } else {
             myStoreStackView.isHidden = true
-            myProductsStackView.isHidden = true
+//            myProductsStackView.isHidden = true
         }
 
         if Helper.userType == Helper.UserType.GUEST.rawValue  {
@@ -60,10 +64,10 @@ class ProfileViewController: UIViewController {
             Helper.resetLoggingData()
             return
         }
-        usernameLabel.text = Helper.currentUser?.fullname ?? ""
-        profileImageView.getAlamofireImage(urlString: Helper.currentUser?.imgAvatar)
-        if HomeViewController.goToMyAds {
-            HomeViewController.goToMyAds = false
+//        usernameLabel.text = Helper.currentUser?.fullname ?? ""
+//        profileImageView.getAlamofireImage(urlString: Helper.currentUser?.imgAvatar)
+        if NewHomeViewController.goToMyAds {
+            NewHomeViewController.goToMyAds = false
             let vc = initViewControllerWith(identifier: MyAdsViewController.className, and: "My Ads".localiz()) as! MyAdsViewController
             show(vc)
         }
@@ -90,7 +94,7 @@ class ProfileViewController: UIViewController {
     
     func openYouTube() {
         let youtubeAppURL = URL(string: "youtube://")!
-        let youtubeWebURL = URL(string: Helper.arakLinks?.youtube ?? "")!
+        guard let youtubeWebURL = URL(string: Helper.arakLinks?.youtube ?? "") else {return}
         
         if UIApplication.shared.canOpenURL(youtubeAppURL) {
             // Open the YouTube app
@@ -103,7 +107,7 @@ class ProfileViewController: UIViewController {
     
     func openFacebook() {
         let facebookAppURL = URL(string: "fb://")!
-        let facebookWebURL = URL(string: Helper.arakLinks?.facebook ?? "")!
+        guard let facebookWebURL = URL(string: Helper.arakLinks?.facebook ?? "") else {return}
         
         if UIApplication.shared.canOpenURL(facebookAppURL) {
             // Open the Facebook app
@@ -116,7 +120,7 @@ class ProfileViewController: UIViewController {
     
     func openInstagram() {
         let instagramAppURL = URL(string: "instagram://")!
-        let instagramWebURL = URL(string: Helper.arakLinks?.instagram ?? "")!
+        guard let instagramWebURL = URL(string: Helper.arakLinks?.instagram ?? "") else {return}
         
         if UIApplication.shared.canOpenURL(instagramAppURL) {
             // Open the Instagram app
@@ -129,7 +133,7 @@ class ProfileViewController: UIViewController {
     
     func openLinkedIn() {
         let linkedInAppURL = URL(string: "linkedin://")!
-        let linkedInWebURL = URL(string: Helper.arakLinks?.linkedin ?? "")!
+        guard let linkedInWebURL = URL(string: Helper.arakLinks?.linkedin ?? "") else { return }
         
         if UIApplication.shared.canOpenURL(linkedInAppURL) {
             // Open the LinkedIn app
@@ -142,7 +146,7 @@ class ProfileViewController: UIViewController {
     
     func openTwitter() {
         let twitterAppURL = URL(string: "twitter://")!
-        let twitterWebURL = URL(string: Helper.arakLinks?.x ?? "")!
+        guard let twitterWebURL = URL(string: Helper.arakLinks?.x ?? "") else {return}
         
         if UIApplication.shared.canOpenURL(twitterAppURL) {
             // Open the Twitter app
@@ -161,9 +165,15 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func History(_ sender: Any) {
-        let vc = initViewControllerWith(identifier: FavoriteViewController.className, and: "Favorite".localiz()) as! FavoriteViewController
+        let vc = initViewControllerWith(identifier: FavoriteViewController.className, and: "History".localiz()) as! FavoriteViewController
         vc.source = .History
         show(vc)
+    }
+    
+    @IBAction func arakServicesAction(_ sender: Any) {
+        let vc = initViewControllerWith(identifier: ServiceViewController.className, and: "" ) as! ServiceViewController
+        show(vc)
+        
     }
     
     @IBAction func MyDetail(_ sender: Any) {
@@ -171,6 +181,11 @@ class ProfileViewController: UIViewController {
         show(vc)
 //        let vc = initViewControllerWith(identifier: AdStatusViewController.className, and: "Edit Profile".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! AdStatusViewController
 //        show(vc)
+    }
+    
+    @IBAction func settingsButtonAction(_ sender: Any) {
+        let vc = initViewControllerWith(identifier: SettingsViewController.className, and: "Settings".localiz()) as! SettingsViewController
+        show(vc)
     }
     
     @IBAction func MyAds(_ sender: Any) {
@@ -184,14 +199,19 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func MyStore(_ sender: Any) {
-        
-//        let vc = initViewControllerWith(identifier: UserStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! UserStoreViewController
-//        show(vc)
-        
-        let vc = initViewControllerWith(identifier: StoreViewController.className, and: "label.Your Store".localiz(), storyboardName: Storyboard.MainPhase.rawValue) as! StoreViewController
-        vc.mode = .edit
-        vc.storeType = .myStore
-        show(vc)
+        storeViewModel.getUserStore {[weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+            
+            if let err = error {
+                self?.showToast(message: err)
+                return
+            }
+            
+            let vc = self?.initViewControllerWith(identifier: UserStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! UserStoreViewController
+            self?.show(vc)
+        }
     }
 
     @IBAction func myProductsAction(_ sender: Any) {
@@ -208,32 +228,27 @@ class ProfileViewController: UIViewController {
     // MARK: - Protected Methods
     
     private func logout() {
-        showLoading()
-        viewModel.logout { [weak self] (error) in
-            defer {
-                self?.stopLoading()
-            }
-            
-            if error != nil {
-                self?.showToast(message: error)
-                return
-            }
-            Helper.store = nil
-            let vc = self?.initViewControllerWith(identifier: "LoginViewController", and: "",storyboardName: Storyboard.Auth.rawValue) as! LoginViewController
-            self?.presentWithNavigation(vc, animated: true, configure: nil, completion: nil)
-        }
+        let cartManager = CartManager()
+        cartManager.clearCart()
+        Helper.store = nil
+        Helper.resetLoggingData()
+        let vc = self.initViewControllerWith(identifier: "LoginViewController", and: "",storyboardName: Storyboard.Auth.rawValue) as! LoginViewController
+        self.presentWithNavigation(vc, animated: true, configure: nil, completion: nil)
+        
     }
     
     private func setupUI() {
-        myDetailLabel.text = "My Detail".localiz()
+        myDetailLabel.text = "My profile".localiz()
         myAdsLabel.text = "My Ads".localiz()
         signOutLabel.text = "Sign out".localiz()
         favorateLabel.text = "Favorite".localiz()
         historyLabel.text = "History".localiz()
-        generalLabel.text = "General".localiz()
+//        generalLabel.text = "General".localiz()
         myStoreLabel.text = "label.My Store".localiz()
         myProductsLabel.text = "label.My Products".localiz()
         followUsLabel.text = "Follow Us".localiz()
+        arakServicesLabel.text = "Arak Service".localiz()
+        settingsLabel.text = "Settings".localiz()
     }
     
 }

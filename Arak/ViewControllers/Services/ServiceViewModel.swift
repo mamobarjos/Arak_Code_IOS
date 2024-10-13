@@ -20,7 +20,7 @@ class ServiceViewModel {
     }
 
     func getServices(page: Int,compliation: @escaping CompliationHandler) {
-        Network.shared.request(request: APIRouter.services(page: page), decodable: PagingModel<[Service]>.self) { (response, error) in
+        Network.shared.request(request: APIRouter.services(page: page), decodable: ServiceContainer.self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
@@ -28,8 +28,8 @@ class ServiceViewModel {
             if page == 1 {
                 self.serviceList = []
             }
-            self.hasMore = (response?.data?.data ?? []).count != 0
-            self.serviceList.append(contentsOf: response?.data?.data ?? [])
+            self.hasMore = (response?.data?.services ?? []).count != 0
+            self.serviceList.append(contentsOf: response?.data?.services ?? [])
             compliation(nil)
         }
     }

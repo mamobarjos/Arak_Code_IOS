@@ -20,8 +20,8 @@ class NotificationCell: UITableViewCell {
     }
     func setup(notification: NotificationModel) {
         titleLabel.text = "\(notification.title ?? "")"
-        descLabel.text =  notification.desc ?? ""
-        self.contentView.backgroundColor = notification.isRead == 0 ? #colorLiteral(red: 1, green: 0.9411764706, blue: 0.8, alpha: 1) : .clear
+        descLabel.text =  notification.description ?? ""
+        self.contentView.backgroundColor = notification.isRead == true ? #colorLiteral(red: 1, green: 0.9411764706, blue: 0.8, alpha: 1) : .clear
         timeLabel.text = notification.createdAt?.convertTime(fromFormatter: "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ", toFormatter: "yyyy-MM-dd hh:mm a")
     }
     

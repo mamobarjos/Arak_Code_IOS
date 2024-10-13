@@ -42,7 +42,7 @@ class HomeViewModel {
     }
     
     func updateAdsFavorate(index: Int)  {
-        adsList[index].isFav = !adsList[index].isFav
+        adsList[index].isFav = !(adsList[index].isFav ?? false)
     }
     
     // MARK: - Exposed Methods
@@ -78,17 +78,13 @@ class HomeViewModel {
                 adsList = []
                 bannerList = []
             }
-            Network.shared.request(request: APIRouter.adsList(page: page, search: search), decodable: AdverismentResponse.self) { (response, error) in
+            Network.shared.request(request: APIRouter.adsList(page: page, search: search, ad_category_id: adsType.rawValue), decodable: AdverismentResponse.self) { (response, error) in
                 if error != nil {
                     compliation(error)
                     return
                 }
-                self.adsList.append(contentsOf: response?.data?.ads?.data ?? [])
-                self.hasMore = (response?.data?.ads?.data ?? []).count != 0
-                if page == 1 {
-                    self.bannerList = (response?.data?.banners?.data ?? [])
-                    self.hasMoreBannerAds = (response?.data?.banners?.data ?? []).count > 0
-                }
+                self.adsList.append(contentsOf: response?.data?.ads ?? [])
+                self.hasMore = (response?.data?.ads ?? []).count != 0
                 compliation(nil)
             }
         } else {
@@ -115,13 +111,13 @@ class HomeViewModel {
         if page == 1 {
             adsList = []
         }
-        Network.shared.request(request: APIRouter.adsList(page: page, search: search), decodable: PagingModel<[Adverisment]>?.self) { (response, error) in
+        Network.shared.request(request: APIRouter.searchAd(title: search), decodable: AdverismentResponse.self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
             }
-            self.adsList.append(contentsOf: response?.data??.data ?? [])
-            self.hasMore = (response?.data??.data ?? []).count != 0
+            self.adsList.append(contentsOf: response?.data?.ads ?? [])
+            self.hasMore = false
             compliation(nil)
         }
     }
@@ -168,17 +164,17 @@ class HomeViewModel {
         }
     }
     
-    func getUserAds(page:Int, isFilter: Bool , year:String, month: String , search:String,compliation: @escaping CompliationHandler) {
+    func getUserAds(page:Int, isFilter: Bool , date_from:String, date_to: String , search:String,compliation: @escaping CompliationHandler) {
         if page == 1 {
             adsList = []
         }
-        Network.shared.request(request: APIRouter.getUserAds(page: page, isFilter: isFilter, year: year, month: month), decodable: PagingModel<[Adverisment]>?.self) { (response, error) in
+        Network.shared.request(request: APIRouter.getUserAds(page: page, isFilter: isFilter, date_from: date_from, date_to: date_to), decodable: AdverismentResponse.self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
             }
-            self.adsList.append(contentsOf: response?.data??.data ?? [])
-            self.hasMore = (response?.data??.data ?? []).count != 0
+            self.adsList = response?.data?.ads ?? []
+            self.hasMore = false
             compliation(nil)
         }
     }

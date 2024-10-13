@@ -7,21 +7,29 @@
 
 import Foundation
 struct CreateProductModel: Codable {
-    let id: Int
-    let price: String
-    let createdAt: String
-    let updatedAt: String
-    let storeid: Int
-    let name: String
-    let desc: String
-
+//    let rating: Double?
+    let id: Int?
+//    let price: String
+//    let salePrice: String
+//    let createdAt: String
+//    let deletedAt: String?
+//    let storeProductFiles: [StoreProductFile]
+//    let description: String
+//    let storeId: Int
+//    let name: String
+//    let updatedAt: String
+    
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case price = "price"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case storeid = "store_id"
-        case name = "name"
-        case desc = "desc"
+//        case rating
+        case id
+//        case price
+//        case salePrice = "sale_price"
+//        case createdAt = "created_at"
+//        case deletedAt = "deleted_at"
+//        case storeProductFiles = "store_product_files"
+//        case description
+//        case storeId = "store_id"
+//        case name
+//        case updatedAt = "updated_at"
     }
 }

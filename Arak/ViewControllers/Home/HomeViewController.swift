@@ -306,7 +306,7 @@ extension HomeViewController: UICollectionViewDelegate , UICollectionViewDataSou
             self.show(vc)
         } favorateBlock: { [weak self] index   in 
             guard let self = self else { return }
-            self.addToFavorate(id: self.viewModel.getAllFeatured()[index].id ?? -1, isFavorate: (self.viewModel.getAllFeatured()[index].isFav), index: index, complation: { [weak self] value in
+            self.addToFavorate(id: self.viewModel.getAllFeatured()[index].id ?? -1, index: index, complation: { [weak self] value in
                 if value {
                     cell.updateFavorate(index: index, isFavorate: !(self?.viewModel.getAllFeatured()[index].isFav ?? false))
                     self?.pageAds = 0
@@ -328,9 +328,9 @@ extension HomeViewController: UICollectionViewDelegate , UICollectionViewDataSou
         return cell
     }
     
-    func addToFavorate(id: Int,isFavorate: Bool,index: Int,complation: @escaping (Bool) -> Void) {
+    func addToFavorate(id: Int,index: Int,complation: @escaping (Bool) -> Void) {
         showLoading()
-        self.detailViewModel.favorite(id: id, isFavorate: isFavorate) { [weak self] (error) in
+        self.detailViewModel.favorite(id: id) { [weak self] (error) in
             defer {
                 self?.stopLoading()
             }
@@ -362,7 +362,7 @@ extension HomeViewController: UICollectionViewDelegate , UICollectionViewDataSou
                 self.show(vc)
             }  favorateBlock: { [weak self] in
                 guard let self = self else { return }
-                self.addToFavorate(id: self.viewModel.getAll()[indexPath.row].id ?? -1, isFavorate: self.viewModel.getAll()[indexPath.row].isFav ,index: indexPath.row, complation: { [weak self] value in
+                self.addToFavorate(id: self.viewModel.getAll()[indexPath.row].id ?? -1 ,index: indexPath.row, complation: { [weak self] value in
                     if value {
                         self?.viewModel.updateAdsFavorate(index:  indexPath.row)
                         self?.pageAds = 0

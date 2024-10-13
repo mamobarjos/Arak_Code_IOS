@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="gTV-IL-0wX" customClass="BannerItemCollectionViewCell" customModule="Arak" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="415" height="197"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="415" height="197"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s8w-4m-Old">
+                        <rect key="frame" x="0.0" y="0.0" width="415" height="197"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="6Gp-c1-ARb">
+                                <rect key="frame" x="0.0" y="0.0" width="415" height="197"/>
+                                <color key="backgroundColor" name="accentOrange"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
+                                        <real key="value" value="13"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTv-ux-qqj">
+                                <rect key="frame" x="0.0" y="0.0" width="415" height="197"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title=""/>
+                                <connections>
+                                    <action selector="bannerAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="WwA-9c-4Ov"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5af-kW-XuB">
+                                <rect key="frame" x="20" y="156" width="375" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <color key="textColor" name="Background"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="5af-kW-XuB" secondAttribute="trailing" constant="20" id="0lS-Re-YD1"/>
+                            <constraint firstAttribute="trailing" secondItem="6Gp-c1-ARb" secondAttribute="trailing" id="1na-LT-cPj"/>
+                            <constraint firstItem="MTv-ux-qqj" firstAttribute="leading" secondItem="s8w-4m-Old" secondAttribute="leading" id="8jj-8Y-W7R"/>
+                            <constraint firstItem="5af-kW-XuB" firstAttribute="leading" secondItem="s8w-4m-Old" secondAttribute="leading" constant="20" id="Emf-Rt-26C"/>
+                            <constraint firstAttribute="trailing" secondItem="MTv-ux-qqj" secondAttribute="trailing" id="FxZ-ca-Pfs"/>
+                            <constraint firstItem="6Gp-c1-ARb" firstAttribute="top" secondItem="s8w-4m-Old" secondAttribute="top" id="LAs-YP-Jgb"/>
+                            <constraint firstAttribute="bottom" secondItem="6Gp-c1-ARb" secondAttribute="bottom" id="Pok-fX-t5f"/>
+                            <constraint firstAttribute="bottom" secondItem="MTv-ux-qqj" secondAttribute="bottom" id="XVk-Z0-ywV"/>
+                            <constraint firstAttribute="bottom" secondItem="5af-kW-XuB" secondAttribute="bottom" constant="20" id="Ybh-KC-3or"/>
+                            <constraint firstItem="6Gp-c1-ARb" firstAttribute="leading" secondItem="s8w-4m-Old" secondAttribute="leading" id="scc-Pd-bia"/>
+                            <constraint firstItem="MTv-ux-qqj" firstAttribute="top" secondItem="s8w-4m-Old" secondAttribute="top" id="vjR-q4-7b5"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadiusV">
+                                <real key="value" value="13"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="s8w-4m-Old" secondAttribute="trailing" id="6qF-vV-PvC"/>
+                <constraint firstAttribute="bottom" secondItem="s8w-4m-Old" secondAttribute="bottom" id="Kco-BI-noO"/>
+                <constraint firstItem="s8w-4m-Old" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="b1A-cn-hh1"/>
+                <constraint firstItem="s8w-4m-Old" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="hT6-Km-Qbz"/>
+            </constraints>
+            <size key="customSize" width="415" height="197"/>
+            <connections>
+                <outlet property="bannerImageView" destination="6Gp-c1-ARb" id="DMa-o9-ZII"/>
+                <outlet property="containerView" destination="s8w-4m-Old" id="HU2-ph-Mvf"/>
+                <outlet property="titleLabel" destination="5af-kW-XuB" id="lOK-Tf-4uQ"/>
+            </connections>
+            <point key="canvasLocation" x="187.68115942028987" y="123.54910714285714"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="banner" width="1006" height="418"/>
+        <namedColor name="Background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="accentOrange">
+            <color red="1" green="0.4309999942779541" blue="0.18000000715255737" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

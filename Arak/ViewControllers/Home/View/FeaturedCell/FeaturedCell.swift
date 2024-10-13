@@ -76,8 +76,8 @@ class FeaturedCell: UICollectionViewCell {
         self.bannerList = bannerList
         isBanner = true
         pageControl.numberOfPages = bannerList.count
-        pageControl.tintColor = UIColor.lightGray
-        pageControl.setFillColor(UIColor.blue, for: .normal)
+        pageControl.setFillColor(UIColor.accentOrange, for: .selected)
+        pageControl.setFillColor(UIColor.accentOrange.withAlphaComponent(0.5), for: .normal)
         featuredPagerView.isInfinite = true
         featuredPagerView.automaticSlidingInterval = 5
         self.setupSlider()
@@ -165,6 +165,8 @@ extension FeaturedCell : FSPagerViewDelegate ,  FSPagerViewDataSource {
             }
             cell.setupBanner(path: images[index].path ?? "" )
             cell.learnMoreButton.isHidden = true
+            cell.photoImageView.contentMode = .scaleAspectFill
+            cell.backgroundColor = .lightGray
             cell.photoImageView.cornerRadius = ImageCornerRadius
             cell.learnMoreBlock = {
                 print("learn more")

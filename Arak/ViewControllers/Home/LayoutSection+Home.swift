@@ -83,6 +83,22 @@ extension NSCollectionLayoutSection {
 
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 15
+        section.contentInsets = .init(top: 5, leading: 20, bottom: 20, trailing: 20)
+        section.boundarySupplementaryItems = [.title()]
+        return section
+    }
+    
+    static func stores() -> NSCollectionLayoutSection {
+
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(230))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(230))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+        group.interItemSpacing = .fixed(15)
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 15
         section.contentInsets = .init(top: 5, leading: 20, bottom: 0, trailing: 20)
         section.boundarySupplementaryItems = [.title()]
         return section

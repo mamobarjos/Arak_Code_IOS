@@ -45,7 +45,7 @@ class EditPhoneNumberViewController: UIViewController {
         }
         var data:[String : String] = [:]
         data["phone_no"] = "+962" + (phoneNumberTextField.text ?? "")
-        data["old_phone"] = Helper.currentUser?.phoneNo ?? ""
+//        data["old_phone"] = Helper.currentUser?.phoneNo ?? ""
 
         signUpViewModel.otp(data: data) {  [weak self] (error) in
           defer {

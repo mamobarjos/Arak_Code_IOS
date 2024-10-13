@@ -9,7 +9,7 @@ import Foundation
 
 struct ReviewResponse: Codable {
     let content: String?
-    let rate: Double?
+    let rate: String?
     let id: Int?
     let createdAt: String?
     let userid: Int?
@@ -19,7 +19,7 @@ struct ReviewResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
         case content = "content"
-               case rate = "rate"
+               case rate = "rating"
                case id = "id"
                case createdAt = "created_at"
                case userid = "user_id"

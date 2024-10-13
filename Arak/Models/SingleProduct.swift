@@ -18,34 +18,42 @@ struct SingleProduct: Codable {
 }
 
 // MARK: - StoreProduct
+struct RelatedProductsContainer: Codable {
+    let total: Int?
+    let products: [RelatedProducts]?
+}
 
 struct RelatedProducts: Codable {
     let id: Int?
-    let name: String?
-    let desc: String?
-    let price: Double?
-    let totalRates: Double?
-    let storeid: Int?
-    let createdAt: String?
-    let updatedAt: String?
+    let description: String?
+    let rating: Double?
+    let storeProductReviews: [Review]?
     let storeProductFiles: [StoreProductFile]?
+    let createdAt: String?
+    //      let deletedAt: JSONNull?
+    let price, salePrice: String?
+    let updatedAt: String?
+    let storeid: Int?
+    let name: String?
+    let store: Store?
+    let desc: String?
 
     var priceformated: String {
-        let price = String(format: "%.2f", self.price ?? 0.0)
-        return "$\(price)"
+        return "\(price ?? "") JOD"
     }
 
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
-        case desc = "desc"
-        case price = "price"
-        case totalRates = "total_rates"
-        case storeid = "store_id"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
+        case id, description, rating
+        case storeProductReviews = "store_product_reviews"
         case storeProductFiles = "store_product_files"
+        case createdAt = "created_at"
+        case desc
+        case price
+        case salePrice = "sale_price"
+        case updatedAt = "updated_at"
+        case storeid = "store_id"
+        case name, store
     }
 }
 
@@ -86,18 +94,19 @@ struct Product: Codable {
 
 // MARK: - StoreProductFile
 struct StoreProductFile: Codable {
-    let id: Int?
+//    let storeProductFile, id: Int?
+//    let deletedAt: JSONNull?
+//    let updatedAt: String?
     let path: String?
-    let storeProductid: Int?
-    let createdAt: String?
-    let updatedAt: String?
+//    let createdAt: String?
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case path = "path"
-        case storeProductid = "store_product_id"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
+//        case storeProductFile = "store_product_file"
+//        case id
+//        case deletedAt = "deleted_at"
+//        case updatedAt = "updated_at"
+        case path = "url"
+//        case createdAt = "created_at"
     }
 }
 

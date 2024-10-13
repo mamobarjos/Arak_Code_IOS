@@ -21,12 +21,13 @@ class MyWalletViewController: UIViewController {
     @IBOutlet weak var earningView: UIView!
     @IBOutlet weak var couponCodeButton: UIButton!
     
+    @IBOutlet weak var adAdsButton: UIButton!
     private var myWalletViewModel: MyWalletViewModel = MyWalletViewModel()
     private var datePicker = DatePickerDialog()
     private var refreshControl = UIRefreshControl()
     private var isFilter: Bool = false
-    private var year: String = ""
-    private var month: String = ""
+    private var from: String = ""
+    private var to: String = ""
     private var page = 1
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,10 @@ class MyWalletViewController: UIViewController {
         localization()
         setupRefershControl()
         loadTransaction()
+        
+        if Helper.arakLinks?.isLive == false {
+            adAdsButton.isHidden = true
+        }
     }
     
     override func onClickButton() {
@@ -46,18 +51,20 @@ class MyWalletViewController: UIViewController {
             Helper.resetLoggingData()
             return
         }
+        
         getBalance()
-        if HomeViewController.goToMyAds {
-            HomeViewController.goToMyAds = false
+        if NewHomeViewController.goToMyAds {
+            NewHomeViewController.goToMyAds = false
             let vc = initViewControllerWith(identifier: MyAdsViewController.className, and: "My Ads".localiz()) as! MyAdsViewController
             show(vc)
         } 
     }
     
     private func getBalance() {
+        self.earningValueLabel.text = "\(Helper.currentUser?.balance ?? "0")" + " " + (Helper.currencyCode ?? "JOD")
         fetchBalance { error in
             if error == nil {
-                self.earningValueLabel.text = "\(Helper.currentUser?.balance ?? 0)" + " " + "JOD".localiz()
+                self.earningValueLabel.text = "\(Helper.currentUser?.balance ?? "0")" + " " + (Helper.currencyCode ?? "JOD")
             }
         }
     }
@@ -79,7 +86,7 @@ class MyWalletViewController: UIViewController {
     private func loadTransaction() {
         showLoading()
         getBalance()
-        myWalletViewModel.getTransactions(page: page, isFilter: isFilter, year: year, month: month) {[weak self] (error) in
+        myWalletViewModel.getTransactions(page: page, from: from, to: to) {[weak self] (error) in
             defer {
                 self?.stopLoading()
             }
@@ -154,13 +161,14 @@ class MyWalletViewController: UIViewController {
                         datePickerMode: .date) { (date) in
             if let dt = date {
                 let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM"
+                formatter.dateFormat = "yyyy-MM-dd"
                 let dateString = formatter.string(from: dt)
+                let currentData = formatter.string(from: Date())
                 self.dateLabel.text = dateString
                 self.isFilter = true
                 self.page = 1
-                self.year = String(dateString.split(separator: "-")[0])
-                self.month = String(dateString.split(separator: "-")[1])
+                self.from = String(dateString)
+                self.to = String(currentData)
                 self.loadTransaction()
             }
         }

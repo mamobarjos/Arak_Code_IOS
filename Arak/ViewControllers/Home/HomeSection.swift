@@ -10,19 +10,21 @@ import Foundation
 enum HomeSectionIdentifier: Int, CaseIterable, Comparable, Equatable {
     case banners = 0
     case ellection
-    case ellectionBanner
+//    case ellectionBanner
     case SpecialAds
     case randomProducts
     case Ads
+    case stores
 
     var requiresAuthentication: Bool {
         switch self {
         case .banners: return false
         case .randomProducts: return false
         case .ellection: return false
-        case .ellectionBanner: return false
+//        case .ellectionBanner: return false
         case .Ads: return false
         case .SpecialAds: return false
+        case .stores: return false
         }
     }
 
@@ -31,9 +33,10 @@ enum HomeSectionIdentifier: Int, CaseIterable, Comparable, Equatable {
         case .banners: return true
         case .randomProducts: return true
         case .ellection: return true
-        case .ellectionBanner: return true
+//        case .ellectionBanner: return true
         case .Ads: return true
         case .SpecialAds: return false
+        case .stores: return true
         }
     }
 
@@ -50,18 +53,20 @@ enum HomeSection: Comparable, Equatable {
     case banners([AdBanner])
     case randomProducts([RelatedProducts])
     case ellection([EllectionPeople])
-    case ellectionBanner([EllectionDataBanner])
+//    case ellectionBanner([EllectionDataBanner])
     case SpecialAds([Adverisment])
     case Ads([Adverisment])
+    case stores([Store])
 
     var title: String? {
         switch self {
         case .banners: return nil
         case .randomProducts: return "label.home.categories".localiz()
         case .ellection: return ""
-        case .ellectionBanner: return ""
+//        case .ellectionBanner: return ""
         case .Ads: return nil
         case .SpecialAds: return "label.home.popularproducts".localiz()
+        case .stores: return ""
         }
     }
 
@@ -70,9 +75,10 @@ enum HomeSection: Comparable, Equatable {
         case .banners: return false
         case .randomProducts: return false
         case .ellection: return true
-        case .ellectionBanner: return true
+//        case .ellectionBanner: return true
         case .SpecialAds: return true
         case .Ads: return false
+        case .stores: return false
         }
     }
 
@@ -81,9 +87,10 @@ enum HomeSection: Comparable, Equatable {
         case .banners(let items): return items.isEmpty ? 0 : 1
         case .randomProducts(let items): return items.count
         case .ellection(let items): return items.count
-        case .ellectionBanner(let items): return items.count
+//        case .ellectionBanner(let items): return items.count
         case .SpecialAds(let items): return items.count
         case .Ads(let items): return items.count
+        case .stores(let items): return items.count
         }
     }
 
@@ -92,9 +99,10 @@ enum HomeSection: Comparable, Equatable {
         case .banners: return .banners
         case .randomProducts: return .randomProducts
         case .ellection: return .ellection
-        case .ellectionBanner: return .ellectionBanner
+//        case .ellectionBanner: return .ellectionBanner
         case .SpecialAds: return .SpecialAds
         case .Ads: return .Ads
+        case .stores: return .stores
         }
     }
 

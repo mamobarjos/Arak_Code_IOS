@@ -10,8 +10,8 @@ import Foundation
 class StoresViewModel {
     private var categories: [StoreCategory] = []
     private var stores: [Store] = []
-    private var searchedStores: [TestSearchModel] = []
-    private var banners: [Banner] = []
+    private var searchedStores: [Store] = []
+    private var banners: [AdBanner] = []
     var canLoadMore = false
 
     func getCategories() -> [StoreCategory] {
@@ -22,28 +22,56 @@ class StoresViewModel {
         return self.stores
     }
 
-    func getSearchedStores() -> [TestSearchModel] {
+    func getSearchedStores() -> [Store] {
         return self.searchedStores
     }
 
-    func getBanners() -> [Banner] {
+    func getBanners() -> [AdBanner] {
         return self.banners
     }
 
-    /// get stores and categories
-    func getStores(page: Int = 1,compliation: @escaping CompliationHandler) {
-        if page == 1 {
-            stores = []
-        }
-        Network.shared.request(request: StoresRout.getStores(page: page), decodable: StoresRespose.self) { [weak self] (response, error) in
+    /// get categories
+    func categories(compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: StoresRout.getCategories, decodable: StoreCategoryContainer.self) { [weak self] (response, error) in
             if error != nil {
                 compliation(error)
                 return
             }
-            self?.canLoadMore = !(response?.data?.storesData.data.isEmpty ?? false)
+            self?.categories = []
             self?.categories.append(contentsOf: response?.data?.storeCategories ?? [])
-            self?.stores.append(contentsOf: response?.data?.storesData.data ?? [])
-            self?.banners = response?.data?.banners ?? []
+        
+            compliation(nil)
+        }
+    }
+    
+    /// get stores
+    func getStores(page: Int = 1,compliation: @escaping CompliationHandler) {
+        if page == 1 {
+            stores = []
+        }
+        Network.shared.request(request: StoresRout.getStores(page: page, category: -1), decodable: StoresData.self) { [weak self] (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            self?.canLoadMore = !(response?.data?.stores?.isEmpty ?? false)
+//            self?.categories.append(contentsOf: response?.data?.storeCategories ?? [])
+            self?.stores.append(contentsOf: response?.data?.stores ?? [])
+//            self?.banners = response?.data?.banners ?? []
+            compliation(nil)
+        }
+    }
+    
+    func getBannerList(page:Int ,compliation: @escaping CompliationHandler) {
+        if page == 1 {
+            banners = []
+        }
+        Network.shared.request(request: APIRouter.userBanners(page: page), decodable: NewPagingModel<[AdBanner]>?.self) { (response, error) in
+            if error != nil {
+                compliation(error)
+                return
+            }
+            self.banners = response?.data??.banners ?? []
             compliation(nil)
         }
     }
@@ -53,30 +81,32 @@ class StoresViewModel {
         if page == 1 {
             self.stores = []
         }
-        Network.shared.request(request: StoresRout.filterStoresByCategory(category: category, page: page), decodable: StoresData.self) { [weak self] response, error in
+        Network.shared.request(request: StoresRout.getStores(page: page, category: category), decodable: StoresData.self) { [weak self] response, error in
             guard error == nil else {
                 compliation(error)
                 return
             }
 //            self?.stores = []
-            self?.canLoadMore = !(response?.data?.data.isEmpty ?? false)
-            self?.stores.append(contentsOf: response?.data?.data ?? [])
+            self?.canLoadMore = !(response?.data?.stores?.isEmpty ?? false)
+            self?.stores.append(contentsOf: response?.data?.stores ?? [])
             compliation(nil)
         }
     }
 
     // search stores
     func searchStores(query: String, compliation: @escaping CompliationHandler) {
-        Network.shared.request(request: StoresRout.searchStore(storeName: query), decodable: PagingModel<[TestSearchModel]>.self) { [weak self] response, error in
+        Network.shared.request(request: StoresRout.searchStore(storeName: query), decodable: StoresData.self) { [weak self] response, error in
             guard error == nil else {
                 compliation(error)
                 return
             }
             self?.searchedStores = []
-            self?.searchedStores = response?.data?.data ?? []
+            self?.searchedStores = response?.data?.stores ?? []
             compliation(nil)
         }
     }
+    
+    
 }
 
 // TODO: - will be removed later

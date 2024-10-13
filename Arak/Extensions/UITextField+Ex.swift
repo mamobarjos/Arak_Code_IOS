@@ -98,3 +98,82 @@ extension UITextView {
         self.resignFirstResponder()
     }
 }
+
+
+
+extension UITextField {
+
+    // Runtime key
+    private struct AssociatedKeys {
+        // Maximum length key
+        static var maxlength: UInt8 = 0
+        // Temporary string key
+        static var tempString: UInt8 = 0
+    }
+
+    // Limit the maximum input length of the textfiled
+    @IBInspectable var maxLength: Int {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.maxlength) as? Int ?? 0
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.maxlength, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            addTarget(self, action: #selector(handleEditingChanged(textField:)), for: .editingChanged)
+        }
+    }
+
+    // Temporary string
+    private var tempString: String? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.tempString) as? String
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.tempString, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    // When the text changes, process the amount of text in the input
+    // box so that its length is within the controllable range.
+    @objc private func handleEditingChanged(textField: UITextField) {
+
+        // Special processing for the Chinese input method
+        guard markedTextRange == nil else { return }
+
+        if textField.text?.count == maxLength {
+
+            // Set lastQualifiedString where text length == maximum length
+            tempString = textField.text
+        } else if textField.text?.count ?? 0 < maxLength {
+
+            // Clear lastQualifiedString when text length > maxlength
+            tempString = nil
+        }
+
+        // Keep the current text range in arcgives
+        let archivesEditRange: UITextRange?
+
+        if textField.text?.count ?? 0 > maxLength {
+
+            // If text length > maximum length, remove last range and to move to -1 postion.
+            let position = textField.position(from: safeTextPosition(selectedTextRange?.start), offset: -1) ?? textField.endOfDocument
+            archivesEditRange = textField.textRange(from: safeTextPosition(position), to: safeTextPosition(position))
+        } else {
+
+            // Just set current select text range
+            archivesEditRange = selectedTextRange
+        }
+
+        // Main handle string maximum length
+        textField.text = tempString ?? String((textField.text ?? "").prefix(maxLength))
+
+        // Last configuration edit text range
+        textField.selectedTextRange = archivesEditRange
+    }
+
+    // Get safe textPosition
+    private func safeTextPosition(_ optionlTextPosition: UITextPosition?) -> UITextPosition {
+
+        /* beginningOfDocument -> The end of the the text document. */
+        return optionlTextPosition ?? endOfDocument
+    }
+}

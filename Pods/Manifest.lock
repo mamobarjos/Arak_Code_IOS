@@ -18,6 +18,7 @@ PODS:
   - BSImagePicker (3.3.3)
   - Cosmos (23.0.0)
   - DatePickerDialog (4.0)
+  - DropDown (2.3.13)
   - DTPhotoViewerController (3.1.0)
   - ExpandableLabel (0.5.2)
   - FacebookSDK (5.15.1):
@@ -216,6 +217,7 @@ DEPENDENCIES:
   - BSImagePicker (~> 3.1)
   - Cosmos (~> 23.0)
   - DatePickerDialog
+  - DropDown
   - DTPhotoViewerController
   - ExpandableLabel
   - FacebookSDK
@@ -249,6 +251,7 @@ SPEC REPOS:
     - BSImagePicker
     - Cosmos
     - DatePickerDialog
+    - DropDown
     - DTPhotoViewerController
     - ExpandableLabel
     - FacebookSDK
@@ -298,6 +301,7 @@ SPEC CHECKSUMS:
   BSImagePicker: 57900b323f951711608acaf97d52e9183530cb6d
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   DatePickerDialog: ccff2f91ff7a018057a4d72fa5ad6de49c8cb0cd
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   DTPhotoViewerController: 2b5e64792ee89fcab1f154538577d1856e04e15b
   ExpandableLabel: c2fab6d27860c572d67134b30522a5917746171d
   FacebookSDK: 40811aca4741187ac7e6b175f261edee4edfc58a
@@ -339,6 +343,6 @@ SPEC CHECKSUMS:
   SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
   WWLayout: 0ff533a6b9d0ae2ca2bdf91b6aefc04234b61f1b
 
-PODFILE CHECKSUM: 582e5a5cced70cd55b91dc85826da34c5188370b
+PODFILE CHECKSUM: 5f20e9cb1e68ca75cb45b1f3e088daa5ee623c4e
 
 COCOAPODS: 1.15.2

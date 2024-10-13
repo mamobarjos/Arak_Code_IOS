@@ -26,7 +26,7 @@ class CategoriesViewController: UIViewController {
     private var categoryPercentage: Double?
     private var viewModel: CreateStoreViewModel = .init()
 
-    let saveButton = PrimaryActionButton(style: .halfRounded, title: "Save")
+    let saveButton = PrimaryActionButton(style: .halfRounded, title: "Save".localiz())
 
     weak var delegate: CategoriesViewControllerDelegate?
     override func viewDidLoad() {
@@ -63,7 +63,12 @@ class CategoriesViewController: UIViewController {
             self?.categories = self?.viewModel.getCategories() ?? []
         })
 
-        self.title = "Choose Category"
+        self.title = "title.Choose Store Category".localiz()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hiddenNavigation(isHidden: false)
     }
 }
 

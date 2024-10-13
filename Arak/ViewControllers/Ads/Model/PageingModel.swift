@@ -7,6 +7,15 @@
 
 import Foundation
 // MARK: - PagingModel
+
+struct NewPagingModel<T: Codable>: Codable {
+    let lastPage: Int?
+    let data: T?
+    let banners: T?
+    let total: Int?
+    let page: String?
+}
+
 struct PagingModel<T: Codable>: Codable {
     let currentPage: Int?
     let data: T?

@@ -131,21 +131,25 @@ public class CBTabBarButton: UIControl {
         tabBg.heightAnchor.constraint(equalToConstant: bgHeight).isActive = true
         
         if rightToLeft {
-            tabImage.trailingAnchor.constraint(equalTo: tabBg.trailingAnchor, constant: -bgHeight/2.0).isActive = true
+            tabImage.centerXAnchor.constraint(equalTo: tabBg.centerXAnchor).isActive = true
             tabImage.centerYAnchor.constraint(equalTo: tabBg.centerYAnchor).isActive = true
-            tabLabel.centerYAnchor.constraint(equalTo: tabBg.centerYAnchor).isActive = true
-            csFoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: tabBg.trailingAnchor)
-            csUnfoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: tabBg.leadingAnchor, constant: bgHeight/4.0)
-            csFoldedBgTrailing = tabImage.trailingAnchor.constraint(equalTo: tabBg.leadingAnchor, constant: bgHeight/2.0)
-            csUnfoldedBgTrailing = tabLabel.trailingAnchor.constraint(equalTo: tabImage.leadingAnchor, constant: -bgHeight/2.0)
+            tabLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 15).isActive = true
+            tabLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            tabLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+//            csFoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: tabBg.trailingAnchor)
+//            csUnfoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: tabBg.trailingAnchor)
+//            csFoldedBgTrailing = tabImage.trailingAnchor.constraint(equalTo: tabBg.leadingAnchor, constant: bgHeight/2.0)
+//            csUnfoldedBgTrailing = tabImage.trailingAnchor.constraint(equalTo: tabBg.leadingAnchor, constant: bgHeight/2.0)
         } else {
-            tabImage.leadingAnchor.constraint(equalTo: tabBg.leadingAnchor, constant: bgHeight/2.0).isActive = true
+            tabImage.centerXAnchor.constraint(equalTo: tabBg.centerXAnchor).isActive = true
             tabImage.centerYAnchor.constraint(equalTo: tabBg.centerYAnchor).isActive = true
-            tabLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-            csFoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: leadingAnchor)
-            csUnfoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: tabImage.trailingAnchor, constant: bgHeight/4.0)
-            csFoldedBgTrailing = tabImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -bgHeight/2.0)
-            csUnfoldedBgTrailing = tabLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -bgHeight/2.0)
+            tabLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 15).isActive = true
+            tabLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            tabLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+//            csFoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: leadingAnchor)
+//            csUnfoldedLblLeading = tabLabel.leadingAnchor.constraint(equalTo: tabImage.trailingAnchor, constant: bgHeight/4.0)
+//            csFoldedBgTrailing = tabImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -bgHeight/2.0)
+//            csUnfoldedBgTrailing = tabLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -bgHeight/2.0)
         }
         
         fold()
@@ -153,32 +157,36 @@ public class CBTabBarButton: UIControl {
     }
 
     private func fold(animationDuration duration: Double = 0.0) {
-        unfoldedConstraints.forEach{ $0.isActive = false }
-        foldedConstraints.forEach{ $0.isActive = true }
-        UIView.animate(withDuration: duration) {
-            self.tabBg.alpha = 0.0
-        }
-        UIView.animate(withDuration: duration * 0.4) {
-            self.tabLabel.alpha = 0.0
-        }
-        UIView.transition(with: tabImage, duration: duration, options: [.transitionCrossDissolve], animations: {
-            self.tabImage.tintColor = .gray
-        }, completion: nil)
+        self.tabImage.tintColor = .gray
+        self.tabLabel.textColor = .gray
+//        unfoldedConstraints.forEach{ $0.isActive = false }
+//        foldedConstraints.forEach{ $0.isActive = true }
+//        UIView.animate(withDuration: duration) {
+//            self.tabBg.alpha = 0.0
+//        }
+//        UIView.animate(withDuration: duration * 0.4) {
+//            self.tabLabel.alpha = 0.0
+//        }
+//        UIView.transition(with: tabImage, duration: duration, options: [.transitionCrossDissolve], animations: {
+//
+//        }, completion: nil)
 
     }
 
     private func unfold(animationDuration duration: Double = 0.0) {
-        foldedConstraints.forEach{ $0.isActive = false }
-        unfoldedConstraints.forEach{ $0.isActive = true }
-        UIView.animate(withDuration: duration) {
-            self.tabBg.alpha = 1.0
-        }
-        UIView.animate(withDuration: duration * 0.5, delay: duration * 0.5, options: [], animations: {
-            self.tabLabel.alpha = 1.0
-        }, completion: nil)
-        UIView.transition(with: tabImage, duration: duration, options: [.transitionCrossDissolve], animations: {
-            self.tabImage.tintColor = UIColor(named: "Secondary")
-        }, completion: nil)
+        self.tabImage.tintColor = UIColor(named: "accentOrange")
+        self.tabLabel.textColor = UIColor(named: "accentOrange")
+//        foldedConstraints.forEach{ $0.isActive = false }
+//        unfoldedConstraints.forEach{ $0.isActive = true }
+//        UIView.animate(withDuration: duration) {
+//            self.tabBg.alpha = 1.0
+//        }
+//        UIView.animate(withDuration: duration * 0.5, delay: duration * 0.5, options: [], animations: {
+//            self.tabLabel.alpha = 1.0
+//        }, completion: nil)
+//        UIView.transition(with: tabImage, duration: duration, options: [.transitionCrossDissolve], animations: {
+//            self.tabImage.tintColor = UIColor(named: "Secondary")
+//        }, completion: nil)
     }
 
     public func setSelected(_ selected: Bool, animationDuration duration: Double = 0.0) {

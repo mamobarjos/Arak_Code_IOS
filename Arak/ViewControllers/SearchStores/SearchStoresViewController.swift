@@ -18,7 +18,7 @@ class SearchStoresViewController: UIViewController {
         }
     }
 
-    fileprivate(set) var stores: [TestSearchModel] = [] {
+    fileprivate(set) var stores: [Store] = [] {
         didSet {
             self.tableView.reloadData()
         }

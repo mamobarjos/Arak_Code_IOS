@@ -25,7 +25,7 @@ class CouponViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.29)
         addGesture()
-        codeTextField.keyboardType = .numberPad
+        codeTextField.keyboardType = .default
         codeTextField.placeholder = "Coupon Code".localiz()
         couponeLabel.text = "Available Coupons\n25,50,100,250".localiz()
         contactNoteLabel.text = "Please contact us to purchase a coupon".localiz()

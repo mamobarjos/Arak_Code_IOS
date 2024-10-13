@@ -28,7 +28,7 @@ class ResetPasswordViewModel {
       }
 
     func resetPassword(data: [String: Any],compliation: @escaping CompliationHandler) {
-      Network.shared.request(request: APIRouter.resetPassword(data: data), decodable: String.self) { (response, error) in
+      Network.shared.request(request: APIRouter.resetPassword(data: data), decodable: ResetPasswordModel.self) { (response, error) in
           if error != nil {
             compliation(error)
             return
@@ -37,8 +37,9 @@ class ResetPasswordViewModel {
           compliation(nil)
         }
       }
+}
 
-    
-    
 
+struct ResetPasswordModel: Codable {
+    let message: String?
 }

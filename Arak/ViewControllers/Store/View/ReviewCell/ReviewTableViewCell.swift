@@ -13,7 +13,8 @@ class ReviewTableViewCell: UITableViewCell {
     @IBOutlet weak var titaleLabel: UILabel!
     @IBOutlet weak var cosmosContainerView: UIView!
     @IBOutlet weak var descLabel: UILabel!
-
+    @IBOutlet weak var storeNameLabel: UILabel!
+    
     @IBOutlet weak var deleteButton: UIButton!
 
     var onDeleteAction: (() -> Void)?
@@ -64,7 +65,7 @@ class ReviewTableViewCell: UITableViewCell {
         if let url = URL(string: review.user?.imgAvatar ?? "") {
             ReviewerImage.kf.setImage(with: url, placeholder: UIImage(named: "Summery Image"))
         }
-        cosmosView.rating = Double(review.rate ?? 5)
+        cosmosView.rating = Double(review.rate ?? "5") ?? 5
         titaleLabel.text = review.user?.fullname
         descLabel.text = review.content
         descLabel.numberOfLines = 0

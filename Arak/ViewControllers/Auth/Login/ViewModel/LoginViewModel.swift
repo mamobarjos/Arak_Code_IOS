@@ -17,7 +17,7 @@ class LoginViewModel {
     
     // MARK: - Protected Methods
   func login(phone: String , password:String , compliation: @escaping CompliationHandler) {
-    Network.shared.request(request: APIRouter.login(phone: phone, password: password), decodable: User.self) { (response, error) in
+    Network.shared.request(request: APIRouter.login(phone: phone, password: password), decodable: UserModel.self) { (response, error) in
       if error != nil {
         compliation(error)
         return
@@ -27,8 +27,8 @@ class LoginViewModel {
 //        return
 //      }
       Helper.userType = Helper.UserType.NORMAL.rawValue
-      Helper.currentUser = response?.data
-      Helper.userToken = response?.token ?? ""
+        Helper.currentUser = response?.data?.user
+        Helper.userToken = response?.data?.accessToken ?? ""
       compliation(nil)
     }
   }

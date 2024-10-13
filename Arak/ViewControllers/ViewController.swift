@@ -23,11 +23,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             if Helper.isLoggingUser() {
-                let tabBarViewController = self.initViewControllerWith(identifier: BubbleTabBarController.className, and: "") as! BubbleTabBarController
+                Network.shared.request(request: APIRouter.getUserInfo, decodable: User.self) {[weak self] (response, error) in
+                    
+                    Helper.userType = Helper.UserType.NORMAL.rawValue
+                    Helper.country = response?.data?.country
+              
+                
+                let tabBarViewController = self?.initViewControllerWith(identifier: BubbleTabBarController.className, and: "") as! BubbleTabBarController
                 tabBarViewController.modalPresentationStyle = .fullScreen
                 let navigationRoot = UINavigationController(rootViewController: tabBarViewController)
                 navigationRoot.modalPresentationStyle = .fullScreen
-                self.present(navigationRoot)
+                self?.present(navigationRoot)
+                }
             } else {
                 let loginViewController = self.initViewControllerWith(identifier: LoginViewController.className, and: "", storyboardName: Storyboard.Auth.rawValue)
                 self.show(loginViewController)

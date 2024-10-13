@@ -38,7 +38,7 @@ class ElectionDetailsViewController: UIViewController {
         descrriptionLabel.text = electionPerson.description
         profileImageView.getAlamofireImage(urlString: electionPerson.img ?? "")
         nameLAbel.text = electionPerson.name
-        distrectLabel.text = electionPerson.district?.name
+//        distrectLabel.text = electionPerson.district?.name
         clusterLabel.text = electionPerson.cluster
         electoralDistricLabel.text = electionPerson.governorate?.name
         governorateLabel.text = electionPerson.governorate?.name

@@ -86,7 +86,7 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) access is absolutely necessary to access to your camera to take a photo</string>
+	<string>$(PRODUCT_NAME) Access to your camera is required to capture photos for your products and store.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) access is absolutely necessary to track your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -94,7 +94,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) access is absolutely necessary to track your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo Libaray access is absolutely necessary to use this app to select images</string>
+	<string>Access to your camera is required to capture photos for your products and store.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>ArbFONTS-Droid Arabic Kufi Bold.tff</string>

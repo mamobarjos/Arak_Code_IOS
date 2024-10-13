@@ -33,9 +33,9 @@ class DetailViewModel {
       }
     }
     
-    func favorite(id:Int,isFavorate: Bool ,compliation: @escaping CompliationHandler) {
+    func favorite(id:Int ,compliation: @escaping CompliationHandler) {
 
-        Network.shared.request(request: APIRouter.favorites(data: ["ad_id":"\(id)"],isFavorate: isFavorate), decodable: String.self) { (response, error) in
+        Network.shared.request(request: APIRouter.favorites(adId: id), decodable: Country.self) { (response, error) in
           if error != nil {
             compliation(error)
             return

@@ -17,12 +17,14 @@ class ForgetPasswordViewController: UIViewController {
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var phoneNumberExtention: UITextField!
   // MARK: - Properties
 
     private var error = ""
     private var viewModel: ForgetPasswordViewModel = ForgetPasswordViewModel()
     private var signUpViewModel: SignUpViewModel = SignUpViewModel()
-
+    
+    private var countryPickerView = ToolbarPickerView()
     
     // MARK: - Override Methods
     override func viewDidLoad() {
@@ -30,6 +32,8 @@ class ForgetPasswordViewController: UIViewController {
         phoneTextField.semanticContentAttribute = .forceLeftToRight
         phoneTextField.textAlignment = .left
         self.setupHideKeyboardOnTap()
+        getCountry()
+        setupPickerView()
         setupUI()
         setupBinding()
     }
@@ -45,6 +49,22 @@ class ForgetPasswordViewController: UIViewController {
       locaization()
     }
 
+    private func setupPickerView() {
+        phoneNumberExtention.inputView = countryPickerView
+        phoneNumberExtention.delegate = self
+        countryPickerView.toolbarDelegate = self
+        countryPickerView.dataSource = self
+        countryPickerView.delegate = self
+        phoneNumberExtention.inputAccessoryView = countryPickerView.toolbar
+    }
+    
+    private func getCountry() {
+      signUpViewModel.getCountry { _ in
+        self.countryPickerView.reloadAllComponents()
+
+      }
+    }
+    
     private func setupBinding() {
 
     }
@@ -99,9 +119,48 @@ class ForgetPasswordViewController: UIViewController {
         return
       }
       let vc = self?.initViewControllerWith(identifier: OtpViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! OtpViewController
-      vc.confige(email: "", processType: .forgot, data: otpData)
+      vc.confige(email: "", processType: .forgot, data: otpData, registerData: otpData)
       self?.show(vc)
     }
   }
 
+}
+
+extension ForgetPasswordViewController: UITextFieldDelegate {
+
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+        countryPickerView.reloadAllComponents()
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+}
+
+extension ForgetPasswordViewController: UIPickerViewDataSource, UIPickerViewDelegate, ToolbarPickerViewDelegate {
+
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    1
+  }
+
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+      return signUpViewModel.countryList.count
+  }
+
+  @objc func didTapDone(toolbar: UIToolbar?) {
+      if phoneNumberExtention.text?.isEmpty ?? false {
+          phoneNumberExtention.text = signUpViewModel.countryList.first?.countryCode
+      }
+      phoneNumberExtention.endEditing(true)
+  }
+
+  // return string from picker
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+      signUpViewModel.countryList[row].countryCode
+  }
+
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+      phoneNumberExtention.text = signUpViewModel.countryList[row].countryCode
+  }
 }

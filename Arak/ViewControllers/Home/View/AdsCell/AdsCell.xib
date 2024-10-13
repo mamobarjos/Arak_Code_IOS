@@ -141,12 +141,34 @@
                             <constraint firstAttribute="bottom" secondItem="Zrd-s0-WwH" secondAttribute="bottom" id="xPI-Y3-Y6p"/>
                         </constraints>
                     </view>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IYX-Cj-lUP">
+                        <rect key="frame" x="0.0" y="0.0" width="392" height="246"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="La" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofK-hP-kFc">
+                                <rect key="frame" x="0.0" y="0.0" width="392" height="246"/>
+                                <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="20"/>
+                                <color key="textColor" name="background"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.017000002786517143" green="0.01600000262260437" blue="0.012999999336898327" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ofK-hP-kFc" firstAttribute="leading" secondItem="IYX-Cj-lUP" secondAttribute="leading" id="0Yc-Hf-0h2"/>
+                            <constraint firstItem="ofK-hP-kFc" firstAttribute="top" secondItem="IYX-Cj-lUP" secondAttribute="top" id="Uwe-aX-sSB"/>
+                            <constraint firstAttribute="trailing" secondItem="ofK-hP-kFc" secondAttribute="trailing" id="ZwC-wh-0NU"/>
+                            <constraint firstAttribute="bottom" secondItem="ofK-hP-kFc" secondAttribute="bottom" id="iyl-fH-RTA"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="IYX-Cj-lUP" secondAttribute="bottom" id="6KL-BK-Sbk"/>
                     <constraint firstAttribute="bottom" secondItem="sSQ-MW-00y" secondAttribute="bottom" id="BFv-7a-wyH"/>
+                    <constraint firstAttribute="trailing" secondItem="IYX-Cj-lUP" secondAttribute="trailing" id="CQO-zQ-GCn"/>
                     <constraint firstAttribute="trailing" secondItem="sSQ-MW-00y" secondAttribute="trailing" id="FZr-P3-LZs"/>
                     <constraint firstItem="sSQ-MW-00y" firstAttribute="leading" secondItem="Be5-fP-jHx" secondAttribute="leading" id="Kp6-0P-sZ8"/>
+                    <constraint firstItem="IYX-Cj-lUP" firstAttribute="leading" secondItem="Be5-fP-jHx" secondAttribute="leading" id="R21-u6-lqb"/>
                     <constraint firstItem="sSQ-MW-00y" firstAttribute="top" secondItem="Be5-fP-jHx" secondAttribute="top" id="SOW-S3-A51"/>
+                    <constraint firstItem="IYX-Cj-lUP" firstAttribute="top" secondItem="Be5-fP-jHx" secondAttribute="top" id="zfH-5D-Oxw"/>
                 </constraints>
             </collectionViewCellContentView>
             <size key="customSize" width="430" height="275"/>
@@ -159,6 +181,8 @@
                 <outlet property="specialAdsLogo" destination="0yv-jE-mQR" id="aLX-RF-ozr"/>
                 <outlet property="typeLabel" destination="eVE-y2-zIY" id="vBH-D7-e2B"/>
                 <outlet property="typeView" destination="Zrd-s0-WwH" id="F4A-SQ-Pmj"/>
+                <outlet property="watchedLabel" destination="ofK-hP-kFc" id="FF5-yM-aZS"/>
+                <outlet property="watchedView" destination="IYX-Cj-lUP" id="jdA-0l-yRZ"/>
             </connections>
             <point key="canvasLocation" x="-147.82608695652175" y="116.51785714285714"/>
         </collectionViewCell>
@@ -173,7 +197,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="separatorColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

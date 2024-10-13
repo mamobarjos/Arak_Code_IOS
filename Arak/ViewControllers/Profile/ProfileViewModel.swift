@@ -11,6 +11,10 @@ class ProfileViewModel {
     
     // MARK: - Properties
     
+    private(set) var genderList: [String] = ["Male".localiz() , "Female".localiz()]
+
+    private(set) var countryList: [Country] = []
+    private(set) var cityList: [Country] = []
     
     // MARK: - Exposed Methods
     
@@ -22,7 +26,7 @@ class ProfileViewModel {
                 compliation(error)
                 return
             }
-            Helper.resetLoggingData()
+            
             compliation(nil)
         }
     }
@@ -38,8 +42,8 @@ class ProfileViewModel {
         }
     }
 
-    func editProfile(data: [String: String],compliation: @escaping CompliationHandler) {
-      Network.shared.request(request: APIRouter.editUserInfo(data: data), decodable: User.self) { (response, error) in
+    func editProfile(data: [String: Any],compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.editUserInfo(data: data, userid: Helper.currentUser?.id ?? 1), decodable: User.self) { (response, error) in
           if error != nil {
             compliation(error)
             return
@@ -51,8 +55,8 @@ class ProfileViewModel {
       }
 
 
-    func editProfileImage(imageType: Int ,data: [String: String],compliation: @escaping CompliationHandler) {
-      Network.shared.request(request: APIRouter.editUserImg(data: data), decodable: User.self) { (response, error) in
+    func editProfileImage(userId: Int,imageType: Int ,data: [String: String],compliation: @escaping CompliationHandler) {
+        Network.shared.request(request: APIRouter.editUserImg(data: data, userid: userId), decodable: User.self) { (response, error) in
           if error != nil {
             compliation(error)
             return
@@ -63,17 +67,43 @@ class ProfileViewModel {
       }
     
     func getUserBalance(compliation: @escaping CompliationHandler) {
-      Network.shared.request(request: APIRouter.getUserBalance, decodable: Double.self) { (response, error) in
+      Network.shared.request(request: APIRouter.getUserBalance, decodable: BalanceContainer.self) { (response, error) in
           if error != nil {
             compliation(error)
             return
           }
           
           var user = Helper.currentUser
-          user?.balance = response?.data ?? 0
+          user?.balance = response?.data?.balance ?? "0"
           Helper.currentUser = user
           compliation(nil)
         }
       }
     
+    func getCountry( compliation: @escaping CompliationHandler) {
+      Network.shared.request(request: APIRouter.countries, decodable: CountryContainer.self) { (response, error) in
+        if error != nil {
+          compliation(error)
+          return
+        }
+          self.countryList = response?.data?.countries ?? []
+        compliation(nil)
+      }
+    }
+
+    func getCity(by countryId: Int ,compliation: @escaping CompliationHandler) {
+      Network.shared.request(request: APIRouter.cities(id: countryId), decodable: CountryContainer.self) { (response, error) in
+        if error != nil {
+          compliation(error)
+          return
+        }
+          self.cityList = response?.data?.cities ?? []
+        compliation(nil)
+      }
+    }
+    
+}
+
+struct BalanceContainer: Codable {
+    let balance: String?
 }

@@ -29,20 +29,24 @@ class OtpViewController: UIViewController {
   private var originalNumber = ""
   private var oldNumber: String = ""
   private var processType: ProcessType = .register
-  private var data:[String : String] = [:]
-  private var viewModel = SignUpViewModel()
+    private var data:[String : String] = [:]
+    private var registerData:[String : Any] = [:]
+    private var viewModel = SignUpViewModel()
   private var profileViewModel = ProfileViewModel()
-
+    
+    let keyChain = KeychainPasswordStoreService()
   override func viewDidLoad() {
         super.viewDidLoad()
     setup()
   }
 
-  func confige(email: String,processType: ProcessType,data:[String : String] = [:]) {
+  func confige(email: String,processType: ProcessType,data:[String : String] = [:], registerData:[String : Any] = [:]) {
     self.processType = processType
       print(data)
-    self.data = data
-    self.oldNumber = data["old_phone"] ?? ""
+      self.data = data
+      self.registerData = registerData
+      self.data["phone_no"] = registerData["phone_no"] as? String
+      self.oldNumber = data["old_phone"] ?? ""
   }
 
   private func setup() {
@@ -86,7 +90,7 @@ class OtpViewController: UIViewController {
       if self.processType == .register  {
         self.chageRegisterStatusButton(isEnable: false)
         self.showLoading()
-        self.viewModel.otp(data: ["phone_no" : self.emailLabel.text ?? ""]) { [weak self] (error) in
+        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? ""]) { [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()
@@ -96,7 +100,7 @@ class OtpViewController: UIViewController {
       } else if self.processType == .changePhone  {
         self.showLoading()
         self.chageRegisterStatusButton(isEnable: false)
-        self.viewModel.otp(data: ["phone_no" : self.emailLabel.text ?? ""]) { [weak self] (error) in
+        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? ""]) { [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()
@@ -106,7 +110,7 @@ class OtpViewController: UIViewController {
       }  else {
         self.showLoading()
         self.chageRegisterStatusButton(isEnable: false)
-        self.viewModel.otp(data: ["phone_no" : self.emailLabel.text ?? ""]) {  [weak self] (error) in
+        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? ""]) {  [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()
@@ -131,8 +135,8 @@ class OtpViewController: UIViewController {
       }
         self.chageRegisterStatusButton(isEnable: false)
       if self.processType == .register {
-        self.data["otp_code"] = self.otpString
-        self.viewModel.register(data: self.data) { [weak self] (error) in
+        self.registerData["otp_code"] = self.otpString
+        self.viewModel.register(data: self.registerData) { [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()
@@ -142,13 +146,13 @@ class OtpViewController: UIViewController {
             return
           }
 
-          let vc = self?.initViewControllerWith(identifier: BubbleTabBarController.className, and: "") as! BubbleTabBarController
-          self?.show(vc)
+            let vc = InterestsViewController.loadFromNib()
+            self?.show(vc)
         }
       } else if self.processType == .changePhone  {
         self.showLoading()
         self.chageRegisterStatusButton(isEnable: false)
-        self.viewModel.changePhone(data: ["phone_no" : self.oldNumber,"new_phone_no" : self.originalNumber]) { [weak self] (error) in
+        self.viewModel.changePhone(data: ["phone_no" : self.originalNumber,"otp_code" : self.otpString]) { [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()
@@ -161,6 +165,10 @@ class OtpViewController: UIViewController {
           var user = Helper.currentUser
             user?.phoneNo = self?.originalNumber
           Helper.currentUser =  user
+            
+            self?.keyChain.save(credentials: .init(
+                phoneNumber:  self?.originalNumber ?? "",
+                password: self?.keyChain.retriveCredentials()?.password ?? ""))
           self?.navigationController?.popToViewController(ofClass: EditProfileViewController.self)
         }
       }

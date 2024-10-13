@@ -194,9 +194,9 @@ class StroreTableViewCell: UITableViewCell {
         }
 
         titleLabel.text = store.name
-        descriptionLabel.text = Helper.appLanguage ?? "en" == "en" ? store.storeCategory.name : store.storeCategory.arName
-        cosmosView.cosmosView.rating = store.totalRates ?? 0
-        cosmosView.rateLabel.text = "[\(store.totalRates ?? 0)]"
+        descriptionLabel.text = Helper.appLanguage ?? "en" == "en" ? store.storeCategory?.name : store.storeCategory?.arName
+        cosmosView.cosmosView.rating = Double(store.totalRates ?? 5) ?? 5
+        cosmosView.rateLabel.text = "[\(store.totalRates?.rounded(toPlaces: 1) ?? 5)]"
     }
 
     func custumizeCell(store: TestSearchModel) {
@@ -216,7 +216,7 @@ class StroreTableViewCell: UITableViewCell {
         titleLabel.text = store.name
         descriptionLabel.text = "Electroics"
         cosmosView.cosmosView.rating = store.totalRates ?? 0
-        cosmosView.rateLabel.text = "[\(store.totalRates ?? 0)]"
+        cosmosView.rateLabel.text = "[\(store.totalRates?.rounded(toPlaces: 1) ?? 5)]"
     }
 }
 

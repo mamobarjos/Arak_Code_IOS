@@ -17,11 +17,11 @@ class MyAdsViewController: UIViewController {
     private var datePicker = DatePickerDialog()
     
     private var selectIndex = -1
-    private var page = 0
+    private var page = 1
     private var homeViewModel = HomeViewModel()
     private var isFilter: Bool = false
-    private var year: String = ""
-    private var month: String = ""
+    private var dateFrom: String = ""
+    private var dateTo: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(AdsDetailCell.self)
@@ -45,12 +45,13 @@ class MyAdsViewController: UIViewController {
                         datePickerMode: .date) { (date) in
             if let dt = date {
                 let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM"
+                formatter.dateFormat = "yyyy-MM-dd"
                 let dateString = formatter.string(from: dt)
+                let dateToString = formatter.string(from: Date.now)
                 self.dateLabel.text = dateString
                 self.isFilter = true
-                self.year = String(dateString.split(separator: "-")[0])
-                self.month = String(dateString.split(separator: "-")[1])
+                self.dateFrom = dateString
+                self.dateTo = dateToString
                 self.page = 1
                 self.fetchUserAds()
             }
@@ -59,7 +60,7 @@ class MyAdsViewController: UIViewController {
     
     func fetchUserAds() {
         showLoading()
-        homeViewModel.getUserAds(page: page,isFilter: isFilter, year: year, month: month,search: "") {[weak self] (error) in
+        homeViewModel.getUserAds(page: page,isFilter: isFilter, date_from: dateFrom, date_to: dateTo,search: "") {[weak self] (error) in
             defer {
                 self?.stopLoading()
             }

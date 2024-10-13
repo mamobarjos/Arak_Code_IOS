@@ -47,7 +47,7 @@ class SocialMediaSignUPViewController: UIViewController {
         }
 
         facebookTextField.text = store.facebook ?? ""
-        twitterTextField.text = store.twitter ?? ""
+        twitterTextField.text = store.x ?? ""
         instaTextField.text = store.instagram ?? ""
         linkidInTextField.text = store.linkedin ?? ""
         YouTubeTextField.text = store.youtube ?? ""
@@ -69,7 +69,7 @@ class SocialMediaSignUPViewController: UIViewController {
                     return
                 }
                 let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
-                Helper.currentUser?.hasStore = 1
+                Helper.currentUser?.hasStore = true
                 self?.show(vc)
             })
             } else {

@@ -11,7 +11,8 @@ class withDrawViewModel {
 
     
     func withDraw(data: [String: String] , compliation: @escaping CompliationHandler) {
-      Network.shared.request(request: APIRouter.withDraw(data: data), decodable: String.self) { (response, error) in
+        // TODO: ---- change model type 
+      Network.shared.request(request: APIRouter.withDraw(data: data), decodable: WithDrawResponse.self) { (response, error) in
         if error != nil {
           compliation(error)
           return
@@ -21,13 +22,33 @@ class withDrawViewModel {
     }
     
     func digitalWallets(compliation: @escaping CompliationHandler) {
-        Network.shared.request(request: APIRouter.digitalWallets, decodable: [DigitalWallet].self) { (response, error) in
+        Network.shared.request(request: APIRouter.digitalWallets, decodable: DigitalWalletsContainer.self) { (response, error) in
         if error != nil {
           compliation(error)
           return
         }
-        self.walletTypeList = response?.data ?? []
+            self.walletTypeList = response?.data?.digitalWallets ?? []
         compliation(nil)
       }
+    }
+}
+
+struct WithDrawResponse: Codable {
+    let amount, status: String?
+    let id: Int?
+    let createdAt, walletType: String?
+//    let deletedAt: JSONNull?
+    let userID: Int?
+    let updatedAt, phoneNo, name: String?
+
+    enum CodingKeys: String, CodingKey {
+        case amount, status, id
+        case createdAt = "created_at"
+        case walletType = "wallet_type"
+//        case deletedAt = "deleted_at"
+        case userID = "user_id"
+        case updatedAt = "updated_at"
+        case phoneNo = "phone_no"
+        case name
     }
 }

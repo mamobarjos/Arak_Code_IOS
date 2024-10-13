@@ -12,11 +12,12 @@ protocol AvailableSucialMediaViewControllerDelegate: AnyObject{
 }
 
 enum SocialMediaType{
-    case whatsApp
+    case LinkedIn
     case instagram
     case youtube
     case website
     case facebook
+    case twitter
 }
 class AvailableSucialMediaViewController: UIViewController {
 
@@ -26,21 +27,36 @@ class AvailableSucialMediaViewController: UIViewController {
     @IBOutlet weak var instaButton: UIButton!
     @IBOutlet weak var youtubeButton: UIButton!
     @IBOutlet weak var webButton: UIButton!
+    @IBOutlet weak var twitterButton: UIButton!
+    @IBOutlet weak var addButton: UIButton!
     
     weak var delegate: AvailableSucialMediaViewControllerDelegate?
-    var selectedSocialMedia: Set<SocialMediaType> = []
+    
+    public var selectedSocialMedia: Set<SocialMediaType> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        titleLabel.text = "  Social media links  ".localiz()
+        addButton.setTitle("Add".localiz(), for: .normal)
+        
+        setDefaultValue(for: .twitter, button: twitterButton)
+        setDefaultValue(for: .LinkedIn, button: whatsButton)
+        setDefaultValue(for: .facebook, button: facebookButton)
+        setDefaultValue(for: .instagram, button: instaButton)
+        setDefaultValue(for: .youtube, button: youtubeButton)
+        setDefaultValue(for: .website, button: webButton)
     }
 
     @IBAction func closeButtonAction(_ sender: Any) {
         self.dismissViewController()
     }
     
+    @IBAction func twitterButtonAction(_ sender: Any) {
+        toggleSelectionSocialMedia(for: .twitter, button: sender as! UIButton)
+    }
+    
     @IBAction func whatsButtonAction(_ sender: UIButton) {
-        toggleSelectionSocialMedia(for: .whatsApp, button: sender)
+        toggleSelectionSocialMedia(for: .LinkedIn, button: sender)
 
     }
     
@@ -77,6 +93,18 @@ class AvailableSucialMediaViewController: UIViewController {
             selectedSocialMedia.insert(type)
             button.layer.borderColor = #colorLiteral(red: 1, green: 0.4309999943, blue: 0.1800000072, alpha: 1)
             button.layer.borderWidth = 2
+        }
+    }
+    
+    private func setDefaultValue(for type: SocialMediaType, button: UIButton){
+        if selectedSocialMedia.contains(type){
+            selectedSocialMedia.insert(type)
+            button.layer.borderColor = #colorLiteral(red: 1, green: 0.4309999943, blue: 0.1800000072, alpha: 1)
+            button.layer.borderWidth = 2
+        }else{
+            selectedSocialMedia.remove(type)
+            button.layer.borderColor = UIColor.gray.cgColor
+            button.layer.borderWidth = 1
         }
     }
 }

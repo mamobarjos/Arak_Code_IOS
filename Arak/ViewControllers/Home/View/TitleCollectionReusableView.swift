@@ -40,7 +40,7 @@ class TitleCollectionReusableView: UICollectionReusableView {
         guard let vc else {return}
         var governorates: [District] = filter?.governorates ?? []
         let districts: [District] = filter?.districts ?? []
-        governorates.insert(District(id: nil, name: "All", nameAr: "الكل", governorateID: nil), at: 0)
+        governorates.insert(District(id: nil, name: "All", nameAr: "الكل"), at: 0)
         if governorates.isEmpty {return}
         let customPicker = CustomPickerView(governorate: governorates, districts:[] )
             customPicker.delegate = self

@@ -13,34 +13,35 @@ import GoogleSignIn
 import FBSDKCoreKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-
-  var window: UIWindow?
-
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-    LocaleManager.setup()
-    IQKeyboardManager.shared.enable = true
-    FirebaseApp.configure()
-      GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-          if error != nil || user == nil {
-              // Show the app's signed-out state.
-          } else {
-              // Show the app's signed-in state.
-          }
-      }
-//      GIDSignIn.sharedInstance.
-    if Helper.appLanguage == nil {
-        Helper.appLanguage = "en"
-        LocaleManager.apply(identifier: Helper.appLanguage ?? "en")
-    }
-      print("token \(Helper.userToken)")
-    for family in UIFont.familyNames {
-        print("\(family)")
-
-        for name in UIFont.fontNames(forFamilyName: family) {
-            print("\(name)")
+    
+    var window: UIWindow?
+//    var cart: CartManagerProtocol?
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        cart = CartManager()
+//        cart?.clearCart()
+        LocaleManager.setup()
+        IQKeyboardManager.shared.enable = true
+        FirebaseApp.configure()
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if error != nil || user == nil {
+                // Show the app's signed-out state.
+            } else {
+                // Show the app's signed-in state.
+            }
         }
-    }
+        //      GIDSignIn.sharedInstance.
+        if Helper.appLanguage == nil {
+            Helper.appLanguage = "en"
+            LocaleManager.apply(identifier: Helper.appLanguage ?? "en")
+        }
+        print("token \(Helper.userToken)")
+//        for family in UIFont.familyNames {
+//            print("\(family)")
+//
+//        for name in UIFont.fontNames(forFamilyName: family) {
+//            print("\(name)")
+//        }
+//    }
     if let font = UIFont(name: "DroidArabicKufi-Bold", size: 14) {
       let attributes = [NSAttributedString.Key.font: font]
       UINavigationBar.appearance().titleTextAttributes = attributes

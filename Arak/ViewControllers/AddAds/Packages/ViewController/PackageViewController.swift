@@ -17,8 +17,8 @@ class PackageViewController: UIViewController {
   private let minimumInteritemSpacing: CGFloat = 10
   private let cellsPerRow = 2
   private var packageList: [Package] = []
-  private var adCategory:AdsCategory?
-
+  private var adCategory:AdCategory?
+    var viewModel: AdsViewModel = AdsViewModel()
   private var refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
@@ -26,9 +26,22 @@ class PackageViewController: UIViewController {
       setupUI()
     }
 
-  func confige(adCategory: AdsCategory) {
+  func confige(adCategory: AdCategory) {
     self.adCategory = adCategory
-    packageList = adCategory.packages ?? []
+      showLoading()
+      viewModel.getPackages(adCategoryId: adCategory.id ?? 1) {[weak self] error in
+          defer {
+              self?.stopLoading()
+          }
+          
+          if error != nil {
+              self?.showToast(message: error)
+          }
+          
+          self?.packageList = self?.viewModel.packages ?? []
+          self?.packageCollectionView.reloadData()
+      }
+
   }
 
   // MARK: - Protected Methods
@@ -42,14 +55,14 @@ class PackageViewController: UIViewController {
     packageCollectionView.contentInsetAdjustmentBehavior = .always
     packageCollectionView.register(PackageCell.self)
     packageCollectionView.register(CustomCell.self)
-    packageCollectionView.reloadData()
+   
   }
 
 }
 extension PackageViewController: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return packageList.count
-    //return packageList.count + 1 // for custom package
+//    return packageList.count
+    return packageList.count + 1 // for custom package
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -75,9 +88,21 @@ extension PackageViewController: UICollectionViewDelegate , UICollectionViewData
         self.show(vc)
         return
     }
-    let vc = initViewControllerWith(identifier: DetailAdsViewController.className, and: "") as! DetailAdsViewController
-    vc.confige(adCategory: adCategory, packageSelect: packageList[indexPath.row])
-    show(vc)
+      
+      if adCategory?.id == 4 {
+          let vc = self.initViewControllerWith(identifier: CheckoutViewController.className, and: "",storyboardName: Storyboard.Main.rawValue) as! CheckoutViewController
+          Ad_category_id = 4
+          Ad_package_id = packageList[indexPath.row].id ?? 0
+          package_Price = packageList[indexPath.row].price ?? ""
+          package_reach = packageList[indexPath.row].reach ?? 0
+          
+          self.show(vc)
+      } else {
+          let vc = initViewControllerWith(identifier: DetailAdsViewController.className, and: "") as! DetailAdsViewController
+          vc.confige(adCategory: adCategory, packageSelect: packageList[indexPath.row])
+          show(vc)
+      }
+  
   }
 
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

@@ -10,7 +10,7 @@ import Alamofire
 
 enum StoresRout: APIConfiguration {
     case createStore(data: [String:Any])
-    case getStores(page: Int)
+    case getStores(page: Int, category: Int)
     case filterStoresByCategory(category: Int, page: Int)
     case searchStore(storeName: String)
 
@@ -20,6 +20,10 @@ enum StoresRout: APIConfiguration {
     case createProduct(data: [String:Any])
     case getStoreProducts(storeId: Int, page: Int)
     case getStoreSingleProduct(productId: Int)
+    case getArakProductsCatigores
+    case getArakProducts(categotyId: Int)
+    case getArakProductVariants(productId: Int)
+    case createOrder(form: CreateOrderForm)
 
     case submitReview(content: String, rate: Int, store_id: Int)
     case deleteStoreReview(id: Int)
@@ -28,12 +32,14 @@ enum StoresRout: APIConfiguration {
     case deleteProductReview(id: Int)
 
     case getCategories
+    case updateUserIntrest(data: [String:Any])
 
     case updateStore(id: Int, data: [String:Any])
     case updateProduct(id: Int, data: [String:Any])
     case getUserProducts(page: Int)
 
     case getProductsByCategory(categoryId: Int, page: Int)
+    case deleteProduct(productId: Int)
 
     var method: HTTPMethod {
         switch self {
@@ -48,9 +54,15 @@ enum StoresRout: APIConfiguration {
         case .submitReview: return .post
         case .deleteStoreReview: return .delete
         case .getCategories: return .get
-
-        case .updateStore:return .post
-        case .updateProduct:return .post
+        case .updateUserIntrest: return .post
+        case .getArakProductsCatigores: return .get
+        case .getArakProducts: return .get
+        case .getArakProductVariants: return .get
+        case .createOrder: return .post
+            
+            
+        case .updateStore:return .patch
+        case .updateProduct:return .patch
         case .getUserStore: return .get
         case .submiteProductReview: return .post
         case .deleteProductReview: return .delete
@@ -58,35 +70,49 @@ enum StoresRout: APIConfiguration {
 
         case .getProductsByCategory:
             return .get
+        case .deleteProduct:
+            return .delete
         }
     }
 
         var path: String {
             switch self {
-            case .createStore: return "stores/create-store"
-            case .getStores: return "stores/get-stores"
+            case .createStore: return "stores"
+            case .getStores: return "stores"
             case .filterStoresByCategory(let categoryId, _): return "stores/filter-stores-by-category/\(categoryId)"
-            case .searchStore(let storeName): return "stores/search-stores/\(storeName)"
-            case .getSingleStore(let storeId): return "stores/get-single-store/\(storeId)"
-            case .createProduct: return "store-products/create-product"
-            case .getStoreProducts(let storeId, _): return "store-products/get-store-products/\(storeId)"
-            case .getStoreSingleProduct(let productId): return "store-products/get-single-store-product/\(productId)"
-            case .submitReview: return "store-reviews/add-review"
+            case .searchStore: return "stores"
+            case .getSingleStore(let storeId): return "stores/\(storeId)"
+            case .createProduct: return "store-products"
+            case .getStoreProducts(let storeId, _): return "store-products/\(storeId)/related"
+            case .getStoreSingleProduct(let productId): return "store-products/\(productId)"
+            case .submitReview: return "store-reviews"
             case .deleteStoreReview(let id):
-                return "store-reviews/delete-review/\(id)"
+                return "store-reviews/\(id)"
             case .getCategories: return "store-categories"
+            case .updateUserIntrest: return "users/update-preferences"
             case .updateStore(let id, _):
-                return "stores/update-store/\(id)"
+                return "stores/\(id)"
             case .updateProduct(let id, _):
-                return "store-products/update-product/\(id)"
+                return "store-products/\(id)"
             case .getUserStore:
-                return "stores/get-user-store"
-            case .submiteProductReview: return "store-product-reviews/add-review"
-            case .deleteProductReview(id: let id): return "store-product-reviews/delete-review/\(id)"
+                return "stores/user/my-store"
+            case .getArakProductsCatigores:
+                return "stores/arak-store/categories"
+            case .getArakProducts:
+                return "stores/arak-store/products"
+            case .getArakProductVariants:
+                return "stores/arak-store/products/variations"
+            case .createOrder:
+                return "stores/arak-store/order"
+                
+            case .submiteProductReview: return "store-product-reviews"
+            case .deleteProductReview(id: let id): return "store-product-reviews/\(id)"
             case .getUserProducts:
-                return "store-products/get-user-store-products"
+                return "store-products/user/my-products"
             case .getProductsByCategory(let id, _):
                 return "stores/filter-store-products-by-category/\(id)"
+            case .deleteProduct(productId: let id):
+                return "store-products/\(id)"
             }
         }
 
@@ -94,26 +120,33 @@ enum StoresRout: APIConfiguration {
             switch self {
             case .createStore(let data):
                 return .body(data)
-            case .getStores(let page):
-                return.url(["page":page])
+            case .getStores(let page, let categoryID):
+                if categoryID == -1 {
+                    return.url(["page":page])
+                } else {
+                    return.url(["page":page, "store_category_id": categoryID])
+                }
+                
             case .filterStoresByCategory(_,let page):
                 return.url(["page":page])
-            case .searchStore:
-                return.url([:])
+            case .searchStore(let storeName):
+                return.url(["name":storeName])
             case .getSingleStore:
                 return.url([:])
             case .createProduct(let data):
                 return .body(data)
             case .getStoreProducts(_,let page):
-                return.url(["page":page])
+                return.url([:])
             case .getStoreSingleProduct:
                 return.url([:])
             case .submitReview(content: let content, rate: let rate, store_id: let storeID):
-                return .body(["content":content, "rate":rate, "store_id":storeID])
+                return .body(["content":content, "rating":rate, "store_id":storeID])
             case .deleteStoreReview:
                 return .url([:])
             case .getCategories:
                 return .url([:])
+            case .updateUserIntrest(let data):
+                return .body(data)
             case .updateStore(_ , let data):
                 return .body(data)
             case .updateProduct(_ , let data):
@@ -121,12 +154,28 @@ enum StoresRout: APIConfiguration {
             case .getUserStore:
                 return .url([:])
             case .submiteProductReview(content: let content, rate: let rate, store_product_id: let storeID):
-                return .body(["content":content, "rate":rate, "store_product_id":storeID])
+                return .body(["content":content, "rating":rate, "store_product_id":storeID])
             case .deleteProductReview(id: let id):
                 return .url([:])
             case .getUserProducts(let page):
                 return.url(["page":page])
             case .getProductsByCategory(categoryId: let categoryId, page: let page):
+                return .url([:])
+            case .getArakProductsCatigores:
+                return .url([:])
+            case .getArakProducts(let id):
+                if id  == -1 {
+                    return .url([:])
+                } else {
+                    return .url(["category":id])
+                }
+               
+            case .getArakProductVariants(let productId):
+                return.url(["product_id":productId])
+                
+            case .createOrder(form: let form):
+                return .body(form.toDictionary() ?? [:])
+            case .deleteProduct:
                 return .url([:])
             }
         }
@@ -167,4 +216,18 @@ enum StoresRout: APIConfiguration {
     }
 
     
+}
+
+extension Encodable {
+    func toDictionary() -> [String: Any]? {
+        do {
+            let data = try JSONEncoder().encode(self)
+            if let dictionary = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] {
+                return dictionary
+            }
+        } catch {
+            print("Failed to convert object to dictionary: \(error.localizedDescription)")
+        }
+        return nil
+    }
 }

@@ -21,7 +21,7 @@ class StoreViewController: UIViewController {
 
     var storeId: Int?
     var storeType: StoreType = .regularStore
-    private var storeDetails: SingleStore?
+    private var storeDetails: Store?
 
     public var mode: StoreMode = .add
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class StoreViewController: UIViewController {
     func configration(storeId: Int) {
         self.showLoading()
         if mode == .edit {
-            storeViewModel.getUserStore { [weak self] error in
+            storeViewModel.getStore(stroeId: Helper.store?.id ?? 0, complition: {[weak self] error in
                 defer {
                     self?.stopLoading()
                 }
@@ -74,9 +74,10 @@ class StoreViewController: UIViewController {
                     self?.storeDetails = storeDetails
                 }
 
-                self?.contentView.products = self?.storeViewModel.getStoreProduct() ?? []
-                self?.contentView.reviews = self?.storeViewModel.getReviews() ?? []
-            }
+                self?.contentView.products = Array(self?.storeViewModel.getStoreProduct().prefix(3) ?? [])
+                self?.contentView.reviews = Array(self?.storeViewModel.getReviews().prefix(3) ?? [])
+            })
+
         } else {
 
             storeViewModel.getStore(stroeId: storeId, complition: {[weak self] error in
@@ -94,8 +95,8 @@ class StoreViewController: UIViewController {
                     self?.storeDetails = storeDetails
                 }
 
-                self?.contentView.products = self?.storeViewModel.getStoreProduct() ?? []
-                self?.contentView.reviews = self?.storeViewModel.getReviews() ?? []
+                self?.contentView.products = Array(self?.storeViewModel.getStoreProduct().prefix(3) ?? [])
+                self?.contentView.reviews = Array(self?.storeViewModel.getReviews().prefix(3) ?? [])
             })
         }
     }
@@ -146,6 +147,12 @@ class StoreViewController: UIViewController {
 }
 
 extension StoreViewController: StoreContentViewProtocol {
+    func didTapViewAllReviews() {
+        let vc = AllReviewsViewController.loadFromNib()
+        vc.reviewsType = .store(self.storeDetails)
+        self.show(vc)
+    }
+    
     func didTapOnAddProduct() {
         let vc = initViewControllerWith(identifier: AddServiceViewController.className, and: "\(storeDetails?.name ?? "Add Product")", storyboardName: Storyboard.MainPhase.rawValue) as! AddServiceViewController
         show(vc)
@@ -153,6 +160,7 @@ extension StoreViewController: StoreContentViewProtocol {
 
     func didTapViewAllProduct() {
         let vc = initViewControllerWith(identifier: StoreProductsViewController.className, and: "\(storeDetails?.name ?? "All Products")", storyboardName: Storyboard.MainPhase.rawValue) as! StoreProductsViewController
+        vc.products = storeDetails?.storeProducts ?? []
         if mode == .edit {
             vc.storeId = storeDetails?.id
             vc.mode = .edit
@@ -170,13 +178,23 @@ extension StoreViewController: StoreContentViewProtocol {
     }
 
     func didTapOnEdit(id: Int) {
+        showLoading()
         let vc = self.initViewControllerWith(identifier: SignUpStoreViewController.className, and: "Your Store".localiz(), storyboardName: Storyboard.storeAuth.rawValue) as! SignUpStoreViewController
          vc.mode = .edit
          show(vc)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.stopLoading()
+        })
     }
 
     func didTapOnBack() {
-        self.navigationController?.popToRootViewController(animated: true)
+        if mode == .edit {
+            self.navigationController?.popToRootViewController(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+       
     }
 
     func didTapOnProduct(id: Int) {
@@ -207,9 +225,7 @@ extension StoreViewController: StoreContentViewProtocol {
                 self?.showToast(message: error)
             }
 
-            if let review = self?.storeViewModel.getReview() {
-                self?.contentView.reviews.append(review)
-            }
+            self?.configration(storeId: self?.storeId ?? 1)
 
 //            self?.contentView.addReviewContainer.isHidden = true
         }
@@ -232,10 +248,8 @@ extension StoreViewController: StoreContentViewProtocol {
             }
 
 //            self?.contentView.addReviewContainer.isHidden = false
-            self?.showToast(message: "Review deleted successfully")
-            self?.contentView.reviews = self?.storeViewModel.getReviews().filter{
-                $0.id != id
-            } ?? []
+            self?.showToast(message: "Review deleted successfully".localiz())
+            self?.configration(storeId: self?.storeId ?? 1)
         }
     }
 }

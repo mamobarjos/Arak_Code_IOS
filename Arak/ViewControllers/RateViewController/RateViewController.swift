@@ -41,17 +41,22 @@ class RateViewController: UIViewController {
     }
     
     @IBAction func submiteReviewAction(_ sender: Any) {
-        if reviewTextView.text == "placeHolder.Enter your review ...".localiz() || reviewTextView.text.isEmpty {
-            UIApplication.shared.topViewController?.showToast(message:  "error.please add your review".localiz())
-            return
-        }
+//        if reviewTextView.text == "placeHolder.Enter your review ...".localiz() || reviewTextView.text.isEmpty {
+//            UIApplication.shared.topViewController?.showToast(message:  "error.please add your review".localiz())
+//            return
+//        }
 
         guard let rating = rating else {
             UIApplication.shared.topViewController?.showToast(message: "error.please rate this store".localiz())
             return
         }
         
-        delegate?.submiteReview(self, context: reviewTextView.text, rating: rating)
+        if reviewTextView.text == "placeHolder.Enter your review ...".localiz() {
+            delegate?.submiteReview(self, context: "       ", rating: rating)
+        } else {
+            delegate?.submiteReview(self, context: reviewTextView.text, rating: rating)
+        }
+       
     }
 }
 

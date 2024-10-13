@@ -9,15 +9,19 @@ import UIKit
 class SuccessOrderViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var doneButtton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setTitleLabelText()
+        hiddenNavigation(isHidden: true)
     }
     
     private func setTitleLabelText() {
-        let fullText = "Thanks for using ARAK"
-        let coloredText = "ARAK"
+        
+        let fullText = "Thanks for using ARAK".localiz()
+        let coloredText = "ARAK".localiz()
         let color = UIColor(hex: "#FF6E2E")
         
         let attributedString = NSMutableAttributedString(string: fullText)
@@ -26,12 +30,14 @@ class SuccessOrderViewController: UIViewController {
             attributedString.addAttribute(.foregroundColor, value: color, range: nsRange)
         }
         
+        title = "Arak Store".localiz()
         titleLabel.attributedText = attributedString
+        subtitleLabel.text = "Your order on the way! enjoy it.".localiz()
+        doneButtton.setTitle("Done".localiz(), for: .normal)
     }
     
     @IBAction func doneButtonAction(_ sender: Any) {
-        let vc = InterestsViewController.loadFromNib()
-        self.show(vc)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 }
 

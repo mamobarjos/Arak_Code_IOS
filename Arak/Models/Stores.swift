@@ -7,6 +7,15 @@
 
 import Foundation
 
+extension Double {
+    /// Rounds the double to the specified number of decimal places.
+    /// - Parameter places: The number of decimal places to round to.
+    /// - Returns: The rounded double.
+    func rounded(toPlaces places: Int) -> Double {
+        let multiplier = pow(10.0, Double(places))
+        return (self * multiplier).rounded() / multiplier
+    }
+}
 struct StoresRespose: Codable {
     let storesData: StoresData
     let storeCategories: [StoreCategory]?
@@ -20,98 +29,94 @@ struct StoresRespose: Codable {
 }
 
 // MARK: - StoreCategory
+
+struct StoreCategoryContainer: Codable {
+    let storeCategories: [StoreCategory]?
+    let total, page, lastPage: Int?
+}
+
 struct StoreCategory: Codable {
-    let id: Int
-    let name: String
-    let arName : String
-//    let createdAt: String
-//    let updatedAt: String
+    let id: Int?
+    let iconUrl: String?
+    let arName, name: String?
+    var selected = false
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
+        case id
         case arName = "name_ar"
-//        case createdAt = "created_at"
-//        case updatedAt = "updated_at"
+        case name = "name_en"
+        case iconUrl = "icon_url"
     }
 }
 
 // MARK: - Stores
 struct StoresData: Codable {
-    let data: [Store]
-    let lastPageurl: String?
-    let prevPageurl: String?
-    let from: Int?
-    let total: Int?
-    let path: String?
-    let firstPageurl: String?
-    let lastPage: Int?
-    let nextPageurl: String?
-    let currentPage: Int?
-    let perPage: Int?
-    let to: Int?
-
-    enum CodingKeys: String, CodingKey {
-        case lastPageurl = "last_page_url"
-        case prevPageurl = "prev_page_url"
-        case from = "from"
-        case total = "total"
-        case path = "path"
-        case firstPageurl = "first_page_url"
-        case lastPage = "last_page"
-        case nextPageurl = "next_page_url"
-        case data = "data"
-        case currentPage = "current_page"
-        case perPage = "per_page"
-        case to = "to"
-    }
+    let page, lastPage, total: Int?
+    let stores: [Store]?
 }
 
 // MARK: - Datum
 struct Store: Codable {
-    let id: Int?
-    let name: String?
-    let desc: String?
-    let website: String?
-    let phoneNo: String?
-    let lon: String?
-    let lat: String?
-    let img: String?
-    let cover: String?
-    let totalRates: Double?
-    let facebook: String?
-    let twitter: String?
-    let instagram: String?
-    let linkedin: String?
-    let youtube: String?
-    let snapchat: String?
-    let userid: Int?
-    let storeCategoryid: Int?
     let createdAt: String?
+    let id: Int?
+    let lon: String?
+    let facebook: String?
+    let storeCategoryID: Int?
+    let deletedAt: String?
+    let snapchat: String?
+    let desc: String?
+    let countryID: Int?
+    let hasCash: Bool?
+    let website, tiktok: String?
+    let user: User?
+    let name: String?
+    let youtube: String?
+    let status: String?
+    let cover: String?
+    let hasMastercard, hasPaypal: Bool?
+    let lat: String?
+    let instagram: String?
+    let userID: Int?
     let updatedAt: String?
-    let storeCategory: StoreCategory
+    let hasVisa: Bool?
+    let storeCategory: StoreCategory?
+    let storeReviews: [ReviewResponse]?
+    let isFeatured: Bool?
+    let img: String?
+    let storeProducts: [StoreProduct]?
+    let totalRates: Double?
+    let x, linkedin: String?
+    let phoneNo: String?
+    let locationName: String?
+    let isReviewed: Bool?
+    
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
-        case desc = "desc"
-        case website = "website"
-        case phoneNo = "phone_no"
-        case lon = "lon"
-        case lat = "lat"
-        case img = "img"
-        case cover = "cover"
-        case totalRates = "total_rates"
-        case facebook = "facebook"
-        case twitter = "twitter"
-        case instagram = "instagram"
-        case linkedin = "linkedin"
-        case youtube = "youtube"
-        case snapchat = "snapchat"
-        case userid = "user_id"
-        case storeCategoryid = "store_category_id"
         case createdAt = "created_at"
+        case id, lon, facebook
+        case storeCategoryID = "store_category_id"
+        case deletedAt = "deleted_at"
+        case snapchat
+        case desc = "description"
+        case countryID = "country_id"
+        case hasCash = "has_cash"
+        case website, tiktok, user, name, youtube, status
+        case cover = "cover_img_url"
+        case hasMastercard = "has_mastercard"
+        case hasPaypal = "has_paypal"
+        case lat, instagram
+        case userID = "user_id"
         case updatedAt = "updated_at"
+        case hasVisa = "has_visa"
         case storeCategory = "store_category"
+        case storeReviews = "store_reviews"
+        case isFeatured = "is_featured"
+        case img = "img_url"
+        case storeProducts = "store_products"
+        case totalRates = "rating"
+        case x, linkedin
+        case phoneNo = "phone_no"
+        case locationName = "location_name"
+        case isReviewed = "is_reviewed"
     }
 }
 // MARK: - Banner

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AdsHomeFilterCollectionReusableViewDelegate: AnyObject {
-    func didtapChooseFilter(_ sender: AdsHomeFilterCollectionReusableView, adsType: AdsTypes)
+    func didtapChooseFilter(_ sender: AdsHomeFilterCollectionReusableView, adsType: AdCategory)
 }
 
 class AdsHomeFilterCollectionReusableView: UICollectionReusableView {
@@ -21,8 +21,8 @@ class AdsHomeFilterCollectionReusableView: UICollectionReusableView {
     weak var delegate: AdsHomeFilterCollectionReusableViewDelegate?
     
     private var filterPickerView = ToolbarPickerView()
-    private var filter: [(AdsTypes, String)] = [(.all, "All".localiz()), (.image, "Images".localiz()), (.video, "Video".localiz()), (.videoWeb, "Video Web".localiz())]
-    private var choosedFilter: AdsTypes = .all
+    public var filter: [AdCategory] = []
+    private var choosedFilter: AdCategory?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -57,17 +57,18 @@ extension AdsHomeFilterCollectionReusableView: UIPickerViewDataSource, UIPickerV
 
   @objc func didTapDone(toolbar: UIToolbar?) {
       filterTextField.resignFirstResponder()
+      guard let choosedFilter else {return}
       delegate?.didtapChooseFilter(self, adsType: choosedFilter)
   }
 
   // return string from picker
   func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 
-      return filter[row].1
+      return Helper.appLanguage == "en" ? filter[row].nameEn : filter[row].nameAr
   }
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-      titleLabel.text = filter[row].1
-      choosedFilter = filter[row].0
+      titleLabel.text = Helper.appLanguage == "en" ? filter[row].nameEn : filter[row].nameAr
+      choosedFilter = filter[row]
   }
 }

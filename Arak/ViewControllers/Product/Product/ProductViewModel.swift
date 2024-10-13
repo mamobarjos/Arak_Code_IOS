@@ -9,7 +9,7 @@ import Foundation
 
 class ProductViewModel{
     
-    private var storeProduct: SingleProduct?
+    private var storeProduct: StoreProduct?
     private var relatedProducts: [RelatedProducts] = []
     private var review: ReviewResponse?
 
@@ -17,7 +17,7 @@ class ProductViewModel{
         return self.relatedProducts
     }
 
-    func getStoreProduct() -> SingleProduct? {
+    func getStoreProduct() -> StoreProduct? {
         return self.storeProduct
     }
 
@@ -26,18 +26,32 @@ class ProductViewModel{
     }
 
     func getProduct(productId: Int, complition: @escaping CompliationHandler) {
-        Network.shared.request(request: StoresRout.getStoreSingleProduct(productId:productId), decodable: SingleProduct.self) { response, error in
+        Network.shared.request(request: StoresRout.getStoreSingleProduct(productId:productId), decodable: StoreProduct.self) { response, error in
             guard error == nil else {
                 complition(error)
                 return
             }
 
             self.storeProduct = response?.data
-            self.relatedProducts = response?.data?.relatedProducts ?? []
+//            self.relatedProducts = response?.data?.relatedProducts ?? []
 
             complition(nil)
         }
     }
+    
+    func getRelatedProduct(productId: Int, complition: @escaping CompliationHandler) {
+        Network.shared.request(request: StoresRout.getStoreProducts(storeId: productId, page: 1), decodable: [RelatedProducts].self) { response, error in
+            guard error == nil else {
+                complition(error)
+                return
+            }
+
+            self.relatedProducts = response?.data ?? []
+
+            complition(nil)
+        }
+    }
+    
     func submitReview(review: String, rate: Int, storeProductId: Int, complition: @escaping CompliationHandler) {
         Network.shared.request(request: StoresRout.submiteProductReview(content: review, rate: rate, store_product_id: storeProductId), decodable: ReviewResponse.self) { [weak self] response, error in
             guard error == nil else {
@@ -59,6 +73,7 @@ class ProductViewModel{
         }
     }
 }
+
 struct Review: Codable {
     let id: Int?
     let content: String?

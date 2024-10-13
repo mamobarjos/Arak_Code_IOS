@@ -63,13 +63,17 @@ class AdsDetailCell: UITableViewCell {
             adsTypeValueLabel.text = "Website ads".localiz()
             numberValueLabel.text = "\(ads.package?.noOfImgs ?? 1) \("Website".localiz())"
             iconImageView.image = #imageLiteral(resourceName: "world-wide-web")
+        } else if  ads.adCategoryID == AdsTypes.store.rawValue {
+            adsTypeValueLabel.text = "Store ads".localiz()
+            numberValueLabel.text = "\(1) \("Store".localiz())"
+            iconImageView.image = UIImage(named: "creat_store_ad")
         }
         reachLabel.text = "Reach".localiz()
         reachValueLabel.text = "\(ads.views ?? 0)"
-        totalReachValueLabel.text = ads.package?.reach ?? ""
+        totalReachValueLabel.text = "\(ads.package?.reach ?? 0)"
         numberLabel.text = "Number".localiz()
         timeLabel.text = "Time".localiz()
-        let (h,m,s) = secondsToHoursMinutesSeconds(seconds: (Int(ads.package?.seconds ?? "1") ?? 1))
+        let (h,m,s) = secondsToHoursMinutesSeconds(seconds: (Int(ads.package?.seconds ?? 1)))
         var timeCountTitle = ""
         if h > 0 {
             timeCountTitle = "\(h) " + "h".localiz()
@@ -82,7 +86,7 @@ class AdsDetailCell: UITableViewCell {
         }
         timeValueLabel.text = timeCountTitle
         priceLabel.text = "Price".localiz()
-        priceValueLabel.text =  "\(ads.package?.price ?? 0) \("JOD".localiz())"
+        priceValueLabel.text =  "\(ads.package?.price ?? "0") \((Helper.currencyCode ?? "JOD"))"
         totalPriceLabel.text = ""
     }
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {

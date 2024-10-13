@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
+
+struct ProductimagesForm: Codable {
+    let url: String
+}
 
 class AddServiceViewController: UIViewController {
 
@@ -92,16 +97,41 @@ class AddServiceViewController: UIViewController {
         if let product = product {
             titleTextField.text = product.name
             descTextField.text = product.desc
-            priceTextField.text = "\(product.price ?? 0.0)"
+            priceTextField.text = product.price ?? "0.0"
+            product.storeProductsFile.forEach { file in
+                if let url = URL(string: file.path ?? "") {
+                    KingfisherManager.shared.retrieveImage(with: url) {[weak self] result in
+                        switch result {
+                        case .success(let value):
+                            let image: UIImage = value.image
+                            self?.images.append(image)
+                        case .failure(let error):
+                            print("Error: \(error)")
+                        }
+                    }
+                }
+            }
+            
+            let price: Double = (Double(product.price ?? "") ?? 0)
+            let salePrice: Double = (Double(product.salePrice ?? "") ?? 0)
+            
+            let discountPercentage = calculateDiscountPercentage(price: price, salePrice: salePrice)
+            discountPriceTextField.text = "\(discountPercentage)"
         }
 
         if let relatedProduct = relatedProduct {
             titleTextField.text = relatedProduct.name
             descTextField.text = relatedProduct.desc
-            priceTextField.text = "\(relatedProduct.price ?? 0.0)"
+            priceTextField.text = "\(relatedProduct.price ?? "0.0")"
         }
     }
 
+   private func calculateDiscountPercentage(price: Double, salePrice: Double) -> Double {
+        let discountValue = price - salePrice
+        let discountPercentage = (discountValue / price) * 100
+        return discountPercentage
+    }
+    
     @IBAction func backButtonAction(_ sender: Any) {
         for controller in self.navigationController!.viewControllers as Array {
             if controller.isKind(of: StoreViewController.self) {
@@ -146,16 +176,38 @@ class AddServiceViewController: UIViewController {
             self.showToast(message: "error.Please add Product Image".localiz())
             return nil
         }
+        
+        let salePrice = (Double(price) ?? 0) - (Double(price) ?? 0) * ((Double(discountPriceTextField.text ?? "0") ?? 0) / 100)
 
         var data: [String: Any] = [
             "name":productName,
-            "desc":desc,
-            "price":price,
+            "description":desc,
+            "price": (Double(price) ?? 0),
+            "sale_price": salePrice,
+            "store_id": Helper.store?.id ?? 0
         ]
-        
-        
-        
         return data
+    }
+    
+    func convertToDictionary(product: [ProductimagesForm]) -> [[String: Any]]? {
+        let encoder = JSONEncoder()
+        
+        do {
+            // Encode the array of products
+            let data = try encoder.encode(product)
+            
+            // Convert the encoded data into a JSON object
+            let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+            
+            // Cast the JSON object as an array of dictionaries
+            if let dictionaryArray = jsonObject as? [[String: Any]] {
+                return dictionaryArray
+            }
+        } catch {
+            print("Failed to encode or serialize: \(error)")
+        }
+        
+        return nil
     }
 }
 
@@ -229,26 +281,48 @@ extension AddServiceViewController: UIImagePickerControllerDelegate & UINavigati
         if userId != -1 {
             let id = "\(userId)"
             UploadMedia.saveImages(userId: id, imagesArray: images, completionHandler: { [weak self] url in
-                    self?.uplaoadedImages = url
+                guard let self else {return}
+                    self.uplaoadedImages = url
                 var data = content
-                
+                var files: [ProductimagesForm] = []
                 for (index, string) in url.enumerated() {
-                    data["files[\(index)][\(string)]"] = string
+                    files.append(.init(url: string))
                 }
                 
+                data["store_product_files"] = self.convertToDictionary(product: files)
+                
                 print(data)
-                self?.viewModel.createService(data: data, completion: {  error in
-                    defer {
-                        self?.stopLoading()
-                    }
-                    if error != nil {
-                        self?.showToast(message: error)
-                        return
-                    }
-                    let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
-                    vc.configure(for: .service)
-                    self?.show(vc)
-                })
+                
+                switch mode {
+                case .add:
+                    self.viewModel.createService(data: data, completion: {  error in
+                        defer {
+                            self.stopLoading()
+                        }
+                        if error != nil {
+                            self.showToast(message: error)
+                            return
+                        }
+                        let vc = self.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
+                        vc.configure(for: .service)
+                        self.show(vc)
+                    })
+                case .edit:
+                    
+                    self.viewModel.updateService(productId: product?.id ?? 0, data: data, completion: {  error in
+                        defer {
+                            self.stopLoading()
+                        }
+                        if error != nil {
+                            self.showToast(message: error)
+                            return
+                        }
+                        
+                        self.showToast(message: "The modification has been completed successfully".localiz())
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                }
+                
             })
         } else {
             self.stopLoading()

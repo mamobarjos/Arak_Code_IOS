@@ -31,6 +31,9 @@ class SignUpViewController: UIViewController,SocialDelegate {
   @IBOutlet weak var cityTextField: UITextField!
   @IBOutlet weak var countryTextField: UITextField!
 
+    @IBOutlet weak var dataContainerView: UIView!
+    @IBOutlet weak var genderContainerView: UIView!
+    @IBOutlet weak var phoneExtintionLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     //    @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var orButton: UIButton!
@@ -55,7 +58,7 @@ class SignUpViewController: UIViewController,SocialDelegate {
   var cityId = -1
 
   var viewModel: SignUpViewModel = SignUpViewModel()
-var haveWallet = -1
+var haveWallet = false
 
   // MARK: - Override Methods
   override func viewDidLoad() {
@@ -98,14 +101,15 @@ var haveWallet = -1
   }
 
   // MARK: - Protected Methods
-  private func setupUI() {
-    setupPickerView()
-    localization()
-    gestureTermsAndPrivacy()
-    genderCustomization()
-    getCountry()
-    self.setupHideKeyboardOnTap()
-  }
+    private func setupUI() {
+        setupPickerView()
+        localization()
+        gestureTermsAndPrivacy()
+        genderCustomization()
+        getCountry()
+        fullNameTextField.keyboardType = .default
+        self.setupHideKeyboardOnTap()
+    }
 
   private func genderCustomization() {
     if Helper.appLanguage != "en" && Helper.appLanguage != nil  {
@@ -166,10 +170,10 @@ var haveWallet = -1
         self.fullNameTextField.becomeFirstResponder()
         return error.isEmpty
       }
-        if haveWallet == -1 {
-            error = "Please insert your wallet status".localiz()
-            return error.isEmpty
-        }
+//        if haveWallet == -1 {
+//            error = "Please insert your wallet status".localiz()
+//            return error.isEmpty
+//        }
         
 //      guard let email = emailTextField.text else {
 //        error = "Please insert your email".localiz()
@@ -311,6 +315,11 @@ var haveWallet = -1
       termsPrivacyLabel.text = "By signing up, you agree to our Terms & Conditions and Privacy Policy .".localiz()
       signUpButton.setTitle("Sign up".localiz(), for: .normal)
       orButton.setTitle("OR".localiz(), for: .normal)
+      
+      if Helper.arakLinks?.isLive == false {
+          dataContainerView.isHidden = true
+          genderContainerView.isHidden = true
+      }
       //    loginFacebookLabel.text = "Log in with Facebook".localiz()
       //    loginGoogleLabel.text = "Log in with Google".localiz()
       //    loginAppleLabel.text = "Sign in with Apple".localiz()
@@ -353,12 +362,13 @@ var haveWallet = -1
       showToast(message: error)
       return
     }
-    let data: [String: String] =  [
+      
+    let data: [String: Any] =  [
         "fullname": fullNameTextField.text ?? "",
         "password": passwordTextField.text ?? "" ,
         "birthdate": dateTextField.text ?? "",
-        "phone_no" : "+962" + (phoneNumberTextField.text ?? "")
-                                   , "password_confirmation" : confirmPasswordTextField.text ?? "" , "gender" : genderTextField.text ?? "" , "city" : cityTextField.text ?? "" , "country" : countryTextField.text ?? "", "has_wallet": "\(haveWallet)"]
+        "phone_no" : (phoneExtintionLabel.text ?? "+962") + (phoneNumberTextField.text ?? "")
+                                   , "gender" : genderTextField.text ?? "" , "city_id" : cityId , "country_id" : countryId, "has_wallet": haveWallet]
     print(data)
     var otpData:[String : String] = [:]
     otpData["phone_no"] = "+962" + (phoneNumberTextField.text ?? "")
@@ -375,7 +385,7 @@ var haveWallet = -1
       }
       let vc = self?.initViewControllerWith(identifier: OtpViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! OtpViewController
         print(data)
-      vc.confige(email: "", processType: .register, data: data)
+        vc.confige(email: "", processType: .register, data: [:], registerData: data)
       self?.show(vc)
     }
   }
@@ -416,13 +426,13 @@ var haveWallet = -1
     @IBAction func yesTapped(_ sender: Any) {
         yesImage.image = UIImage(named: "Check (1)")
         noImage.image = UIImage(named: "check 1")
-        haveWallet = 1
+        haveWallet = true
     }
     
     @IBAction func noTapped(_ sender: Any) {
         yesImage.image = UIImage(named: "check 1" )
         noImage.image = UIImage(named: "Check (1)")
-        haveWallet = 0
+        haveWallet = false
     }
 }
 
@@ -443,6 +453,7 @@ extension SignUpViewController: UITextFieldDelegate {
     return true
   }
 }
+
 extension SignUpViewController: UIPickerViewDataSource, UIPickerViewDelegate, ToolbarPickerViewDelegate {
 
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -470,6 +481,7 @@ extension SignUpViewController: UIPickerViewDataSource, UIPickerViewDelegate, To
       if (countryTextField.text ?? "").isEmpty {
         if !viewModel.countryList.isEmpty {
           countryTextField.text = viewModel.countryList[0].name
+            phoneExtintionLabel.text = viewModel.countryList[0].countryCode
           self.countryId = viewModel.countryList[0].id ?? -1
           self.cityTextField.text = ""
           self.cityId = -1
@@ -507,6 +519,7 @@ extension SignUpViewController: UIPickerViewDataSource, UIPickerViewDelegate, To
     } else if countryPickerView == pickerView {
       if !viewModel.countryList.isEmpty {
           countryTextField.text = viewModel.countryList[row].name
+          phoneExtintionLabel.text = viewModel.countryList[row].countryCode
           cityTextField.text = ""
           self.countryId = viewModel.countryList[row].id ?? -1
           self.cityId = -1

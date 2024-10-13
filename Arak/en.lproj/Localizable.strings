@@ -43,8 +43,8 @@
 "Submit" = "Submit";
 "Please check your email" = "Please check your email";
 "OR" = "OR";
-"Male" = "Male";
-"Female" = "Female";
+"Male" = "MALE";
+"Female" = "FEMALE";
 "Image" = "Image";
 "Video" = "Video";
 "Website" = "Website";
@@ -52,7 +52,6 @@
 "Description" = "Description";
 "Phone Number" = "Phone Number";
 "Location" = "Location";
-"Website" = "Website";
 
 "Learn More" = "Learn More";
 "Reach" = "Reach";
@@ -174,8 +173,8 @@
 "JOD" = "JOD";
 "Enter Name" = "Enter Name";
 "Enter Phone Number" = "7xxxxxxxx";
-"Wallet Type" = "Wallet Type";
-"Select Wallet Type" = "Select Wallet Type";
+"Wallet Type" = "Bank Type";
+"Select Wallet Type" = "Select Bank Type";
 "Continue" = "Continue";
 "Enter Amount" = "Enter Amount";
 "Your request has been successfully uploaded" = "Your request has been successfully uploaded";
@@ -225,7 +224,7 @@
 
 //Profile
 "Edit Profile" = "Edit Profile";
-"My Detail" = "My Detail";
+"My profile" = "My profile";
 "Sign out" = "Sign out";
 "Follow Us" = "Follow Us";
 "Favorite" = "Favorite";
@@ -260,7 +259,7 @@
 
 
 "All" = "All";
-"Stores" = "Store";
+"Stores" = "Stores";
 "Images" = "Images";
 "Video" = "Video";
 "Video Web" = "Video Web";
@@ -268,7 +267,7 @@
 
 //Addiational
 "Withdrawal Request Successful" = "Withdrawal Request Successful";
-"Your withdrawal request has been confirmed" = "Your withdrawal request has been confirmed";
+"Your withdrawal request has been confirmed" = "We have received your withdrawal request. Please note that it takes 2 business days to process the transaction. Thank you.";
 "Go to My Wallet" = "Go to My Wallet";
 "More" = "More";
 "Less" = "Less";
@@ -339,7 +338,7 @@
 "Please enter website" = "Please enter website";
 "Please enter valid url for website" = "Please enter a valid url for the website";
 "Join us and be one of the thousands of registered members" = "Join us and be one of the thousands of registered members";
-"We apologize, the minimum amount for withdrawal is 5 dinars" = "We apologize, the minimum amount for withdrawal is 5 dinars";
+"We apologize, the minimum amount for withdrawal is 3 dinars" = "We apologize, the minimum amount for withdrawal is 3 dinars";
 "Please contact us to purchase a coupon" = "Please contact us to purchase a coupon";
 
 
@@ -351,16 +350,18 @@
 "placeHolder.Description" = "Description";
 "placeHolder.Title" = "Title";
 "placeHolder.Price" = "Price";
-"placeHolder.Company Name" = "Company Name";
+"placeHolder.Company Name" = "Store Name";
 "placeHolder.Website" = "Website";
 "placeHolder.Phone Number" = "Phone Number";
 "placeHolder.Location" = "Location";
 
 
 
+"See All" = "See All";
+"Products" = "Products";
 "label.Products Store" = "Products Store";
 "label.Related Products" = "Related Products";
-"label.Review" = "Review";
+"label.Reviews" = "Reviews";
 "label.Rate this service Provider" = "Rate this service Provider";
 "label.Rate this Ad" = "Rate this Ad";
 "label.View All" = "View All";
@@ -392,7 +393,7 @@
 "error.Please Enter Store Description" = "Please Enter Store Description";
 "error.Please Enter Store Phone Number" = "Please Enter Store Phone Number";
 "error.Please Enter your Store Location" = "Please Enter your Store Location";
-"error.Please Choose Store Category Type" = "Please Choose Store Category Type";
+"error.Please Choose Store Category Type" = "Category";
 "error.Please Add Your Store Image" = "Please Add Your Store Image";
 "error.Please Add Your Store Cover Image" = "Please Add Your Store Cover Image";
 "error.you already have store" = "you already have store";
@@ -414,3 +415,57 @@
 "Join us to open your online store" = "Join us to open your online store";
 "Call" = "Call";
 "Add Product" = "Add Product";
+"Interests" = "Interests";
+"Choose Your interests" = "Choose Your interests";
+
+
+"Suggestions Of Stores" = "Suggestions Of Stores";
+"Please select at least one Category" = "Please select at least one Category";
+"Social media accounts" = "Social media accounts";
+"Review deleted successfully" = "Review deleted successfully";
+"Upload Cover Image" = "Upload Cover Image";
+"Store Information" = "Store Information";
+"Add social link" = "Add social link";
+"Add" = "Add";
+"  Social media links  " = "  Social media links  ";
+"Statistics" = "Statistics";
+"Choose the option you want to apply" = "Choose the option you want to apply";
+"View" = "View";
+"Edit" = "Edit";
+"Dismiss" = "Dismiss";
+"Cart" = "Cart";
+"Your Cart is empty" = "Your Cart is empty";
+"error.Please Enter First Name" = "Please Enter First Name";
+"error.Please Enter Last Name" = "Please Enter Last Name";
+"error.Please Enter address" = "Please Enter address";
+"error.Please Enter Post Code" = "Please Enter Post Code";
+"error.Please Enter Phone Number" = "Please Enter Phone Number";
+"error.Please Chooose Payment Type" = "Please Chooose Payment Type";
+"Shipping Details" = "Shipping Details";
+"Arak Store" = "Arak Store";
+"Product details" = "Product details";
+"Quantity:" = "Quantity:";
+"Price:" = "Price:";
+"Choose Type:" = "Choose Type:";
+"Add your notes here" = "Add your notes here";
+"Special note" = "Special note";
+"Payment summary" = "Payment summary";
+"Cart total" = "Cart total";
+"Total amount" = "Total amount";
+"Place order" = "Place order";
+"First Name" = "First Name";
+"Last Name" = "Last Name";
+"Address" = "Address";
+"Post code" = "Post code";
+"Choose Payment Method:" = "Choose Payment Method:";
+"Thanks for using ARAK" = "Thanks for using ARAK";
+"Your order on the way! enjoy it." = "Your order on the way! enjoy it.";
+"Store ads" = "Store ads";
+"Requierd" = "Requierd";
+"Please selecte the quantity" = "Please selecte the quantity";
+"Add To Cart" = "Add To Cart";
+"Products add to cart" = "Products add to cart";
+"Product deleted successfully" = "Product deleted successfully";
+"Store" = "Store";
+"Set location on map" = "Set location on map";
+"Watched" = "Watched";

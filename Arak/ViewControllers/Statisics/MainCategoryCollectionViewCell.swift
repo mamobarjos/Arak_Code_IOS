@@ -10,9 +10,13 @@ import Kingfisher
 
 class MainCategoryCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var productImageView: UIImageView!
 
+   var category: StoreCategory?
+    
+    var onAction: (() -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -21,12 +25,22 @@ class MainCategoryCollectionViewCell: UICollectionViewCell {
         titleLabel.text = title
     }
     
-//    public func setupCell(product: CategoryList){
-//        titleLabel.text = product.title
-//        if let imageUrlString = product.image?.first, let imageUrl = URL(string: imageUrlString) {
-//                productImageView.kf.setImage(with: imageUrl)
-//        }
-//    }
+    public func setupCell(category: StoreCategory){
+        self.category = category
+        titleLabel.text = category.name
+        productImageView.getAlamofireImage(urlString: category.iconUrl ?? "")
+        
+        if category.selected {
+            containerView.borderWidth = 3
+            containerView.borderColor = .accentOrange
+        } else {
+            containerView.borderWidth = 1
+            containerView.borderColor = .lightGray
+        }
+    }
     
     
+    @IBAction func cellButtonAction(_ sender: Any) {
+        onAction?()
+    }
 }

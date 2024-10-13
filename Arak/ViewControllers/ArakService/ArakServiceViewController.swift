@@ -67,7 +67,7 @@ extension ArakServiceViewController : UITableViewDelegate , UITableViewDataSourc
             return
         }
         let popUp = self.initViewControllerWith(identifier: ArakServiceDetailsPopUpViewController.className, and: "") as! ArakServiceDetailsPopUpViewController
-        popUp.serviceDesc = serviceViewModel.item(at: indexPath.row ).desc
+        popUp.serviceDesc = serviceViewModel.item(at: indexPath.row ).descTitle
         popUp.onButtonAction = {[weak self] in
             popUp.dismiss(animated: false)
             let vc = self?.initViewControllerWith(identifier: ServicePopUpViewController.className, and: "") as! ServicePopUpViewController

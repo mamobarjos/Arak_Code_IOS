@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SuccessOrderViewController" customModule="Arak" customModuleProvider="target">
             <connections>
+                <outlet property="doneButtton" destination="ImM-lm-MUp" id="EKI-Bz-hnH"/>
+                <outlet property="subtitleLabel" destination="yTa-zN-Nsi" id="Jew-Gm-hda"/>
                 <outlet property="titleLabel" destination="Ny4-Mh-5RM" id="bwj-GM-yM9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

@@ -113,9 +113,16 @@ extension HorizontalTagView: UICollectionViewDataSource, UICollectionViewDelegat
         let item = self.items[indexPath.item]
 
         cell.categoryNameLabel.text = item.title
-        if let url = URL(string: item.imageURL) {
-            cell.mainCategoryImageView.sd_setImage(with: url)
+        
+        if item.id == -1 {
+            cell.mainCategoryImageView.image = UIImage(named: "all_Category_icon")
+            cell.mainCategoryImageView.contentMode = .scaleAspectFit
+        } else {
+            cell.mainCategoryImageView.kf.setImage(with: URL(string: item.imageURL))
+            cell.mainCategoryImageView.contentMode = .scaleToFill
         }
+       
+       
         cell.tagIsSelected = item.id == selectedItemID
 
 //        if indexPath.item == items.count - 1 {
@@ -125,11 +132,12 @@ extension HorizontalTagView: UICollectionViewDataSource, UICollectionViewDelegat
         cell.setup(with: item, animate: self.shouldAnimate)
         cell.onAction = { [weak self] in
 //            if item.id != 0 {
-//                self?.selectedItemID = item.id
+                self?.selectedItemID = item.id
 //                self?.onItemSelection?(item)
 //                self?.shouldAnimate = false
 //            }
             self?.delegate?.didTapItem(item: item)
+            
         }
         return cell
     }

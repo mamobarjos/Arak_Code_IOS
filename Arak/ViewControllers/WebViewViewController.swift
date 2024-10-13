@@ -57,7 +57,7 @@ class WebViewViewController: UIViewController,WKNavigationDelegate {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    hiddenNavigation(isHidden: processType == .Payment )
+    hiddenNavigation(isHidden: false )
     navigationController?.navigationBar.transparentNavigationBar()
   }
 
@@ -77,7 +77,7 @@ class WebViewViewController: UIViewController,WKNavigationDelegate {
         vc.modalPresentationStyle = .overCurrentContext
         vc.modalTransitionStyle = .crossDissolve
         vc.confige(title: "Success".localiz(), description: "Your ad will be post soon.".localiz(), goString: "Go to My Ads".localiz()) {
-            HomeViewController.goToMyAds = true
+            NewHomeViewController.goToMyAds = true
             vc.dismiss(animated: true, completion: nil)
             self.navigationController?.popToViewController(ofClass: BubbleTabBarController.self)
         }

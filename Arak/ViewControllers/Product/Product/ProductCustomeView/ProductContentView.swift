@@ -15,6 +15,7 @@ protocol ProductContentViewDelegate: AnyObject {
     func userDidTapShare(id: String)
     func userDidTapBack()
     func didTapOnViewAllproducts()
+    func didTapOnViewAllReviews()
     func submiteReview(_ message: String, _ rating: Int)
     func showTostMessage(with error: String)
     func deleteReview(id: Int)
@@ -37,24 +38,29 @@ class ProductContentView: UIView, FeaturedCelldelegate {
 
     @IBOutlet weak var shopNameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
-
+    @IBOutlet weak var salePriceLabel: UILabel!
+    
     @IBOutlet weak var relatedProductTitleLabel: UILabel!
 //    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
     @IBOutlet weak var reviewTitleLabel: UILabel!
-//    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var viewAllReviewsButton: UIButton!
+    @IBOutlet weak var viewAllReviewsStackView: UIStackView!
+    //    @IBOutlet weak var submitButton: UIButton!
 
 //    @IBOutlet weak var vistStoreButton: UIButton!
     @IBOutlet weak var favButton: UIButton!
 
+    @IBOutlet weak var addReviewButton: UIButton!
     @IBOutlet weak var viewAllProducts: UIButton!
 //    @IBOutlet weak var addReviewContainer: UIView!
-
+    @IBOutlet weak var barButtonItemView: BottomBarItemView!
+    
     var homeViewModel = HomeViewModel()
 
     private(set) var rating: Int?
     
     weak var delegate: ProductContentViewDelegate?
-    var storeProduct: SingleProduct?  {
+    var storeProduct: StoreProduct?  {
         didSet {
             guard let storeProduct = storeProduct else {
                 return
@@ -78,6 +84,13 @@ class ProductContentView: UIView, FeaturedCelldelegate {
 
     var reviews: [ReviewResponse] = [] {
         didSet {
+            if reviews.isEmpty {
+                viewAllReviewsStackView.isHidden = true
+                reviewsTableView.isHidden = true
+            } else {
+                viewAllReviewsStackView.isHidden = false
+                reviewsTableView.isHidden = false
+            }
             reviewsTableView.reloadData()
         }
     }
@@ -95,6 +108,13 @@ class ProductContentView: UIView, FeaturedCelldelegate {
 //        self.delegate?.visatStoreTapped()
 //    }
   
+    @IBAction func addReviewButtonAction(_ sender: Any) {
+        let vc = UIApplication.shared.topViewController?.initViewControllerWith(identifier: RateViewController.className, and: "", storyboardName: "Main") as! RateViewController
+        vc.delegate = self
+        UIApplication.shared.topViewController?.present(vc)
+       
+    }
+    
     @IBAction func favAction(_ sender: Any) {
         delegate?.userDidTapFavIcon(id: "1")
     }
@@ -103,7 +123,11 @@ class ProductContentView: UIView, FeaturedCelldelegate {
     @IBAction func viewAllAction(_ sender: Any) {
         delegate?.didTapOnViewAllproducts()
     }
-
+    
+    @IBAction func viewAllReviewsButtonAction(_ sender: Any) {
+        delegate?.didTapOnViewAllReviews()
+    }
+    
 //    @IBAction func submitButton(_ sender: Any) {
 //        if rateTextView.text == "placeHolder.Enter your review for this service provider...".localiz() || rateTextView.text.isEmpty {
 //            self.delegate?.showTostMessage(with: "please add your review")
@@ -124,7 +148,10 @@ class ProductContentView: UIView, FeaturedCelldelegate {
         self.addSubview(view)
 
          relatedProductTitleLabel.text = "label.Related Products".localiz()
-         reviewTitleLabel.text = "label.Review".localiz()
+         reviewTitleLabel.text = "label.Reviews".localiz()
+         viewAllReviewsButton.setTitle("See All".localiz(), for: .normal)
+         viewAllProducts.setTitle("See All".localiz(), for: .normal)
+         
 //         rateThisProviderTitleLabel.text = "label.Rate this service Provider".localiz()
 //         submitButton.setTitle("action.Submit".localiz(), for: .normal)
 //         vistStoreButton.setTitle("action.Visit Store".localiz(), for: .normal)
@@ -162,6 +189,7 @@ class ProductContentView: UIView, FeaturedCelldelegate {
          reviewsTableView.rowHeight = 150
          reviewsTableView.estimatedRowHeight = 150
          reviewsTableView.separatorColor = .clear
+         reviewsTableView.isScrollEnabled = false
          reviewsTableView.register(ReviewTableViewCell.self)
 //         editedCosmosView.rating = 0
 //         editedCosmosView.didFinishTouchingCosmos = { [weak self] rating in
@@ -172,14 +200,77 @@ class ProductContentView: UIView, FeaturedCelldelegate {
          }
     }
 
-    private func updateUI(product: SingleProduct) {
-        productNameLabel.text = product.storeProduct?.name
-        shopNameLabel.text = product.storeProduct?.store?.name
-        descLable.text = product.storeProduct?.desc
-        priceLabel.text = product.storeProduct?.priceformated
-        cosmosView.rating = product.storeProduct?.totalRates ?? 0
-        ratingLabelText.text = "(\(product.storeProduct?.totalRates ?? 0.0))"
+    private func updateUI(product: StoreProduct) {
+        productNameLabel.text = product.name
+        shopNameLabel.text = product.store?.name
+        descLable.text = product.desc
+        priceLabel.text = product.priceformated
+        cosmosView.rating = Double(product.totalRates ?? 5.0)
+        ratingLabelText.text = "[\(product.totalRates?.rounded(toPlaces: 1) ?? 5.0)]"
+        addReviewButton.isHidden = product.isReviewed ?? false
+        priceLabel.text = product.priceformated
+        salePriceLabel.text = (product.salePrice ?? "") + " " + (Helper.currencyCode ?? "JOD")
+        priceLabel.textColor = .lightGray
+        let strokeTextAttributes: [NSAttributedString.Key: Any] = [
+            .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+            .strikethroughColor: UIColor.lightGray
+        ]
+
+        let attributedText = NSAttributedString(string: priceLabel.text ?? "", attributes: strokeTextAttributes)
+        priceLabel.attributedText = attributedText
+        
+        priceLabel.isHidden = product.price == product.salePrice
+        
 //        self.reviews = product.storeProduct?.reviews ?? []
+        
+        barButtonItemView.webAction = { [weak self] in
+            if let url = URL(string: "https://\(self?.storeProduct?.store?.website ?? "")") {
+                UIApplication.shared.open(url)
+            }
+        }
+
+        barButtonItemView.phoneAction = { [weak self] in
+            if let phoneCallURL = URL(string: "tel://\(self?.storeProduct?.store?.phoneNo ?? "")") {
+
+                let application:UIApplication = UIApplication.shared
+                if (application.canOpenURL(phoneCallURL)) {
+                    application.open(phoneCallURL, options: [:], completionHandler: nil)
+                }
+              }
+        }
+
+        barButtonItemView.locationAction = { [weak self] in
+            if let latDouble = Double(self?.storeProduct?.store?.lat ?? "") , let lngDouble = Double(self?.storeProduct?.store?.lon ?? "") {
+              Helper.OpenMap(latDouble, lngDouble)
+            } else {
+//                self?.showToast(message: "Can't open the Map ")
+            }
+        }
+
+        barButtonItemView.whatsAppAction = { [weak self] in
+            let urlWhats = "whatsapp://send?phone=\(self?.storeProduct?.store?.phoneNo ?? "")"
+              if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed){
+                  if let whatsappURL = URL(string: urlString) {
+                      if UIApplication.shared.canOpenURL(whatsappURL){
+                          if #available(iOS 10.0, *) {
+                              UIApplication.shared.open(whatsappURL, options: [:], completionHandler: nil)
+                          } else {
+                              UIApplication.shared.openURL(whatsappURL)
+                          }
+                      }
+                      else {
+                          print("Install Whatsapp")
+                      }
+                  }
+              }
+        }
+    }
+}
+
+extension ProductContentView: RateViewControllerDelegate {
+    func submiteReview(_ sender: RateViewController, context: String, rating: Double) {
+        sender.dismiss(animated: true)
+        delegate?.submiteReview(context, Int(rating))
     }
 }
 
@@ -242,13 +333,13 @@ extension ProductContentView: UICollectionViewDelegate, UICollectionViewDataSour
         if collectionView == bannerCollectionView {
             return CGSize(width: bannerCollectionView.bounds.width, height: bannerCollectionView.bounds.height)
         } else {
-            return CGSize(width: 250, height: 81)
+            return CGSize(width: 275, height: 81)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == bannerCollectionView {
-            self.delegate?.didTapOnBanner(productImagesFile: storeProduct?.storeProduct?.storeProductFiles ?? [])
+            self.delegate?.didTapOnBanner(productImagesFile: storeProduct?.storeProductsFile ?? [])
         } else {
             let product = relatedProducts[indexPath.item]
             self.delegate?.didTapOnProduct(id: product.id ?? 0)
@@ -262,11 +353,11 @@ extension ProductContentView: UICollectionViewDelegate, UICollectionViewDataSour
     func makeFeatured(indexPath:IndexPath,isBanner: Bool) -> FeaturedCell {
             let cell:FeaturedCell = bannerCollectionView.dequeueReusableCell(forIndexPath: indexPath)
         cell.ImageCornerRadius = 0
-        cell.setup(images: storeProduct?.storeProduct?.storeProductFiles ?? [])
+        cell.setup(images: storeProduct?.storeProductsFile ?? [])
         cell.delegate = self
         
         cell.showImages = { [weak self] in
-            self?.delegate?.didTapOnBanner(productImagesFile: self?.storeProduct?.storeProduct?.storeProductFiles ?? [])
+            self?.delegate?.didTapOnBanner(productImagesFile: self?.storeProduct?.storeProductsFile ?? [])
         }
         cell.layoutIfNeeded()
         return cell

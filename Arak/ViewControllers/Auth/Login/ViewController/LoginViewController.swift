@@ -31,12 +31,15 @@ class LoginViewController: UIViewController, SocialDelegate {
     @IBOutlet weak var faceIdImageView: UIImageView!
     @IBOutlet weak var orButton: UIButton!
     @IBOutlet weak var hasAccountLabel: UILabel!
+    @IBOutlet weak var phoneNumberExtention: UITextField!
     
     // MARK: - Properties
     let keyChain = KeychainPasswordStoreService()
     let faceIDAuthenticatorService = DefaultFaceIDAuthenticatorService()
     var viewModel: LoginViewModel = LoginViewModel()
     var signUpViewModel: SignUpViewModel = SignUpViewModel()
+    var notificationViewModel: NotificationViewModel = NotificationViewModel()
+    private var countryPickerView = ToolbarPickerView()
     var error = ""
     fileprivate var currentNonce: String?
     
@@ -46,7 +49,10 @@ class LoginViewController: UIViewController, SocialDelegate {
         super.viewDidLoad()
         socialDelegate = self
         setupUI()
+        getCountry() 
+        setupPickerView() 
         self.setupHideKeyboardOnTap()
+        notificationViewModel.getStaticLinks { _ in }
 
     }
     
@@ -61,6 +67,21 @@ class LoginViewController: UIViewController, SocialDelegate {
 //        GIDSignIn.sharedInstance().presentingViewController = self
     }
     
+    private func setupPickerView() {
+        phoneNumberExtention.inputView = countryPickerView
+        phoneNumberExtention.delegate = self
+        countryPickerView.toolbarDelegate = self
+        countryPickerView.dataSource = self
+        countryPickerView.delegate = self
+        phoneNumberExtention.inputAccessoryView = countryPickerView.toolbar
+    }
+    
+    private func getCountry() {
+      signUpViewModel.getCountry { _ in
+        self.countryPickerView.reloadAllComponents()
+
+      }
+    }
     
     private func localization() {
         welcomeLabel.text = "Welcome".localiz()
@@ -185,8 +206,8 @@ class LoginViewController: UIViewController, SocialDelegate {
             validPhone = "\(validPhone.dropFirst(1))"
         }
         
-        if  validPhone.count == 9 {
-            validPhone = "+962" + validPhone
+        if  validPhone.count <= 9 {
+            validPhone = (phoneNumberExtention.text ?? "+962") + validPhone
         }
         viewModel.login(phone: validPhone, password: passwordTextField.text!) { [weak self] (error) in
             
@@ -384,4 +405,43 @@ extension LoginViewController {
     func error(socialError: SocialError?) {
         print(socialError?.rawValue)
     }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+        countryPickerView.reloadAllComponents()
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+}
+
+extension LoginViewController: UIPickerViewDataSource, UIPickerViewDelegate, ToolbarPickerViewDelegate {
+
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    1
+  }
+
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+      return signUpViewModel.countryList.count
+  }
+
+  @objc func didTapDone(toolbar: UIToolbar?) {
+      if phoneNumberExtention.text?.isEmpty ?? false {
+          phoneNumberExtention.text = signUpViewModel.countryList.first?.countryCode
+      }
+      phoneNumberExtention.endEditing(true)
+  }
+
+  // return string from picker
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+      signUpViewModel.countryList[row].countryCode
+  }
+
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+      phoneNumberExtention.text = signUpViewModel.countryList[row].countryCode
+  }
 }

@@ -51,7 +51,7 @@ class Network {
               completion(nil,NetworkResponse.unableToDecode.rawValue)
               return
             }
-              if statusCode == 401 {
+          if statusCode == 401 && !request.path.contains("auth/login") {
                 self.Logout()
               
                 completion(nil,NetworkResponse.authenticationError.rawValue)
@@ -97,24 +97,40 @@ class Network {
                   }
                   
                   
-                guard let decodeObj = try? decoder.decode(GenericModel<T>.self, from: decode) else {
-                  completion(nil,NetworkResponse.unableToDecode.rawValue)
-                  return
-                }
-
-                if decodeObj.statusCode != 200  &&  decodeObj.statusCode != 201 {
-                  switch decodeObj.generalDescription {
-                    case .string(let error):
-                      completion(nil,error)
-                    case .listOfString(let errorList):
-                      completion(nil,errorList.joined(separator: "\n"))
-                    default:
-                      completion(nil,"Error")
+                  
+                  guard let decodeObj = try? decoder.decode(GenericModel<T>.self, from: decode) else {
+                      completion(nil,NetworkResponse.unableToDecode.rawValue)
+                      return
                   }
-
-                  return
-                }
-                completion(decodeObj, nil)
+                  
+                  if decodeObj.statusCode == 400 {
+                      completion(nil, decodeObj.message ?? "Error")
+                      return
+                  }
+                  
+                  if decodeObj.statusCode == 401 {
+                      completion(nil, decodeObj.message ?? "Error")
+                      return
+                  }
+                  
+                  if decodeObj.statusCode == 404 {
+                      completion(nil, decodeObj.message ?? "Error")
+                      return
+                  }
+                  
+                  if decodeObj.statusCode != 200  &&  decodeObj.statusCode != 201 {
+                      switch decodeObj.generalDescription {
+                      case .string(let error):
+                          completion(nil,error)
+                      case .listOfString(let errorList):
+                          completion(nil,errorList.joined(separator: "\n"))
+                      default:
+                          completion(nil,"Error")
+                      }
+                      
+                      return
+                  }
+                  completion(decodeObj, nil)
               }
           break
       }
@@ -252,6 +268,8 @@ class Network {
                     completionHandler(nil, NetworkResponse.generalError.rawValue.localiz())
                 }
             }
+        }.cURLDescription { curl in
+            debugPrint(curl)
         }
     }
 }

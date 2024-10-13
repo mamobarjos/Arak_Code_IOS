@@ -21,26 +21,48 @@ class SignUpStoreViewController: UIViewController {
         case coverPhoto
     }
 
+    @IBOutlet weak var uploadCoverphotoLabel: UILabel!
+    @IBOutlet weak var storeInformationLabel: UILabel!
     @IBOutlet weak var pickPhotoButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var coverImageView: UIImageView!
 
     @IBOutlet weak var companyNameTextField: UITextField!
     @IBOutlet weak var storeDesTextField: UITextView!
-    @IBOutlet weak var websiteTextField: UITextField!
+   
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
 
+    @IBOutlet weak var addSocialMediaLinksButton: UIButton!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var chooseCategoryView: UIView!
-    @IBOutlet weak var categoryName: UILabel!
+    @IBOutlet weak var categoryName: UITextField!
 
+    @IBOutlet weak var countryTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    
     @IBOutlet weak var chooseCategoryButton: UIButton!
     private var imagePicker = UIImagePickerController()
     private var currentLocation: CLLocation?
     private var currentLocatioTitle: String?
-
+    
+    @IBOutlet weak var linkedInView: UIView!
+    @IBOutlet weak var facebookView: UIView!
+    @IBOutlet weak var instaView: UIView!
+    @IBOutlet weak var youtubeView: UIView!
+    @IBOutlet weak var websiteView: UIView!
+    @IBOutlet weak var twitterView: UIView!
+    
+    @IBOutlet weak var websiteTextField: UITextField!
+    @IBOutlet weak var facebookTextField: UITextField!
+    @IBOutlet weak var instaTextField: UITextField!
+    @IBOutlet weak var YouTubeTextField: UITextField!
+    @IBOutlet weak var twitterTextField: UITextField!
+    @IBOutlet weak var linkidInTextField: UITextField!
+    @IBOutlet weak var phoneExtentionButton: UIButton!
+    
+    
     private(set) var imageData: Data?
     private(set) var imageUrl: String?
     private(set) var coverImageData: Data?
@@ -48,7 +70,16 @@ class SignUpStoreViewController: UIViewController {
     private(set) var categoryId: Int?
     private(set) var imageType: ImageType = .personalPhoto
 
+    var availbleSocialMedia: Set<SocialMediaType> = []
     public var mode: StoreMode = .add
+    private var viewModel = CreateStoreViewModel()
+    
+    private var countryPickerView = ToolbarPickerView()
+    private var cityPickerView = ToolbarPickerView()
+    
+    var countryId = -1
+    var cityId = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         storeDesTextField.delegate = self
@@ -59,6 +90,14 @@ class SignUpStoreViewController: UIViewController {
         phoneNumberTextField.placeholder = "placeHolder.Phone Number".localiz()
         locationTextField.placeholder = "placeHolder.Location".localiz()
         submitButton.setTitle("action.Continue".localiz(), for: .normal)
+        uploadCoverphotoLabel.text = "Upload Cover Image".localiz()
+        uploadCoverphotoLabel.font = .font(for: .bold, size: 16)
+        storeInformationLabel.text = "Store Information".localiz()
+        addSocialMediaLinksButton.setTitle("Add social link".localiz(), for: .normal)
+        cityTextField.placeholder = "City".localiz()
+        
+       
+        setupPickerView()
         storeDesTextField.textAlignment = Helper.appLanguage ?? "en" == "en" ? .left : .right
         if Helper.appLanguage ?? "en" == "en" {
             self.chooseCategoryButton.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -73,19 +112,57 @@ class SignUpStoreViewController: UIViewController {
             self?.navigationController?.pushViewController(vc, animated: true)
         }
 
-        coverImageView.contentMode = .scaleToFill
+        coverImageView.contentMode = .center
         imageView.contentMode = .scaleToFill
 
         if mode == .edit {
             fillViewWithData()
         }
+        
+        getCountry()
+        getCity()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hiddenNavigation(isHidden: false)
+        hiddenNavigation(isHidden: true)
     }
 
+    private func setupPickerView() {
+        countryTextField.inputView = countryPickerView
+        countryTextField.delegate = self
+        countryPickerView.toolbarDelegate = self
+        countryPickerView.dataSource = self
+        countryPickerView.delegate = self
+        countryTextField.inputAccessoryView = countryPickerView.toolbar
+        
+        cityTextField.inputView = cityPickerView
+        cityTextField.delegate = self
+        cityPickerView.toolbarDelegate = self
+        cityPickerView.dataSource = self
+        cityPickerView.delegate = self
+        cityTextField.inputAccessoryView = cityPickerView.toolbar
+    }
+    
+    private func getCity() {
+        viewModel.getCity(by: countryId) {[weak self] _ in
+            guard let self else { return }
+            self.cityTextField.text = viewModel.cityList.first(where: {$0.id ?? 1 == Helper.currentUser?.cityID})?.name
+            self.cityPickerView.reloadAllComponents()
+        }
+    }
+    
+    private func getCountry() {
+        viewModel.getCountry { [weak self] _ in
+            guard let self else {return}
+          countryTextField.text = viewModel.countryList.first(where: {$0.id ?? 1 == Helper.currentUser?.countryID})?.name
+            phoneExtentionButton.setTitle( viewModel.countryList.first(where: {$0.id ?? 1 == Helper.currentUser?.countryID})?.countryCode, for: .normal)
+            self.countryPickerView.reloadAllComponents()
+            getCity()
+      }
+    }
+
+    
     private func fillViewWithData() {
         guard let store = Helper.store else {
             self.showToast(message:"Error Can't find your store")
@@ -106,18 +183,63 @@ class SignUpStoreViewController: UIViewController {
         storeDesTextField.text = store.desc
         websiteTextField.text = store.website
         phoneNumberTextField.text = store.phoneNo
-        locationTextField.text = "\(store.lat ?? "") , \(store.lon ?? "")"
-        categoryName.text = "Current Category: " + "\(store.storeCategoryid ?? 1)"
-        categoryId = store.storeCategoryid
+        locationTextField.text = store.locationName
+        categoryName.text = "Current Category: " + "\(store.storeCategory?.name ?? "")"
+        categoryId = store.storeCategory?.id
+        countryId = store.countryID ?? 1
         currentLocatioTitle = "\(store.lat ?? "") , \(store.lon ?? "")"
         let phoneNo = Helper.currentUser?.phoneNo ?? ""
         phoneNumberTextField.text = phoneNo.replacingOccurrences(of: "+962", with: "")
+              
+        if store.website?.isEmpty == false {
+            websiteView.isHidden = false
+            websiteTextField.text = store.website
+        }
+        
+        if store.linkedin?.isEmpty == false {
+            linkedInView.isHidden = false
+            linkidInTextField.text = store.linkedin
+        }
+        
+        if store.instagram?.isEmpty == false {
+            instaView.isHidden = false
+            instaTextField.text = store.instagram
+        }
+        
+        if store.youtube?.isEmpty == false {
+            youtubeView.isHidden = false
+            YouTubeTextField.text = store.youtube
+        }
+        
+        if store.facebook?.isEmpty == false {
+            facebookView.isHidden = false
+            facebookTextField.text = store.facebook
+        }
+        
+        if store.x?.isEmpty == false {
+            twitterView.isHidden = false
+            twitterTextField.text = store.x
+        }
+    
         currentLocation = CLLocation(
             latitude: Double(store.lat ?? "") ?? 0.0,
             longitude: Double(store.lon ?? "") ?? 0.0)
 
     }
+    
+    @IBAction func addSocialButtonAction(_ sender: Any) {
+        let vc = initViewControllerWith(identifier: AvailableSucialMediaViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! AvailableSucialMediaViewController
+        vc.selectedSocialMedia = self.availbleSocialMedia
+        vc.delegate = self
+        self.present(vc)
+    }
 
+    
+    @IBAction func backButtonAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    
     @IBAction func locatioAction(_ sender: Any) {
         let vc = initViewControllerWith(identifier: MapViewController.className, and: "") as! MapViewController
         vc.configue {
@@ -142,13 +264,42 @@ class SignUpStoreViewController: UIViewController {
         guard let content = validateContent() else {
             return
         }
-        let vc = initViewControllerWith(identifier: SocialMediaSignUPViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as!
-        SocialMediaSignUPViewController
-        if mode == .edit {
-            vc.mode = .edit
+        
+        self.showLoading()
+        if mode == .add {
+        viewModel.createStore(data: content, compliation: { [weak self] error in
+            defer {
+                self?.stopLoading()
+            }
+            if error != nil {
+                self?.showToast(message: error)
+                return
+            }
+            
+            
+            let vc = self?.initViewControllerWith(identifier: CongretsStoreViewController.className, and: "", storyboardName: Storyboard.storeAuth.rawValue) as! CongretsStoreViewController
+            Helper.currentUser?.hasStore = true
+            
+            self?.show(vc)
+        })
+        } else {
+            viewModel.updateStore(id: Helper.store?.id ?? -1, data: content, compliation: { [weak self] error in
+                defer {
+                    self?.stopLoading()
+                }
+                if error != nil {
+                    self?.showToast(message: error)
+                    return
+                }
+                self?.showToast(message: "Your Store Updated Successfully")
+                for controller in (self?.navigationController!.viewControllers ?? []) as Array {
+                    if controller.isKind(of: StoreViewController.self) {
+                        self?.navigationController!.popToViewController(controller, animated: true)
+                        break
+                    }
+                }
+            })
         }
-        vc.getData(data: content)
-        show(vc)
     }
 
     private func validateContent() -> [String:Any]? {
@@ -200,17 +351,24 @@ class SignUpStoreViewController: UIViewController {
 
         let lat = currentLocation?.coordinate.latitude
         let lon = currentLocation?.coordinate.longitude
-
+        let validePhone = (phoneExtentionButton.titleLabel?.text ?? "+962") + phoneNumber
+        
         let data: [String: Any] = [
             "name":companyName,
-            "desc":description,
-            "website":websiteTextField.text ?? "",
-            "phone_no":phoneNumberTextField.text ?? "",
+            "description":description,
+            "phone_no": validePhone,
             "store_category_id":categoryId,
             "lon":"\(lon ?? 0)",
             "lat":"\(lat ?? 0)",
-            "img":imageUrl,
-            "cover":coverImageUrl
+            "img_url":imageUrl,
+            "cover_img_url":coverImageUrl,
+            "website":websiteTextField.text ?? "",
+            "facebook":"\(facebookTextField.text ?? "")",
+            "x":"\(twitterTextField.text ?? "")",
+            "instagram":"\(instaTextField.text ?? "")",
+            "linkedin":"\(linkidInTextField.text ?? "")",
+            "youtube":"\(YouTubeTextField.text ?? "")",
+            "location_name": locationTextField.text ?? ""
         ]
         return data
     }
@@ -231,6 +389,7 @@ extension SignUpStoreViewController: UIImagePickerControllerDelegate & UINavigat
                 coverImageView.image = nil
                 coverImageData = image.jpegData(compressionQuality: 0.8)
                 coverImageView.image = image
+                coverImageView.contentMode = .scaleToFill
             }
             uploadToImageFirebase()
 
@@ -245,6 +404,7 @@ extension SignUpStoreViewController: UIImagePickerControllerDelegate & UINavigat
                 coverImageView.image = nil
                 coverImageData = image.jpegData(compressionQuality: 0.8)
                 coverImageView.image = image
+                coverImageView.contentMode = .scaleToFill
             }
             uploadToImageFirebase()
         }
@@ -321,6 +481,122 @@ extension SignUpStoreViewController: UITextViewDelegate {
         if textView.text.isEmpty == true {
             textView.text = "placeHolder.Description".localiz()
             textView.textColor = .lightGray
+        }
+    }
+}
+
+extension SignUpStoreViewController: AvailableSucialMediaViewControllerDelegate{
+    func didSelectSocialMedia(type: Set<SocialMediaType>) {
+        self.availbleSocialMedia = type
+        linkedInView.isHidden = true
+        instaView.isHidden = true
+        youtubeView.isHidden = true
+        websiteView.isHidden = true
+        facebookView.isHidden = true
+        twitterView.isHidden = true
+        
+        type.forEach({
+            type in
+            switch type {
+            case .LinkedIn:
+                linkedInView.isHidden = false
+            case .instagram:
+                instaView.isHidden = false
+            case .youtube:
+                youtubeView.isHidden = false
+            case .website:
+                websiteView.isHidden = false
+            case .facebook:
+                facebookView.isHidden = false
+            case .twitter:
+                twitterView.isHidden = false
+            }
+        })
+
+    }
+}
+
+extension SignUpStoreViewController: UITextFieldDelegate {
+
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    if textField == cityTextField {
+      cityPickerView.reloadAllComponents()
+    } else if textField == countryTextField {
+      countryPickerView.reloadAllComponents()
+    }
+  }
+
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+}
+
+extension SignUpStoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, ToolbarPickerViewDelegate {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == countryPickerView {
+            return viewModel.countryList.count
+        } else if pickerView == cityPickerView {
+            return viewModel.cityList.count
+        }
+        return 0
+    }
+    
+    @objc func didTapDone(toolbar: UIToolbar?) {
+       if countryPickerView.toolbar == toolbar {
+            if (countryTextField.text ?? "").isEmpty {
+                if !viewModel.countryList.isEmpty {
+                    countryTextField.text = viewModel.countryList[0].name
+                    phoneExtentionButton.setTitle( viewModel.countryList[0].countryCode, for: .normal)
+
+                    self.countryId = viewModel.countryList[0].id ?? -1
+                    self.cityTextField.text = ""
+                    self.cityId = -1
+                    self.getCity()
+                }
+            }
+        } else if cityPickerView.toolbar == toolbar {
+            if (cityTextField.text ?? "").isEmpty {
+                if !viewModel.cityList.isEmpty {
+                    cityTextField.text = viewModel.cityList[0].name
+                    cityId = viewModel.cityList[0].id ?? -1
+                }
+            }
+        }
+        countryTextField.endEditing(true)
+        cityTextField.endEditing(true)
+    }
+    
+    // return string from picker
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == cityPickerView {
+            return viewModel.cityList[row].name
+        } else if pickerView == countryPickerView {
+            return viewModel.countryList[row].name
+        }
+        return ""
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if countryPickerView == pickerView {
+            if !viewModel.countryList.isEmpty {
+                countryTextField.text = viewModel.countryList[row].name
+                phoneExtentionButton.setTitle( viewModel.countryList[row].countryCode, for: .normal)
+                cityTextField.text = ""
+                self.countryId = viewModel.countryList[row].id ?? -1
+                self.cityId = -1
+                self.getCity()
+            }
+        } else if cityPickerView == pickerView {
+            if !viewModel.cityList.isEmpty {
+                cityTextField.text = viewModel.cityList[row].name
+                cityId = viewModel.cityList[row].id ?? -1
+            }
         }
     }
 }

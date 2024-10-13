@@ -7,56 +7,61 @@
 
 import Foundation
 
+struct UserModel: Codable {
+    let accessToken: String?
+    let user: User?
+
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access_token"
+        case user
+    }
+}
+
 struct User: Codable {
-    let fullname: String?
-    let cityID, adsImgsViews: Int?
-//    let oauthID, preferences, imgAvatar: JSONNull?
+    let id: Int?
+    var fullname, password, phoneNo, birthdate: String?
+    let gender: String?
+    let countryID, cityID: Int?
+    var role, balance: String?
     var imgAvatar: String?
     let notificationsEnabled: Bool?
-//    let updatedAt: JSONNull?
-    var hasStore: Int?
-    var balance: Double?
-    let id: Int?
-    let gender: String?
-    let countryID: Int?
-    var phoneNo: String?
     let fcmToken: String?
-    let birthdate: String?
-    let isActive, hasWallet: Int?
-    let adsVideosViews: Int?
-    let role: Int?
-//    let slProvider, deletedAt: JSONNull?
-    let createdAt, password: String?
-    let adsWebsiteViews: Int?
+    var isActive, hasStore, hasWallet: Bool?
+    let adsImgsViews, adsVideosViews, adsWebsiteViews: Int?
+//    let preferences, oauthID, slProvider: JSONNull?
+    let createdAt: String?
+//    let updatedAt, deletedAt: JSONNull?
+    let accessToken: String?
+    let country: Country?
     
     var balanceTitle: String  {
-        return "\(balance ?? 0) \("JOD".localiz())"
+        return "\(balance ?? "0") \((Helper.currencyCode ?? "JOD"))"
     }
     
     enum CodingKeys: String, CodingKey {
-        case fullname
-        case cityID = "city_id"
-        case adsImgsViews = "ads_imgs_views"
-//        case oauthID = "oauthId"
-//        case preferences
-//        case imgAvatar = "img_avatar"
-        case notificationsEnabled = "notifications_enabled"
-//        case updatedAt = "updated_at"
-        case hasStore = "has_store"
-        case balance, id, gender
-        case countryID = "country_id"
+        case id, fullname, password
         case phoneNo = "phone_no"
+        case birthdate, gender
+        case countryID = "country_id"
+        case cityID = "city_id"
+        case role, balance
+        case imgAvatar = "img_avatar"
+        case notificationsEnabled = "notifications_enabled"
         case fcmToken = "fcm_token"
-        case birthdate
         case isActive = "is_active"
+        case hasStore = "has_store"
         case hasWallet = "has_wallet"
+        case adsImgsViews = "ads_imgs_views"
         case adsVideosViews = "ads_videos_views"
-        case role
-//        case slProvider = "sl_provider"
-//        case deletedAt = "deleted_at"
-        case createdAt = "created_at"
-        case password
         case adsWebsiteViews = "ads_website_views"
+        case accessToken = "access_token"
+//        case preferences
+//        case oauthID = "oauthId"
+//        case slProvider = "sl_provider"
+        case createdAt = "created_at"
+//        case updatedAt = "updated_at"
+//        case deletedAt = "deleted_at"
+        case country
         
     }
 }

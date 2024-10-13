@@ -15,9 +15,13 @@ class CustomCell: UICollectionViewCell {
     private var customBlock:CustomBlock?
     
     override func awakeFromNib() {
-        contentView.addShadow(position: .all)
-        customView.addShadow(position: .all)
+        self.addShadow(position: .bottom)
+//        contentView.addShadow(position: .all)
+//        customView.addShadow(position: .all)
+//        customView.borderWidth = 1
+//        customView.borderColor = .lightGray
         customLabel.text = "Custom".localiz()
+        customLabel.font = .font(for: .bold, size: 18)
     }
     
     func setup(customBlock:CustomBlock?)  {

@@ -118,7 +118,7 @@ public class CollectionViewCell: UICollectionViewCell {
 
     private func commonInit() {
         imageView = UIImageView(frame: CGRect.zero)
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 10
         imageView.layer.masksToBounds = true
         imageView.backgroundColor = UIColor.clear

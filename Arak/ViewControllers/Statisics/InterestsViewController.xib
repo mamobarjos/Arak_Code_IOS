@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InterestsViewController" customModule="Arak" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="ZFJ-3v-OkZ" id="cBH-Jf-Nl2"/>
+                <outlet property="continueButton" destination="uvq-O4-quo" id="WBm-An-m52"/>
+                <outlet property="headerTitleLabel" destination="Pnm-o8-QJt" id="vVg-So-8oT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

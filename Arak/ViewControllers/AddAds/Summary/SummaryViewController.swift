@@ -30,28 +30,13 @@ class SummaryViewController: UIViewController {
 
   private func loadDetailView() {
 
-    guard let detailView = Bundle.main.loadNibNamed("DetailView", owner: self, options: nil)?.first as? DetailView else {
+    guard let detailView = Bundle.main.loadNibNamed("SummaryDetailView", owner: self, options: nil)?.first as? SummaryDetailView else {
       navigationController?.popViewController(animated: true)
       return
     }
 
       detailView.configeUI(ads: ads, viewMode: .view, viewController: nil) { (action) in
       switch action {
-        case .call(let phone):
-          Helper.CellPhone(phone)
-          break
-        case .location(let lat , let lng):
-          if let latDouble = Double(lat) , let lngDouble = Double(lng) {
-            Helper.OpenMap(latDouble, lngDouble)
-          }
-          break
-        case .website(let url):
-          let vc = self.initViewControllerWith(identifier: WebViewViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! WebViewViewController
-          vc.confige(title: "", path: url, processType: .Other)
-          self.show(vc)
-          break
-        case .empty:
-          break
         case .checkout:
             let vc = self.initViewControllerWith(identifier: CheckoutViewController.className, and: "",storyboardName: Storyboard.Main.rawValue) as! CheckoutViewController
             vc.confige(ads: self.ads)
@@ -69,15 +54,8 @@ class SummaryViewController: UIViewController {
             }
           }
           break
-        case .viewFullScreen:
+      default:
           break
-      case .whatsapp(_):
-        break
-      case .favorite(id: let id):
-        break
-      
-      case .backToHome:
-        break
       }
     }
 

@@ -63,7 +63,7 @@ class FeedbackViewController: UIViewController,UITextViewDelegate {
       self.showToast(message: error)
       return
     }
-    let data: [String: String] = ["content": descriptionTextView.text!,"rate": "\(ratingView.rating)"]
+    let data: [String: String] = ["content": descriptionTextView.text!,"rating": "\(ratingView.rating)"]
     showLoading()
     feedbackViewModel.arakFeedback(data: data) { [weak self] (error) in
 

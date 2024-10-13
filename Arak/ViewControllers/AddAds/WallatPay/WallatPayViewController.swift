@@ -42,11 +42,11 @@ class WallatPayViewController: UIViewController {
     }
     
     private func getBalance() {
-//        fetchBalance { error in
-//            if error == nil {
-//                self.earningValueLabel.text = "\(Helper.currentUser?.balanceTitle ?? "")"
-//            }
-//        }
+        fetchBalance { error in
+            if error == nil {
+                self.earningValueLabel.text = "\(Helper.currentUser?.balanceTitle ?? "")"
+            }
+        }
     }
     
     private func localization() {
@@ -58,6 +58,10 @@ class WallatPayViewController: UIViewController {
             adsTypeValueLabel.text = "Video ads".localiz()
         }else if ads?.adCategoryID == AdsTypes.videoWeb.rawValue {
             adsTypeValueLabel.text = "Website ads".localiz()
+        }else if ads?.adCategoryID == AdsTypes.store.rawValue {
+            adsTypeValueLabel.text = "Store ads".localiz()
+        } else if ads == nil {
+            adsTypeValueLabel.text = "Store ads".localiz()
         }
         
         adsTypeLabel.text = "Ads Type".localiz()
@@ -71,6 +75,13 @@ class WallatPayViewController: UIViewController {
         timeValueLabel.text = ads?.createdAt ?? ""
         totalAmountValueLabel.text = ads?.totalAmount ?? ""
         payButton.setTitle("Pay".localiz() + " \(ads?.totalAmount ?? "")", for: .normal)
+        
+        if ads == nil {
+            reachValueLabel.text = "\(package_reach)"
+            totalAmountValueLabel.text = "\(package_Price)" + " " + (Helper.currencyCode ?? "JOD")
+            numbleValueLabel.text = "1"
+            timeLabel.isHidden = true
+        }
         
     }
     
@@ -110,7 +121,7 @@ class WallatPayViewController: UIViewController {
                     vc.confige(title: "Success".localiz(), description: "Your ad will be post soon.".localiz(), goString: "Go to My Ads".localiz()) {
                         vc.dismiss(animated: true, completion: nil)
                         self?.navigationController?.popToViewController(ofClass: BubbleTabBarController.self)
-                        HomeViewController.goToMyAds = true
+                        NewHomeViewController.goToMyAds = true
                     }
                     self?.present(vc, animated: true, completion: nil)
                 } else {
@@ -136,44 +147,95 @@ class WallatPayViewController: UIViewController {
     }
     
     func uploadData() {
-        
-        showLoading()
-        var data: [String : Any] = [:]
-        
-        data["title"] = ads?.title ?? ""
-        data["desc"] = ads?.desc ?? ""
-        data["phone_no"] = ads?.phoneNo ?? ""
-        data["alternative_phone_no"] = ""
-        data["company_name"] = ads?.companyName ?? ""
-        data["lon"] = ads?.lon ?? ""
-        data["lat"] = ads?.lat ?? ""
-        data["ad_category_id"] = ads?.adCategoryID
-        data["package_id"] = ads?.packageID
-        data["website_url"] = ads?.websiteURL ?? ""
-        data["type"] = type
-        data["duration"] =  Int(Double(ads?.duration ?? "0") ?? 0)
-        
-        
-        if (ads?.adImages?.count ?? 0 != 0) {
-            if let urlString = ads?.adImages?.first?.path , let url = URL(string: urlString) , let userId = Helper.currentUser?.id, let thumbnilUIImage = ads?.adImages?.first?.thumbnilData {
-                
-                UploadMedia.uploadVideo(userId: "\(userId)", videoURL: url) { (firebasePath) in
-                    data["files[0][url]"] = firebasePath
-                    self.uploadThumbnil(thumbnilUIImage, data: data)
+        if ads == nil { // then it's Store
+           
+            showLoading()
+            viewModel.getUserStore {[weak self] error in
+                guard let self else {return}
+                if error != nil {
+                    self.showToast(message: error)
+                    self.stopLoading()
+                  return
                 }
                 
-            }
-        } else if let imageAds = (ads?.adFileImagesPreparing) , imageAds.count != 0 , let userId = Helper.currentUser?.id {
-            let imageArray:[UIImage?] = imageAds.map { (obj) -> UIImage? in
-                return obj.path
-            }
-            UploadMedia.saveImages(userId: "\(userId)", imagesArray: imageArray) { (urlsPath) in
-                for index in 0...urlsPath.count - 1 {
-                    data["files[\(index)][url]"] = urlsPath[index]
+                var data: [String : Any] = [:]
+                data["payment_type"] = "WALLET"
+                data["ad_category_id"] = Ad_category_id
+                data["ad_package_id"] = Ad_package_id
+                data["store_id"] = Helper.store?.id ?? 0
+                self.viewModel.addStoreAds(data: data) { [weak self] (error) in
+                    defer {
+                        self?.stopLoading()
+                    }
+                    if error != nil {
+                        self?.showToast(message: error)
+                        return
+                    }
+                    if self?.viewModel.url.isEmpty ?? false {
+                        let vc = self?.initViewControllerWith(identifier: SuccessCheckoutViewController.className, and: "") as! SuccessCheckoutViewController
+                        vc.modalPresentationStyle = .overCurrentContext
+                        vc.modalTransitionStyle = .crossDissolve
+                        vc.confige(title: "Success".localiz(), description: "Your ad will be post soon.".localiz(), goString: "Go to My Ads".localiz()) {
+                            vc.dismiss(animated: true, completion: nil)
+                            self?.navigationController?.popToViewController(ofClass: BubbleTabBarController.self)
+                            NewHomeViewController.goToMyAds = true
+                        }
+                        self?.present(vc, animated: true, completion: nil)
+                    } else {
+                        let vc = self?.initViewControllerWith(identifier: WebViewViewController.className, and: "",storyboardName: Storyboard.Auth.rawValue) as! WebViewViewController
+                        vc.confige(title: "", path:self?.viewModel.url ?? "" , processType: .Payment, imageFirebasePath: "")
+                        self?.show(vc)
+                    }
                 }
-                self.completeUpload(data: data)
             }
+            
+            return
         }
+        
+      showLoading()
+      var data: [String : Any] = [:]
+
+      data["payment_type"] = "WALLET"
+      data["title"] = ads?.title ?? ""
+      data["description"] = ads?.desc ?? ""
+      data["phone_no"] = ads?.phoneNo ?? ""
+      data["alternative_phone_no"] = ""
+      data["lon"] = ads?.lon ?? ""
+      data["lat"] = ads?.lat ?? ""
+      data["ad_category_id"] = ads?.adCategoryID
+      data["ad_package_id"] = ads?.adPackageID
+        data["website_url"] = ads?.websiteURL
+          if ads?.websiteURL?.isEmpty == true || ads?.websiteURL == nil {
+              data["website_url"] = "https://example.com"
+          }
+//      data["type"] = type
+      data["duration"] = Int(Double(ads?.duration ?? 0))
+
+        var adFiles: [[String:String]] = []
+      if (ads?.adImages?.count ?? 0 != 0) {
+        if let urlString = ads?.adImages?.first?.path , let url = URL(string: urlString) , let userId = Helper.currentUser?.id, let thumbnilUIImage = ads?.adImages?.first?.thumbnilData {
+
+          UploadMedia.uploadVideo(userId: "\(userId)", videoURL: url) { (firebasePath) in
+//            data["files[0][url]"] = firebasePath
+              adFiles.append(["url":firebasePath])
+              data["ad_files"] = adFiles
+            self.uploadThumbnil(thumbnilUIImage, data: data)
+          }
+
+        }
+      } else if let imageAds = (ads?.adFileImagesPreparing) , imageAds.count != 0 , let userId = Helper.currentUser?.id {
+        let imageArray:[UIImage?] = imageAds.map { (obj) -> UIImage? in
+          return obj.path
+        }
+        UploadMedia.saveImages(userId: "\(userId)", imagesArray: imageArray) { (urlsPath) in
+          for index in 0...urlsPath.count - 1 {
+              adFiles.append(["url":urlsPath[index]])
+              data["ad_files"] = adFiles
+//            data["files[\(index)][url]"] = urlsPath[index]
+          }
+          self.completeUpload(data: data)
+        }
+      }
     }
     
     private func uploadThumbnil(_ thumbnil: UIImage?,data:[String : Any] ) {

@@ -31,7 +31,7 @@ class NotificationViewModel {
 extension NotificationViewModel {
     
     func getNotifications(page:Int ,compliation: @escaping CompliationHandler) {
-        Network.shared.request(request: APIRouter.notifications(page: page), decodable: NotificationResponse.self) { (response, error) in
+        Network.shared.request(request: APIRouter.notifications(page: page), decodable: NotificationResponseContainer.self) { (response, error) in
             if error != nil {
                 compliation(error)
                 return
@@ -39,9 +39,10 @@ extension NotificationViewModel {
             if page == 1 {
                 self.notificationList = []
             }
-            self.hasPage = (response?.data?.notifications?.data ?? []).count != 0
-            self.notificationList.append(contentsOf: response?.data?.notifications?.data ?? [])
-            Helper.notificationCount = response?.data?.notifCount ?? "0"
+            
+            self.hasPage = (response?.data?.data?.notifications ?? []).count != 0
+            self.notificationList.append(contentsOf: response?.data?.data?.notifications ?? [])
+            Helper.notificationCount = response?.data?.data?.notificationCount ?? "0"
             compliation(nil)
         }
     }
@@ -52,6 +53,7 @@ extension NotificationViewModel {
                 compliation(error)
                 return
             }
+            print(response?.data?.isLive)
             Helper.arakLinks = response?.data
             compliation(nil)
         }

@@ -40,21 +40,21 @@ class BottomBarItemView: ViewWithSetup {
 
     override func setup() {
         self.backgroundColor = .background
-        self.dropShadow()
+//        self.dropShadow()
 
         self.layout.height(to: 90)
         addSubview(stackView)
 
         stackView.layout
-            .leading(to: .superview, offset: 30)
-            .trailing(to: .superview, offset: -30)
+            .leading(to: .superview, offset: 0)
+            .trailing(to: .superview, offset: 0)
             .centerY(to: .superview)
 
         stackView.addingArrangedSubviews([
             phoneButton,
-            webButton,
+            whatsAppButton,
             locationButton,
-            whatsAppButton
+            webButton
         ])
 
         [phoneButton, webButton, locationButton, whatsAppButton].forEach {

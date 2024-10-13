@@ -7,27 +7,38 @@
 
 import Foundation
 
+struct NotificationResponseContainer: Codable {
+    let data: NotificationResponse?
+//    let total, page, limit: Int?
+}
+
 struct NotificationResponse: Codable {
-    var notifications: PagingModel<[NotificationModel]>?
-    var notifCount : String?
+    let notifications: [NotificationModel]?
+    let notificationCount: String?
+    
     enum CodingKeys: String, CodingKey {
         case notifications
-        case notifCount = "notif_count"
+        case notificationCount = "notification_count"
     }
 }
+
 struct NotificationModel: Codable {
-    var id: Int?
-    var title, desc, type: String?
-    var isRead: Int?
-    var userID: Int?
-    var createdAt, updatedAt: String?
+    let id: Int?
+    let title, description, type: String?
+    let url: String?
+    let isRead: Bool?
+//    let userID, senderID: JSONNull?
+    let createdAt, updatedAt: String?
+//    let deletedAt: JSONNull?
     var isCollaped = true
 
     enum CodingKeys: String, CodingKey {
-        case id, title, desc, type
+        case id, title, description, type, url
         case isRead = "is_read"
-        case userID = "user_id"
+//        case userID = "user_id"
+//        case senderID = "sender_id"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+//        case deletedAt = "deleted_at"
     }
 }

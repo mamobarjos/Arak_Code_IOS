@@ -30,59 +30,75 @@ class DetailView: UIView {
     
     typealias ActionBlock = ((Action) -> ())
     
-    @IBOutlet weak var companyNameValueLabel: UILabel!
-    @IBOutlet weak var companyLabel: UILabel!
-    @IBOutlet weak var companyStackView: UIStackView!
-    @IBOutlet weak var phoneNumberStackView: UIStackView!
-    @IBOutlet weak var locationStackView: UIStackView!
-    @IBOutlet weak var websiteStackView: UIStackView!
-    @IBOutlet weak var websiteLabel: UILabel!
-    @IBOutlet weak var websiteValueLabel: UILabel!
-    @IBOutlet weak var websiteImageView: UIImageView!
-    @IBOutlet weak var locationImageView: UIImageView!
-    @IBOutlet weak var locationValueLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var phoneImageView: UIImageView!
-    @IBOutlet weak var phoneNumberValueLabel: UILabel!
-    @IBOutlet weak var phoneNumberLabel: UILabel!
+//    @IBOutlet weak var companyNameValueLabel: UILabel!
+//    @IBOutlet weak var companyLabel: UILabel!
+//    @IBOutlet weak var companyStackView: UIStackView!
+//    @IBOutlet weak var phoneNumberStackView: UIStackView!
+//    @IBOutlet weak var locationStackView: UIStackView!
+//    @IBOutlet weak var websiteStackView: UIStackView!
+//    @IBOutlet weak var websiteLabel: UILabel!
+//    @IBOutlet weak var websiteValueLabel: UILabel!
+//    @IBOutlet weak var websiteImageView: UIImageView!
+//    @IBOutlet weak var locationImageView: UIImageView!
+//    @IBOutlet weak var locationValueLabel: UILabel!
+//    @IBOutlet weak var locationLabel: UILabel!
+//    @IBOutlet weak var phoneImageView: UIImageView!
+//    @IBOutlet weak var phoneNumberValueLabel: UILabel!
+//    @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var descriptionValueLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+//    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var titleValueLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
+//    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var sliderPageView: FSPagerView!
     @IBOutlet weak var pageControl: UIPageControl!
     
     @IBOutlet weak var summaryView: UIView!
     @IBOutlet weak var checkoutButton: UIButton!
     
-    @IBOutlet weak var whatsappImageView: UIImageView!
+//    @IBOutlet weak var whatsappImageView: UIImageView!
     @IBOutlet weak var totalAmountValueLabel: UILabel!
     @IBOutlet weak var totalAmountLabel: UILabel!
     @IBOutlet weak var cartDetailsLabel: UILabel!
-    @IBOutlet weak var favoriateButton: UIButton!
+//    @IBOutlet weak var favoriateButton: UIButton!
     
-    @IBOutlet weak var backToHome: UIButton!
+//    @IBOutlet weak var backToHome: UIButton!
     
     @IBOutlet weak var numberOfImagesView: UIView!
     @IBOutlet weak var numberOfImagesLabel: UILabel!
     
     
-    @IBOutlet weak var reviewrTableView: UITableView!
+//    @IBOutlet weak var reviewrTableView: UITableView!
 
-    @IBOutlet weak var reviewStoreTitleLabel: UILabel!
-    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
-    @IBOutlet weak var submitButton: UIButton!
+//    @IBOutlet weak var reviewStoreTitleLabel: UILabel!
+//    @IBOutlet weak var rateThisProviderTitleLabel: UILabel!
+//    @IBOutlet weak var submitButton: UIButton!
     
-    @IBOutlet weak var heightConst: NSLayoutConstraint!
+//    @IBOutlet weak var heightConst: NSLayoutConstraint!
+//
+//    @IBOutlet weak var addReviewContainer: UIView!
+//    @IBOutlet weak var cosmosView: CosmosView!
+//    @IBOutlet weak var reviewTextView: UITextView!
+    @IBOutlet weak var quickAccessContainerView: UIView!
+    @IBOutlet weak var locationNameLabel: UILabel!
+    
+    @IBOutlet weak var callButton: UIButton!
+    @IBOutlet weak var whatsButton: UIButton!
+    @IBOutlet weak var locationButton: UIButton!
+    @IBOutlet weak var websiteButton: UIButton!
+    
+    
     @IBOutlet weak var reviewsContainerView: UIView!
-    @IBOutlet weak var addReviewContainer: UIView!
-    @IBOutlet weak var cosmosView: CosmosView!
-    @IBOutlet weak var reviewTextView: UITextView!
+    @IBOutlet weak var reviewTitleLabel: UILabel!
+    @IBOutlet weak var viewAllReviewsButton: UIButton!
+    @IBOutlet weak var viewAllReviewsStackView: UIStackView!
+    @IBOutlet weak var reviewsTableView: UITableView!
+    
+    @IBOutlet weak var addReviewButton: UIButton!
     
     private var actionType: ActionBlock?
     private var ads: Adverisment?
     private var viewMode: ViewMode = .detail
-    private var mediaList: [AdImage] = []
+    private var mediaList: [AdFile] = []
     private var mediaListPreparing: [AdImagePrepare] = []
     private(set) var rating: Int?
     
@@ -94,7 +110,7 @@ class DetailView: UIView {
             } else {
                 reviewsContainerView.isHidden = false
             }
-            reviewrTableView.reloadData()
+            reviewsTableView.reloadData()
         }
     }
     
@@ -110,47 +126,26 @@ class DetailView: UIView {
     
     
     private func setupTableView() {
-        reviewrTableView.delegate = self
-        reviewrTableView.dataSource = self
-        reviewrTableView.rowHeight = 150
-        reviewrTableView.estimatedRowHeight = 150
-        reviewrTableView.separatorColor = .clear
-        reviewrTableView.register(ReviewTableViewCell.self)
-        cosmosView.rating = 0
-        cosmosView.didFinishTouchingCosmos = { [weak self] rating in
-            self?.rating = Int(rating)
-        }
+        reviewsTableView.delegate = self
+        reviewsTableView.dataSource = self
+        reviewsTableView.rowHeight = 150
+        reviewsTableView.isScrollEnabled = false
+        reviewsTableView.estimatedRowHeight = 150
+        reviewsTableView.separatorColor = .clear
+        reviewsTableView.register(ReviewTableViewCell.self)
     }
 
     private func setup() {
-        reviewTextView.delegate = self
         guard let ads = ads else {
             return
         }
         
         numberOfImagesView.isHidden = viewMode == .view
-        phoneImageView.addTapGestureRecognizer {
-            if (self.viewMode == .view) {
-                return
-            }
-            self.actionType?(.call(phone: self.ads?.phoneNo ?? ""))
-        }
-        websiteLabel.addTapGestureRecognizer {
-            if (self.viewMode == .view) {
-                return
-            }
-            self.actionType?(.website(url:  self.ads?.websiteURL ?? "")) //To Do...
-        }
-        
-        websiteImageView.addTapGestureRecognizer {
-            if (self.viewMode == .view) {
-                return
-            }
-            self.actionType?(.website(url:  self.ads?.websiteURL ?? "")) //To Do...
-        }
+
         
         if (viewMode == .view) {
-            addReviewContainer.isHidden = true
+            reviewsContainerView.isHidden = true
+            addReviewButton.isHidden = true
             summaryView.isHidden = false
             if (ads.adImages?.count ?? 0 != 0) {
                 self.mediaList = ads.adImages ?? []
@@ -164,44 +159,27 @@ class DetailView: UIView {
         
         self.localiztion()
         self.setupSlider()
-        phoneImageView.isHidden = viewMode == .view
-        locationImageView.isHidden = viewMode == .view
-        websiteImageView.isHidden = viewMode == .view
-        websiteStackView.isHidden = ads.adCategoryID != AdsTypes.videoWeb.rawValue
-        
+        quickAccessContainerView.isHidden = viewMode == .view
+        websiteButton.isHidden = ads.adCategoryID != AdsTypes.videoWeb.rawValue
+        addReviewButton.isHidden = ads.isReviewed ?? false
+        locationNameLabel.text = ads.locationTitle
         titleValueLabel.text = ads.title ?? ""
         descriptionValueLabel.text = ads.desc ?? ""
-        
-        phoneNumberValueLabel.text = ads.phoneNo ?? ""
-        
-        locationValueLabel.text = (ads.locationTitle ?? "").isEmpty ?   "\(ads.lon ?? ""), \(ads.lat ?? "")" :  (ads.locationTitle ?? "")
-        websiteValueLabel.text = ads.websiteURL ?? ""
-        companyStackView.isHidden = ads.companyName?.isEmpty ?? false
-        companyNameValueLabel.text = ads.companyName ?? ""
         totalAmountValueLabel.text = ads.totalAmount ?? ""
-        favoriateButton.isHidden = ads.isMe
-        favoriateButton.setImage(ads.isFav ? #imageLiteral(resourceName: "Icon awesome-heart") : #imageLiteral(resourceName: "Icon awesome-heart-1"), for: .normal)
-        whatsappImageView.isHidden = viewMode == .view
-        backToHome.isHidden  = viewMode == .view
+        
+       
+        
+//        whatsappImageView.isHidden = viewMode == .view
+//        backToHome.isHidden  = viewMode == .view
     }
     
     
     private func localiztion() {
-        titleLabel.text = "Title".localiz()
-        descriptionLabel.text = "Description".localiz()
-        phoneNumberLabel.text = "Phone Number".localiz()
-        locationLabel.text = "Location".localiz()
-        websiteLabel.text = "Website".localiz()
-        companyLabel.text = "Company".localiz()
-        totalAmountLabel.text = "Total Amount".localiz()
+        reviewTitleLabel.text = "label.Reviews".localiz()
+        viewAllReviewsButton.setTitle("See All".localiz(), for: .normal)
         cartDetailsLabel.text = "Cart Details".localiz()
         checkoutButton.setTitle("Check Out".localiz(), for: .normal)
-        backToHome.setTitle("Back To Ads".localiz(), for: .normal)
-        reviewStoreTitleLabel.text = "label.Review".localiz()
-        rateThisProviderTitleLabel.text = "label.Rate this Ad".localiz()
-        submitButton.setTitle("action.Submit".localiz(), for: .normal)
-        reviewTextView.text = "placeHolder.Enter your review ...".localiz()
-        
+//        backToHome.setTitle("Back To Ads".localiz(), for: .normal)
     }
     
     private func setupSlider() {
@@ -216,27 +194,12 @@ class DetailView: UIView {
         pageControl.numberOfPages = mediaList.count
     }
     
-    @IBAction func submiteReviewAction(_ sender: Any) {
-        if reviewTextView.text == "placeHolder.Enter your review ...".localiz() || reviewTextView.text.isEmpty {
-            self.sender?.showToast(message:  "error.please add your review".localiz())
-            return
-        }
-
-        guard let rating = rating else {
-            self.sender?.showToast(message: "error.please rate this store".localiz())
-            return
-        }
-
-        self.sender?.submiteReview(context: reviewTextView.text, rating: rating)
+    @IBAction func addReviewButtonAction(_ sender: Any) {
+        let vc = UIApplication.shared.topViewController?.initViewControllerWith(identifier: RateViewController.className, and: "", storyboardName: "Main") as! RateViewController
+        vc.delegate = self
+        self.sender?.present(vc)
     }
     
-    @IBAction func BackToHome(_ sender: Any) {
-        if (viewMode == .view) {
-            return
-        }
-        actionType?(.backToHome)
-        
-    }
     @IBAction func Whatsapp(_ sender: Any) {
         if (viewMode == .view) {
             return
@@ -244,13 +207,19 @@ class DetailView: UIView {
         actionType?(.whatsapp(phone: ads?.phoneNo ?? ""))
     }
     
-    @IBAction func Favorite(_ sender: Any) {
-        if (viewMode == .view) {
-            return
-        }
-        actionType?(.favorite(id: ads?.id ?? -1))
-    }
+//    @IBAction func Favorite(_ sender: Any) {
+//        if (viewMode == .view) {
+//            return
+//        }
+//        actionType?(.favorite(id: ads?.id ?? -1))
+//    }
     
+    
+    @IBAction func seeAllReviewsButtonAction(_ sender: Any) {
+        let vc = AllReviewsViewController.loadFromNib()
+        vc.reviewsType = .Ad(self.ads)
+        self.sender?.show(vc)
+    }
     
     @IBAction func CallPhone(_ sender: Any) {
         if (viewMode == .view) {
@@ -274,13 +243,10 @@ class DetailView: UIView {
         
     }
     
-    @IBAction func OpenMap(_ sender: Any) {
-        if (viewMode == .view) {
-            return
-        }
-        actionType?(.website(url:  ads?.websiteURL ?? "")) //To Do...
+    @IBAction func websiteAction(_ sender: Any) {
+        self.actionType?(.website(url:  self.ads?.websiteURL ?? "")) //To Do...
     }
-    
+   
 }
 
 extension DetailView: UITableViewDelegate, UITableViewDataSource {
@@ -292,6 +258,7 @@ extension DetailView: UITableViewDelegate, UITableViewDataSource {
      
             let cell:ReviewTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
             let review = reviews[indexPath.row]
+            cell.storeNameLabel.text = ""
             cell.cosumizeCell(review: review)
             cell.onDeleteAction = { [weak self] in
                 self?.sender?.deleteReview(id: review.id ?? 0)
@@ -357,18 +324,9 @@ extension DetailView : FSPagerViewDelegate ,  FSPagerViewDataSource {
     
 }
 
-extension DetailView: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "placeHolder.Enter your review ...".localiz() {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty == true {
-            textView.text = "placeHolder.Enter your review ...".localiz()
-            textView.textColor = .lightGray
-        }
+extension DetailView: RateViewControllerDelegate {
+    func submiteReview(_ sender: RateViewController, context: String, rating: Double) {
+        sender.dismiss(animated: true)
+        self.sender?.submiteReview(context: context, rating: Int(rating))
     }
 }
