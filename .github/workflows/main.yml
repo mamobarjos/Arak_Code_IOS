@@ -1,0 +1,24 @@
+name: Build iOS App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          brew install cocoapods
+          pod install
+
+      - name: Build the App
+        run: xcodebuild -workspace YourApp.xcworkspace -scheme YourApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4'
+
+      - name: Archive the App
+        run: xcodebuild -scheme YourApp archive -archivePath build/YourApp.xcarchive
