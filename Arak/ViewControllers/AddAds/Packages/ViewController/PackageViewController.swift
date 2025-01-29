@@ -61,8 +61,8 @@ class PackageViewController: UIViewController {
 }
 extension PackageViewController: UICollectionViewDelegate , UICollectionViewDataSource , UICollectionViewDelegateFlowLayout{
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//    return packageList.count
-    return packageList.count + 1 // for custom package
+    return packageList.count
+//    return packageList.count + 1 // for custom package
   }
 
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -397,7 +397,7 @@
 "error.Please Add Your Store Image" = "Please Add Your Store Image";
 "error.Please Add Your Store Cover Image" = "Please Add Your Store Cover Image";
 "error.you already have store" = "you already have store";
-
+"placeHolder.DiscountPrice" = "Discount Price";
 "Featured ads" = "Featured ads";
 "Election Candidates" = "Election Candidates";
 "Regular ads" = "Regular ads";

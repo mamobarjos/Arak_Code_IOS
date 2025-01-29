@@ -155,11 +155,11 @@ class WithDrawViewController: UIViewController {
           return error.isEmpty
         }
 
-        if phone.count != 9 {
-          error = "Phone Number Should not been less than 9 digits".localiz()
-          self.phoneTextField.becomeFirstResponder()
-          return error.isEmpty
-        }
+//        if phone.count != 9 {
+//          error = "Phone Number Should not been less than 9 digits".localiz()
+//          self.phoneTextField.becomeFirstResponder()
+//          return error.isEmpty
+//        }
         
         
         return error.isEmpty
@@ -232,16 +232,16 @@ extension WithDrawViewController: UIPickerViewDataSource, UIPickerViewDelegate, 
 
 }
 extension WithDrawViewController {
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-      if textField == phoneTextField {
-        let maxLength = 9
-        let currentString: NSString = (textField.text ?? "") as NSString
-        let newString: NSString =
-               currentString.replacingCharacters(in: range, with: string) as NSString
-        return newString.length <= maxLength
-      }
-   return true
-  }
+//  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//      if textField == phoneTextField {
+//        let maxLength = 9
+//        let currentString: NSString = (textField.text ?? "") as NSString
+//        let newString: NSString =
+//               currentString.replacingCharacters(in: range, with: string) as NSString
+//        return newString.length <= maxLength
+//      }
+//   return true
+//  }
 }
 extension UITextField {
 

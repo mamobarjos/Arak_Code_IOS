@@ -120,12 +120,12 @@ class SignUpViewModel {
     }
     
     func otp(data: [String: String] , compliation: @escaping CompliationHandler) {
-      Network.shared.request(request: APIRouter.otp(data: data), decodable: String.self) { (response, error) in
+        Network.shared.request(request: APIRouter.otp(data: data), decodable: String.self) { (response, error) in
         if error != nil || response?.data == nil {
           compliation(error)
           return
         }
-        self.phone = response?.data ?? ""
+//        self.phone = response?.data ?? ""
         compliation(nil)
       }
     }

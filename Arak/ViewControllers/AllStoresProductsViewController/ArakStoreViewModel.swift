@@ -11,7 +11,7 @@ class ArakStoreViewModel {
     private(set) var products: [ArakProduct] = []
     private(set) var productVariants: [ProductVariant] = []
     private(set) var categories: [ArakCategory] = []
-    
+    var hasMoreProducts: Bool = false
     func getProducts() -> [ArakProduct] {
         return self.products
     }
@@ -24,14 +24,19 @@ class ArakStoreViewModel {
         return self.categories
     }
     
-    func getStoreProducts(by category: Int, complition: @escaping CompliationHandler) {
-        Network.shared.request(request: StoresRout.getArakProducts(categotyId: category), decodable: [ArakProduct].self) { [weak self] response, error in
+    func getStoreProducts(by category: Int, page: Int, complition: @escaping CompliationHandler) {
+        Network.shared.request(request: StoresRout.getArakProducts(categotyId: category, page: page), decodable: [ArakProduct].self) { [weak self] response, error in
             guard error == nil else {
                 complition(error)
                 return
             }
-            
-            self?.products = response?.data ?? []
+            if page == 1 {
+                self?.products = response?.data ?? []
+            } else {
+                self?.products.append(contentsOf: response?.data ?? [])
+            }
+
+            self?.hasMoreProducts = response?.data?.count != 0
             complition(nil)
         }
     }
@@ -44,6 +49,7 @@ class ArakStoreViewModel {
             }
             
             self?.categories = response?.data ?? []
+            self?.hasMoreProducts = true
             complition(nil)
         }
     }

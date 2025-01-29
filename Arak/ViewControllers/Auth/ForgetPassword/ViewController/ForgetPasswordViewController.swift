@@ -18,6 +18,9 @@ class ForgetPasswordViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var phoneNumberExtention: UITextField!
+    @IBOutlet weak var emailContainerView: UIView!
+    @IBOutlet weak var emailTextField: UITextField!
+
   // MARK: - Properties
 
     private var error = ""
@@ -46,6 +49,7 @@ class ForgetPasswordViewController: UIViewController {
 
     // MARK: - Protected Methods
     private func setupUI() {
+        emailContainerView.isHidden = true
       locaization()
     }
 
@@ -72,6 +76,7 @@ class ForgetPasswordViewController: UIViewController {
     private func locaization() {
       welcomeLabel.text = "Forget Your Password".localiz()
       messageLabel.text = "Please insert your phone number".localiz()
+      emailTextField.placeholder = "Email".localiz()
       phoneTextField.placeholder = "xxxxxxxxx".localiz()
       nextButton.setTitle("Next".localiz(), for: .normal)
       welcomeLabel.textAligment()
@@ -95,12 +100,20 @@ class ForgetPasswordViewController: UIViewController {
           return error.isEmpty
         }
 
-        if phone.count != 9 {
-          error = "Phone Number Should not been less than 9 digits".localiz()
-          self.phoneTextField.becomeFirstResponder()
-          return error.isEmpty
-        }
+//        if phone.count != 9 {
+//          error = "Phone Number Should not been less than 9 digits".localiz()
+//          self.phoneTextField.becomeFirstResponder()
+//          return error.isEmpty
+//        }
       return error.isEmpty
+    }
+
+    private func showEmailIfNeeded(isEnabled: Bool) {
+        if isEnabled {
+            emailContainerView.isHidden = false
+        } else {
+            emailContainerView.isHidden = true
+        }
     }
 
   @IBAction func Forget(_ sender: Any) {
@@ -108,8 +121,10 @@ class ForgetPasswordViewController: UIViewController {
         self.showToast(message: error)
         return
       }
+
     var otpData:[String : String] = [:]
-    otpData["phone_no"] = "+962" + (phoneTextField.text ?? "")
+      otpData["phone_no"] = "\(phoneNumberExtention.text ?? "+962")" + (phoneTextField.text ?? "")
+      otpData["email"] = emailTextField.text ?? ""
     signUpViewModel.otp(data: otpData) {  [weak self] (error) in
       defer {
         self?.stopLoading()
@@ -151,6 +166,7 @@ extension ForgetPasswordViewController: UIPickerViewDataSource, UIPickerViewDele
   @objc func didTapDone(toolbar: UIToolbar?) {
       if phoneNumberExtention.text?.isEmpty ?? false {
           phoneNumberExtention.text = signUpViewModel.countryList.first?.countryCode
+          showEmailIfNeeded(isEnabled: signUpViewModel.countryList.first?.emailRequired ?? false)
       }
       phoneNumberExtention.endEditing(true)
   }
@@ -162,5 +178,6 @@ extension ForgetPasswordViewController: UIPickerViewDataSource, UIPickerViewDele
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
       phoneNumberExtention.text = signUpViewModel.countryList[row].countryCode
+      showEmailIfNeeded(isEnabled: signUpViewModel.countryList[row].emailRequired ?? false)
   }
 }

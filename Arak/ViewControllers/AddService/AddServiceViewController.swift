@@ -31,6 +31,7 @@ class AddServiceViewController: UIViewController {
 
     @IBOutlet weak var titleTextField: UITextField!
 
+    @IBOutlet weak var currencyButton: UIButton!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var discountPriceTextField: UITextField!
     
@@ -54,7 +55,7 @@ class AddServiceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        
+        currencyButton.setTitle(Helper.currencyCode, for: .normal)
         setupUI()
     }
     
@@ -68,7 +69,7 @@ class AddServiceViewController: UIViewController {
         titleTextField.placeholder = "placeHolder.Title".localiz()
         priceTextField.placeholder = "placeHolder.Price".localiz()
         continueButton.setTitle("action.Continue".localiz(), for: .normal)
-
+        discountPriceTextField.placeholder = "placeHolder.DiscountPrice".localiz()
         descTextField.textColor = UIColor.lightGray
         descTextField.delegate = self
         descTextField.font = .font(for: .regular, size: 17)

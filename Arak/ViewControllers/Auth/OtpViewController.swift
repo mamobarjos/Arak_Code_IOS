@@ -79,6 +79,10 @@ class OtpViewController: UIViewController {
               with: stars)
       emailLabel.text = result
     }
+
+      if !(data["phone_no"]?.starts(with: "+962") ?? true) {
+          emailLabel.text = data["email"]
+      }
     resendCodeLabel.isHidden = true
     setupTimer()
     localization()
@@ -90,7 +94,7 @@ class OtpViewController: UIViewController {
       if self.processType == .register  {
         self.chageRegisterStatusButton(isEnable: false)
         self.showLoading()
-        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? ""]) { [weak self] (error) in
+        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? "", "email" : self.data["email"] ?? ""]) { [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()
@@ -100,7 +104,7 @@ class OtpViewController: UIViewController {
       } else if self.processType == .changePhone  {
         self.showLoading()
         self.chageRegisterStatusButton(isEnable: false)
-        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? ""]) { [weak self] (error) in
+        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? "", "email" : self.data["email"] ?? ""]) { [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()
@@ -110,7 +114,7 @@ class OtpViewController: UIViewController {
       }  else {
         self.showLoading()
         self.chageRegisterStatusButton(isEnable: false)
-        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? ""]) {  [weak self] (error) in
+        self.viewModel.otp(data: ["phone_no" : self.data["phone_no"] ?? "", "email" : self.data["email"] ?? ""]) {  [weak self] (error) in
           defer {
             self?.chageRegisterStatusButton(isEnable: true)
             self?.stopLoading()

@@ -24,7 +24,8 @@ struct Country: Codable {
     let countryCode, updatedAt: String?
     let currency: Currency?
     let nameAr: String?
-    
+    let emailRequired: Bool?
+
     var name:String {
         return Helper.appLanguage ?? "en" == "en" ? (nameEn ?? "") : (nameAr ?? "")
     }
@@ -39,6 +40,7 @@ struct Country: Codable {
         case updatedAt = "updated_at"
         case currency
         case nameAr = "name_ar"
+        case emailRequired = "email_required"
     }
 }
 

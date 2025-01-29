@@ -21,7 +21,7 @@ enum StoresRout: APIConfiguration {
     case getStoreProducts(storeId: Int, page: Int)
     case getStoreSingleProduct(productId: Int)
     case getArakProductsCatigores
-    case getArakProducts(categotyId: Int)
+    case getArakProducts(categotyId: Int, page: Int)
     case getArakProductVariants(productId: Int)
     case createOrder(form: CreateOrderForm)
 
@@ -163,11 +163,11 @@ enum StoresRout: APIConfiguration {
                 return .url([:])
             case .getArakProductsCatigores:
                 return .url([:])
-            case .getArakProducts(let id):
+            case .getArakProducts(let id, let page):
                 if id  == -1 {
-                    return .url([:])
+                    return .url(["page":page, "per_page": 10])
                 } else {
-                    return .url(["category":id])
+                    return .url(["category":id, "page":page, "per_page": 10])
                 }
                
             case .getArakProductVariants(let productId):

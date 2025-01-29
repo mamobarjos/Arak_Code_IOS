@@ -277,6 +277,7 @@
 "Once the details below are completed, one of our expert advisors will contact you" = "بمجرد اكتمال التفاصيل أدناه ، سيتصل بك أحد المستشارين الخبراء لدينا";
 "Send" = "إرسال";
 "Completed" = "مكتمل";
+"placeHolder.DiscountPrice" = "سعر مخفض";
 "Please insert your Coupon Code" = "الرجاء إدخال رمز القسيمة الخاص بك";
 "Coupon code has been entered successfully" = "تم ادخال رمز القسيمة بنجاح";
 "Your request has been successfully sent" = "تم ارسال طلبك بنجاح";

@@ -19,12 +19,16 @@ class AllStoresProductsViewController: UIViewController {
     private let inset: CGFloat = 0
     private let minimumLineSpacing: CGFloat = 10
     private let minimumInteritemSpacing: CGFloat = 10
-    
+    private var pageFeatured = 1
 //    private var storesViewModel: StoresViewModel = StoresViewModel()
 //    private var storeViewModel: StoreViewModel = StoreViewModel()
     
     private var viewModel: ArakStoreViewModel = ArakStoreViewModel()
-    private(set) var categoryId = -1
+    private(set) var categoryId = -1 {
+        didSet {
+            pageFeatured = 1
+        }
+    }
     var products: [ArakProduct] = [] {
         didSet {
             collectionView.reloadData()
@@ -84,7 +88,7 @@ class AllStoresProductsViewController: UIViewController {
     
     private func getProducts() {
         showLoading()
-        viewModel.getStoreProducts(by: categoryId) { [weak self] error in
+        viewModel.getStoreProducts(by: categoryId, page: pageFeatured) { [weak self] error in
                 defer {
                     self?.stopLoading()
                 }
@@ -140,6 +144,13 @@ extension AllStoresProductsViewController: UICollectionViewDelegate, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return minimumInteritemSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == products.count - 1 && viewModel.hasMoreProducts {
+            pageFeatured += 1
+            getProducts()
+        }
     }
 }
 

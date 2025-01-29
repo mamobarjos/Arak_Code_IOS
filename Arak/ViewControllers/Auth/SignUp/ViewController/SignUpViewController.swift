@@ -35,6 +35,9 @@ class SignUpViewController: UIViewController,SocialDelegate {
     @IBOutlet weak var genderContainerView: UIView!
     @IBOutlet weak var phoneExtintionLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+
+    @IBOutlet weak var emailContainerView: UIView!
+    @IBOutlet weak var emailTextField: UITextField!
     //    @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var orButton: UIButton!
 //  @IBOutlet weak var loginFacebookLabel: UILabel!
@@ -108,6 +111,7 @@ var haveWallet = false
         genderCustomization()
         getCountry()
         fullNameTextField.keyboardType = .default
+        emailContainerView.isHidden = true
         self.setupHideKeyboardOnTap()
     }
 
@@ -261,11 +265,12 @@ var haveWallet = false
           return error.isEmpty
         }
 
-        if phone.count != 9 {
-          error = "Phone Number Should not been less than 9 digits".localiz()
-          self.phoneNumberTextField.becomeFirstResponder()
-          return error.isEmpty
-        }
+//        if phone.count != 9 {
+//          error = "Phone Number Should not been less than 9 digits".localiz()
+//          self.phoneNumberTextField.becomeFirstResponder()
+//          return error.isEmpty
+//        }
+
         if countryId == -1 {
           error = "Please select country".localiz()
           return error.isEmpty
@@ -315,7 +320,8 @@ var haveWallet = false
       termsPrivacyLabel.text = "By signing up, you agree to our Terms & Conditions and Privacy Policy .".localiz()
       signUpButton.setTitle("Sign up".localiz(), for: .normal)
       orButton.setTitle("OR".localiz(), for: .normal)
-      
+      emailTextField.placeholder = "Email".localiz()
+
       if Helper.arakLinks?.isLive == false {
           dataContainerView.isHidden = true
           genderContainerView.isHidden = true
@@ -367,11 +373,17 @@ var haveWallet = false
         "fullname": fullNameTextField.text ?? "",
         "password": passwordTextField.text ?? "" ,
         "birthdate": dateTextField.text ?? "",
-        "phone_no" : (phoneExtintionLabel.text ?? "+962") + (phoneNumberTextField.text ?? "")
-                                   , "gender" : genderTextField.text ?? "" , "city_id" : cityId , "country_id" : countryId, "has_wallet": haveWallet]
+        "phone_no" : (phoneExtintionLabel.text ?? "+962") + (phoneNumberTextField.text ?? ""), "gender" : genderTextField.text ?? "" ,
+        "city_id" : cityId,
+        "country_id" : countryId,
+        "has_wallet": haveWallet,
+        "email": emailTextField.text ?? ""]
+
     print(data)
     var otpData:[String : String] = [:]
-    otpData["phone_no"] = "+962" + (phoneNumberTextField.text ?? "")
+    otpData["phone_no"] = (phoneExtintionLabel.text ?? "+962") + (phoneNumberTextField.text ?? "")
+    otpData["email"] = emailTextField.text ?? ""
+
     self.signUpButton.isUserInteractionEnabled = false
     showLoading()
     viewModel.otp(data: otpData) {  [weak self] (error) in
@@ -434,6 +446,14 @@ var haveWallet = false
         noImage.image = UIImage(named: "Check (1)")
         haveWallet = false
     }
+
+    private func showEmailIfNeeded(isEnabled: Bool) {
+        if isEnabled {
+            emailContainerView.isHidden = false
+        } else {
+            emailContainerView.isHidden = true
+        }
+    }
 }
 
 extension SignUpViewController: UITextFieldDelegate {
@@ -481,6 +501,7 @@ extension SignUpViewController: UIPickerViewDataSource, UIPickerViewDelegate, To
       if (countryTextField.text ?? "").isEmpty {
         if !viewModel.countryList.isEmpty {
           countryTextField.text = viewModel.countryList[0].name
+            self.showEmailIfNeeded(isEnabled: viewModel.countryList[0].emailRequired ?? false)
             phoneExtintionLabel.text = viewModel.countryList[0].countryCode
           self.countryId = viewModel.countryList[0].id ?? -1
           self.cityTextField.text = ""
@@ -519,6 +540,7 @@ extension SignUpViewController: UIPickerViewDataSource, UIPickerViewDelegate, To
     } else if countryPickerView == pickerView {
       if !viewModel.countryList.isEmpty {
           countryTextField.text = viewModel.countryList[row].name
+          self.showEmailIfNeeded(isEnabled: viewModel.countryList[row].emailRequired ?? false)
           phoneExtintionLabel.text = viewModel.countryList[row].countryCode
           cityTextField.text = ""
           self.countryId = viewModel.countryList[row].id ?? -1
@@ -685,16 +707,16 @@ extension SignUpViewController {
   }
 }
 extension SignUpViewController {
-  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-      if textField == phoneNumberTextField {
-        let maxLength = 9
-        let currentString: NSString = (textField.text ?? "") as NSString
-        let newString: NSString =
-               currentString.replacingCharacters(in: range, with: string) as NSString
-        return newString.length <= maxLength
-      }
-   return true
-  }
+//  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//      if textField == phoneNumberTextField {
+//        let maxLength = 9
+//        let currentString: NSString = (textField.text ?? "") as NSString
+//        let newString: NSString =
+//               currentString.replacingCharacters(in: range, with: string) as NSString
+//        return newString.length <= maxLength
+//      }
+//   return true
+//  }
 }
 extension SignUpViewController : LoginButtonDelegate {
     

@@ -129,6 +129,7 @@ struct AdBanner: Codable {
     let countryID: Int?
     let isHomepage: Bool?
     let createdAt, websiteURL: String?
+    let type: String?
 //    let userID: JSONNull?
     let title: String?
     let path: String?
@@ -144,6 +145,7 @@ struct AdBanner: Codable {
         case isHomepage = "is_homepage"
         case createdAt = "created_at"
         case websiteURL = "website_url"
+        case type
 //        case userID = "user_id"
         case title
         case path = "img_url"
@@ -238,7 +240,7 @@ struct Adverisment: Codable {
         case createdAt = "created_at"
         case desc = "description"
         case thumbUrl = "thumb_url"
-        case websiteURL
+        case websiteURL = "website_url"
         case locationTitle, alternativePhoneNo, companyName
         case totalAmount
         case lon, lat

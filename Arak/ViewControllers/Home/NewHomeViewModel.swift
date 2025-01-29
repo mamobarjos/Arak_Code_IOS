@@ -124,7 +124,7 @@ class NewHomeViewModel {
                 compliation(error)
                 return
             }
-            self.bannerList = response?.data??.banners ?? []
+            self.bannerList = response?.data??.banners?.filter({$0.type == "HOMEPAGE"}) ?? []
             self.hasMoreBannerAds = (response?.data??.banners ?? []).count > 0
             compliation(nil)
         }
